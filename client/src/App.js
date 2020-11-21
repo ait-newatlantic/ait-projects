@@ -11,7 +11,6 @@ import BCTQKD from './components/kinhdoanh/baocaokinhdoanh/baocaotongquat'
 import BCCTKD from './components/kinhdoanh/baocaokinhdoanh/baocaochitiet'
 import BDTQKD from './components/kinhdoanh/bieudokd/bieudotongquat'
 import BDCTKD from './components/kinhdoanh/bieudokd/bieudochitiet'
-import DKKPI from './components/kinhdoanh/nhaplieu/dangkykpi'
 import CN_NCTT from './components/kinhdoanh/capnhat/capnhatnctt.jsx'
 import KTKH from './components/khachhang/KTKH'
 
@@ -78,7 +77,6 @@ function App() {
                       <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
                       <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
                       <Route path="/khachhang/khoitao" exact component={KTKH} />
-                      <Route path="/test" exact component={DKKPI} />
                     </Switch>
                   </Router>
                 )}
@@ -95,7 +93,6 @@ function App() {
                       <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
                       <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
                       <Route path="/khachhang/khoitao" exact component={KTKH} />
-                      <Route path="/test" exact component={DKKPI} />
                     </Switch>
                   </Router>
                 )}

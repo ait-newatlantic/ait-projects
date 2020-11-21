@@ -8,7 +8,7 @@ export const TypeContext = createContext();
 export const TypeProvider = (props) => {
     const [types, setTypes] = useState([])
     useEffect(()=>{
-        Axios.get("http://localhost:8080/api/get/nhaplieu/loaixe").then((response)=>{
+        Axios.get("http://localhost:8080/api/get/loaixe").then((response)=>{
             setTypes(response.data)
         })
     },[])

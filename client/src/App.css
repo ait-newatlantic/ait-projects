@@ -10,6 +10,7 @@ body {
   position: relative;
   display: grid;
   grid-template: auto 1fr auto / 1fr;
+  background-image: url("https://wallpapermemory.com/uploads/760/blue-background-hd-1080p-294130.jpg");
 }
 
 .sticky {

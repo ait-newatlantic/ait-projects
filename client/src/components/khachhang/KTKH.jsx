@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import { ProvinceContext } from '../../context/province/ProvinceContext'
@@ -7,14 +7,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
 
 export default function KTKH() {
-    const [employee, setEmployee] = useState("");
-    const [customer, setCustomer] = useState("");
+    const [customer_name, setCustomer_Name] = useState("");
     const [customer_number, setCustomer_Number] = useState("");
+    const [customer_taxcode, setCustomer_Taxcode] = useState("");
+    const [customer_opinion, setCustomer_Opinion] = useState("");
     const [customer_type, setCustomer_Type] = useState("");
     const [customer_area, setCustomer_Area] = useState("");
-    const [color, setColor] = useState("");
-    const [ait, setAit] = useState("");
-    const [kmt, setKmt] = useState("");
     const [note, setNote] = useState("");
 
     //const [branches, setBranches] = useContext(BranchContext);
@@ -24,19 +22,19 @@ export default function KTKH() {
     //them id thang nam ngay, id khach hang,
     //table nhucauthuc te them col-smumn id_nguoinhap, id_khachhang, flag: DONE or FAILED theo đợt
     const Submit = () => {
-        Axios.post("http://localhost:8080/api/post/nhaplieu/nhucauthucte", {
-            employee: employee,
-            customer: customer,
+        Axios.post("http://localhost:8080/api/post/khachhang", {
+            customer_name: customer_name,
+            customer_taxcode: customer_taxcode,
+            customer_opinion: customer_opinion,
             customer_number: customer_number,
             customer_type: customer_type,
             customer_area: customer_area,
-            color: color,
-            ait: ait,
-            kmt: kmt,
             note: note,
         }).then((response) => {
-            console.log(response)
-        })
+            return response.data;
+        }).catch(error => {
+            return alert(error);
+        });
     }
 
     return (
@@ -51,7 +49,7 @@ export default function KTKH() {
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Tên khách hàng</label>
-                        <input type="customer" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer(e.target.value)} />
+                        <input type="customer_name" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Name(e.target.value)} />
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >SĐT khách hàng</label>
@@ -66,12 +64,12 @@ export default function KTKH() {
                                 setCustomer_Area(newValue);
                             }}
                             options={provinces.map((option) => option.province_name)}
-                            renderInput={(params) => <TextField {...params} label="Tỉnh thành" variant="outlined" />}
+                            renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Mã số thuế</label>
-                        <input type="customer" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer(e.target.value)} />
+                        <input type="customer_taxcode" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Taxcode(e.target.value)} />
                     </div>
                 </div>
 
@@ -89,7 +87,7 @@ export default function KTKH() {
                     </div>
                     <div className="col-sm-9" id="ykien-khachhang">
                         <label for="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
-                        <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setNote(e.target.value)}></textarea>
+                        <textarea type="customer_opinion" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Opinion(e.target.value)}></textarea>
                     </div>
                 </div>
             </div>

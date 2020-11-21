@@ -41,29 +41,11 @@ export default function Sidebar(props) {
                         </SubMenu>
                         <SubMenu title="Biểu đồ KD">
                             <MenuItem>Biểu đồ tổng quát
-                            <Link to="/kinhdoanh/baocao/tongquatkd" />
+                            <Link to="/kinhdoanh/bieudokd/bieudotq" />
                             </MenuItem>
                             <MenuItem>Biểu đồ chi tiết
-                            <Link to="/kinhdoanh/baocao/chitietkd" />
+                            <Link to="/kinhdoanh/bieudokd/bieudoct" />
                             </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý nhân sự">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
-                            </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý CV chi nhánh">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
-                            </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Khách hàng">
@@ -74,13 +56,43 @@ export default function Sidebar(props) {
                             </MenuItem>
                         </SubMenu>
                     </SubMenu>
-                    <SubMenu title="Phân tích dòng xe">
+                    <SubMenu title="Quản lý nhân sự">
                         <SubMenu title="Nhập liệu">
                             <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
+                            >Khởi tạo nhân viên
+                            <Link to="#" />
                             </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
+                        </SubMenu>
+                        <SubMenu title="Báo cáo">
+                            <MenuItem
+                            >Tổng hợp DSNS
+                            <Link to="#" />
+                            </MenuItem>
+                            <MenuItem
+                            >Hồ sơ NV
+                            <Link to="#" />
+                            </MenuItem>
+                        </SubMenu>
+                    </SubMenu>
+                    <SubMenu title="Quản lý CV chi nhánh">
+                        <SubMenu title="Báo cáo giao dịch với KH">
+                            <MenuItem>1</MenuItem>
+                            <MenuItem>2</MenuItem>
+                            <MenuItem>3 </MenuItem>
+                        </SubMenu>
+                    </SubMenu>
+                    <SubMenu title="Phân tích dòng xe">
+                        <SubMenu title="Nhập liệu">
+                            <MenuItem>Phân khúc đầu kéo</MenuItem>
+                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
+                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
+                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
+                        </SubMenu>
+                        <SubMenu title="Báo cáo phân tích các dòng xe">
+                            <MenuItem>Phân khúc đầu kéo</MenuItem>
+                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
+                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
+                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
                         </SubMenu>
                     </SubMenu>
                 </Menu>

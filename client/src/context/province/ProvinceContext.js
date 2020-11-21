@@ -8,7 +8,7 @@ export const ProvinceContext = createContext();
 export const ProvinceProvider = (props) => {
     const [provinces, setProvinces] = useState([])
     useEffect(()=>{
-        Axios.get("http://localhost:8080/api/get/nhaplieu/tinhthanh").then((response)=>{
+        Axios.get("http://localhost:8080/api/get/tinhthanh").then((response)=>{
             setProvinces(response.data)
         })
     },[])

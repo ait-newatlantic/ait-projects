@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Axios from 'axios'
-import { Alert, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
@@ -81,7 +81,7 @@ export default function NCTT(props) {
         )
     }
     const SubmitForm = () => {
-        Axios.post("http://localhost:8080/api/post/nhaplieu/nhucauthucte", {
+        Axios.post("http://localhost:8080/api/post/nhucauthucte", {
             date: date,
             employee: currentUsers.username,
             employee_field: employee_field,
@@ -132,7 +132,7 @@ export default function NCTT(props) {
                                 setCustomer_Area(newValue);
                             }}
                             options={provinces.map((option) => option.province_name)}
-                            renderInput={(params) => <TextField {...params} label="Tỉnh thành" variant="outlined" />}
+                            renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
                     </div>
                     <div className="col-sm">
@@ -200,7 +200,7 @@ export default function NCTT(props) {
                                 setModel(newValue);
                             }}
                             options={models.map((option) => option.model_name)}
-                            renderInput={(params) => <TextField {...params} label="Model xe" variant="outlined" />}
+                            renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
                     </div>
                     <div className="col-sm">
@@ -212,7 +212,7 @@ export default function NCTT(props) {
                                 setType(newValue);
                             }}
                             options={types.map((option) => option.type_name)}
-                            renderInput={(params) => <TextField {...params} label="Loại xe" variant="outlined" />}
+                            renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
                     </div>
                     <div className="col-sm">

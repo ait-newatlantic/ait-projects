@@ -9,7 +9,7 @@ export default function BCCT() {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/baocaokd/baocaochitiet/nam", {
+        Axios.get("http://localhost:8080/api/get/nhucauthucte/nam", {
             params: {
                 year,
             }
@@ -19,7 +19,7 @@ export default function BCCT() {
     }
 
     // const Update = () => {
-    //     Axios.put("http://localhost:8080/api/put/baocaokd/baocaochitiet/", {         
+    //     Axios.put("http://localhost:8080/api/put/nhucauthucte/", {         
     //         status: status, 
     //     })
     //     setStatus("")
@@ -27,7 +27,7 @@ export default function BCCT() {
 
 
     useEffect(() => {
-        Axios.get("http://localhost:8080/api/get/baocaokd/baocaochitiet").then((response) => {
+        Axios.get("http://localhost:8080/api/get/nhucauthucte").then((response) => {
             setYearResult(response.data)
         })
     }, [])
@@ -43,20 +43,6 @@ export default function BCCT() {
                                 id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
                         </div>
                     </div>
-                    <div className="col">
-                        <div className="form-group">
-                            <label for="exampleFormControlInput1" >Model xe</label>
-                            <input type="year" className="form-control"
-                                id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="form-group">
-                            <label for="exampleFormControlInput1" >Giai đoạn</label>
-                            <input type="year" className="form-control"
-                                id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
-                        </div>
-                    </div>
                 </div>
                 <div className="form-group">
                     <Button block type="submit" onClick={Submit}>
@@ -67,7 +53,7 @@ export default function BCCT() {
 
             <div className="container p-3 my-3 border border-dark">
                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
-                <table className="table-ms">
+                <table className="table-sm">
                     <tbody >
                         <tr id="titles">
                             <th colSpan="2">Thông tin nhân viên và ngày tháng</th>

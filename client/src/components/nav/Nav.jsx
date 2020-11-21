@@ -21,65 +21,65 @@ export default function Nav() {
         AuthService.logout();
     };
     return (
-        <nav className="navbar navbar-expand navbar-dark navbar-custom">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="/home">AIT</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav">
                     <li className="nav-item active">
                         <a class="nav-link" href="/home">Trang chủ <span class="sr-only">(current)</span></a>
                     </li>
+                </ul>
 
-                    {showModeratorBoard && (
-                        <ul class="navbar-nav">
+                {showModeratorBoard && (
+                    <ul class="navbar-nav">
                         <li className="nav-item  active">
                             <a class="nav-link" href="/mod">Dashboard</a>
                         </li>
-                        </ul>
-                    )}
+                    </ul>
+                )}
 
-                    {showAdminBoard && (
-                        <ul class="navbar-nav">
-                            <li className="nav-item  active">
-                                <a class="nav-link" href="/admin">Dashboard</a>
-                            </li>
-                            <li className="nav-item  active">
-                                <a class="nav-link" href="/register">Đăng kí User</a>
-                            </li>  
-                            <li className="nav-item  active">
-                                <a class="nav-link" href="/register">Cấp quyền User</a>
-                            </li>                  
-                        </ul>
-                    )}
+                {showAdminBoard && (
+                    <ul class="navbar-nav">
+                        <li className="nav-item  active">
+                            <a class="nav-link" href="/admin">Dashboard</a>
+                        </li>
+                        <li className="nav-item  active">
+                            <a class="nav-link" href="/register">Đăng kí User</a>
+                        </li>
+                        <li className="nav-item  active">
+                            <a class="nav-link" href="/register">Cấp quyền User</a>
+                        </li>
+                    </ul>
+                )}
 
-                    {/* {currentUser && (
+                {/* {currentUser && (
                         <li className="nav-item">
                             <a class="nav-link" href="/user">Nhân Viên</a>
                         </li>
                     )} */}
-                </ul>
-            </div>
 
-            {currentUser ? (
-                <ul className="navbar-nav">
-                    <li className="nav-item  active">
-                        <a class="nav-link" href="/profile">{currentUser.username}</a>
-                    </li>
-                    <li className="nav-item  active">
-                        <a href="/login" className="nav-link" onClick={logOut}>
-                            Đăng xuất
-                        </a>
-                    </li>
-                </ul>
-            ) : (
-                    <ul className="navbar-nav">
+                {currentUser ? (
+                    <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">
-                            <a class="nav-link" href="/login">Login</a>
+                            <a class="nav-link" href="/profile">{currentUser.username}</a>
+                        </li>
+                        <li className="nav-item active">
+                            <a href="/login" className="nav-link" onClick={logOut}>
+                                Đăng xuất
+                        </a>
                         </li>
                     </ul>
-                )}
+                ) : (
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item active">
+                                <a class="nav-link" href="/login">Login</a>
+                            </li>
+                        </ul>
+                    )}
+            </div>
         </nav>
     )
 }

@@ -36,7 +36,7 @@ export default function CN_NCTT(props) {
 
     const FetchData = async () =>{
         const id = props.match.params.id // lay id tu URL
-        Axios.get(`http://localhost:8080/api/get/nhucauthucte`, {
+        Axios.get(`http://localhost:8080/api/get/nhucauthucte/id`, {
             params: {
                id,
             }

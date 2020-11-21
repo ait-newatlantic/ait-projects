@@ -8,7 +8,7 @@ export default function BCTQ(props) {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/baocaokd/baocaotongquat", {
+        Axios.get("http://localhost:8080/api/get/nhucauthucte/total", {
             params: {
                 year,
             }

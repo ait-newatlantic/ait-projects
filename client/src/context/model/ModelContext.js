@@ -8,7 +8,7 @@ export const ModelContext = createContext();
 export const ModelProvider = (props) => {
     const [models, setModels] = useState([])
     useEffect(()=>{
-        Axios.get("http://localhost:8080/api/get/nhaplieu/modelxe").then((response)=>{
+        Axios.get("http://localhost:8080/api/get/modelxe").then((response)=>{
             setModels(response.data)
         })
     },[])

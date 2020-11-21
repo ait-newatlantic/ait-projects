@@ -9,7 +9,7 @@ const db = mysql.createConnection({
 });
 
 module.exports = function (app) {
-    app.post('/api/post/nhaplieu/nhucauthucte', (req, res) => {
+    app.post('/api/post/nhucauthucte', (req, res) => {
         const date = req.body.date
         const employee = req.body.employee
         const employee_field = req.body.employee_field
@@ -35,14 +35,14 @@ module.exports = function (app) {
                 })
     })
 
-    app.get('/api/get/baocaokd/baocaochitiet', function (req, res) {
+    app.get('/api/get/nhucauthucte', function (req, res) {
         const sqlSelect = "SELECT * FROM nhucauthucte"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.get('/api/get/baocaokd/baocaochitiet/nam', function (req, res) {
+    app.get('/api/get/nhucauthucte/nam', function (req, res) {
         const year = req.query.year;
         const sqlSelect = `SELECT * FROM nhucauthucte WHERE year=${year} `
         db.query(sqlSelect, (err, result) => {
@@ -50,35 +50,35 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/api/get/nhaplieu/chinhanh', function (req, res) {
+    app.get('/api/get/chinhanh', function (req, res) {
         const sqlSelect = "SELECT * FROM chinhanh"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.get('/api/get/nhaplieu/tinhthanh', function (req, res) {
+    app.get('/api/get/tinhthanh', function (req, res) {
         const sqlSelect = "SELECT * FROM tinhthanh"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.get('/api/get/nhaplieu/modelxe', function (req, res) {
+    app.get('/api/get/modelxe', function (req, res) {
         const sqlSelect = "SELECT * FROM modelxe"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.get('/api/get/nhaplieu/loaixe', function (req, res) {
+    app.get('/api/get/loaixe', function (req, res) {
         const sqlSelect = "SELECT * FROM loaixe"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.put('/api/put/baocaokd/baocaochitiet', function (req, res) {
+    app.put('/api/put/nhucauthucte', function (req, res) {
         const status = req.body.status;
         const sqlUpdate = `UPDATE nhucauthucte SET status =? WHERE status = ? `
         db.query(sqlUpdate, status, (err, result) => {
@@ -86,7 +86,7 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/api/get/nhucauthucte', function (req, res) {
+    app.get('/api/get/nhucauthucte/id', function (req, res) {
         const id = req.query.id;
         const sqlSelect = `SELECT * FROM nhucauthucte WHERE id=${id}`
         db.query(sqlSelect, (err, result) => {
@@ -114,7 +114,7 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/api/get/baocaokd/baocaotongquat', function (req, res) {
+    app.get('/api/get/nhucauthucte/total', function (req, res) {
         const year = req.query.year;
         const sqlSelect = `SELECT 
          SUM(CASE WHEN YEAR(date)=${year} THEN quantity END) as tongcong,
@@ -134,33 +134,33 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/api/get/bieudokd//bieudotongquat', function (req, res) {
+    app.get('/api/get/nhucauthucte/bdtq', function (req, res) {
         const year = req.query.year;
         const sqlSelect = `SELECT 
-         SUM(CASE WHEN year= ${year} AND month = "1" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte1,
-         SUM(CASE WHEN year= ${year} AND month = "1" THEN quantity END) as dukien1,
-         SUM(CASE WHEN year= ${year} AND month = "2" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte2,
-         SUM(CASE WHEN year= ${year} AND month = "2" THEN quantity END) as dukien2,
-         SUM(CASE WHEN year= ${year} AND month = "3" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte3,
-         SUM(CASE WHEN year= ${year} AND month = "3" THEN quantity END) as dukien3,
-         SUM(CASE WHEN year= ${year} AND month = "4" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte4,
-         SUM(CASE WHEN year= ${year} AND month = "4" THEN quantity END) as dukien4,
-         SUM(CASE WHEN year= ${year} AND month = "5" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte5,
-         SUM(CASE WHEN year= ${year} AND month = "5" THEN quantity END) as dukien5,
-         SUM(CASE WHEN year= ${year} AND month = "6" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte6,
-         SUM(CASE WHEN year= ${year} AND month = "6" THEN quantity END) as dukien6,
-         SUM(CASE WHEN year= ${year} AND month = "7" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte7,
-         SUM(CASE WHEN year= ${year} AND month = "7" THEN quantity END) as dukien7,
-         SUM(CASE WHEN year= ${year} AND month = "8" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte8,
-         SUM(CASE WHEN year= ${year} AND month = "8" THEN quantity END) as dukien8,
-         SUM(CASE WHEN year= ${year} AND month = "9" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte9,
-         SUM(CASE WHEN year= ${year} AND month = "9" THEN quantity END) as dukien9,
-         SUM(CASE WHEN year= ${year} AND month = "10" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte10,
-         SUM(CASE WHEN year= ${year} AND month = "10" THEN quantity END) as dukien10,
-         SUM(CASE WHEN year= ${year} AND month = "11" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte11,
-         SUM(CASE WHEN year= ${year} AND month = "11" THEN quantity END) as dukien11,
-         SUM(CASE WHEN year= ${year} AND month = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
-         SUM(CASE WHEN year= ${year} AND month = "12" THEN quantity END) as dukien12
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "1" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte1,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "1" THEN quantity END) as dukien1,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "2" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte2,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "2" THEN quantity END) as dukien2,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "3" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte3,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "3" THEN quantity END) as dukien3,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "4" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte4,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "4" THEN quantity END) as dukien4,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "5" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte5,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "5" THEN quantity END) as dukien5,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "6" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte6,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "6" THEN quantity END) as dukien6,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "7" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte7,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "7" THEN quantity END) as dukien7,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "8" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte8,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "8" THEN quantity END) as dukien8,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "9" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte9,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "9" THEN quantity END) as dukien9,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "10" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte10,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "10" THEN quantity END) as dukien10,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "11" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte11,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "11" THEN quantity END) as dukien11,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
+         SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "12" THEN quantity END) as dukien12
          FROM nhucauthucte`;
         db.query(sqlSelect, (err, result) => {
             res.send(result);

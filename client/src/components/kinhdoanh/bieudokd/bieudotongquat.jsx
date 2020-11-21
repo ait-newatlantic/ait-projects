@@ -9,7 +9,7 @@ export default function BDTQ() {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/bieudokd//bieudotongquat", {
+        Axios.get("http://localhost:8080/api/get/nhucauthucte/bdtq", {
             params: {
                 year,
             }
