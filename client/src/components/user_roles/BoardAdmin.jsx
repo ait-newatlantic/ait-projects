@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import UserService from "../../services/user.service";
 import Sidebar from "../sidebar/Sidebar"
 import Home from "../home/Home"
+import "./style.css"
 
 const BoardAdmin = () => {
     const [content, setContent] = useState("");
@@ -26,12 +27,15 @@ const BoardAdmin = () => {
     }, []);
 
     return (
-        <Container fluid="ms">
-            <Row>
-                <Col sm><Sidebar data={content} /></Col>
-                <Col sm={9}><Home /></Col>
-            </Row>
-        </Container>
+        <div className="row">
+            <div className="col-sm"><Sidebar /></div>
+            <div className="col-sm">
+                <img src="https://wallpaperaccess.com/full/2927307.jpg" width="100%" alt="slogan" />
+            </div>
+            <div className="col-sm">
+                <img src="https://cdn.hipwallpaper.com/i/33/49/MY0nlG.jpg" width="100%" alt="slogan" />
+            </div>
+        </div>
     );
 };
 

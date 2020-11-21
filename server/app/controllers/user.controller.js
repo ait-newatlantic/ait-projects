@@ -3,13 +3,13 @@ exports.allAccess = (req, res) => {
 };
 
 exports.userBoard = (req, res) => {
-  res.status(200).send("Nhân viên");
+  res.status(200).send("Chức vụ: Nhân viên");
 };
 
 exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin");
+  res.status(200).send("Chức vụ: Admin");
 };
 
 exports.moderatorBoard = (req, res) => { 
-  res.status(200).send("Nhân Viên");
+  res.status(200).send("Chức vụ: Chuyên viên");
 };

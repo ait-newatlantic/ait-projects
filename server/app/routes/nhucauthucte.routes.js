@@ -117,16 +117,17 @@ module.exports = function (app) {
     app.get('/api/get/baocaokd/baocaotongquat', function (req, res) {
         const year = req.query.year;
         const sqlSelect = `SELECT 
-         SUM(CASE WHEN year=${year} THEN quantity END) as tongcong,
-         SUM(CASE WHEN year=${year} AND status="TIẾP CẬN CHÀO HÀNG" THEN quantity END) as tiepcanchaohang,
-         SUM(CASE WHEN year=${year} AND status="ĐÀM PHÁN" THEN quantity END) as damphan,
-         SUM(CASE WHEN year=${year} AND status="CHỐT ĐƠN HÀNG" THEN quantity END) as chotdonhang,
-         SUM(CASE WHEN year=${year} AND status="ĐÃ CỌC" THEN quantity END) as dacoc,
-         SUM(CASE WHEN year=${year} AND status="ĐÃ THANH TOÁN TẠM ỨNG" THEN quantity END) as dathanhtoantamung,
-         SUM(CASE WHEN year=${year} AND status="HOÀN TẤT GIAO DỊCH" THEN quantity END) as hoantatgiaodich,
-         SUM(CASE WHEN year=${year} AND status="LÊN HỢP ĐỒNG" THEN quantity END) as lenhopdong,
-         SUM(CASE WHEN year=${year} AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
-         SUM(CASE WHEN year=${year} AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
+         SUM(CASE WHEN YEAR(date)=${year} THEN quantity END) as tongcong,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="TIẾP CẬN CHÀO HÀNG" THEN quantity END) as tiepcanchaohang,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="CHẠY THỬ" THEN quantity END) as chaythu,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="ĐÀM PHÁN" THEN quantity END) as damphan,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="CHỐT ĐƠN HÀNG" THEN quantity END) as chotdonhang,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="ĐÃ CỌC" THEN quantity END) as dacoc,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="ĐÃ THANH TOÁN TẠM ỨNG" THEN quantity END) as dathanhtoantamung,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="HOÀN TẤT GIAO DỊCH" THEN quantity END) as hoantatgiaodich,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="LÊN HỢP ĐỒNG" THEN quantity END) as lenhopdong,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
+         SUM(CASE WHEN YEAR(date)=${year} AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
          FROM nhucauthucte`;
         db.query(sqlSelect, (err, result) => {
             res.send(result);

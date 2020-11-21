@@ -19,7 +19,7 @@ export default function Sidebar(props) {
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
     }, []);
-    
+
     return (
         <ProSidebar image="https://wallpapermemory.com/uploads/760/blue-background-hd-1080p-294130.jpg">
             {showAdminBoard && (
@@ -67,12 +67,11 @@ export default function Sidebar(props) {
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Khách hàng">
-                        <SubMenu title="Nhập liệu">
+                        <SubMenu title="Khởi tạo">
                             <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
+                            >Khởi tạo KH
+                            <Link to="/khachhang/khoitao" />
                             </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Phân tích dòng xe">
@@ -86,7 +85,6 @@ export default function Sidebar(props) {
                     </SubMenu>
                 </Menu>
             )}
-
             {showModeratorBoard && (
                 <Menu>
                     <MenuItem >{props.data}</MenuItem>
@@ -124,12 +122,11 @@ export default function Sidebar(props) {
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Khách hàng">
-                        <SubMenu title="Nhập liệu">
+                        <SubMenu title="Khởi tạo">
                             <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
+                            >Khởi tạo KH
+                            <Link to="/khachhang/khoitao" />
                             </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Phân tích dòng xe">

@@ -33,12 +33,26 @@ export default function BCCT() {
     }, [])
 
     return (
-        <div>
+        <div className="container-fluid">
             <div class="container p-3 my-3 border border-dark">
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
                             <label for="exampleFormControlInput1" >Năm</label>
+                            <input type="year" className="form-control"
+                                id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label for="exampleFormControlInput1" >Model xe</label>
+                            <input type="year" className="form-control"
+                                id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
+                        </div>
+                    </div>
+                    <div className="col">
+                        <div className="form-group">
+                            <label for="exampleFormControlInput1" >Giai đoạn</label>
                             <input type="year" className="form-control"
                                 id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
                         </div>
@@ -51,36 +65,36 @@ export default function BCCT() {
                 </div>
             </div>
 
-            <div className="container-fluid p-3 my-3 border border-dark">
+            <div className="container p-3 my-3 border border-dark">
                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
-                <table className="table">
+                <table className="table-ms">
                     <tbody >
                         <tr id="titles">
                             <th colSpan="2">Thông tin nhân viên và ngày tháng</th>
                             <th colSpan="7">Thông tin khách hàng</th>
                             <th colSpan="4">Thông tin xe</th>
-                            <th>Cập nhật</th>
+                            <th rowspan="2">Cập nhật</th>
                         </tr>
                         <tr>
                             <th>Người nhập</th>
                             <th>Người đi thực tế</th>
-                            <th>Tên KH</th>
-                            <th>SĐT KH</th>
-                            <th>Loại KH</th>
-                            <th>Khu vực KH</th>
-                            <th>Ý kiến KH</th>
+                            <th>Tên khách hàng</th>
+                            <th>Số điện thoại khách hàng</th>
+                            <th>Loại khách hàng</th>
+                            <th>Khách hàng thuộc khu vực</th>
+                            <th>Ý kiến khách hàng</th>
                             <th>Phương thức liên lạc</th>
                             <th>Giai đoạn</th>
                             <th>Model xe</th> 
                             <th>Loại xe</th> 
                             <th>Số lượng</th> 
                             <th>Màu xe</th>  
-                            <th></th>
+                            
                         </tr>
                         {!!yearResult && yearResult.map(form => (
                             <tr className="content" key={form._id}>
                                 <td>{form.employee}</td>
-                                <td>{form.date_enter}</td>
+                                <td>{form.employee_field}</td>
                                 <td>{form.customer}</td>
                                 <td>{form.customer_number}</td>
                                 <td>{form.customer_type}</td>

@@ -4,6 +4,11 @@ td {
   border: 1px solid black;
 }
 
-th{
-    background-color: rgb(75, 133, 128);
+th {
+  background-color: #007bff;
+  text-align: center;
+}
+
+h1{
+  text-align: center;
 }

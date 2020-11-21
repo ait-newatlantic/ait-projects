@@ -39,6 +39,7 @@ export default function NCTT(props) {
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
 
+    const currentUsers = AuthService.getCurrentUser();
     const [content, setContent] = useState("");
 
     useEffect(() => {
@@ -82,7 +83,7 @@ export default function NCTT(props) {
     const SubmitForm = () => {
         Axios.post("http://localhost:8080/api/post/nhaplieu/nhucauthucte", {
             date: date,
-            employee: content,
+            employee: currentUsers.username,
             employee_field: employee_field,
             model: model,
             type: type,
@@ -139,6 +140,7 @@ export default function NCTT(props) {
                         <select className="form-control" id="exampleFormControlSelect1" onClick={e => setStatus(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
                             <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
+                            <option value="CHẠY THỬ">CHẠY THỬ</option>
                             <option value="ĐÀM PHÁN">ĐÀM PHÁN</option>
                             <option value="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
                             <option value="ĐÃ CỌC">ĐÃ CỌC</option>
@@ -171,11 +173,12 @@ export default function NCTT(props) {
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1" >Phương thức liên lạc</label>
-                        <select className="form-control" id="exampleFormControlSelect1" onClick={e => setCustomer_Communication(e.target.value)}>
+                        <select className="form-control" id="exampleFormControlSelect1" 
+                        onClick={e => setCustomer_Communication(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
-                            <option value="DỰ KIẾN">GẶP TRỰC TIẾP</option>
-                            <option value="TIỀM NĂNG">QUA ĐIỆN THOẠI</option>
-                            <option value="THÂN THIẾT">QUA EMAIL/CHAT(ZALO,...)</option>
+                            <option value="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
+                            <option value="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
+                            <option value="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option>
                         </select>
                     </div>
                     <div className="col-sm-9" id="diadiem-giaodich">
@@ -235,7 +238,7 @@ export default function NCTT(props) {
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Người nhập</label>
-                        <input type="employee" value={content} className="form-control" id="exampleFormControlInput1"/>
+                        <input type="employee" value={currentUsers.username} className="form-control" id="exampleFormControlInput1"/>
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Người đi thực tế</label>

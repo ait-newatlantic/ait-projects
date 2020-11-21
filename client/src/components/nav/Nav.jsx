@@ -47,6 +47,9 @@ export default function Nav() {
                             </li>
                             <li className="nav-item  active">
                                 <a class="nav-link" href="/register">Đăng kí User</a>
+                            </li>  
+                            <li className="nav-item  active">
+                                <a class="nav-link" href="/register">Cấp quyền User</a>
                             </li>                  
                         </ul>
                     )}
