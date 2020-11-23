@@ -1,0 +1,17 @@
+FROM node:12.19.1-buster-slim
+
+ENV SKIP_PREFLIGHT_CHECK=true
+ENV NODE_ENV=production
+WORKDIR /usr/src/app
+
+# install serve
+RUN npm install -g serve
+
+# npm ci modules and build
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+CMD [ "serve", "-s", "build", "-l", "3000" ]
