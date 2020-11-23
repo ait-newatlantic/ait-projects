@@ -94,65 +94,11 @@ export default function CN_NCTT(props) {
                                     ))}
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlInput1" >SĐT khách hàng</label>
-                                    {!!forms && forms.map(form => (
-                                    <input type="customer_number" className="form-control" placeholder={form.customer_number} id="exampleFormControlInput1" onChange={e => setCustomer_Number(e.target.value)} />
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlSelect1" >Loại khách hàng</label>
-                                    <select className="form-control" id="exampleFormControlSelect1" onClick={e => setCustomer_Type(e.target.value)}>
-                                    {!!forms && forms.map(form => (
-                                        <option value="" selected disabled hidden>{form.customer_type}</option>
-                                    ))}
-                                        <option value="DỰ KIẾN">DỰ KIẾN</option>
-                                        <option value="TIỀM NĂNG">TIỀM NĂNG</option>
-                                        <option value="THÂN THIẾT">THÂN THIẾT</option>
-                                        <option value="CŨ">CŨ</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlSelect1">Khu vực khách hàng</label>
-                                    <Autocomplete
-                                        size="small"
-                                        value={customer_area}
-                                        onChange={(event, newValue) => {
-                                            setCustomer_Area(newValue);
-                                        }}
-                                        options={provinces.map((option) => option.province_name)}
-                                        renderInput={(params) => <TextField {...params} label={forms.map((option) => option.customer_area)} variant="outlined" />}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlSelect1" >Giai đoạn</label>
-                                    <select className="form-control" id="exampleFormControlSelect1" onClick={e => setStatus(e.target.value)}>
-                                        {!!forms && forms.map(form => (
-                                        <option value="" selected disabled hidden>{form.status}</option>
-                                        ))}
-                                        <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
-                                        <option value="ĐÀM PHÁN">ĐÀM PHÁN</option>
-                                        <option value="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
-                                        <option value="ĐÃ CỌC">ĐÃ CỌC</option>
-                                        <option value="LÊN HỢP ĐỒNG">LÊN HỢP ĐỒNG</option>
-                                        <option value="ĐÃ THANH TOÁN TẠM ỨNG">ĐÃ THANH TOÁN TẠM ỨNG</option>
-                                        <option value="HOÀN TẤT GIAO DỊCH">HOÀN TẤT GIAO DỊCH</option>
-                                        <option value="BÀN GIAO CHƯA THANH TOÁN">BÀN GIAO CHƯA THANH TOÁN</option>
-                                        <option value="GIAO DỊCH THẤT BẠI">GIAO DỊCH THẤT BẠI</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 
-                    <div className="container p-3 my-3 border border-dark" >
+                    {/* <div className="container p-3 my-3 border border-dark" >
                         <p><strong>Thông tin xe</strong></p>
                         <div className="row">
                             <div className="col">
@@ -207,7 +153,7 @@ export default function CN_NCTT(props) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="container p-3 my-3 border border-dark" >
                         <p><strong>Thông tin thêm</strong></p>
@@ -231,14 +177,14 @@ export default function CN_NCTT(props) {
                         </div>
                     </div>
 
-                    <div className="container p-3 my-3 border border-dark" >
+                    {/* <div className="container p-3 my-3 border border-dark" >
                         <div className="form-group">
                             <label for="exampleFormControlTextarea1">Tình trạng hiện tại</label>
                             {!!forms && forms.map(form => (
                             <textarea type="note" className="form-control" placeholder={form.note} id="exampleFormControlTextarea1" rows="3" onChange={e => setNote(e.target.value)}></textarea>
                             ))}
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="form-group">
                         <Button block type="submit" onClick={Submit}>

@@ -13,9 +13,12 @@ export default function Notification() {
                     <div>
                         <img src="https://wallpaperaccess.com/full/2927307.jpg" alt="slogan" />
                     </div>
+                    <div>
+                        <p>Phần mềm AIT version 1.0.0 </p>
+                    </div>
                 </div>
                 <div class="col" >
-                    <div class="custom container border border-dark overflow-auto" style={{ height: "70vh" }}>
+                    <div class="custom container border border-dark bg-dark text-white overflow-auto" style={{ height: "70vh" }}>
                         <div class="card-body text-center">
                             <h4 class="card-title"><strong>Thông báo</strong> </h4>
                         </div>

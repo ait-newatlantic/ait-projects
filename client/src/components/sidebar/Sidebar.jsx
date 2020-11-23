@@ -21,13 +21,15 @@ export default function Sidebar(props) {
     }, []);
 
     return (
-        <ProSidebar image="https://wallpapermemory.com/uploads/760/blue-background-hd-1080p-294130.jpg">
+        <ProSidebar 
+        image="https://wallpapermemory.com/uploads/760/blue-background-hd-1080p-294130.jpg"
+        >
             {showAdminBoard && (
                 <Menu>
-                    <MenuItem >{props.data}</MenuItem>
+                    <MenuItem>{props.data}</MenuItem>
                     <SubMenu title="Báo cáo & phân tích KD">
                         <SubMenu title="Nhập liệu">
-                            <MenuItem>Nhu cầu thực tế
+                            <MenuItem>Nhu cầu thực tế 
                             <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
                             </MenuItem>
                         </SubMenu>
