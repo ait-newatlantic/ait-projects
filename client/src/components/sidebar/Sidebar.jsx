@@ -55,6 +55,12 @@ export default function Sidebar(props) {
                             <Link to="/khachhang/khoitao" />
                             </MenuItem>
                         </SubMenu>
+                        <SubMenu title="Báo cáo">
+                            <MenuItem
+                            >Danh sách KH
+                            <Link to="/khachhang/danhsach" />
+                            </MenuItem>
+                        </SubMenu>
                     </SubMenu>
                     <SubMenu title="Quản lý nhân sự">
                         <SubMenu title="Nhập liệu">
@@ -103,51 +109,77 @@ export default function Sidebar(props) {
                     <SubMenu title="Báo cáo & phân tích KD">
                         <SubMenu title="Nhập liệu">
                             <MenuItem>Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
+                        <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
                             </MenuItem>
                         </SubMenu>
                         <SubMenu title="Báo cáo KD">
                             <MenuItem>Báo cáo tổng quát
-                            <Link to="/kinhdoanh/baocao/tongquatkd" />
+                        <Link to="/kinhdoanh/baocao/tongquatkd" />
                             </MenuItem>
                             <MenuItem>Báo cáo chi tiết
-                            <Link to="/kinhdoanh/baocao/chitietkd" />
+                        <Link to="/kinhdoanh/baocao/chitietkd" />
                             </MenuItem>
                         </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý nhân sự">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
+                        <SubMenu title="Biểu đồ KD">
+                            <MenuItem>Biểu đồ tổng quát
+                        <Link to="/kinhdoanh/bieudokd/bieudotq" />
                             </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý CV chi nhánh">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
+                            <MenuItem>Biểu đồ chi tiết
+                        <Link to="/kinhdoanh/bieudokd/bieudoct" />
                             </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Khách hàng">
                         <SubMenu title="Khởi tạo">
                             <MenuItem
                             >Khởi tạo KH
-                            <Link to="/khachhang/khoitao" />
+                        <Link to="/khachhang/khoitao" />
                             </MenuItem>
+                        </SubMenu>
+                        <SubMenu title="Báo cáo">
+                            <MenuItem
+                            >Danh sách KH
+                        <Link to="/khachhang/danhsach" />
+                            </MenuItem>
+                        </SubMenu>
+                    </SubMenu>
+                    <SubMenu title="Quản lý nhân sự">
+                        <SubMenu title="Nhập liệu">
+                            <MenuItem
+                            >Khởi tạo nhân viên
+                        <Link to="#" />
+                            </MenuItem>
+                        </SubMenu>
+                        <SubMenu title="Báo cáo">
+                            <MenuItem
+                            >Tổng hợp DSNS
+                        <Link to="#" />
+                            </MenuItem>
+                            <MenuItem
+                            >Hồ sơ NV
+                        <Link to="#" />
+                            </MenuItem>
+                        </SubMenu>
+                    </SubMenu>
+                    <SubMenu title="Quản lý CV chi nhánh">
+                        <SubMenu title="Báo cáo giao dịch với KH">
+                            <MenuItem>1</MenuItem>
+                            <MenuItem>2</MenuItem>
+                            <MenuItem>3 </MenuItem>
                         </SubMenu>
                     </SubMenu>
                     <SubMenu title="Phân tích dòng xe">
                         <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Nhu cầu thực tế
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
-                            </MenuItem>
-                            <MenuItem>Component 2</MenuItem>
+                            <MenuItem>Phân khúc đầu kéo</MenuItem>
+                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
+                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
+                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
+                        </SubMenu>
+                        <SubMenu title="Báo cáo phân tích các dòng xe">
+                            <MenuItem>Phân khúc đầu kéo</MenuItem>
+                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
+                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
+                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
                         </SubMenu>
                     </SubMenu>
                 </Menu>

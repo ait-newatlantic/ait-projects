@@ -50,7 +50,10 @@ export default function Nav() {
                             <a class="nav-link" href="/register">Đăng kí User</a>
                         </li>
                         <li className="nav-item  active">
-                            <a class="nav-link" href="/register">Cấp quyền User</a>
+                            <a class="nav-link" href="#">Cấp quyền User</a>
+                        </li>
+                        <li className="nav-item  active">
+                            <a class="nav-link" href="/thongbao">Thông báo</a>
                         </li>
                     </ul>
                 )}

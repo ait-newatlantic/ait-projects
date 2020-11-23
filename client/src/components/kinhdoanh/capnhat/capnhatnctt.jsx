@@ -84,64 +84,6 @@ export default function CN_NCTT(props) {
                             <h1>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h1>
                     </div>
                     <div className="container p-3 my-3 border border-dark" >
-                        <p><strong>Thông tin nhân viên, chi nhánh & ngày tháng</strong></p>
-                        <div className="row">
-                            <div className="col">
-                                <div className="form">
-                                    <label for="exampleFormControlSelect1">Chi nhánh</label>
-                                    <Autocomplete
-                                        size="small"
-                                        value={branch}
-                                        onChange={(event, newValue) => {
-                                            setBranch(newValue);
-                                        }}
-                                        options={branches.map((option) => option.branch_name)}
-                                        renderInput={(params) => <TextField {...params} label={forms.map((option) => option.branch)} variant="outlined" />}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlInput1" >Tên nhân viên</label>
-                                    {!!forms && forms.map(form => (
-                                    <input type="employee" className="form-control" placeholder={form.employee} id="exampleFormControlInput1" onChange={e => setEmployee(e.target.value)} />
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlSelect1">Tháng</label>
-                                    <select className="form-control" id="exampleFormControlInput1" onClick={e => setMonth(e.target.value)}>
-                                    {!!forms && forms.map(form => (
-                                        <option value="" selected disabled hidden>{form.month}</option>
-                                        ))}
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label for="exampleFormControlInput1">Năm</label>
-                                    {!!forms && forms.map(form => (
-                                    <input type="year" className="form-control" placeholder={form.year} id="exampleFormControlInput1 " onChange={e => setYear(e.target.value)} />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="container p-3 my-3 border border-dark" >
                         <p><strong>Thông tin khách hàng</strong></p>
                         <div className="row">
                             <div className="col">
@@ -188,16 +130,6 @@ export default function CN_NCTT(props) {
                                     />
                                 </div>
                             </div>
-                            {/* <div className="col">
-                                    <div className="form-group">
-                                        <label for="exampleFormControlSelect1">Tỉnh thành</label>
-                                        <select className="form-control" id="exampleFormControlInput1" onClick={e => setCustomer_Area(e.target.value)}>
-                                            {provinces.map(province => (
-                                                <option value={province.province_name}>{province.province_name}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div> */}
                             <div className="col">
                                 <div className="form-group">
                                     <label for="exampleFormControlSelect1" >Giai đoạn</label>

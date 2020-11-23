@@ -4,12 +4,15 @@ import { Button } from "react-bootstrap";
 import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
+import { CustomerContext } from '../../../context/customer/CustomerContext'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
 import AuthService from "../../../services/auth.service";
 import UserService from "../../../services/user.service";
 import "./style.css"
+import form from 'react-validation/build/form';
+import { useCallback } from 'react';
 
 
 export default function NCTT(props) {
@@ -34,6 +37,9 @@ export default function NCTT(props) {
     const [models, setModels] = useContext(ModelContext);
     const [provinces, setProvinces] = useContext(ProvinceContext);
     const [types, setTypes] = useContext(TypeContext);
+    const [customers, setCustomers] = useContext(CustomerContext);
+
+    const [customerResult, setCustomerResult] = useState();
 
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -70,16 +76,17 @@ export default function NCTT(props) {
         }
     }, []);
 
-    const Submit = () =>{
+    const Submit = () => {
         SubmitForm()
         Alert1()
     }
 
-    const Alert1 = () =>{
-        return(
+    const Alert1 = () => {
+        return (
             alert("Success")
         )
     }
+
     const SubmitForm = () => {
         Axios.post("http://localhost:8080/api/post/nhucauthucte", {
             date: date,
@@ -105,6 +112,38 @@ export default function NCTT(props) {
         })
     }
 
+    // em attach throttle callback cho do bi call nhieu lan/s
+    const Autofill = useCallback(() => {
+        Axios.get("http://localhost:8080/api/get/khachhang/thongtin", {
+            params: {
+                customer,
+            }
+        }).then((response) => {
+            setCustomerResult(response.data);
+            response.data.forEach(value => {
+                setCustomer_Number(value.customer_number);
+                setCustomer_Area(value.customer_area);
+            })
+            console.log(response.data)
+        });
+    }, [customer])
+
+    // const Autofillx = (updateField) => {
+    //     Axios.get("http://localhost:8080/api/get/khachhang/thongtin", {
+    //         params: {
+    //             customer,
+    //         }
+    //     }).then((response) => {
+    //         updateField(response.data);
+    //     });
+    // }
+
+    
+    useEffect(() => {
+        Autofill();
+    }, [customer, Autofill])
+
+    
     return (
         <div className="container p-3 my-3 border border-dark">
             <div className="head">
@@ -115,13 +154,60 @@ export default function NCTT(props) {
             <div className="container p-3 my-3 border border-dark" >
                 <p><strong>Thông tin khách hàng</strong></p>
                 <div className="row">
+
+                </div>
+                <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Tên (Công ty/ Cá nhân)</label>
-                        <input type="customer" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer(e.target.value)} />
+                    <label for="exampleFormControlSelect1">Tên khách hàng</label>
+                        <div className="row">
+                            <div className="col-sm">
+                                <Autocomplete
+                                    freeSolo
+                                    disableClearable
+                                    size="small"
+                                    value={customer}
+                                    onChange={(event, newValue) => {
+                                        setCustomer(newValue);
+                                        // Autofillx(function(response) {
+                                        //     console.log(response)
+                                        //     setCustomerResult(response.data);
+                                        // });
+                                    }}
+                                    inputValue={customer}
+                                    onInputChange={(event, newValue) => {
+                                        setCustomer(newValue);
+                                    }}
+                                    options={customers.map((option) => option.customer)}
+                                    renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                />
+                            </div>
+                            {/* <div className="col">
+                                <Button block type="submit" onClick={Autofill}>
+                                    Tra cứu
+                                </Button>
+                            </div> */}
+                        </div>
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >SĐT khách hàng</label>
-                        <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Number(e.target.value)} />
+                        <Autocomplete
+                            size="small"
+                            freeSolo
+                            disableClearable
+                            value={customer_number}
+                            onChange={(event, newValue) => {
+                                setCustomer_Number(newValue);
+                            }}
+                            inputValue={customer_number}
+                            onInputChange={(event, newValue) => {
+                                setCustomer_Number(newValue);
+                            }}
+                            options={customers.map((option) => option.customer_number)}
+                            renderInput={(params) => <TextField {...params} variant="outlined" />}
+                        />
+                        {/* {!!customerResult && customerResult.map(result => (
+                            <p>{result.customer_number}</p>
+                        ))} */}
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1">Khu vực khách hàng</label>
@@ -134,6 +220,9 @@ export default function NCTT(props) {
                             options={provinces.map((option) => option.province_name)}
                             renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
+                        {/* {!!customerResult && customerResult.map(result => (
+                            <p>{result.customer_area}</p>
+                        ))} */}
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1" >Giai đoạn</label>
@@ -156,25 +245,32 @@ export default function NCTT(props) {
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1" >Loại khách hàng</label>
-                        <select className="form-control" id="exampleFormControlSelect1" 
-                        onClick={e => setCustomer_Type(e.target.value)}>
+                        <select className="form-control" id="exampleFormControlSelect1"
+                            onClick={e => setCustomer_Type(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
                             <option value="DỰ KIẾN">DỰ KIẾN</option>
                             <option value="TIỀM NĂNG">TIỀM NĂNG</option>
                             <option value="ĐÃ SỬ DỤNG KAMAZ">ĐÃ SỬ DỤNG KAMAZ</option>
                         </select>
                     </div>
-                        <div className="col-sm-9" id="ykien-khachhang">
-                            <label for="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
-                            <textarea type="customer_opinion" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Opinion(e.target.value)}></textarea>
-                        </div>
+                    <div className="col-sm-9" id="ykien-khachhang">
+                        <label for="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
+                        <textarea type="customer_opinion"
+                            className="form-control"
+                            id="exampleFormControlTextarea1"
+                            rows="3"
+                            onChange={e => setCustomer_Opinion(e.target.value)}></textarea>
+                        {!!customerResult && customerResult.map(result => (
+                            <p>{result.customer_opinion}</p>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1" >Phương thức liên lạc</label>
-                        <select className="form-control" id="exampleFormControlSelect1" 
-                        onClick={e => setCustomer_Communication(e.target.value)}>
+                        <select className="form-control" id="exampleFormControlSelect1"
+                            onClick={e => setCustomer_Communication(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
                             <option value="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
                             <option value="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
@@ -238,7 +334,7 @@ export default function NCTT(props) {
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Người nhập</label>
-                        <input type="employee" value={currentUsers.username} className="form-control" id="exampleFormControlInput1"/>
+                        <input type="employee" value={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Người đi thực tế</label>
@@ -247,7 +343,7 @@ export default function NCTT(props) {
 
                     <div className="col-sm">
                         <label for="example-date-input" >Ngày đi thực tế</label>
-                        <input class="form-control" type="date" id="example-date-input" onChange={e => setDate(e.target.value)}/>
+                        <input class="form-control" type="date" id="example-date-input" onChange={e => setDate(e.target.value)} />
                     </div>
                 </div>
             </div>

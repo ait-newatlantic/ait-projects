@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import UserService from "../../services/user.service";
 import Sidebar from "../sidebar/Sidebar"
-import Home from "../home/Home"
+import Notification from "../notification/Notification"
+import { NotificationProvider } from "../../context/notification/NotificationContext"
+
 
 const BoardModerator = () => {
     const [content, setContent] = useState("");
@@ -26,12 +27,12 @@ const BoardModerator = () => {
     }, []);
 
     return (
-        <Container fluid="ms">
-            <Row>
-                <Col sm><Sidebar data={content} /></Col>
-                <Col sm={9}><Home /></Col>
-            </Row>
-        </Container>
+        <NotificationProvider>
+            <div className="row">
+                <div className="col-md-auto"><Sidebar /></div>
+                <div className="col-md"><Notification /></div>
+            </div>
+        </NotificationProvider>
     );
 };
 

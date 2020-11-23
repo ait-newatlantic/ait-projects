@@ -7,13 +7,15 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
 
 export default function KTKH() {
-    const [customer_name, setCustomer_Name] = useState("");
+    const [customer, setCustomer] = useState("");
     const [customer_number, setCustomer_Number] = useState("");
+    const [customer_representative, setCustomer_Representative] = useState("");
+    const [customer_representative_number, setCustomer_Representative_Number] = useState("");
+    const [customer_representative_email, setCustomer_Representative_Email] = useState("");
     const [customer_taxcode, setCustomer_Taxcode] = useState("");
-    const [customer_opinion, setCustomer_Opinion] = useState("");
     const [customer_type, setCustomer_Type] = useState("");
     const [customer_area, setCustomer_Area] = useState("");
-    const [note, setNote] = useState("");
+    const [customer_address, setCustomer_Address] = useState("");
 
     //const [branches, setBranches] = useContext(BranchContext);
     const [provinces, setProvinces] = useContext(ProvinceContext);
@@ -21,20 +23,33 @@ export default function KTKH() {
     //Bo chi nhanh, them nguoi nhap, chinh lại ngày tháng thực tế(DATETIME)
     //them id thang nam ngay, id khach hang,
     //table nhucauthuc te them col-smumn id_nguoinhap, id_khachhang, flag: DONE or FAILED theo đợt
-    const Submit = () => {
+    const SubmitForm = () => {
         Axios.post("http://localhost:8080/api/post/khachhang", {
-            customer_name: customer_name,
+            customer: customer,
             customer_taxcode: customer_taxcode,
-            customer_opinion: customer_opinion,
+            customer_representative: customer_representative,
+            customer_representative_number: customer_representative_number,
+            customer_representative_email: customer_representative_email,
             customer_number: customer_number,
             customer_type: customer_type,
             customer_area: customer_area,
-            note: note,
+            customer_address: customer_address,
         }).then((response) => {
             return response.data;
         }).catch(error => {
             return alert(error);
         });
+    }
+
+    const Alert1 = () => {
+        return (
+            alert("Success")
+        )
+    }
+    
+    const Submit = () => {
+        SubmitForm()
+        Alert1()
     }
 
     return (
@@ -49,7 +64,7 @@ export default function KTKH() {
                 <div className="row">
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >Tên khách hàng</label>
-                        <input type="customer_name" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Name(e.target.value)} />
+                        <input type="customer" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer(e.target.value)} />
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlInput1" >SĐT khách hàng</label>
@@ -75,26 +90,35 @@ export default function KTKH() {
 
                 <div className="row">
                     <div className="col-sm">
+                        <label for="exampleFormControlInput1" >Tên người đại diện</label>
+                        <input type="customer_representative" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Representative(e.target.value)} />
+                    </div>
+                    <div className="col-sm">
+                        <label for="exampleFormControlInput1" >SĐT người đại diện</label>
+                        <input type="customer_representative_number" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Representative_Number(e.target.value)} />
+                    </div>
+                    <div className="col-sm">
+                        <label for="exampleFormControlInput1" >Email người đại diện</label>
+                        <input type="customer_representative_email" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Representative_Email(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-sm">
                         <label for="exampleFormControlSelect1" >Loại khách hàng</label>
                         <select className="form-control" id="exampleFormControlSelect1"
                             onchange="if (value=='ĐÃ SỬ DỤNG KAMAZ'){form['ĐÃ SỬ DỤNG KAMAZ'].style.visibility='visible'}else {form['ĐÃ SỬ DỤNG KAMAZ'].style.visibility='hidden'};"
                             onClick={e => setCustomer_Type(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
-                            <option value="DỰ KIẾN">DỰ KIẾN</option>
-                            <option value="TIỀM NĂNG">TIỀM NĂNG</option>
-                            <option value="ĐÃ SỬ DỤNG KAMAZ">ĐÃ SỬ DỤNG KAMAZ</option>
+                            <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
+                            <option value="TƯ NHÂN">TƯ NHÂN</option>
                         </select>
                     </div>
-                    <div className="col-sm-9" id="ykien-khachhang">
-                        <label for="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
-                        <textarea type="customer_opinion" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Opinion(e.target.value)}></textarea>
+                    <div className="col-sm-9">
+                        <label for="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
+                        <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Address(e.target.value)}></textarea>
                     </div>
                 </div>
-            </div>
-
-            <div className="container p-3 my-3 border border-dark" >
-                <label for="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
-                <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setNote(e.target.value)}></textarea>
             </div>
 
             <div className="container p-3 my-3 border border-dark" >
