@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import { BranchContext } from '../../../context/branch/BranchContext'
 import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
 import api from "../../../api/index"
+import logo from "../../../static/imgs/ait_logo.jpg"
 
 export default function CN_NCTT(props) {
     const [month, setMonth] = useState("");
@@ -78,7 +78,7 @@ export default function CN_NCTT(props) {
             <div className="container p-3 my-3 border border-dark">
                 <form>
                     <div className="head">
-                            <img src="https://www.newatlantic.vn/images/logos/ait_logo.jpg" alt="logo" width="100" height="100" />
+                            <img src={logo} alt="logo" width="100" height="100" />
                             <h1>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h1>
                     </div>
                     <div className="container p-3 my-3 border border-dark" >

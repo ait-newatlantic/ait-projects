@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { NotificationContext } from "../../context/notification/NotificationContext"
+import background from "../../../src/static/imgs/background.jpg"
 import "./style.css";
 
 export default function Notification() {
@@ -11,7 +12,7 @@ export default function Notification() {
             <div class="row">
                 <div className="col">
                     <div>
-                        <img src="https://wallpaperaccess.com/full/2927307.jpg" alt="slogan" />
+                        <img src={background} alt="slogan" />
                     </div>
                     <div>
                         <p>Phần mềm AIT version 1.0.0 </p>

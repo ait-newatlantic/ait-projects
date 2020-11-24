@@ -1,5 +1,8 @@
 import React from 'react'
 import './style.css'
+import slide1 from "../../../src/static/imgs/slide1.jpg"
+import slide2 from "../../../src/static/imgs/slide2.jpg"
+import slide3 from "../../../src/static/imgs/slide3.jpg"
 
 export default function Slide(){
     return(
@@ -12,13 +15,13 @@ export default function Slide(){
                 </ol>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                    <img className="d-block w-100" src="https://kamaz.ru/upload/iblock/866/86608301973635aaa15841df1906b906.jpg" alt="First slide"/>
+                    <img className="d-block w-100" src={slide1} alt="First slide"/>
                     </div>
                     <div className="carousel-item">
-                    <img className="d-block w-100" src="https://kamaz.ru/upload/iblock/55a/55a98d32ba10a7c37447b9921b40d6d0.jpg" alt="Second slide"/>
+                    <img className="d-block w-100" src={slide2} alt="Second slide"/>
                     </div>
                     <div className="carousel-item">
-                    <img className="d-block w-100" src="https://kamaz.ru/upload/iblock/0e0/0e06cecf8c630196848637aff24537b8.jpg" alt="Third slide"/>
+                    <img className="d-block w-100" src={slide3} alt="Third slide"/>
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

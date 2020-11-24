@@ -13,7 +13,7 @@ import UserService from "../../../services/user.service";
 import "./style.css"
 import { useCallback } from 'react';
 import api from "../../../api/index"
-
+import logo from "../../../static/imgs/ait_logo.jpg"
 
 export default function NCTT(props) {
     const [date, setDate] = useState("");
@@ -136,7 +136,7 @@ export default function NCTT(props) {
     return (
         <div className="container p-3 my-3 border border-dark">
             <div className="head">
-                <img src="https://www.newatlantic.vn/images/logos/ait_logo.jpg" alt="logo" width="100" height="100" />
+                <img src={logo} alt="logo" width="100" height="100" />
                 <h1>FORM NHẬP NHU CẦU THỰC TẾ</h1>
             </div>
 

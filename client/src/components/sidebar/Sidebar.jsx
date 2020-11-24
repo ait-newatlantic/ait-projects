@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import 'react-pro-sidebar/dist/css/styles.css';
 import AuthService from "../../services/auth.service";
 import "./style.css"
+import blue from "../../static/imgs/blue.jpg"
 
 export default function Sidebar(props) {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -22,7 +23,7 @@ export default function Sidebar(props) {
 
     return (
         <ProSidebar 
-        image="https://wallpapermemory.com/uploads/760/blue-background-hd-1080p-294130.jpg"
+        image={blue}
         >
             {showAdminBoard && (
                 <Menu>

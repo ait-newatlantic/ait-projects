@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
 import api from "../../api/index"
+import logo from "../../static/imgs/ait_logo.jpg"
 
 export default function KTKH() {
     const [customer, setCustomer] = useState("");
@@ -55,7 +56,7 @@ export default function KTKH() {
     return (
         <div className="container p-3 my-3 border border-dark">
             <div className="head">
-                <img src="https://www.newatlantic.vn/images/logos/ait_logo.jpg" alt="logo" width="100" height="100" />
+                <img src={logo} alt="logo" width="100" height="100" />
                 <h1>FORM KHỞI TẠO KHÁCH HÀNG</h1>
             </div>
 
