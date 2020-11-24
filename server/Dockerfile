@@ -7,5 +7,5 @@ COPY package*.json ./
 RUN npm ci --only=production
 COPY . .
 
-EXPOSE 4000
+EXPOSE 8080
 CMD [ "npm", "run", "start" ]
