@@ -12,4 +12,5 @@ server/.env
 HOST='localhost'\
 USER='namtran'\
 PASS='123456'\
-DATABASE='ait'
+DATABASE='ait'\
+SECRET_KEY='bezkoder-secret-key'
