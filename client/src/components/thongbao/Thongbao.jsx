@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import 'react-pro-sidebar/dist/css/styles.css';
+import api from "../../api/index"
 
 export default function Thongbao() {
     const [content, setContent] = useState("");
 
     const Submit = () => {
-        Axios.post("http://localhost:8080/api/post/thongbao", {
+        api.post("/api/post/thongbao", {
             content: content,
             employee: "Admin"
 

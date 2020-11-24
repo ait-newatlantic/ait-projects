@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 import { Button } from "react-bootstrap";
+import api from "../../../api/index"
 
 export default function BCTQ(props) {
 
@@ -8,7 +9,7 @@ export default function BCTQ(props) {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/nhucauthucte/total", {
+        api.get("/api/get/nhucauthucte/total", {
             params: {
                 year,
             }

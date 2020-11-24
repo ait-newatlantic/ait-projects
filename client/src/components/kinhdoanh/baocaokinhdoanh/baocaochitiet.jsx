@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import "./style.css"
+import api from "../../../api/index"
 
 export default function BCCT() {
     
@@ -9,7 +10,7 @@ export default function BCCT() {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/nhucauthucte/nam", {
+        api.get("/api/get/nhucauthucte/nam", {
             params: {
                 year,
             }
@@ -18,16 +19,8 @@ export default function BCCT() {
         });
     }
 
-    // const Update = () => {
-    //     Axios.put("http://localhost:8080/api/put/nhucauthucte/", {         
-    //         status: status, 
-    //     })
-    //     setStatus("")
-    // }
-
-
     useEffect(() => {
-        Axios.get("http://localhost:8080/api/get/nhucauthucte").then((response) => {
+        api.get("/api/get/nhucauthucte").then((response) => {
             setYearResult(response.data)
         })
     }, [])

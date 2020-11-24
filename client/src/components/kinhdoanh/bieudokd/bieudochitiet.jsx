@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import StackChart from "../../chart/stack"
 import VerticalChart from "../../chart/vertical"
 import { Button } from "react-bootstrap";
-import Axios from 'axios';
+import api from '../../../api/index'
 
-export default function BDCT (){
+export default function BDCT() {
     const [year, setYear] = useState('');
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/nhucauthucte/bdtq", {
+        api.get("/api/get/nhucauthucte/bdtq", {
             params: {
                 year,
             }
@@ -18,7 +18,7 @@ export default function BDCT (){
         });
     }
 
-    return(
+    return (
         <div>
             <div class="container p-3 my-3 border border-dark">
                 <div className="row">
@@ -36,12 +36,12 @@ export default function BDCT (){
                         </Button>
                 </div>
             </div>
-            
+
             <div class="container p-3 my-3 border border-dark">
-            <div className="row">
-                <div className="col-sm"><StackChart/></div>
-                <div className="col-sm"><VerticalChart/></div>
-            </div>
+                <div className="row">
+                    <div className="col-sm"><StackChart /></div>
+                    <div className="col-sm"><VerticalChart /></div>
+                </div>
             </div>
         </div>
     )

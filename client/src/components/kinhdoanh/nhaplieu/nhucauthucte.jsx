@@ -11,8 +11,8 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import AuthService from "../../../services/auth.service";
 import UserService from "../../../services/user.service";
 import "./style.css"
-import form from 'react-validation/build/form';
 import { useCallback } from 'react';
+import api from "../../../api/index"
 
 
 export default function NCTT(props) {
@@ -88,7 +88,7 @@ export default function NCTT(props) {
     }
 
     const SubmitForm = () => {
-        Axios.post("http://localhost:8080/api/post/nhucauthucte", {
+        api.post("/api/post/nhucauthucte", {
             date: date,
             employee: currentUsers.username,
             employee_field: employee_field,
@@ -114,7 +114,7 @@ export default function NCTT(props) {
 
     // em attach throttle callback cho do bi call nhieu lan/s
     const Autofill = useCallback(() => {
-        Axios.get("http://localhost:8080/api/get/khachhang/thongtin", {
+        api.get("/api/get/khachhang/thongtin", {
             params: {
                 customer,
             }
@@ -128,22 +128,11 @@ export default function NCTT(props) {
         });
     }, [customer])
 
-    // const Autofillx = (updateField) => {
-    //     Axios.get("http://localhost:8080/api/get/khachhang/thongtin", {
-    //         params: {
-    //             customer,
-    //         }
-    //     }).then((response) => {
-    //         updateField(response.data);
-    //     });
-    // }
-
-    
     useEffect(() => {
         Autofill();
     }, [customer, Autofill])
 
-    
+
     return (
         <div className="container p-3 my-3 border border-dark">
             <div className="head">
@@ -158,7 +147,7 @@ export default function NCTT(props) {
                 </div>
                 <div className="row">
                     <div className="col-sm">
-                    <label for="exampleFormControlSelect1">Tên khách hàng</label>
+                        <label for="exampleFormControlSelect1">Tên khách hàng</label>
                         <div className="row">
                             <div className="col-sm">
                                 <Autocomplete
@@ -168,10 +157,6 @@ export default function NCTT(props) {
                                     value={customer}
                                     onChange={(event, newValue) => {
                                         setCustomer(newValue);
-                                        // Autofillx(function(response) {
-                                        //     console.log(response)
-                                        //     setCustomerResult(response.data);
-                                        // });
                                     }}
                                     inputValue={customer}
                                     onInputChange={(event, newValue) => {
@@ -181,11 +166,6 @@ export default function NCTT(props) {
                                     renderInput={(params) => <TextField {...params} variant="outlined" />}
                                 />
                             </div>
-                            {/* <div className="col">
-                                <Button block type="submit" onClick={Autofill}>
-                                    Tra cứu
-                                </Button>
-                            </div> */}
                         </div>
                     </div>
                     <div className="col-sm">
@@ -205,10 +185,8 @@ export default function NCTT(props) {
                             options={customers.map((option) => option.customer_number)}
                             renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
-                        {/* {!!customerResult && customerResult.map(result => (
-                            <p>{result.customer_number}</p>
-                        ))} */}
                     </div>
+
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1">Khu vực khách hàng</label>
                         <Autocomplete
@@ -220,9 +198,7 @@ export default function NCTT(props) {
                             options={provinces.map((option) => option.province_name)}
                             renderInput={(params) => <TextField {...params} variant="outlined" />}
                         />
-                        {/* {!!customerResult && customerResult.map(result => (
-                            <p>{result.customer_area}</p>
-                        ))} */}
+
                     </div>
                     <div className="col-sm">
                         <label for="exampleFormControlSelect1" >Giai đoạn</label>

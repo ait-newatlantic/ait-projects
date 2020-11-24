@@ -1,14 +1,14 @@
-import Axios from "axios";
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
+import api from "../../api/index"
 
 export const ProvinceContext = createContext();
 
 export const ProvinceProvider = (props) => {
     const [provinces, setProvinces] = useState([])
     useEffect(()=>{
-        Axios.get("http://localhost:8080/api/get/tinhthanh").then((response)=>{
+        api.get("/api/get/tinhthanh").then((response)=>{
             setProvinces(response.data)
         })
     },[])

@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
-import { Button } from "react-bootstrap";
+import api from "../../api/index"
 
 export default function DSKH() {
     
-    //const [year, setYear] = useState('');
     const [customerResult, setCustomerResult] = useState();
 
-    // const Submit = () => {
-    //     Axios.get("http://localhost:8080/api/get/nhucauthucte/nam", {
-    //         params: {
-    //             year,
-    //         }
-    //     }).then((response) => {
-    //         setYearResult(response.data);
-    //     });
-    // }
-
     useEffect(() => {
-        Axios.get("http://localhost:8080/api/get/khachhang").then((response) => {
+        api.get("/api/get/khachhang").then((response) => {
             setCustomerResult(response.data)
         })
     }, [])

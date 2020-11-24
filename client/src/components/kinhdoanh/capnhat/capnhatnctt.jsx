@@ -5,9 +5,7 @@ import { BranchContext } from '../../../context/branch/BranchContext'
 import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useParams } from 'react-router-dom';
+import api from "../../../api/index"
 
 export default function CN_NCTT(props) {
     const [month, setMonth] = useState("");
@@ -36,7 +34,7 @@ export default function CN_NCTT(props) {
 
     const FetchData = async () =>{
         const id = props.match.params.id // lay id tu URL
-        Axios.get(`http://localhost:8080/api/get/nhucauthucte/id`, {
+        api.get(`/api/get/nhucauthucte/id`, {
             params: {
                id,
             }
@@ -46,7 +44,7 @@ export default function CN_NCTT(props) {
     }
 
     const Submit = () => {
-        Axios.put("http://localhost:8080/api/update/nhucauthucte", {
+        api.put("/api/update/nhucauthucte", {
             id:  props.match.params.id,
             month: month,
             year: year,

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
-import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import { ProvinceContext } from '../../context/province/ProvinceContext'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
+import api from "../../api/index"
 
 export default function KTKH() {
     const [customer, setCustomer] = useState("");
@@ -24,7 +24,7 @@ export default function KTKH() {
     //them id thang nam ngay, id khach hang,
     //table nhucauthuc te them col-smumn id_nguoinhap, id_khachhang, flag: DONE or FAILED theo đợt
     const SubmitForm = () => {
-        Axios.post("http://localhost:8080/api/post/khachhang", {
+        api.post("/api/post/khachhang", {
             customer: customer,
             customer_taxcode: customer_taxcode,
             customer_representative: customer_representative,

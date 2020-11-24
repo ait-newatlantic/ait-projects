@@ -2,13 +2,14 @@ import Axios from "axios";
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
+import api from "../../api/index"
 
 export const NotificationContext = createContext();
 
 export const NotificationProvider = (props) => {
     const [notifications, setNotifications] = useState([])
     useEffect(()=>{
-        Axios.get("http://localhost:8080/api/get/thongbao").then((response)=>{
+        api.get("/api/get/thongbao").then((response)=>{
             setNotifications(response.data)
         })
     },[])

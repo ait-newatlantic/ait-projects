@@ -36,6 +36,8 @@ import { NotificationProvider } from "./context/notification/NotificationContext
 
 import AuthService from "./services/auth.service";
 
+require('dotenv').config()
+
 function App() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);

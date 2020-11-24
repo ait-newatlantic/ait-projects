@@ -3,13 +3,14 @@ import GroupChart from "../../chart/group"
 import Axios from "axios"
 import { useState } from 'react'
 import { Button } from "react-bootstrap";
+import api from "../../../api/index"
 
 export default function BDTQ() {
     const [year, setYear] = useState('');
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        Axios.get("http://localhost:8080/api/get/nhucauthucte/bdtq", {
+        api.get("/api/get/nhucauthucte/bdtq", {
             params: {
                 year,
             }
