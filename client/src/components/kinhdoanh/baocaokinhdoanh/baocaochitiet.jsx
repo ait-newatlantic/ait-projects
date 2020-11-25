@@ -46,12 +46,13 @@ export default function BCCT() {
 
             <div className="container p-3 my-3 border border-dark">
                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
-                <table className="table-sm">
+                <table className="table-lg">
                     <tbody >
                         <tr id="titles">
-                            <th colSpan="2">Thông tin nhân viên và ngày tháng</th>
+                            <th colSpan="2">Thông tin nhân viên</th>
                             <th colSpan="7">Thông tin khách hàng</th>
                             <th colSpan="4">Thông tin xe</th>
+                            <th colSpan="2">Ngày tháng</th>
                             <th rowspan="2">Cập nhật</th>
                         </tr>
                         <tr>
@@ -68,6 +69,8 @@ export default function BCCT() {
                             <th>Loại xe</th> 
                             <th>Số lượng</th> 
                             <th>Màu xe</th>  
+                            <th>Ngày tạo</th>
+                            <th>Lần cập nhật cuối cùng</th>
                             
                         </tr>
                         {!!yearResult && yearResult.map(form => (
@@ -85,6 +88,8 @@ export default function BCCT() {
                                 <td>{form.type}</td>
                                 <td>{form.quantity}</td>
                                 <td>{form.color}</td>
+                                <td>{form.date_enter}</td>
+                                <td>{form.date_update}</td>
                                 <td>
                                     <a class="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
                                 </td>

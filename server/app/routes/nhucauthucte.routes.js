@@ -104,20 +104,24 @@ module.exports = function (app) {
 
     app.put('/api/update/nhucauthucte', function (req, res) {
         const status = req.body.status
+        const color = req.body.color
         const ait = req.body.ait
         const kmt = req.body.kmt
+        const date = req.body.date
         const note = req.body.note
         const id = req.body.id
         const sqlUpdate = `
         UPDATE nhucauthucte 
         SET 
             status=?,
+            color=?,
             ait=?, 
             kmt=?, 
-            note=? 
+            date=?,
+            note=?
         WHERE 
             id=?`
-        db.query(sqlUpdate, [status, ait, kmt, note, id], (err, result) => {
+        db.query(sqlUpdate, [status, color, ait, kmt, date, note, id], (err, result) => {
             if (err) { console.log(err) }
         })
     })
