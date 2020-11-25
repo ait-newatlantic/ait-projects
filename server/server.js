@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
-
+ 
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
