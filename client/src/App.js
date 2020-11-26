@@ -3,8 +3,6 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import Home from './components/home/Home'
-import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import NCTT from './components/kinhdoanh/nhaplieu/nhucauthucte'
 import BCTQKD from './components/kinhdoanh/baocaokinhdoanh/baocaotongquat'
@@ -14,6 +12,7 @@ import BDCTKD from './components/kinhdoanh/bieudokd/bieudochitiet'
 import CN_NCTT from './components/kinhdoanh/capnhat/capnhatnctt.jsx'
 import KTKH from './components/khachhang/KTKH'
 import DSKH from "./components/khachhang/DSKH"
+import CNKH from "./components/khachhang/CNKH"
 import Sidebar from "./components/sidebar/Sidebar"
 import Thongbao from "./components/thongbao/Thongbao"
 import Notification from "./components/notification/Notification"
@@ -89,6 +88,7 @@ function App() {
                         <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
                         <Route path="/khachhang/khoitao" exact component={KTKH} />
                         <Route path="/khachhang/danhsach" exact component={DSKH} />
+                        <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
                       </Switch>
                     </Router>
                   )}
@@ -109,6 +109,7 @@ function App() {
                         <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
                         <Route path="/khachhang/khoitao" exact component={KTKH} />
                         <Route path="/khachhang/danhsach" exact component={DSKH} />
+                        <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
                       </Switch>
                     </Router>
                   )}

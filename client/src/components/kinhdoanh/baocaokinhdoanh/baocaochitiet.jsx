@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import "./style.css"
 import api from "../../../api/index"
+import format from "date-format"
 
 export default function BCCT() {
     
@@ -27,7 +27,7 @@ export default function BCCT() {
 
     return (
         <div className="container-fluid">
-            <div class="container p-3 my-3 border border-dark">
+            <div className="container p-3 my-3 border border-dark">
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
@@ -69,7 +69,7 @@ export default function BCCT() {
                             <th>Loại xe</th> 
                             <th>Số lượng</th> 
                             <th>Màu xe</th>  
-                            <th>Ngày tạo</th>
+                            <th>Ngày tạo form</th>
                             <th>Lần cập nhật cuối cùng</th>
                             
                         </tr>
@@ -91,7 +91,7 @@ export default function BCCT() {
                                 <td>{form.date_enter}</td>
                                 <td>{form.date_update}</td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
+                                    <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
                                 </td>
                             </tr>
                         ))}

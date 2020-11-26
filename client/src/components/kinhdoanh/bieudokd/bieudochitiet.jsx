@@ -20,7 +20,7 @@ export default function BDCT() {
 
     return (
         <div>
-            <div class="container p-3 my-3 border border-dark">
+            <div className="container p-3 my-3 border border-dark">
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
@@ -37,7 +37,7 @@ export default function BDCT() {
                 </div>
             </div>
 
-            <div class="container p-3 my-3 border border-dark">
+            <div className="container p-3 my-3 border border-dark">
                 <div className="row">
                     <div className="col-sm"><StackChart /></div>
                     <div className="col-sm"><VerticalChart /></div>

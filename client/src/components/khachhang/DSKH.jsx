@@ -44,7 +44,7 @@ export default function DSKH() {
                                 <td>{form.customer_area}</td>
                                 <td>{form.customer_address}</td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm" href={`/#/${form.id}`} role="button">Cập nhật</a>
+                                    <a className="btn btn-warning btn-sm" href={`/khachhang/capnhat/${form.id}`} role="button">Cập nhật</a>
                                 </td>
                             </tr>
                         ))}

@@ -64,15 +64,15 @@ export default function KTKH() {
                 <p><strong>Thông tin khách hàng</strong></p>
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Tên khách hàng</label>
+                        <label htmlFor="exampleFormControlInput1" >Tên khách hàng</label>
                         <input type="customer" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer(e.target.value)} />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >SĐT khách hàng</label>
+                        <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
                         <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Number(e.target.value)} />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1">Khu vực khách hàng</label>
+                        <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
                         <Autocomplete
                             size="small"
                             value={customer_area}
@@ -84,31 +84,30 @@ export default function KTKH() {
                         />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Mã số thuế</label>
+                        <label htmlFor="exampleFormControlInput1" >Mã số thuế</label>
                         <input type="customer_taxcode" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Taxcode(e.target.value)} />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Tên người đại diện</label>
+                        <label htmlFor="exampleFormControlInput1" >Tên người đại diện</label>
                         <input type="customer_representative" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Representative(e.target.value)} />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >SĐT người đại diện</label>
+                        <label htmlFor="exampleFormControlInput1" >SĐT người đại diện</label>
                         <input type="customer_representative_number" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Representative_Number(e.target.value)} />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Email người đại diện</label>
+                        <label htmlFor="exampleFormControlInput1" >Email người đại diện</label>
                         <input type="customer_representative_email" className="form-control" id="exampleFormControlInput1" onChange={e => setCustomer_Representative_Email(e.target.value)} />
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1" >Loại khách hàng</label>
+                        <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
                         <select className="form-control" id="exampleFormControlSelect1"
-                            onchange="if (value=='ĐÃ SỬ DỤNG KAMAZ'){form['ĐÃ SỬ DỤNG KAMAZ'].style.visibility='visible'}else {form['ĐÃ SỬ DỤNG KAMAZ'].style.visibility='hidden'};"
                             onClick={e => setCustomer_Type(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
                             <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
@@ -116,7 +115,7 @@ export default function KTKH() {
                         </select>
                     </div>
                     <div className="col-sm-9">
-                        <label for="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
+                        <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
                         <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Address(e.target.value)}></textarea>
                     </div>
                 </div>

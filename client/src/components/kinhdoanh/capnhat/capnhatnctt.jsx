@@ -1,13 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Button } from "react-bootstrap";
-import { BranchContext } from '../../../context/branch/BranchContext'
-import { ProvinceContext } from '../../../context/province/ProvinceContext'
-import { ModelContext } from '../../../context/model/ModelContext'
-import { TypeContext } from '../../../context/type/TypeContext'
 import api from "../../../api/index"
 import logo from "../../../static/imgs/ait_logo.jpg"
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+
 
 export default function CN_NCTT(props) {
     const [date, setDate] = useState("");
@@ -233,7 +228,7 @@ export default function CN_NCTT(props) {
 
                     <div className="col-sm">
                         <label for="example-date-input" >Ngày đi thực tế</label>
-                        <input class="form-control" type="date" id="example-date-input" style={{background:"#add8e6"}} onChange={e => setDate(e.target.value)} />
+                        <input className="form-control" type="date" id="example-date-input" style={{background:"#add8e6"}} onChange={e => setDate(e.target.value)} />
                     </div>
                 </div>
             </div>
@@ -276,8 +271,8 @@ export default function CN_NCTT(props) {
 
             <div className="container p-3 my-3 border border-dark" >
                 <label for="exampleInputFile">Upload ảnh</label>
-                <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                <small id="fileHelp" class="form-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
+                <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
+                <small id="fileHelp" className="form-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
 
                 <Button variant="success" block type="submit" onClick={Submit}>
                     Gửi form
