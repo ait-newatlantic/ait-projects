@@ -2,7 +2,7 @@ require('dotenv').config()
 const mysql = require("mysql");
 const config = require("../config/db.config.js");
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     user: config.USER,
     host: config.HOST,
     password: config.PASSWORD, 
