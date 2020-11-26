@@ -28,10 +28,7 @@ const BoardModerator = () => {
 
     return (
         <NotificationProvider>
-            <div className="row">
-                <div className="col-md-auto"><Sidebar /></div>
-                <div className="col-md"><Notification /></div>
-            </div>
+                <div><Notification /></div>
         </NotificationProvider>
     );
 };

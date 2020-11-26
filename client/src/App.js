@@ -20,7 +20,8 @@ import Notification from "./components/notification/Notification"
 import Login from "./components/user/login/Login";
 import Register from "./components/user/register/Register";
 import Profile from "./components/user/profile/Profile";
-import Home1 from "./components/user_roles/Home";
+import Home from "./components/user_roles/Home";
+import Home1 from "./components/home/Home1";
 import BoardUser from "./components/user_roles/BoardUser";
 import BoardModerator from "./components/user_roles/BoardModerator";
 import BoardAdmin from "./components/user_roles/BoardAdmin";
@@ -66,55 +67,59 @@ function App() {
                 <main className="app-content">
                   <Router>
                     <Switch>
-                      <Route exact path={["/", "/home"]} component={Home1} />
+                      <Route exact path={["/", "/home1"]} component={Home1} />
                       <Route exact path="/login" component={Login} />
                     </Switch>
                   </Router>
                   {showAdminBoard && (
-                    <Router>
-                      <Switch>
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/register" component={Register} />
-                        <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/thongbao" component={Thongbao} />
-                        <Route path="/user" component={BoardUser} />
-                        <Route path="/mod" component={BoardModerator} />
-                        <Route path="/admin" component={BoardAdmin} />
-                        <Route path="/kinhdoanh/nhaplieu/nhucauthucte" exact component={NCTT} />
-                        <Route path="/kinhdoanh/capnhat/nhucauthucte/:id" exact component={CN_NCTT} />
-                        <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
-                        <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
-                        <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
-                        <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
-                        <Route path="/khachhang/khoitao" exact component={KTKH} />
-                        <Route path="/khachhang/danhsach" exact component={DSKH} />
-                        <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
-                      </Switch>
-                    </Router>
+                    <div>
+                      <Router>
+                        <Switch>
+                          <Route exact path={["/", "/home"]} component={Home} />
+                          <Route exact path="/login" component={Login} />
+                          <Route exact path="/register" component={Register} />
+                          <Route exact path="/profile" component={Profile} />
+                          <Route exact path="/thongbao" component={Thongbao} />
+                          <Route path="/user" component={BoardUser} />
+                          <Route path="/mod" component={BoardModerator} />
+                          <Route path="/admin" component={BoardAdmin} />
+                          <Route path="/kinhdoanh/nhaplieu/nhucauthucte" exact component={NCTT} />
+                          <Route path="/kinhdoanh/capnhat/nhucauthucte/:id" exact component={CN_NCTT} />
+                          <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
+                          <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
+                          <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
+                          <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
+                          <Route path="/khachhang/khoitao" exact component={KTKH} />
+                          <Route path="/khachhang/danhsach" exact component={DSKH} />
+                          <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
+                        </Switch>
+                      </Router>
+                    </div>
                   )}
                   {showModeratorBoard && (
-                    <Router>
-                      <Switch>
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/thongbao" component={Thongbao} />
-                        <Route path="/user" component={BoardUser} />
-                        <Route path="/mod" component={BoardModerator} />
-                        <Route path="/admin" component={BoardAdmin} />
-                        <Route path="/kinhdoanh/nhaplieu/nhucauthucte" exact component={NCTT} />
-                        <Route path="/kinhdoanh/capnhat/nhucauthucte/:id" exact component={CN_NCTT} />
-                        <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
-                        <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
-                        <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
-                        <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
-                        <Route path="/khachhang/khoitao" exact component={KTKH} />
-                        <Route path="/khachhang/danhsach" exact component={DSKH} />
-                        <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
-                      </Switch>
-                    </Router>
+                        <Router>
+                          <Switch>
+                            <Route exact path={["/", "/home"]} component={Home} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/profile" component={Profile} />
+                            <Route exact path="/thongbao" component={Thongbao} />
+                            <Route path="/user" component={BoardUser} />
+                            <Route path="/mod" component={BoardModerator} />
+                            <Route path="/admin" component={BoardAdmin} />
+                            <Route path="/kinhdoanh/nhaplieu/nhucauthucte" exact component={NCTT} />
+                            <Route path="/kinhdoanh/capnhat/nhucauthucte/:id" exact component={CN_NCTT} />
+                            <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
+                            <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
+                            <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
+                            <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
+                            <Route path="/khachhang/khoitao" exact component={KTKH} />
+                            <Route path="/khachhang/danhsach" exact component={DSKH} />
+                            <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
+                          </Switch>
+                        </Router>
                   )}
                 </main>
-                <NotificationProvider/>
+                <NotificationProvider />
               </CustomerProvider>
             </TypeProvider>
           </ModelProvider>

@@ -22,172 +22,108 @@ export default function Sidebar(props) {
     }, []);
 
     return (
-        <ProSidebar 
-        image={blue}
-        >
-            {showAdminBoard && (
-                <Menu>
-                    <MenuItem>{props.data}</MenuItem>
-                    <SubMenu title="Báo cáo & phân tích KD">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem>Nhu cầu thực tế 
-                            <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo KD">
-                            <MenuItem>Báo cáo tổng quát
-                            <Link to="/kinhdoanh/baocao/tongquatkd" />
-                            </MenuItem>
-                            <MenuItem>Báo cáo chi tiết
-                            <Link to="/kinhdoanh/baocao/chitietkd" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Biểu đồ KD">
-                            <MenuItem>Biểu đồ tổng quát
-                            <Link to="/kinhdoanh/bieudokd/bieudotq" />
-                            </MenuItem>
-                            <MenuItem>Biểu đồ chi tiết
-                            <Link to="/kinhdoanh/bieudokd/bieudoct" />
-                            </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Khách hàng">
-                        <SubMenu title="Khởi tạo">
-                            <MenuItem
-                            >Khởi tạo KH
-                            <Link to="/khachhang/khoitao" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo">
-                            <MenuItem
-                            >Danh sách KH
-                            <Link to="/khachhang/danhsach" />
-                            </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý nhân sự">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Khởi tạo nhân viên
-                            <Link to="#" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo">
-                            <MenuItem
-                            >Tổng hợp DSNS
-                            <Link to="#" />
-                            </MenuItem>
-                            <MenuItem
-                            >Hồ sơ NV
-                            <Link to="#" />
-                            </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý CV chi nhánh">
-                        <SubMenu title="Báo cáo giao dịch với KH">
-                            <MenuItem>1</MenuItem>
-                            <MenuItem>2</MenuItem>
-                            <MenuItem>3 </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Phân tích dòng xe">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem>Phân khúc đầu kéo</MenuItem>
-                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
-                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
-                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo phân tích các dòng xe">
-                            <MenuItem>Phân khúc đầu kéo</MenuItem>
-                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
-                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
-                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                </Menu>
-            )}
-            {showModeratorBoard && (
-                <Menu>
-                    <MenuItem >{props.data}</MenuItem>
-                    <SubMenu title="Báo cáo & phân tích KD">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem>Nhu cầu thực tế
-                        <Link to="/kinhdoanh/nhaplieu/nhucauthucte" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo KD">
-                            <MenuItem>Báo cáo tổng quát
-                        <Link to="/kinhdoanh/baocao/tongquatkd" />
-                            </MenuItem>
-                            <MenuItem>Báo cáo chi tiết
-                        <Link to="/kinhdoanh/baocao/chitietkd" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Biểu đồ KD">
-                            <MenuItem>Biểu đồ tổng quát
-                        <Link to="/kinhdoanh/bieudokd/bieudotq" />
-                            </MenuItem>
-                            <MenuItem>Biểu đồ chi tiết
-                        <Link to="/kinhdoanh/bieudokd/bieudoct" />
-                            </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Khách hàng">
-                        <SubMenu title="Khởi tạo">
-                            <MenuItem
-                            >Khởi tạo KH
-                        <Link to="/khachhang/khoitao" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo">
-                            <MenuItem
-                            >Danh sách KH
-                        <Link to="/khachhang/danhsach" />
-                            </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý nhân sự">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem
-                            >Khởi tạo nhân viên
-                        <Link to="#" />
-                            </MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo">
-                            <MenuItem
-                            >Tổng hợp DSNS
-                        <Link to="#" />
-                            </MenuItem>
-                            <MenuItem
-                            >Hồ sơ NV
-                        <Link to="#" />
-                            </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Quản lý CV chi nhánh">
-                        <SubMenu title="Báo cáo giao dịch với KH">
-                            <MenuItem>1</MenuItem>
-                            <MenuItem>2</MenuItem>
-                            <MenuItem>3 </MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                    <SubMenu title="Phân tích dòng xe">
-                        <SubMenu title="Nhập liệu">
-                            <MenuItem>Phân khúc đầu kéo</MenuItem>
-                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
-                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
-                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
-                        </SubMenu>
-                        <SubMenu title="Báo cáo phân tích các dòng xe">
-                            <MenuItem>Phân khúc đầu kéo</MenuItem>
-                            <MenuItem>Phân khúc Ben 3 chân</MenuItem>
-                            <MenuItem>Phân khúc Ben 4 chân</MenuItem>
-                            <MenuItem>Phân khúc xe tải thùng</MenuItem>
-                        </SubMenu>
-                    </SubMenu>
-                </Menu>
-            )}
-        </ProSidebar>
-
-    );
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <a className="navbar-brand" href="/home">AIT</a>
+                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li className="nav-item active">
+                        <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
+                    </li>
+                    {showAdminBoard && (
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Báo cáo & phân tích KD</a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="/kinhdoanh/nhaplieu/nhucauthucte">Nhu cầu thực tế</a>
+                                        </ul>
+                                    </li>
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="/kinhdoanh/baocao/tongquatkd">Báo cáo TQ</a>
+                                            <a className="dropdown-item" href="/kinhdoanh/baocao/chitietkd">Báo cáo CT</a>
+                                        </ul>
+                                    </li>
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Biểu đồ KD</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="/kinhdoanh/bieudokd/bieudotq">Biểu đồ TQ</a>
+                                            <a className="dropdown-item" href="/kinhdoanh/bieudokd/bieudoct">Biểu đồ CT</a>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Khách hàng</a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="/khachhang/khoitao">Khởi tạo KH</a>
+                                        </ul>
+                                    </li>
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="/khachhang/danhsach">Danh sách KH</a>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý nhân sự</a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="#">Khởi tạo NV</a>
+                                        </ul>
+                                    </li>
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="#">Tổng hợp DSNS</a>
+                                            <a className="dropdown-item" href="#">Hồ sơ NV</a>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý CV chi nhánh</a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo giao dịch với KH</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="#">1</a>
+                                            <a className="dropdown-item" href="#">2</a>
+                                            <a className="dropdown-item" href="#">3</a>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Phân tích dòng xe</a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="#">Đầu kéo</a>
+                                            <a className="dropdown-item" href="#">Ben 3 chân</a>
+                                            <a className="dropdown-item" href="#">Ben 4 chân</a>
+                                            <a className="dropdown-item" href="#">Xe tải thùng</a>
+                                        </ul>
+                                    </li>
+                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo</a>
+                                        <ul className="dropdown-menu">
+                                            <a className="dropdown-item" href="#">Đầu kéo</a>
+                                            <a className="dropdown-item" href="#">Ben 3 chân</a>
+                                            <a className="dropdown-item" href="#">Ben 4 chân</a>
+                                            <a className="dropdown-item" href="#">Xe tải thùng</a>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    )}
+                </ul>
+            </div>
+        </nav>
+    )
 };

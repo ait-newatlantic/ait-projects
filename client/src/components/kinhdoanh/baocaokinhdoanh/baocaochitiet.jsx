@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
 import "./style.css"
 import api from "../../../api/index"
-import format from "date-format"
 
 export default function BCCT() {
     
@@ -26,7 +25,7 @@ export default function BCCT() {
     }, [])
 
     return (
-        <div className="container-fluid">
+        <div>
             <div className="container p-3 my-3 border border-dark">
                 <div className="row">
                     <div className="col">

@@ -23,7 +23,7 @@ export default function Thongbao() {
         <div className="container p-3 my-3 border border-dark">
             <div className="head">
                 <img src="https://www.newatlantic.vn/images/logos/ait_logo.jpg" alt="logo" width="100" height="100" />
-                <h1>FORM TẠO THÔNG BÁO</h1>
+                <h1>FORM TẠO TIN TỨC</h1>
             </div>
             <div className="container p-3 my-3 border border-dark" >
                 <label for="exampleFormControlTextarea1"><strong>Nội dung</strong></label>
@@ -31,7 +31,7 @@ export default function Thongbao() {
             </div>
             <div className="container p-3 my-3 border border-dark" >
                 <Button variant="success" block type="submit" onClick={Submit}>
-                    Gửi thông báo
+                    Gửi tin
                     </Button>
             </div>
         </div>

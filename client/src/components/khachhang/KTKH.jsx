@@ -44,7 +44,7 @@ export default function KTKH() {
 
     const Alert1 = () => {
         return (
-            alert("Success")
+            alert("Gửi form thành công!!!")
         )
     }
     

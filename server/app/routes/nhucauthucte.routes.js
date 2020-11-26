@@ -52,7 +52,7 @@ module.exports = function (app) {
 
     app.get('/api/get/nhucauthucte/nam', function (req, res) {
         const year = req.query.year;
-        const sqlSelect = `SELECT * FROM nhucauthucte WHERE year=${year} `
+        const sqlSelect = `SELECT * FROM nhucauthucte WHERE YEAR(date)=${year} `
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })

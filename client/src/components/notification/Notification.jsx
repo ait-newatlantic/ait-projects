@@ -10,7 +10,7 @@ export default function Notification() {
         <div>
             <div className="custom container border border-dark bg-dark text-white overflow-auto" style={{ height: "70vh" }}>
                 <div className="card-body text-center">
-                    <h4 className="card-title"><strong>Thông báo</strong> </h4>
+                    <h4 className="card-title"><strong>Tin tức</strong> </h4>
                 </div>
                 <div>
                     {notifications.map(notification => (

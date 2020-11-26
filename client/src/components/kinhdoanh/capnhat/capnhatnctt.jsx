@@ -36,7 +36,7 @@ export default function CN_NCTT(props) {
 
     const Alert1 = () => {
         return (
-            alert("Success")
+            alert("Gửi form thành công!!!")
         )
     }
     
