@@ -5,7 +5,14 @@ const db = mysql.createConnection({
     user: config.USER,
     host: config.HOST,
     password: config.PASSWORD, 
-    database: config.DB
+    database: config.DB,
+    dialect: "mysql",
+    pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+    }
 });
 
 module.exports = function (app) {
