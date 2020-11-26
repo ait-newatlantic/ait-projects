@@ -203,6 +203,7 @@ export default function CN_NCTT(props) {
                             <option value="Vàng">Vàng</option>
                             <option value="Xanh">Xanh</option>
                             <option value="Xanh quân đội">Xanh quân đội</option>
+                            <option value="Đỏ">Đỏ</option>
                             <option value="Chưa quyết định">Chưa quyết định</option>
                         </select>
                         ))}

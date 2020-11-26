@@ -299,6 +299,7 @@ export default function NCTT(props) {
                             <option value="Trắng">Trắng</option>
                             <option value="Vàng">Vàng</option>
                             <option value="Xanh">Xanh</option>
+                            <option value="Đỏ">Đỏ</option>
                             <option value="Xanh quân đội">Xanh quân đội</option>
                         </select>
                     </div>

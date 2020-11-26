@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
 import "./style.css"
 import api from "../../../api/index"
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { CSVLink } from 'react-csv'
 
 export default function BCCT() {
-    
+
     const [year, setYear] = useState('');
     const [yearResult, setYearResult] = useState();
 
@@ -30,7 +32,7 @@ export default function BCCT() {
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
-                            <label for="exampleFormControlInput1" >Năm</label>
+                            <label htmlFor="exampleFormControlInput1" >Năm</label>
                             <input type="year" className="form-control"
                                 id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
                         </div>
@@ -45,14 +47,22 @@ export default function BCCT() {
 
             <div className="container p-3 my-3 border border-dark">
                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
-                <table className="table-lg">
+                <div>
+                    <ReactHTMLTableToExcel
+                        className="btn btn-info"
+                        table="emp"
+                        filename="Báo cáo kinh doanh"
+                        sheet="Sheet"
+                        buttonText="Export excel" />
+                </div>
+                <table id="emp" className="table-lg">
                     <tbody >
                         <tr id="titles">
                             <th colSpan="2">Thông tin nhân viên</th>
                             <th colSpan="7">Thông tin khách hàng</th>
                             <th colSpan="4">Thông tin xe</th>
                             <th colSpan="2">Ngày tháng</th>
-                            <th rowspan="2">Cập nhật</th>
+                            <th rowSpan="2">Cập nhật</th>
                         </tr>
                         <tr>
                             <th>Người nhập</th>
@@ -64,13 +74,13 @@ export default function BCCT() {
                             <th>Ý kiến khách hàng</th>
                             <th>Phương thức liên lạc</th>
                             <th>Giai đoạn</th>
-                            <th>Model xe</th> 
-                            <th>Loại xe</th> 
-                            <th>Số lượng</th> 
-                            <th>Màu xe</th>  
+                            <th>Model xe</th>
+                            <th>Loại xe</th>
+                            <th>Số lượng</th>
+                            <th>Màu xe</th>
                             <th>Ngày tạo form</th>
                             <th>Lần cập nhật cuối cùng</th>
-                            
+
                         </tr>
                         {!!yearResult && yearResult.map(form => (
                             <tr className="content" key={form._id}>
