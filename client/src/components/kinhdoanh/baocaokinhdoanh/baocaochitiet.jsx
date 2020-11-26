@@ -3,7 +3,6 @@ import { Button } from "react-bootstrap";
 import "./style.css"
 import api from "../../../api/index"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import { CSVLink } from 'react-csv'
 
 export default function BCCT() {
 
@@ -61,7 +60,7 @@ export default function BCCT() {
                             <th colSpan="2">Thông tin nhân viên</th>
                             <th colSpan="7">Thông tin khách hàng</th>
                             <th colSpan="4">Thông tin xe</th>
-                            <th colSpan="2">Ngày tháng</th>
+                            <th colSpan="3">Thông tin thêm</th>
                             <th rowSpan="2">Cập nhật</th>
                         </tr>
                         <tr>
@@ -80,6 +79,7 @@ export default function BCCT() {
                             <th>Màu xe</th>
                             <th>Ngày tạo form</th>
                             <th>Lần cập nhật cuối cùng</th>
+                            <th>Ghi chú</th>
 
                         </tr>
                         {!!yearResult && yearResult.map(form => (
@@ -99,6 +99,7 @@ export default function BCCT() {
                                 <td>{form.color}</td>
                                 <td>{form.date_enter}</td>
                                 <td>{form.date_update}</td>
+                                <td>{form.note}</td>
                                 <td>
                                     <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
                                 </td>
