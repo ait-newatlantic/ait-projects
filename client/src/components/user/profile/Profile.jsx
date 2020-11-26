@@ -8,7 +8,7 @@ const Profile = () => {
         <div className="container">
             <header className="jumbotron">
                 <h3>
-                    <strong>{currentUser.username}</strong> Profile
+                    Hồ sơ <strong>{currentUser.username}</strong>
         </h3>
             </header>
             <p>
@@ -21,7 +21,7 @@ const Profile = () => {
             <p>
                 <strong>Email:</strong> {currentUser.email}
             </p>
-            <strong>Authorities:</strong>
+            <strong>Chức vụ:</strong>
             <ul>
                 {currentUser.roles &&
                     currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}

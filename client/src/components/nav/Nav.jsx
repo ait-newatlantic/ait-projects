@@ -37,7 +37,7 @@ export default function Nav() {
                             <a className="nav-link" href="/mod">Tin tức</a>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Báo cáo & phân tích KD</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BC & PT kinh doanh</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                     <ul className="dropdown-menu">
@@ -63,18 +63,18 @@ export default function Nav() {
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="/khachhang/khoitao">Khởi tạo KH</a>
+                                        <a className="dropdown-item" href="/khachhang/khoitao">Khởi tạo khách hàng</a>
                                     </ul>
                                 </li>
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="/khachhang/danhsach">Danh sách KH</a>
+                                        <a className="dropdown-item" href="/khachhang/danhsach">Danh sách khách hàng</a>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý NS</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý nhân sự</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                     <ul className="dropdown-menu">
@@ -90,7 +90,7 @@ export default function Nav() {
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý CV CN</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý CV chi nhánh</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo giao dịch với KH</a>
                                     <ul className="dropdown-menu">
@@ -102,22 +102,22 @@ export default function Nav() {
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Phân tích dòng xe</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PT & ĐG các dòng xe</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="#">Đầu kéo</a>
-                                        <a className="dropdown-item" href="#">Ben 3 chân</a>
-                                        <a className="dropdown-item" href="#">Ben 4 chân</a>
-                                        <a className="dropdown-item" href="#">Xe tải thùng</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Đầu kéo</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Ben 3 chân</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Ben 4 chân</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Xe tải thùng</a>
                                     </ul>
                                 </li>
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo</a>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="#">Đầu kéo</a>
-                                        <a className="dropdown-item" href="#">Ben 3 chân</a>
-                                        <a className="dropdown-item" href="#">Ben 4 chân</a>
-                                        <a className="dropdown-item" href="#">Xe tải thùng</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Đầu kéo</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Ben 3 chân</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Ben 4 chân</a>
+                                        <a className="dropdown-item" href="#">Phân khúc Xe tải thùng</a>
                                     </ul>
                                 </li>
                             </ul>
@@ -130,7 +130,7 @@ export default function Nav() {
                                 <a className="nav-link" href="/admin">Tin tức</a>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Báo cáo & phân tích KD</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BC & PT kinh doanh</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                         <ul className="dropdown-menu">
@@ -167,7 +167,7 @@ export default function Nav() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý NS</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý nhân sự</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                         <ul className="dropdown-menu">
@@ -183,7 +183,7 @@ export default function Nav() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Quản lý CV CN</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý CV chi nhánh</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo giao dịch với KH</a>
                                         <ul className="dropdown-menu">
@@ -195,22 +195,22 @@ export default function Nav() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Phân tích dòng xe</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PT & ĐG các dòng xe</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="#">Đầu kéo</a>
-                                            <a className="dropdown-item" href="#">Ben 3 chân</a>
-                                            <a className="dropdown-item" href="#">Ben 4 chân</a>
-                                            <a className="dropdown-item" href="#">Xe tải thùng</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Đầu kéo</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Ben 3 chân</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Ben 4 chân</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Xe tải thùng</a>
                                         </ul>
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="#">Đầu kéo</a>
-                                            <a className="dropdown-item" href="#">Ben 3 chân</a>
-                                            <a className="dropdown-item" href="#">Ben 4 chân</a>
-                                            <a className="dropdown-item" href="#">Xe tải thùng</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Đầu kéo</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Ben 3 chân</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Ben 4 chân</a>
+                                            <a className="dropdown-item" href="#">Phân khúc Xe tải thùng</a>
                                         </ul>
                                     </li>
                                 </ul>

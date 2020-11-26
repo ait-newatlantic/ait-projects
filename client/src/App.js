@@ -20,8 +20,8 @@ import Notification from "./components/notification/Notification"
 import Login from "./components/user/login/Login";
 import Register from "./components/user/register/Register";
 import Profile from "./components/user/profile/Profile";
-import Home from "./components/user_roles/Home";
-import Home1 from "./components/home/Home1";
+import Home1 from "./components/user_roles/Home";
+import Home from "./components/home/Home";
 import BoardUser from "./components/user_roles/BoardUser";
 import BoardModerator from "./components/user_roles/BoardModerator";
 import BoardAdmin from "./components/user_roles/BoardAdmin";
@@ -67,7 +67,7 @@ function App() {
                 <main className="app-content">
                   <Router>
                     <Switch>
-                      <Route exact path={["/", "/home1"]} component={Home1} />
+                      <Route exact path={["/", "/home"]} component={Home1} />
                       <Route exact path="/login" component={Login} />
                     </Switch>
                   </Router>
@@ -75,7 +75,6 @@ function App() {
                     <div>
                       <Router>
                         <Switch>
-                          <Route exact path={["/", "/home"]} component={Home} />
                           <Route exact path="/login" component={Login} />
                           <Route exact path="/register" component={Register} />
                           <Route exact path="/profile" component={Profile} />
@@ -99,7 +98,6 @@ function App() {
                   {showModeratorBoard && (
                         <Router>
                           <Switch>
-                            <Route exact path={["/", "/home"]} component={Home} />
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/profile" component={Profile} />
                             <Route exact path="/thongbao" component={Thongbao} />
