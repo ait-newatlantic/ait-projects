@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Axios from 'axios'
 import { Button } from "react-bootstrap";
 import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
@@ -30,8 +29,6 @@ export default function NCTT(props) {
     const [customer_meeting, setCustomer_Meeting] = useState("");
     const [customer_communication, setCustomer_Communication] = useState("");
     const [color, setColor] = useState("");
-    const [ait, setAit] = useState("");
-    const [kmt, setKmt] = useState("");
     const [note, setNote] = useState("");
 
     const [models, setModels] = useContext(ModelContext);
@@ -104,8 +101,6 @@ export default function NCTT(props) {
             customer_meeting: customer_meeting,
             customer_communication: customer_communication,
             color: color,
-            ait: ait,
-            kmt: kmt,
             note: note,
         }).then((response) => {
             console.log(response)
@@ -147,7 +142,7 @@ export default function NCTT(props) {
                 </div>
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1">Tên khách hàng</label>
+                        <label htmlFor="exampleFormControlSelect1">Tên khách hàng</label>
                         <div className="row">
                             <div className="col-sm">
                                 <Autocomplete
@@ -169,7 +164,7 @@ export default function NCTT(props) {
                         </div>
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >SĐT khách hàng</label>
+                        <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
                         <Autocomplete
                             size="small"
                             freeSolo
@@ -188,7 +183,7 @@ export default function NCTT(props) {
                     </div>
 
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1">Khu vực khách hàng</label>
+                        <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
                         <Autocomplete
                             size="small"
                             value={customer_area}
@@ -201,7 +196,7 @@ export default function NCTT(props) {
 
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1" >Giai đoạn</label>
+                        <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
                         <select className="form-control" id="exampleFormControlSelect1" onClick={e => setStatus(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
                             <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
@@ -220,7 +215,7 @@ export default function NCTT(props) {
 
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1" >Loại khách hàng</label>
+                        <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
                         <select className="form-control" id="exampleFormControlSelect1"
                             onClick={e => setCustomer_Type(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
@@ -230,7 +225,7 @@ export default function NCTT(props) {
                         </select>
                     </div>
                     <div className="col-sm-9" id="ykien-khachhang">
-                        <label for="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
+                        <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
                         <textarea type="customer_opinion"
                             className="form-control"
                             id="exampleFormControlTextarea1"
@@ -244,7 +239,7 @@ export default function NCTT(props) {
 
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1" >Phương thức liên lạc</label>
+                        <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
                         <select className="form-control" id="exampleFormControlSelect1"
                             onClick={e => setCustomer_Communication(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
@@ -254,7 +249,7 @@ export default function NCTT(props) {
                         </select>
                     </div>
                     <div className="col-sm-9" id="diadiem-giaodich">
-                        <label for="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
+                        <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
                         <textarea type="customer_meeting" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Meeting(e.target.value)}></textarea>
                     </div>
                 </div>
@@ -264,7 +259,7 @@ export default function NCTT(props) {
                 <p><strong>Thông tin xe</strong></p>
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1">Model xe</label>
+                        <label htmlFor="exampleFormControlSelect1">Model xe</label>
                         <Autocomplete
                             size="small"
                             value={model}
@@ -276,7 +271,7 @@ export default function NCTT(props) {
                         />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1">Loại xe</label>
+                        <label htmlFor="exampleFormControlSelect1">Loại xe</label>
                         <Autocomplete
                             size="small"
                             value={type}
@@ -288,11 +283,11 @@ export default function NCTT(props) {
                         />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Số lượng</label>
+                        <label htmlFor="exampleFormControlInput1" >Số lượng</label>
                         <input type="quantity" className="form-control" id="exampleFormControlInput1" onChange={e => setQuantity(e.target.value)} />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlSelect1">Màu yêu cầu</label>
+                        <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
                         <select className="form-control" id="exampleFormControlSelect1" onClick={e => setColor(e.target.value)}>
                             <option value="" selected disabled hidden>Click để chọn</option>
                             <option value="Cam">Cam</option>
@@ -310,28 +305,28 @@ export default function NCTT(props) {
                 <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
                 <div className="row">
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Người nhập</label>
+                        <label htmlFor="exampleFormControlInput1" >Người nhập</label>
                         <input type="employee" value={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
                     </div>
                     <div className="col-sm">
-                        <label for="exampleFormControlInput1" >Người đi thực tế</label>
+                        <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
                         <input type="employee_field" className="form-control" id="exampleFormControlInput1" onChange={e => setEmployee_Field(e.target.value)} />
                     </div>
 
                     <div className="col-sm">
-                        <label for="example-date-input" >Ngày đi thực tế</label>
+                        <label htmlFor="example-date-input" >Ngày đi thực tế</label>
                         <input className="form-control" type="date" id="example-date-input" onChange={e => setDate(e.target.value)} />
                     </div>
                 </div>
             </div>
 
             <div className="container p-3 my-3 border border-dark" >
-                <label for="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
+                <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
                 <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setNote(e.target.value)}></textarea>
             </div>
 
             <div className="container p-3 my-3 border border-dark" >
-                <label for="exampleInputFile">Upload ảnh</label>
+                <label htmlFor="exampleInputFile">Upload ảnh</label>
                 <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
                 <small id="fileHelp" className="form-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
 
@@ -342,7 +337,7 @@ export default function NCTT(props) {
             </div>
 
             <div className="container p-3 my-3 border border-dark">
-                <label for="exampleFormControlTextarea1"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></label>
+                <label htmlFor="exampleFormControlTextarea1"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></label>
                 <p>DỰ KIẾN: chỉ mới tiếp cận và chào hàng</p>
                 <p>TIỀM NĂNG: Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng</p>
                 <p>ĐÃ SỬ DỤNG KAMAZ: Khách hàng đã và đang sử dụng sản phẩm của mình </p>

@@ -40,7 +40,7 @@ export default function Nav() {
                             <a className="nav-link" href="/mod">Tin tức</a>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BC & PT kinh doanh</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kinh doanh</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                     <ul className="dropdown-menu">
@@ -77,7 +77,7 @@ export default function Nav() {
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý nhân sự</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nhân sự</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                     <ul className="dropdown-menu">
@@ -93,7 +93,7 @@ export default function Nav() {
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý CV chi nhánh</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Chi nhánh</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo giao dịch với KH</a>
                                     <ul className="dropdown-menu">
@@ -105,7 +105,7 @@ export default function Nav() {
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
-                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PT & ĐG các dòng xe</a>
+                            <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Các dòng xe</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                     <ul className="dropdown-menu">
@@ -133,7 +133,7 @@ export default function Nav() {
                                 <a className="nav-link" href="/admin">Tin tức</a>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BC & PT kinh doanh</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kinh doanh</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                         <ul className="dropdown-menu">
@@ -170,7 +170,7 @@ export default function Nav() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý nhân sự</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nhân sự</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                         <ul className="dropdown-menu">
@@ -186,7 +186,7 @@ export default function Nav() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Qlý CV chi nhánh</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Chi nhánh</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo giao dịch với KH</a>
                                         <ul className="dropdown-menu">
@@ -198,7 +198,7 @@ export default function Nav() {
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">
-                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PT & ĐG các dòng xe</a>
+                                <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Các dòng xe</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Nhập liệu</a>
                                         <ul className="dropdown-menu">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Axios from 'axios'
 import api from "../../api/index"
+import "./style.css"
 
 export default function DSKH() {
     
@@ -16,6 +16,7 @@ export default function DSKH() {
         <div className="container-fluid">
             <div className="container p-3 my-3 border border-dark">
                 <h1>DANH SÁCH KHÁCH HÀNG</h1>
+                <div className="table-container">
                 <table className="table-sm">
                     <tbody >
                         <tr>
@@ -50,6 +51,7 @@ export default function DSKH() {
                         ))}
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     )
