@@ -28,8 +28,6 @@ export default function NCTT(props) {
     const [customer_opinion, setCustomer_Opinion] = useState("");
     const [customer_meeting, setCustomer_Meeting] = useState("");
     const [customer_communication, setCustomer_Communication] = useState("");
-    const [ait, setAit] = useState("");
-    const [kmt, setKmt] = useState("");
     const [color, setColor] = useState("");
     const [note, setNote] = useState("");
 
@@ -102,12 +100,12 @@ export default function NCTT(props) {
             customer_opinion: customer_opinion,
             customer_meeting: customer_meeting,
             customer_communication: customer_communication,
-            ait: ait,
-            kmt: kmt,
             color: color,
             note: note,
         }).then((response) => {
             console.log(response)
+        }).catch((error) => {
+            console.log(error);
         })
     }
 

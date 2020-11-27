@@ -40,12 +40,10 @@ module.exports = function (app) {
         const customer_meeting = req.body.customer_meeting
         const customer_communication = req.body.customer_communication
         const color = req.body.color
-        const ait = req.body.ait
-        const kmt = req.body.kmt
         const note = req.body.note
         db.query
-            ("INSERT INTO nhucauthucte (date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, ait, kmt, color, note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                [date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, ait, kmt, color, note], (err, result) => {
+            ("INSERT INTO nhucauthucte (date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                [date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note], (err, result) => {
                     console.log(err);
                 })
     })

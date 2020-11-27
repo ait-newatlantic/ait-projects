@@ -56,6 +56,8 @@ export default function CN_NCTT(props) {
             note: note,
         }).then((response) => {
             console.log(response)
+        }).catch((error) => {
+            console.log(error);
         })
     }
 
