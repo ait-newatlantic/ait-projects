@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './fonts/roboto/Roboto-Regular.ttf'
 require('dotenv').config()
 
 ReactDOM.render(

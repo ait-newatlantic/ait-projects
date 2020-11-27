@@ -54,59 +54,61 @@ export default function BCCT() {
                         sheet="Sheet"
                         buttonText="Export excel" />
                 </div>
-                <table id="emp" className="table-lg">
-                    <tbody >
-                        <tr id="titles">
-                            <th colSpan="2">Thông tin nhân viên</th>
-                            <th colSpan="7">Thông tin khách hàng</th>
-                            <th colSpan="4">Thông tin xe</th>
-                            <th colSpan="3">Thông tin thêm</th>
-                            <th rowSpan="2">Cập nhật</th>
-                        </tr>
-                        <tr>
-                            <th>Người nhập</th>
-                            <th>Người đi thực tế</th>
-                            <th>Tên khách hàng</th>
-                            <th>Số điện thoại khách hàng</th>
-                            <th>Loại khách hàng</th>
-                            <th>Khách hàng thuộc khu vực</th>
-                            <th>Ý kiến khách hàng</th>
-                            <th>Phương thức liên lạc</th>
-                            <th>Giai đoạn</th>
-                            <th>Model xe</th>
-                            <th>Loại xe</th>
-                            <th>Số lượng</th>
-                            <th>Màu xe</th>
-                            <th>Ngày tạo form</th>
-                            <th>Lần cập nhật cuối cùng</th>
-                            <th>Ghi chú</th>
-
-                        </tr>
-                        {!!yearResult && yearResult.map(form => (
-                            <tr className="content" key={form._id}>
-                                <td>{form.employee}</td>
-                                <td>{form.employee_field}</td>
-                                <td>{form.customer}</td>
-                                <td>{form.customer_number}</td>
-                                <td>{form.customer_type}</td>
-                                <td>{form.customer_area}</td>
-                                <td>{form.customer_opinion}</td>
-                                <td>{form.customer_communication}</td>
-                                <td>{form.status}</td>
-                                <td>{form.model}</td>
-                                <td>{form.type}</td>
-                                <td>{form.quantity}</td>
-                                <td>{form.color}</td>
-                                <td>{form.date_enter}</td>
-                                <td>{form.date_update}</td>
-                                <td>{form.note}</td>
-                                <td>
-                                    <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
-                                </td>
+                <div className="table-container">
+                    <table id="emp" className="table-lg">
+                        <tbody >
+                            <tr id="titles">
+                                <th colSpan="2">Thông tin nhân viên</th>
+                                <th colSpan="7">Thông tin khách hàng</th>
+                                <th colSpan="4">Thông tin xe</th>
+                                <th colSpan="3">Thông tin thêm</th>
+                                <th rowSpan="2">Cập nhật</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                            <tr>
+                                <th>Người nhập</th>
+                                <th>Người đi thực tế</th>
+                                <th>Tên khách hàng</th>
+                                <th>Số điện thoại khách hàng</th>
+                                <th>Loại khách hàng</th>
+                                <th>Khách hàng thuộc khu vực</th>
+                                <th>Ý kiến khách hàng</th>
+                                <th>Phương thức liên lạc</th>
+                                <th>Giai đoạn</th>
+                                <th>Model xe</th>
+                                <th>Loại xe</th>
+                                <th>Số lượng</th>
+                                <th>Màu xe</th>
+                                <th>Ngày tạo form</th>
+                                <th>Lần cập nhật cuối cùng</th>
+                                <th>Ghi chú</th>
+
+                            </tr>
+                            {!!yearResult && yearResult.map(form => (
+                                <tr className="content" key={form._id}>
+                                    <td>{form.employee}</td>
+                                    <td>{form.employee_field}</td>
+                                    <td>{form.customer}</td>
+                                    <td>{form.customer_number}</td>
+                                    <td>{form.customer_type}</td>
+                                    <td>{form.customer_area}</td>
+                                    <td>{form.customer_opinion}</td>
+                                    <td>{form.customer_communication}</td>
+                                    <td>{form.status}</td>
+                                    <td>{form.model}</td>
+                                    <td>{form.type}</td>
+                                    <td>{form.quantity}</td>
+                                    <td>{form.color}</td>
+                                    <td>{form.date_enter}</td>
+                                    <td>{form.date_update}</td>
+                                    <td>{form.note}</td>
+                                    <td>
+                                        <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )

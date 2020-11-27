@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import AuthService from "../../services/auth.service";
 import "./style.css"
+import logo from "../../../src/static/imgs/ait_logo.jpg"
 
 export default function Nav() {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -26,7 +27,9 @@ export default function Nav() {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <a className="navbar-brand" href="/home">AIT</a>
+                <a className="navbar-brand" href="/home">
+                    <img src={logo} alt="logo" height="50vh"/>
+                </a>
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li className="nav-item active">
                         <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
