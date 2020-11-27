@@ -25,7 +25,7 @@ module.exports = function (app) {
       });
     
     app.post('/api/post/nhucauthucte', (req, res) => {
-        const date= req.body.date
+        const date= req.body.date.split("T")[0]
         const employee = req.body.employee
         const employee_field = req.body.employee_field
         const model = req.body.model
