@@ -19,7 +19,7 @@ export default function NCTT(props) {
     const [employee_field, setEmployee_Field] = useState("");
     const [model, setModel] = useState("");
     const [type, setType] = useState("");
-    const [quantity, setQuantity] = useState("");
+    const [quantity, setQuantity] = useState(0); //initialize to 0
     const [status, setStatus] = useState("");
     const [customer, setCustomer] = useState("");
     const [customer_number, setCustomer_Number] = useState("");
@@ -28,8 +28,6 @@ export default function NCTT(props) {
     const [customer_opinion, setCustomer_Opinion] = useState("");
     const [customer_meeting, setCustomer_Meeting] = useState("");
     const [customer_communication, setCustomer_Communication] = useState("");
-    const [ait, setAit] = useState("");
-    const [kmt, setKmt] = useState("");
     const [color, setColor] = useState("");
     const [note, setNote] = useState("");
 
@@ -93,7 +91,7 @@ export default function NCTT(props) {
             employee_field: employee_field,
             model: model,
             type: type,
-            quantity: quantity,
+            quantity: isNaN(parseInt(quantity)) ? 0 : parseInt(quantity), //check for parsing empty string and if NaN make it to 0
             status: status,
             customer: customer,
             customer_number: customer_number,
@@ -102,8 +100,6 @@ export default function NCTT(props) {
             customer_opinion: customer_opinion,
             customer_meeting: customer_meeting,
             customer_communication: customer_communication,
-            ait: ait,
-            kmt: kmt,
             color: color,
             note: note,
         }).then((response) => {

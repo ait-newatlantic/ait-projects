@@ -8,8 +8,8 @@ export default function CN_NCTT(props) {
     const [date, setDate] = useState("");
     const [status, setStatus] = useState("");
     const [color, setColor] = useState("");
-    const [ait, setAit] = useState("");
-    const [kmt, setKmt] = useState("");
+    const [ait, setAit] = useState(0); //set initial value to 0
+    const [kmt, setKmt] = useState(0); // set initial value to 0
     const [note, setNote] = useState("");
 
     const [forms, setForms] = useState([]);
@@ -51,8 +51,8 @@ export default function CN_NCTT(props) {
             color: color,
             date: date,
             status: status,
-            ait: ait,
-            kmt: kmt,
+            ait: isNaN(parseInt(ait)) ? 0 : parseInt(ait),
+            kmt: isNaN(parseInt(kmt)) ? 0 : parseInt(kmt),
             note: note,
         }).then((response) => {
             console.log(response)
