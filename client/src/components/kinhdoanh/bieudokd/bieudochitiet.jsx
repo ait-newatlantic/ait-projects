@@ -3,6 +3,7 @@ import StackChart from "../../chart/stack"
 import VerticalChart from "../../chart/vertical"
 import { Button } from "react-bootstrap";
 import api from '../../../api/index'
+import "./style.css"
 
 export default function BDCT() {
     const [year, setYear] = useState('');
@@ -20,7 +21,7 @@ export default function BDCT() {
 
     return (
         <div>
-            <div className="container p-3 my-3 border border-dark">
+            <div className="container-fluid p-3 my-3 border border-dark custom">
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
@@ -37,7 +38,7 @@ export default function BDCT() {
                 </div>
             </div>
 
-            <div className="container p-3 my-3 border border-dark">
+            <div className="container-fluid p-3 my-3 border border-dark custom">
                 <div className="row">
                     <div className="col-sm"><StackChart /></div>
                     <div className="col-sm"><VerticalChart /></div>

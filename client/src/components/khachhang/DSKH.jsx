@@ -13,8 +13,8 @@ export default function DSKH() {
     }, [])
 
     return (
-        <div className="container-fluid">
-            <div className="container p-3 my-3 border border-dark">
+        <div>
+            <div className="container-fluid p-3 my-3 border border-dark custom">
                 <h1>DANH SÁCH KHÁCH HÀNG</h1>
                 <div className="table-container">
                 <table className="table-sm">

@@ -20,7 +20,7 @@ export default function BCTQ(props) {
 
     return (
         <div>
-            <div className="container p-3 my-3 border border-dark">
+            <div className="container-fluid p-3 my-3 border border-dark custom">
                 <div className="row">
                     <div className="col">
                         <div className="form-group">
@@ -37,7 +37,7 @@ export default function BCTQ(props) {
                 </div>
             </div>
 
-            <div className="container p-3 my-3 border border-dark">
+            <div className="container-fluid p-3 my-3 border border-dark custom">
                 <h1>BÁO CÁO KINH DOANH TỔNG QUÁT</h1>
                 <table className="table">
                     <tbody>
