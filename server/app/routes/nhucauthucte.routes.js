@@ -25,7 +25,7 @@ module.exports = function (app) {
       });
     
     app.post('/api/post/nhucauthucte', (req, res) => { //Post nhucauthucte
-        const date= req.body.date.split("T")[0] 
+        const date= req.body.date
         const employee = req.body.employee
         const employee_field = req.body.employee_field
         const model = req.body.model
@@ -45,6 +45,7 @@ module.exports = function (app) {
             ("INSERT INTO nhucauthucte (date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 [date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note], (err, result) => {
                     console.log(err);
+                    res.send(result)
                 })
     })
 
@@ -112,7 +113,7 @@ module.exports = function (app) {
         const color = req.body.color
         const ait = req.body.ait
         const kmt = req.body.kmt
-        const date = req.body.date.split("T")[0]
+        const date = req.body.date
         const note = req.body.note
         const id = req.body.id
         const sqlUpdate = `

@@ -86,7 +86,7 @@ export default function NCTT(props) {
 
     const SubmitForm = () => {
         api.post("/api/post/nhucauthucte", {
-            date: date,
+            date: date.split("T")[0], //parsing date from ISO-8061 to DATE type YYYY-MM-D in MySQL database before sending to server
             employee: currentUsers.username,
             employee_field: employee_field,
             model: model,

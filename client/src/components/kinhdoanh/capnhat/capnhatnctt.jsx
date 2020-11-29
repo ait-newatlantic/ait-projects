@@ -49,7 +49,7 @@ export default function CN_NCTT(props) {
         api.put("/api/update/nhucauthucte", {
             id: props.match.params.id,
             color: color,
-            date: date,
+            date: date.split("T")[0], //parsing date from ISO-8061 to DATE type YYYY-MM-D in MySQL database before sending to server,
             status: status,
             ait: isNaN(parseInt(ait)) ? 0 : parseInt(ait),
             kmt: isNaN(parseInt(kmt)) ? 0 : parseInt(kmt),
