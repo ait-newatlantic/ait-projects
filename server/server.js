@@ -24,7 +24,7 @@ const db = require("./app/models");
 const Role = db.role;
 
 db.sequelize.sync();
-// force: true will drop the table if it already exists
+// force: true //will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {
 //   console.log('Drop and Resync Database with { force: true }');
 //   initial();
@@ -45,8 +45,8 @@ app.use(function(req, res, next) {
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
-require('./app/routes/nhucauthucte.routes')(app);
-require('./app/routes/khachhang.routes')(app);
+require('./app/routes/demand.routes')(app);
+require('./app/routes/customer.routes')(app);
 require('./app/routes/thongbao.routes')(app);
 
 // set port, listen for requests

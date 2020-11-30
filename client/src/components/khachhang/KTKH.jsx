@@ -25,7 +25,7 @@ export default function KTKH() {
     //them id thang nam ngay, id khach hang,
     //table nhucauthuc te them col-smumn id_nguoinhap, id_khachhang, flag: DONE or FAILED theo đợt
     const SubmitForm = () => {
-        api.post("/api/post/khachhang", {
+        api.post("/api/post/customers", {
             customer: customer,
             customer_taxcode: customer_taxcode,
             customer_representative: customer_representative,

@@ -7,7 +7,7 @@ export default function DSKH() {
     const [customerResult, setCustomerResult] = useState();
 
     useEffect(() => {
-        api.get("/api/get/khachhang").then((response) => {
+        api.get("/api/get/customers").then((response) => {
             setCustomerResult(response.data)
         })
     }, [])
@@ -45,7 +45,7 @@ export default function DSKH() {
                                 <td>{form.customer_area}</td>
                                 <td>{form.customer_address}</td>
                                 <td>
-                                    <a className="btn btn-warning btn-sm" href={`/khachhang/capnhat/${form.id}`} role="button">Cập nhật</a>
+                                    <a className="btn btn-warning btn-sm" href={`/customers/capnhat/${form.id}`} role="button">Cập nhật</a>
                                 </td>
                             </tr>
                         ))}

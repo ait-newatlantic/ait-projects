@@ -25,7 +25,7 @@ module.exports = function (app) {
         next();
     });
     
-    app.post('/api/post/khachhang', (req, res) => {
+    app.post('/api/post/customers', (req, res) => {
         const customer = req.body.customer
         const customer_number = req.body.customer_number
         const customer_area = req.body.customer_area
@@ -36,36 +36,36 @@ module.exports = function (app) {
         const customer_type = req.body.customer_type
         const customer_address = req.body.customer_address
         db.query
-            ("INSERT INTO khachhang (customer, customer_number, customer_representative, customer_representative_number, customer_representative_email, customer_area, customer_taxcode, customer_type, customer_address) VALUES (?,?,?,?,?,?,?,?,?)",
+            ("INSERT INTO customers (customer, customer_number, customer_representative, customer_representative_number, customer_representative_email, customer_area, customer_taxcode, customer_type, customer_address) VALUES (?,?,?,?,?,?,?,?,?)",
                 [customer, customer_number, customer_representative, customer_representative_number, customer_representative_email, customer_area, customer_taxcode, customer_type, customer_address], (err, result) => {
                     console.log(err);
                 })
     })
 
-    app.get('/api/get/khachhang', function (req, res) {
-        const sqlSelect = `SELECT * FROM khachhang `
+    app.get('/api/get/customers', function (req, res) {
+        const sqlSelect = `SELECT * FROM customers `
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.get('/api/get/khachhang/thongtin', function (req, res) {
+    app.get('/api/get/customers/thongtin', function (req, res) {
         const customer = req.query.customer;
-        const sqlSelect = `SELECT * FROM khachhang WHERE customer="${customer}"`
+        const sqlSelect = `SELECT * FROM customers WHERE customer="${customer}"`
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.get('/api/get/khachhang/id', function (req, res) {
+    app.get('/api/get/customers/id', function (req, res) {
         const id = req.query.id;
-        const sqlSelect = `SELECT * FROM khachhang WHERE id=${id}`
+        const sqlSelect = `SELECT * FROM customers WHERE id=${id}`
         db.query(sqlSelect, (err, result) => {
             res.send(result)
         })
     })
 
-    app.put('/api/update/khachhang', function (req, res) {
+    app.put('/api/update/customers', function (req, res) {
         const customer = req.body.customer
         const customer_number = req.body.customer_number
         const customer_representative = req.body.customer_representative
@@ -77,7 +77,7 @@ module.exports = function (app) {
         const customer_address = req.body.customer_address
         const id = req.body.id
         const sqlUpdate = `
-        UPDATE khachhang 
+        UPDATE customers 
         SET 
             customer=?,
             customer_number=?,

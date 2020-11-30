@@ -9,7 +9,7 @@ export default function BCTQ(props) {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        api.get("/api/get/nhucauthucte/total", {
+        api.get("/api/get/demands/total", {
             params: {
                 year,
             }

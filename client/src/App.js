@@ -13,9 +13,7 @@ import CN_NCTT from './components/kinhdoanh/capnhat/capnhatnctt.jsx'
 import KTKH from './components/khachhang/KTKH'
 import DSKH from "./components/khachhang/DSKH"
 import CNKH from "./components/khachhang/CNKH"
-import Sidebar from "./components/sidebar/Sidebar"
 import Thongbao from "./components/thongbao/Thongbao"
-import Notification from "./components/notification/Notification"
 
 import Login from "./components/user/login/Login";
 import Register from "./components/user/register/Register";
@@ -82,15 +80,15 @@ function App() {
                           <Route path="/user" component={BoardUser} />
                           <Route path="/mod" component={BoardModerator} />
                           <Route path="/admin" component={BoardAdmin} />
-                          <Route path="/kinhdoanh/nhaplieu/nhucauthucte" exact component={NCTT} />
-                          <Route path="/kinhdoanh/capnhat/nhucauthucte/:id" exact component={CN_NCTT} />
+                          <Route path="/kinhdoanh/nhaplieu/demands" exact component={NCTT} />
+                          <Route path="/kinhdoanh/capnhat/demands/:id" exact component={CN_NCTT} />
                           <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
                           <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
                           <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
                           <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
-                          <Route path="/khachhang/khoitao" exact component={KTKH} />
-                          <Route path="/khachhang/danhsach" exact component={DSKH} />
-                          <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
+                          <Route path="/customers/khoitao" exact component={KTKH} />
+                          <Route path="/customers/danhsach" exact component={DSKH} />
+                          <Route path="/customers/capnhat/:id" exact component={CNKH} />
                         </Switch>
                       </Router>
                     </div>
@@ -104,15 +102,15 @@ function App() {
                             <Route path="/user" component={BoardUser} />
                             <Route path="/mod" component={BoardModerator} />
                             <Route path="/admin" component={BoardAdmin} />
-                            <Route path="/kinhdoanh/nhaplieu/nhucauthucte" exact component={NCTT} />
-                            <Route path="/kinhdoanh/capnhat/nhucauthucte/:id" exact component={CN_NCTT} />
+                            <Route path="/kinhdoanh/nhaplieu/demands" exact component={NCTT} />
+                            <Route path="/kinhdoanh/capnhat/demands/:id" exact component={CN_NCTT} />
                             <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
                             <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
                             <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
                             <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
-                            <Route path="/khachhang/khoitao" exact component={KTKH} />
-                            <Route path="/khachhang/danhsach" exact component={DSKH} />
-                            <Route path="/khachhang/capnhat/:id" exact component={CNKH} />
+                            <Route path="/customers/khoitao" exact component={KTKH} />
+                            <Route path="/customers/danhsach" exact component={DSKH} />
+                            <Route path="/customers/capnhat/:id" exact component={CNKH} />
                           </Switch>
                         </Router>
                   )}

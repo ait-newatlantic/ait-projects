@@ -24,7 +24,8 @@ module.exports = function (app) {
         next();
       });
     
-    app.post('/api/post/nhucauthucte', (req, res) => { //Post nhucauthucte
+    app.post('/api/post/demands', async (req, res) => { //Post demands
+        try{
         const date= req.body.date
         const employee = req.body.employee
         const employee_field = req.body.employee_field
@@ -42,73 +43,96 @@ module.exports = function (app) {
         const color = req.body.color
         const note = req.body.note
         db.query
-            ("INSERT INTO nhucauthucte (date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            ("INSERT INTO demands (date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 [date, employee, employee_field, model, type, quantity, status, customer, customer_number, customer_type, customer_area, customer_opinion, customer_meeting, customer_communication, color, note], (err, result) => {
                     console.log(err);
-                    res.send(result)
-                })
+                })}catch(error){
+                    return res.status(500).json({ message: error });
+                }
     })
 
-    app.get('/api/get/nhucauthucte', function (req, res) {
-        const sqlSelect = "SELECT * FROM nhucauthucte"
+    app.get('/api/get/demands', async (req, res) => {
+        try{
+        const sqlSelect = "SELECT * FROM demands"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/nhucauthucte/nam', function (req, res) {
+    app.get('/api/get/demands/nam', async (req, res) => {
+        try{
         const year = req.query.year;
-        const sqlSelect = `SELECT * FROM nhucauthucte WHERE YEAR(date)=${year} `
+        const sqlSelect = `SELECT * FROM demands WHERE YEAR(date)=${year} `
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/chinhanh', function (req, res) {
+    app.get('/api/get/chinhanh', async (req, res) => {
+        try{
         const sqlSelect = "SELECT * FROM chinhanh"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/tinhthanh', function (req, res) {
+    app.get('/api/get/tinhthanh', async (req, res) => {
+        try{
         const sqlSelect = "SELECT * FROM tinhthanh"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/modelxe', function (req, res) {
+    app.get('/api/get/modelxe', async (req, res) => {
+        try{
         const sqlSelect = "SELECT * FROM modelxe"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/loaixe', function (req, res) {
+    app.get('/api/get/loaixe', async (req, res) => {
+        try{
         const sqlSelect = "SELECT * FROM loaixe"
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.put('/api/put/nhucauthucte', function (req, res) {
+    app.put('/api/put/demands', async (req, res) => {
         const status = req.body.status;
-        const sqlUpdate = `UPDATE nhucauthucte SET status =? WHERE status = ? `
+        const sqlUpdate = `UPDATE demands SET status =? WHERE status = ? `
         db.query(sqlUpdate, status, (err, result) => {
             res.send(result)
         })
-    })
+    }) 
 
-    app.get('/api/get/nhucauthucte/id', function (req, res) {
+    app.get('/api/get/demands/id', async (req, res) => {
+        try{
         const id = req.query.id;
-        const sqlSelect = `SELECT * FROM nhucauthucte WHERE id=${id}`
+        const sqlSelect = `SELECT * FROM demands WHERE id=${id}`
         db.query(sqlSelect, (err, result) => {
             res.send(result)
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.put('/api/update/nhucauthucte', function (req, res) {
+    app.put('/api/update/demands', async (req, res) => {
+        try{
         const status = req.body.status
         const color = req.body.color
         const ait = req.body.ait
@@ -117,7 +141,7 @@ module.exports = function (app) {
         const note = req.body.note
         const id = req.body.id
         const sqlUpdate = `
-        UPDATE nhucauthucte 
+        UPDATE demands 
         SET 
             status=?,
             color=?,
@@ -129,10 +153,13 @@ module.exports = function (app) {
             id=?`
         db.query(sqlUpdate, [status, color, ait, kmt, date, note, id], (err, result) => {
             if (err) { console.log(err) }
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/nhucauthucte/total', function (req, res) {
+    app.get('/api/get/demands/total', async (req, res) => {
+        try{
         const year = req.query.year;
         const sqlSelect = `SELECT 
          SUM(CASE WHEN YEAR(date)=${year} THEN quantity END) as tongcong,
@@ -146,13 +173,16 @@ module.exports = function (app) {
          SUM(CASE WHEN YEAR(date)=${year} AND status="LÊN HỢP ĐỒNG" THEN quantity END) as lenhopdong,
          SUM(CASE WHEN YEAR(date)=${year} AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
          SUM(CASE WHEN YEAR(date)=${year} AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
-         FROM nhucauthucte`;
+         FROM demands`;
         db.query(sqlSelect, (err, result) => {
             res.send(result);
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 
-    app.get('/api/get/nhucauthucte/bdtq', function (req, res) {
+    app.get('/api/get/demands/bdtq', async (req, res) => {
+        try{
         const year = req.query.year;
         const sqlSelect = `SELECT 
          SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "1" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte1,
@@ -179,9 +209,11 @@ module.exports = function (app) {
          SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "11" THEN quantity END) as dukien11,
          SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
          SUM(CASE WHEN YEAR(date)= ${year} AND MONTH(date) = "12" THEN quantity END) as dukien12
-         FROM nhucauthucte`;
+         FROM demands`;
         db.query(sqlSelect, (err, result) => {
             res.send(result);
-        })
+        })}catch(error){
+            return res.status(500).json({ message: error });
+        }
     })
 }

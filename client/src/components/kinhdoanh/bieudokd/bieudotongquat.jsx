@@ -10,7 +10,7 @@ export default function BDTQ() {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        api.get("/api/get/nhucauthucte/bdtq", {
+        api.get("/api/get/demands/bdtq", {
             params: {
                 year,
             }

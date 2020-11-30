@@ -25,7 +25,7 @@ export default function CNKH(props) {
 
     const FetchData = async () => {
         const id = props.match.params.id // lay id tu URL
-        api.get(`/api/get/khachhang/id`, {
+        api.get(`/api/get/customers/id`, {
             params: {
                 id,
             }
@@ -58,7 +58,7 @@ export default function CNKH(props) {
     }
 
     const SubmitForm = () => {
-        api.put("/api/update/khachhang", {
+        api.put("/api/update/customers", {
             id: props.match.params.id,
             customer: customer,
             customer_area: customer_area,

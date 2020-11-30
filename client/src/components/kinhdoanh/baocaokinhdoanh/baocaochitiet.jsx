@@ -10,7 +10,7 @@ export default function BCCT() {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        api.get("/api/get/nhucauthucte/nam", {
+        api.get("/api/get/demands/nam", {
             params: {
                 year,
             }
@@ -20,7 +20,7 @@ export default function BCCT() {
     }
 
     useEffect(() => {
-        api.get("/api/get/nhucauthucte").then((response) => {
+        api.get("/api/get/demands").then((response) => {
             setYearResult(response.data)
         })
     }, [])
@@ -98,11 +98,11 @@ export default function BCCT() {
                                     <td>{form.type}</td>
                                     <td>{form.quantity}</td>
                                     <td>{form.color}</td>
-                                    <td>{form.date_enter}</td>
-                                    <td>{form.date_update}</td>
+                                    <td>{form.createdAt}</td>
+                                    <td>{form.updatedAt}</td>
                                     <td>{form.note}</td>
                                     <td>
-                                        <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/nhucauthucte/${form.id}`} role="button">Cập nhật</a>
+                                        <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/demands/${form.id}`} role="button">Cập nhật</a>
                                     </td>
                                 </tr>
                             ))}

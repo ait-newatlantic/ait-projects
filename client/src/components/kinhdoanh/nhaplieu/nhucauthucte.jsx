@@ -85,7 +85,7 @@ export default function NCTT(props) {
     }
 
     const SubmitForm = () => {
-        api.post("/api/post/nhucauthucte", {
+        api.post("/api/post/demands", {
             date: date.split("T")[0], //parsing date from ISO-8061 to DATE type YYYY-MM-D in MySQL database before sending to server
             employee: currentUsers.username,
             employee_field: employee_field,
@@ -111,7 +111,7 @@ export default function NCTT(props) {
 
     // em attach throttle callback cho do bi call nhieu lan/s
     const Autofill = useCallback(() => {
-        api.get("/api/get/khachhang/thongtin", {
+        api.get("/api/get/customers/thongtin", {
             params: {
                 customer,
             }
@@ -226,7 +226,7 @@ export default function NCTT(props) {
                             <option value="ĐÃ SỬ DỤNG KAMAZ">ĐÃ SỬ DỤNG KAMAZ</option>
                         </select>
                     </div>
-                    <div className="col-sm-9" id="ykien-khachhang">
+                    <div className="col-sm-9" id="ykien-customers">
                         <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
                         <textarea type="customer_opinion"
                             className="form-control"

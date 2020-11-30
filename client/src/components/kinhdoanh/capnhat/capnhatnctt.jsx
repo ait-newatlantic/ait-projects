@@ -16,7 +16,7 @@ export default function CN_NCTT(props) {
 
     const FetchData = async () => {
         const id = props.match.params.id // lay id tu URL
-        api.get(`/api/get/nhucauthucte/id`, {
+        api.get(`/api/get/demands/id`, {
             params: {
                 id,
             }
@@ -46,7 +46,7 @@ export default function CN_NCTT(props) {
     }
 
     const SubmitForm = () => {
-        api.put("/api/update/nhucauthucte", {
+        api.put("/api/update/demands", {
             id: props.match.params.id,
             color: color,
             date: date.split("T")[0], //parsing date from ISO-8061 to DATE type YYYY-MM-D in MySQL database before sending to server,
@@ -131,7 +131,7 @@ export default function CN_NCTT(props) {
                              <input type="customer_type" className="form-control" value={form.customer_type} id="exampleFormControlInput1"/>
                         ))}
                     </div>
-                    <div className="col-sm-9" id="ykien-khachhang">
+                    <div className="col-sm-9" id="ykien-customers">
                         <label for="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
                         {!!forms && forms.map(form => (
                             <textarea type="customer_opinion"
