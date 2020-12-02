@@ -29,7 +29,7 @@ export default function CN_NCTT(props) {
     const form = useRef();
     const checkBtn = useRef();
 
-    
+
     const onChangeDate = (e) => {
         const date = e.target.value;
         setDate(date);
@@ -156,15 +156,13 @@ export default function CN_NCTT(props) {
         DemandService.get_specific_demand(id)
             .then(response => {
                 setDemands(response.data);
-                response.data.forEach(value => {
-                    setId(value.id)
-                    setDate(value.date);
-                    setAit(value.ait);
-                    setKmt(value.kmt);
-                    setStatus(value.status);
-                    setNote(value.note);
-                    setColor(value.color);
-                })
+                setId(demands.id)
+                setDate(demands.date);
+                setAit(demands.ait);
+                setKmt(demands.kmt);
+                setStatus(demands.status);
+                setNote(demands.note);
+                setColor(demands.color);
                 console.log(response.data);
             })
             .catch(e => {

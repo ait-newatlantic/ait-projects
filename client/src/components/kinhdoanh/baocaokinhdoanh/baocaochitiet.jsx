@@ -8,6 +8,7 @@ export default function BCCT() {
 
     const [year, setYear] = useState('');
     const [yearResult, setYearResult] = useState();
+    // const [updateats, setUpdateAt] = useState([])
 
     const Submit = () => {
         api.get("/api/get/demands/nam", {
@@ -22,7 +23,7 @@ export default function BCCT() {
     useEffect(() => {
         api.get("/api/demands").then((response) => {
             // response.data.forEach(value => {
-            //     console.log(value.date)
+            //      console.log(value.updatedAt.substring(0, 10))
             // })
             setYearResult(response.data)
         })
@@ -103,8 +104,8 @@ export default function BCCT() {
                                     <td>{form.quantity}</td>
                                     <td>{form.color}</td>
                                     <td>{form.date}</td>
-                                    <td>{form.createdAt}</td>
-                                    <td>{form.updatedAt}</td>
+                                    <td>{form.createdAt.substring(0, 10)}</td>
+                                    <td>{form.updatedAt.substring(0, 10)}</td>
                                     <td>{form.note}</td>
                                     <td>
                                         <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/demands/${form.id}`} role="button">Cập nhật</a>
