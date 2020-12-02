@@ -84,8 +84,25 @@ exports.findOne = (req, res) => {
 // Update a Demand by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
-  
-    Demand.update(req.body, {
+
+    if (!req.body.date) {
+        res.status(400).send({
+            message: "Xin vui lòng nhập thông tin đầy đủ!"
+        });
+        return;
+    }
+
+    // Create a Demand
+    const demand = {
+        date : req.body.date,
+        status : req.body.status,
+        ait: req.body.ait,
+        kmt:req.body.kmt,
+        color : req.body.color,
+        note : req.body.note,
+    };
+
+    Demand.update(demand, {
       where: { id: id }
     })
       .then(num => {

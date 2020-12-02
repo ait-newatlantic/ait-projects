@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Button } from "react-bootstrap";
 import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
 import { CustomerContext } from '../../../context/customer/CustomerContext'
+import { Button } from "react-bootstrap";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -19,7 +19,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
@@ -67,20 +67,9 @@ export default function NCTT(props) {
         setQuantity(quantity);
     };
 
-    const required = (value) => {
-        if (!value) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    This field is required!
-                </div>
-            );
-        }
-    };
-
     const onChangeDate = (e) => {
         const date = e.target.value;
         setDate(date);
-        console.log(date)
     };
 
     const onChangeEmployee_Field = (e) => {
@@ -103,6 +92,16 @@ export default function NCTT(props) {
             return (
                 <div className="alert alert-danger" role="alert">
                     The input type should not be an empty string.
+                </div>
+            );
+        }
+    };
+
+    const required = (value) => {
+        if (!value) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    This field is required!
                 </div>
             );
         }
@@ -286,7 +285,7 @@ export default function NCTT(props) {
                                         <div className="col-sm">
                                             <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
                                             <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={e => setStatus(e.target.value)}>
-                                                <option value="">Click để chọn</option>
+                                                <option value={null}>Click để chọn</option>
                                                 <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
                                                 <option value="CHẠY THỬ">CHẠY THỬ</option>
                                                 <option value="ĐÀM PHÁN">ĐÀM PHÁN</option>
