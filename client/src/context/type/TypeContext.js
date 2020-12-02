@@ -9,7 +9,7 @@ export const TypeContext = createContext();
 export const TypeProvider = (props) => {
     const [types, setTypes] = useState([])
     useEffect(()=>{
-        api.get("/api/get/loaixe").then((response)=>{
+        api.get("/api/car_types").then((response)=>{
             setTypes(response.data)
         })
     },[])

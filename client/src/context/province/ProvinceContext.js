@@ -8,7 +8,7 @@ export const ProvinceContext = createContext();
 export const ProvinceProvider = (props) => {
     const [provinces, setProvinces] = useState([])
     useEffect(()=>{
-        api.get("/api/get/tinhthanh").then((response)=>{
+        api.get("/api/provinces").then((response)=>{
             setProvinces(response.data)
         })
     },[])

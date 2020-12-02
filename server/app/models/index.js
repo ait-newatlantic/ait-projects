@@ -23,12 +23,14 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.demand = require("../models/demand.model.js")(sequelize, Sequelize);
 db.customer = require("../models/customer.model.js")(sequelize, Sequelize);
+db.car_model = require("../models/car_model.model.js")(sequelize, Sequelize);
+db.car_type = require("../models/car_type.model.js")(sequelize, Sequelize);
+db.province = require("../models/province.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

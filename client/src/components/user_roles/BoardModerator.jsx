@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
-import Sidebar from "../sidebar/Sidebar"
+import Sidebar from "../sidebar/Sidebar" 
 import Notification from "../notification/Notification"
 import { NotificationProvider } from "../../context/notification/NotificationContext"
 

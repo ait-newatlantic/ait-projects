@@ -2,25 +2,26 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Button } from "react-bootstrap";
 import api from "../../../api/index"
 import logo from "../../../static/imgs/ait_logo.jpg"
+import DemandService from "../../../services/demand.service";
 
 
 export default function CN_NCTT(props) {
     const [date, setDate] = useState("");
     const [status, setStatus] = useState("");
     const [color, setColor] = useState("");
-    const [ait, setAit] = useState(0); //set initial value to 0
-    const [kmt, setKmt] = useState(0); // set initial value to 0
+    const [ait, setAit] = useState(0); 
+    const [kmt, setKmt] = useState(0); 
     const [note, setNote] = useState("");
+    const [id, setId] = useState("");
 
     const [forms, setForms] = useState([]);
 
     const FetchData = async () => {
-        const id = props.match.params.id // lay id tu URL
-        api.get(`/api/get/demands/id`, {
-            params: {
-                id,
-            }
-        }).then((response) => {
+        setId(props.match.params.id) // lay id tu URL
+        console.log(id)
+        DemandService.get_specific_demand(
+            id
+            ).then((response) => {
             setForms(response.data);
             response.data.forEach(value => {
                 setDate(value.date);

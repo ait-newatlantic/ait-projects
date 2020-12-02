@@ -28,17 +28,7 @@ module.exports = (sequelize, Sequelize) => {
             customer_address: {
                 type: Sequelize.STRING
             },
-            createdAt:{
-                type: 'TIMESTAMP',
-                defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-                allowNull: false
-            },
-            updatedAt:{
-                type: 'TIMESTAMP',
-                defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-                allowNull: false
-            }
+           
         });
-
     return Customers;
 };  

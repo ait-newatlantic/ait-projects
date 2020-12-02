@@ -27,7 +27,7 @@ export default function KTKH() {
     const SubmitForm = () => {
         api.post("/api/post/customers", {
             customer: customer,
-            customer_taxcode: customer_taxcode,
+            customer_taxcode: customer_taxcode, 
             customer_representative: customer_representative,
             customer_representative_number: customer_representative_number,
             customer_representative_email: customer_representative_email,

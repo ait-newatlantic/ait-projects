@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.STRING
             },
             date: {
-                type: Sequelize.DATE
+                type: Sequelize.DATEONLY    
             },
             model: {
                 type: Sequelize.STRING
@@ -55,16 +55,6 @@ module.exports = (sequelize, Sequelize) => {
             note: {
                 type: Sequelize.STRING
             },
-            createdAt:{
-                type: 'TIMESTAMP',
-                defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-                allowNull: false
-            },
-            updatedAt:{
-                type: 'TIMESTAMP',
-                defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-                allowNull: false
-            }
         });
 
     return Demands;

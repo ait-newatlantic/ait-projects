@@ -20,7 +20,10 @@ export default function BCCT() {
     }
 
     useEffect(() => {
-        api.get("/api/get/demands").then((response) => {
+        api.get("/api/demands").then((response) => {
+            // response.data.forEach(value => {
+            //     console.log(value.date)
+            // })
             setYearResult(response.data)
         })
     }, [])
@@ -61,7 +64,7 @@ export default function BCCT() {
                                 <th colSpan="2">Thông tin nhân viên</th>
                                 <th colSpan="7">Thông tin khách hàng</th>
                                 <th colSpan="4">Thông tin xe</th>
-                                <th colSpan="3">Thông tin thêm</th>
+                                <th colSpan="4">Thông tin thêm</th>
                                 <th rowSpan="2">Cập nhật</th>
                             </tr>
                             <tr>
@@ -78,6 +81,7 @@ export default function BCCT() {
                                 <th>Loại xe</th>
                                 <th>Số lượng</th>
                                 <th>Màu xe</th>
+                                <th>Ngày đi thực tế</th>
                                 <th>Ngày tạo form</th>
                                 <th>Lần cập nhật cuối cùng</th>
                                 <th>Ghi chú</th>
@@ -98,6 +102,7 @@ export default function BCCT() {
                                     <td>{form.type}</td>
                                     <td>{form.quantity}</td>
                                     <td>{form.color}</td>
+                                    <td>{form.date}</td>
                                     <td>{form.createdAt}</td>
                                     <td>{form.updatedAt}</td>
                                     <td>{form.note}</td>

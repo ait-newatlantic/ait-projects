@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,7 +8,7 @@ export const ModelContext = createContext();
 export const ModelProvider = (props) => {
     const [models, setModels] = useState([])
     useEffect(()=>{
-        api.get("/api/get/modelxe").then((response)=>{
+        api.get("/api/car_models").then((response)=>{
             setModels(response.data)
         })
     },[])
