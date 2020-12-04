@@ -6,19 +6,80 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 export default function BCCT() {
 
-    const [year, setYear] = useState('');
+    const [fromdate, setFromDate] = useState('');
+    const [todate, setToDate] = useState('');
+    const [datetype, setDateType] = useState('');
     const [yearResult, setYearResult] = useState();
     // const [updateats, setUpdateAt] = useState([])
 
-    const Submit = () => {
-        api.get("/api/get/demands/nam", {
+    const getDate = () => {
+        api.get("/api/demands/date", {
             params: {
-                year,
+                fromdate,
+                todate,
             }
         }).then((response) => {
             setYearResult(response.data);
+            console.log(response.data)
         });
     }
+
+    const getUpdatedAt = () => {
+        api.get("/api/demands/updateat", {
+            params: {
+                fromdate,
+                todate,
+            }
+        }).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
+    const getCreatedAt = () => {
+        api.get("/api/demands/createdat", {
+            params: {
+                fromdate,
+                todate,
+            }
+        }).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
+    const getGoAt = () => {
+        api.get("/api/demands/goat", {
+            params: {
+                fromdate,
+                todate,
+            }
+        }).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
+    const Submit =  () => {
+        if(datetype === "Ngày tạo form"){
+            getCreatedAt()
+        }
+        if(datetype === "Ngày cập nhật gần nhất"){
+            getUpdatedAt()
+        }
+        if(datetype === "Ngày đi thực tế"){
+            getGoAt()
+        }
+        if(datetype === "Tất cả các ngày"){
+            getDate()
+        }
+    }
+
+    const onChangeDateType = (e) => {
+        const datetype = e.target.value;
+        setDateType(datetype);
+        console.log(datetype)
+    };
 
     useEffect(() => {
         api.get("/api/demands").then((response) => {
@@ -33,18 +94,37 @@ export default function BCCT() {
         <div>
             <div className="container-fluid p-3 my-3 border border-dark custom">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-sm">
+                        <label htmlFor="exampleFormControlSelect1">Loại ngày</label>
+                        <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeDateType}>
+                            <option defaultValue="" selected disabled hidden>Click để chọn</option>
+                            <option defaultValue="Ngày tạo form">Ngày tạo form</option>
+                            <option defaultValue="Ngày cập nhật gần nhất">Ngày cập nhật gần nhất</option>
+                            <option defaultValue="Ngày đi thực tế">Ngày đi thực tế</option>
+                            <option defaultValue="Tất cả các ngày">Tất cả các ngày</option>
+                        </select>
+                    </div>
+                    <div className="col-sm">
                         <div className="form-group">
-                            <label htmlFor="exampleFormControlInput1" >Năm</label>
-                            <input type="year" className="form-control"
-                                id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
+                            <label htmlFor="exampleFormControlInput1" >Từ ngày</label>
+                            <input type="date" className="form-control"
+                                id="exampleFormControlInput1" onChange={e => setFromDate(e.target.value)} />
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                        <div className="form-group">
+                            <label htmlFor="exampleFormControlInput1" >Đến ngày</label>
+                            <input type="date" className="form-control"
+                                id="exampleFormControlInput1" onChange={e => setToDate(e.target.value)} />
                         </div>
                     </div>
                 </div>
-                <div className="form-group">
-                    <Button block type="submit" onClick={Submit}>
-                        Tra cứu
+                <div className="row">
+                    <div className="col-sm">
+                        <Button block type="submit" onClick={Submit}>
+                            Tra cứu
                         </Button>
+                    </div>
                 </div>
             </div>
 
@@ -84,7 +164,7 @@ export default function BCCT() {
                                 <th>Màu xe</th>
                                 <th>Ngày đi thực tế</th>
                                 <th>Ngày tạo form</th>
-                                <th>Lần cập nhật cuối cùng</th>
+                                <th>Ngày cập nhật gần nhất</th>
                                 <th>Ghi chú</th>
 
                             </tr>

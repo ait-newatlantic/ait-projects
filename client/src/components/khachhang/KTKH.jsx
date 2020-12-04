@@ -20,10 +20,7 @@ export default function KTKH() {
 
     //const [branches, setBranches] = useContext(BranchContext);
     const [provinces, setProvinces] = useContext(ProvinceContext);
-
-    //Bo chi nhanh, them nguoi nhap, chinh lại ngày tháng thực tế(DATETIME)
-    //them id thang nam ngay, id khach hang,
-    //table nhucauthuc te them col-smumn id_nguoinhap, id_khachhang, flag: DONE or FAILED theo đợt
+    
     const SubmitForm = () => {
         api.post("/api/post/customers", {
             customer: customer,

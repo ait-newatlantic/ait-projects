@@ -136,34 +136,18 @@ export default function CN_NCTT(props) {
         },
     }))(Tooltip);
 
-    // const Submit = () => {
-    //     api.put("/api/update/demands", {
-    //         id: props.match.params.id,
-    //         color: color,
-    //         date: date,
-    //         status: status,
-    //         ait: ait,
-    //         kmt: kmt,
-    //         note: note,
-    //     }).then((response) => {
-    //         console.log(response.data)
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     })
-    // }
-
     const FetchData = id => {
         DemandService.get_specific_demand(id)
             .then(response => {
                 setDemands(response.data);
-                setId(demands.id)
-                setDate(demands.date);
-                setAit(demands.ait);
-                setKmt(demands.kmt);
-                setStatus(demands.status);
-                setNote(demands.note);
-                setColor(demands.color);
-                console.log(response.data);
+                setId(props.match.params.id)
+                setDate(response.data.date);
+                setAit(response.data.ait);
+                setKmt(response.data.kmt);
+                setStatus(response.data.status);
+                setNote(response.data.note);
+                setColor(response.data.color);
+                console.log(response.data)
             })
             .catch(e => {
                 console.log(e);
@@ -214,7 +198,7 @@ export default function CN_NCTT(props) {
                                     <div className="col-sm">
                                         <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
                                         <Select className="form-control" id="exampleFormControlSelect1" style={{ background: "#add8e6" }} onChange={onChangeStatus}>
-                                            <option defaultValue={demands.status} selected disabled hidden>{demands.status}</option>
+                                            <option defaultValue={demands.status} >{demands.status}</option>
                                             <option defaultValue="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
                                             <option defaultValue="CHẠY THỬ">CHẠY THỬ</option>
                                             <option defaultValue="ĐÀM PHÁN">ĐÀM PHÁN</option>
@@ -303,7 +287,7 @@ export default function CN_NCTT(props) {
                                     <div className="col-sm">
                                         <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
                                         <Select className="form-control" id="exampleFormControlSelect1" onChange={onChangeColor} style={{ background: "#add8e6" }}>
-                                            <option defaultValue={demands.color} selected disabled hidden >{demands.color}</option>
+                                            <option defaultValue={demands.color}>{demands.color}</option>
                                             <option defaultValue="Cam">Cam</option>
                                             <option defaultValue="Trắng">Trắng</option>
                                             <option defaultValue="Vàng">Vàng</option>
@@ -335,7 +319,6 @@ export default function CN_NCTT(props) {
                                             style={{ background: "#add8e6" }}
                                             className="form-control"
                                             name="date"
-                                            value={date}
                                             onChange={onChangeDate}
                                             validations={[required]}
                                         />
@@ -351,10 +334,10 @@ export default function CN_NCTT(props) {
                                             <label htmlFor="exampleFormControlInput1" >AIT</label>
                                             <Input
                                                 style={{ background: "#add8e6" }}
-                                                type="number"
+                                                type="text"
                                                 className="form-control"
                                                 name="ait"
-                                                value={demands.ait}
+                                                placeholder={demands.ait}
                                                 onChange={onChangeAit}
                                                 validations={[validAit]}
                                             />
@@ -365,10 +348,10 @@ export default function CN_NCTT(props) {
                                             <label htmlFor="exampleFormControlInput1" >KMT</label>
                                             <Input
                                                 style={{ background: "#add8e6" }}
-                                                type="number"
+                                                type="text"
                                                 className="form-control"
                                                 name="kmt"
-                                                value={demands.kmt}
+                                                placeholder={demands.kmt}
                                                 onChange={onChangeKmt}
                                                 validations={[validKmt]}
                                             />

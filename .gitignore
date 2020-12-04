@@ -1,5 +1,5 @@
 /client/node_modules/
 /client/.env
-/client/src/debug.log
+/client/debug.log
 /server/node_modules/
 /server/.env

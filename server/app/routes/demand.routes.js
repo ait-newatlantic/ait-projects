@@ -9,9 +9,22 @@ module.exports = app => {
     // Retrieve all Tutorials
     router.get("/", demands.findAll);
   
+    // Retrieve all demands by date range
+    router.get("/date", demands.findAllDate);
+
+    router.get("/updateat", demands.findAllUpdatedAt);
+
+    router.get("/createat", demands.findAllCreatedAt);
+
+    router.get("/goat", demands.findAllGoAt);
+
+    router.get("/total", demands.findAllTotal);
+
+    router.get("/overall", demands.findAllOverall);
+
     // Retrieve a single Tutorial with id
     router.get("/:id", demands.findOne);
-  
+
     // Update a Tutorial with id
     router.put("/:id", demands.update);
   

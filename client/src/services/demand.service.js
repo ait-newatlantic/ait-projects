@@ -53,17 +53,22 @@ const update_specific_demand = (
     status,
     color,) => {
     return axios.put(API_URL + `api/demands/${id}`, {
-    ait,
-    kmt,
-    date,
-    note,
-    status,
-    color,
+        ait,
+        kmt,
+        date,
+        note,
+        status,
+        color,
     });
-  };
+};
+
+const get_overall = () => {
+    return axios.get(API_URL + `api/demands/overall`);
+};
 
 export default {
     create_demand,
     get_specific_demand,
     update_specific_demand,
+    get_overall,
 };

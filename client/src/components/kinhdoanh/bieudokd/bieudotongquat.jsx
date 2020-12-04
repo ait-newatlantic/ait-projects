@@ -6,13 +6,15 @@ import api from "../../../api/index"
 import "./style.css"
 
 export default function BDTQ() {
-    const [year, setYear] = useState('');
+    const [fromdate, setFromDate] = useState('');
+    const [todate, setToDate] = useState('');
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        api.get("/api/get/demands/bdtq", {
+        api.get("/api/demands/overall", {
             params: {
-                year,
+                fromdate,
+                todate,
             }
         }).then((response) => {
             setYearResult(response.data);
@@ -22,18 +24,27 @@ export default function BDTQ() {
         <div>
             <div className="container-fluid p-3 my-3 border border-dark custom">
                 <div className="row">
-                    <div className="col">
+                    <div className="col-sm">
                         <div className="form-group">
-                            <label for="exampleFormControlInput1" >Năm</label>
-                            <input type="year" className="form-control"
-                                id="exampleFormControlInput1" onChange={e => setYear(e.target.value)} />
+                            <label htmlFor="exampleFormControlInput1" >Từ ngày</label>
+                            <input type="date" className="form-control"
+                                id="exampleFormControlInput1" onChange={e => setFromDate(e.target.value)} />
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                        <div className="form-group">
+                            <label htmlFor="exampleFormControlInput1" >Đến ngày</label>
+                            <input type="date" className="form-control"
+                                id="exampleFormControlInput1" onChange={e => setToDate(e.target.value)} />
                         </div>
                     </div>
                 </div>
-                <div className="form-group">
-                    <Button block type="submit" onClick={Submit}>
-                        Tra cứu
+                <div className="row">
+                    <div className="col-sm">
+                        <Button block type="submit" onClick={Submit}>
+                            Tra cứu
                         </Button>
+                    </div>
                 </div>
             </div>
 
