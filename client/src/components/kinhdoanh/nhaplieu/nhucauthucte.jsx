@@ -52,7 +52,7 @@ export default function NCTT(props) {
 
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState(undefined);
+    const [currentUser, setCurrentUser] = useState(null);
 
     const currentUsers = AuthService.getCurrentUser();
     const [content, setContent] = useState("");
@@ -153,7 +153,7 @@ export default function NCTT(props) {
 
     // em attach throttle callback cho do bi call nhieu lan/s
     const Autofill = useCallback(() => {
-        api.get("/api/get/customers/thongtin", {
+        api.get("/api/customers/info", {
             params: {
                 customer,
             }
@@ -183,9 +183,6 @@ export default function NCTT(props) {
                 setContent(_content);
             }
         );
-    }, []);
-
-    useEffect(() => {
         setEmployee(currentUsers.username)
         const user = AuthService.getCurrentUser();
         if (user) {
@@ -194,6 +191,7 @@ export default function NCTT(props) {
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
     }, []);
+
 
     useEffect(() => {
         Autofill();
@@ -285,7 +283,7 @@ export default function NCTT(props) {
                                         <div className="col-sm">
                                             <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
                                             <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={e => setStatus(e.target.value)}>
-                                                <option value={null}>Click để chọn</option>
+                                                <option value="" >Click để chọn</option>
                                                 <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
                                                 <option value="CHẠY THỬ">CHẠY THỬ</option>
                                                 <option value="ĐÀM PHÁN">ĐÀM PHÁN</option>
@@ -420,7 +418,7 @@ export default function NCTT(props) {
                                     <div className="row">
                                         <div className="col-sm">
                                             <label htmlFor="exampleFormControlInput1" >Người nhập</label>
-                                            <input type="employee" value={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
+                                            <input type="employee" defaultValue={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
                                         </div>
                                         <div className="col-sm">
                                             <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>

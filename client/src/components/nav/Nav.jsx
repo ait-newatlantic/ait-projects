@@ -36,9 +36,9 @@ export default function Nav() {
                     </li>
                     {showModeratorBoard && (
                         <ul className="navbar-nav mr-auto">
-                        <li className="nav-item  active">
+                        {/* <li className="nav-item  active">
                             <a className="nav-link" href="/mod">Tin tức</a>
-                        </li>
+                        </li> */}
                         <li className="nav-item dropdown active">
                             <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kinh doanh</a>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -129,9 +129,9 @@ export default function Nav() {
                     )}
                     {showAdminBoard && (
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item  active">
+                            {/* <li className="nav-item  active">
                                 <a className="nav-link" href="/admin">Tin tức</a>
-                            </li>
+                            </li> */}
                             <li className="nav-item dropdown active">
                                 <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kinh doanh</a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -225,7 +225,7 @@ export default function Nav() {
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a className="dropdown-item" href="/register">Đăng kí User</a>
                                     <a className="dropdown-item" href="#">Cấp quyền User</a>
-                                    <a className="dropdown-item" href="/thongbao">Gửi tin tức</a>
+                                    {/* <a className="dropdown-item" href="/thongbao">Gửi tin tức</a> */}
                                 </div>
                             </li>
                         </ul>

@@ -97,7 +97,7 @@ export default function BCCT() {
                     <div className="col-sm">
                         <label htmlFor="exampleFormControlSelect1">Loại ngày</label>
                         <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeDateType}>
-                            <option defaultValue="" selected disabled hidden>Click để chọn</option>
+                            <option defaultValue="">Click để chọn</option>
                             <option defaultValue="Ngày tạo form">Ngày tạo form</option>
                             <option defaultValue="Ngày cập nhật gần nhất">Ngày cập nhật gần nhất</option>
                             <option defaultValue="Ngày đi thực tế">Ngày đi thực tế</option>
@@ -141,7 +141,7 @@ export default function BCCT() {
                 <div className="table-container">
                     <table id="emp" className="table-lg">
                         <tbody >
-                            <tr id="titles">
+                            <tr id="titles" key="a">
                                 <th colSpan="2">Thông tin nhân viên</th>
                                 <th colSpan="7">Thông tin khách hàng</th>
                                 <th colSpan="4">Thông tin xe</th>
@@ -169,7 +169,7 @@ export default function BCCT() {
 
                             </tr>
                             {!!yearResult && yearResult.map(form => (
-                                <tr className="content" key={form._id}>
+                                <tr className="content" key={form.id}>
                                     <td>{form.employee}</td>
                                     <td>{form.employee_field}</td>
                                     <td>{form.customer}</td>

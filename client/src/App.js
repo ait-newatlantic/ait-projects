@@ -19,13 +19,11 @@ import Login from "./components/user/login/Login";
 import Register from "./components/user/register/Register";
 import Profile from "./components/user/profile/Profile";
 import Home1 from "./components/user_roles/Home";
-import Home from "./components/home/Home";
 import BoardUser from "./components/user_roles/BoardUser";
 import BoardModerator from "./components/user_roles/BoardModerator";
 import BoardAdmin from "./components/user_roles/BoardAdmin";
 import Nav from "./components/nav/Nav"
 
-import { BranchProvider } from './context/branch/BranchContext'
 import { ProvinceProvider } from './context/province/ProvinceContext'
 import { ModelProvider } from './context/model/ModelContext'
 import { TypeProvider } from './context/type/TypeContext'
@@ -56,7 +54,6 @@ function App() {
       <header className="sticky">
         <Nav />
       </header>
-      <BranchProvider>
         <ProvinceProvider>
           <ModelProvider>
             <TypeProvider>
@@ -120,7 +117,6 @@ function App() {
             </TypeProvider>
           </ModelProvider>
         </ProvinceProvider>
-      </BranchProvider>
       <footer className="footer">
         <Footer />
       </footer>

@@ -247,10 +247,10 @@ export default function CN_NCTT(props) {
                                     <div className="col-sm">
                                         <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
                                         <Select className="form-control" id="exampleFormControlSelect1">
-                                            <option defaultValue="" selected disabled hidden>{demands.customer_communication}</option>
-                                            <option defaultValue="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
+                                            <option defaultValue="" >{demands.customer_communication}</option>
+                                            {/* <option defaultValue="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
                                             <option defaultValue="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
-                                            <option defaultValue="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option>
+                                            <option defaultValue="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option> */}
                                         </Select>
                                     </div>
                                     <div className="col-sm-9" id="diadiem-giaodich">

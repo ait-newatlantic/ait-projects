@@ -51,7 +51,7 @@ export default function BDTQ() {
             <div className="container-fluid p-3 my-3 border border-dark custom">
                 <h1>BIỂU ĐỒ ĐÁNH GIÁ KINH DOANH TỔNG QUÁT</h1>
                 {!!yearResult && yearResult.map(month => (
-                    <GroupChart
+                    <GroupChart key="a"
                         dukien1={month.dukien1} thucte1={month.thucte1}
                         dukien2={month.dukien2} thucte2={month.thucte2}
                         dukien3={month.dukien3} thucte3={month.thucte3}

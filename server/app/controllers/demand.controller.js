@@ -41,7 +41,7 @@ exports.create = (req, res) => {
   // Save Demand in the database
   Demand.create(demand)
     .then(data => {
-      res.send({ message: "Sending form successfully!" });
+      res.send({ message: "Sending form successfully!" , data: data});
       //res.send(data);
     })
     .catch(err => {
@@ -254,7 +254,6 @@ exports.update = (req, res) => {
     return;
   }
 
-  // Create a Demand
   const demand = {
     date: req.body.date,
     status: req.body.status,
