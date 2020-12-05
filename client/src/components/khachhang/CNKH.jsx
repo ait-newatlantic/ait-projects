@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import { ProvinceContext } from '../../context/province/ProvinceContext'
 import 'react-pro-sidebar/dist/css/styles.css';
 import logo from "../../static/imgs/ait_logo.jpg"
@@ -38,6 +38,34 @@ export default function CNKH(props) {
         setCustomer_Representative(customer_representative);
     };
 
+    const validString = (value) => {
+        if (!value.trim().length) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    The input type should not be empty.
+                </div>
+            );
+        }
+    };
+
+    const validEmail = (value) => {
+        if (!value.trim().length) {
+            setCustomer_Representative_Email(customers.customer_representative_email)
+        }
+    };
+
+    const validName = (value) => {
+        if (!value.trim().length) {
+            setCustomer_Representative(customers.customer_representative)
+        }
+    };
+
+    const validNumber = (value) => {
+        if (!value.trim().length) {
+            setCustomer_Representative_Number(customers.customer_representative_number)
+        }
+    };
+
     const handleUpdate = (e) => {
         e.preventDefault();
         setId(props.match.params.id)
@@ -71,35 +99,6 @@ export default function CNKH(props) {
         }
     };
 
-    const validString = (value) => {
-        if (!value.trim().length) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    The input type should not be empty.
-                </div>
-            );
-        }
-    };
-
-    const validEmail = (value) => {
-        if (!value.trim().length) {
-            setCustomer_Representative_Email(customers.customer_representative_email)
-        }
-    };
-
-    const validName = (value) => {
-        if (!value.trim().length) {
-            setCustomer_Representative(customers.customer_representative)
-        }
-    };
-
-    const validNumber = (value) => {
-        if (!value.trim().length) {
-            setCustomer_Representative_Number(customers.customer_representative_number)
-        }
-    };
-
-
     const FetchData = id => {
         CustomerService.get_specific_customer(id)
             .then(response => {
@@ -121,7 +120,7 @@ export default function CNKH(props) {
         }
     }, [props.match.params.id])
 
- 
+
     return (
         <div className="container p-3 my-3 border border-dark">
             <Form onSubmit={handleUpdate} ref={form}>
@@ -163,7 +162,7 @@ export default function CNKH(props) {
                                         type="text"
                                         className="form-control"
                                         name="customer_representative"
-                                        validations ={[validName]}
+                                        validations={[validName]}
                                         placeholder={customers.customer_representative}
                                         onChange={onChangeCustomer_Representative}
                                     />
@@ -175,7 +174,7 @@ export default function CNKH(props) {
                                         type="text"
                                         className="form-control"
                                         name="customer_representative_number"
-                                        validations ={[validNumber]}
+                                        validations={[validNumber]}
                                         placeholder={customers.customer_representative_number}
                                         onChange={onChangeCustomer_Representative_Number}
                                     />
@@ -187,7 +186,7 @@ export default function CNKH(props) {
                                         type="text"
                                         className="form-control"
                                         name="customer_representative"
-                                        validations ={[validEmail]}
+                                        validations={[validEmail]}
                                         placeholder={customers.customer_representative_email}
                                         onChange={onChangeCustomer_Representative_Email}
                                     />
@@ -216,7 +215,7 @@ export default function CNKH(props) {
 
                         <div className="container p-3 my-3 border border-dark" >
                             <Button variant="success" block type="submit" onClick={handleUpdate}>
-                                Gửi form
+                                Cập nhật
                     </Button>
                         </div>
                     </div>
@@ -228,9 +227,15 @@ export default function CNKH(props) {
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
                             >
-                                <div className="card card-container" >
-                                    <h1>{message}</h1>
-                                </div>
+                                {/* <div className="card card-container" >
+                                        <h1>{message}</h1>
+                                    </div> */}
+                                <Alert key={message.message}>
+                                    <Alert.Heading>{message.heading}</Alert.Heading>
+                                    <p>
+                                        {message.message}
+                                    </p>
+                                </Alert>
                             </div>
                         </div>
                     </div>

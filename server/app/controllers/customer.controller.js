@@ -8,7 +8,7 @@ exports.create = (req, res) => {
   if (!req.body.customer || !req.body.customer_number || !req.body.customer_area || !req.body.customer_type) 
   {
     res.status(400).send({
-      message: "Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng!!!"
+      message: { heading: "Oh snap! You got an error!" , message:"Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng!!!"}
     });
     return;
   }
@@ -29,7 +29,7 @@ exports.create = (req, res) => {
   // Save Customer in the database
   Customer.create(customer)
     .then(data => {
-      res.send({ message: "Sending form successfully!", data: data });
+      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data});
       //res.send(data);
     })
     .catch(err => {
@@ -96,11 +96,11 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Customer was updated successfully."
+          message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
         });
       } else {
-        res.send({
-          message: `Cannot update Customer with id=${id}. Maybe Customer was not found or req.body is empty!`
+        res.status(400).send({
+          message: { heading: "Oh snap! You got an error!", message: `Cannot update Customer with id=${id}. Maybe Customer was not found or req.body is empty!` }
         });
       }
     })

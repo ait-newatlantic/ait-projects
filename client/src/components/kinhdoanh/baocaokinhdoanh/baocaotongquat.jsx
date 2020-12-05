@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from "react-bootstrap";
-import api from "../../../api/index"
+import DemandService from "../../../services/demand.service"
 
 export default function BCTQ(props) {
 
@@ -9,12 +9,10 @@ export default function BCTQ(props) {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        api.get("/api/demands/total", {
-            params: {
-                fromdate,
-                todate,
-            }
-        }).then((response) => {
+        DemandService.get_total(
+            fromdate,
+            todate,
+        ).then((response) => {
             setYearResult(response.data);
         });
     }

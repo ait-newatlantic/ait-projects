@@ -53,7 +53,6 @@ require('./app/routes/demand.routes')(app);
 require('./app/routes/customer.routes')(app);
 require('./app/routes/car_model.routes')(app);
 require('./app/routes/car_type.routes')(app);
-require('./app/routes/thongbao.routes')(app);
 require('./app/routes/province.routes')(app);
 
 // set port, listen for requests

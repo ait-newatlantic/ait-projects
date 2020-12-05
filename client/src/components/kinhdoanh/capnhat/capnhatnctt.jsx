@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import logo from "../../../static/imgs/ait_logo.jpg"
 import DemandService from "../../../services/demand.service";
 import CheckButton from "react-validation/build/button";
@@ -378,26 +378,32 @@ export default function CN_NCTT(props) {
                                 <small id="fileHelp" className="demands-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
 
                                 <Button variant="success" block type="submit" onClick={handleRegister}>
-                                    Gửi demands
+                                    Cập nhật
                                     </Button>
                             </div>
                         </div>
                     </div>
                 )}
-                {message && (
-                    <div className="form-group">
-                        <div className="container p-3 my-3 border border-dark">
-                            <div
-                                className={successful ? "alert alert-success" : "alert alert-danger"}
-                                role="alert"
-                            >
-                                <div className="card card-container" >
-                                    <h1>{message}</h1>
+                 {message && (
+                        <div className="form-group">
+                            <div className="container p-3 my-3 border border-dark">
+                                <div
+                                    className={successful ? "alert alert-success" : "alert alert-danger"}
+                                    role="alert"
+                                >
+                                    {/* <div className="card card-container" >
+                                        <h1>{message}</h1>
+                                    </div> */}
+                                    <Alert key={message.message}>
+                                        <Alert.Heading>{message.heading}</Alert.Heading>
+                                        <p>
+                                            {message.message}
+                                        </p>
+                                    </Alert>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
         </div>

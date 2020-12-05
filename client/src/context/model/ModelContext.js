@@ -1,14 +1,14 @@
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
-import api from "../../api/index"
+import CarService from "../../services/car.service"
 
 export const ModelContext = createContext();
 
 export const ModelProvider = (props) => {
     const [models, setModels] = useState([])
     useEffect(()=>{
-        api.get("/api/car_models").then((response)=>{
+        CarService.get_car_models().then((response)=>{
             setModels(response.data)
         })
     },[])

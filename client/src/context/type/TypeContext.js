@@ -2,14 +2,14 @@ import Axios from "axios";
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
-import api from "../../api/index"
+import CarService from "../../services/car.service"
 
 export const TypeContext = createContext();
 
 export const TypeProvider = (props) => {
     const [types, setTypes] = useState([])
     useEffect(()=>{
-        api.get("/api/car_types").then((response)=>{
+        CarService.get_car_types().then((response)=>{
             setTypes(response.data)
         })
     },[])

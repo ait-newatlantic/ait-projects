@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from 'react'
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import { ProvinceContext } from '../../context/province/ProvinceContext'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -21,10 +21,8 @@ export default function KTKH() {
     const [customer_type, setCustomer_Type] = useState("");
     const [customer_area, setCustomer_Area] = useState("");
     const [customer_address, setCustomer_Address] = useState(null);
-
     const [message, setMessage] = useState("");
     const [successful, setSuccessful] = useState(false);
-
     const form = useRef();
     const checkBtn = useRef();
 
@@ -63,6 +61,11 @@ export default function KTKH() {
     const onChangeCustomer_Type = (e) => {
         const customer_type = e.target.value;
         setCustomer_Type(customer_type);
+    };
+
+    const onChangeCustomer_Address = (e) => {
+        const customer_address = e.target.value;
+        setCustomer_Address(customer_address);
     };
 
     const onChangeCustomer_Taxcode = (e) => {
@@ -218,7 +221,7 @@ export default function KTKH() {
                                 </div>
                                 <div className="col-sm-9">
                                     <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
-                                    <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Address(e.target.value)}></textarea>
+                                    <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
                                 </div>
                             </div>
                         </div>
@@ -231,19 +234,25 @@ export default function KTKH() {
                     </div>
                 )}
                 {message && (
-                    <div className="form-group">
-                        <div className="container p-3 my-3 border border-dark">
-                            <div
-                                className={successful ? "alert alert-success" : "alert alert-danger"}
-                                role="alert"
-                            >
-                                <div className="card card-container" >
-                                    <h1>{message}</h1>
+                        <div className="form-group">
+                            <div className="container p-3 my-3 border border-dark">
+                                <div
+                                    className={successful ? "alert alert-success" : "alert alert-danger"}
+                                    role="alert"
+                                >
+                                    {/* <div className="card card-container" >
+                                        <h1>{message}</h1>
+                                    </div> */}
+                                    <Alert key={message.message}>
+                                        <Alert.Heading>{message.heading}</Alert.Heading>
+                                        <p>
+                                            {message.message}
+                                        </p>
+                                    </Alert>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
         </div>

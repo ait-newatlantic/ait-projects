@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     !req.body.model ||
     !req.body.type) {
     res.status(400).send({
-      message: "Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!"
+      message: { heading: "Oh snap! You got an error!" , message:" Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!"}
     });
     return;
   }
@@ -41,7 +41,7 @@ exports.create = (req, res) => {
   // Save Demand in the database
   Demand.create(demand)
     .then(data => {
-      res.send({ message: "Sending form successfully!" , data: data});
+      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data});
       //res.send(data);
     })
     .catch(err => {
@@ -65,7 +65,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving demands."
       });
     });
 };
@@ -269,11 +269,11 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Demand was updated successfully."
+          message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
         });
       } else {
-        res.send({
-          message: `Cannot update Demand with id=${id}. Maybe Demand was not found or req.body is empty!`
+        res.status(400).send({
+          message: { heading: "Oh snap! You got an error!", message: `Cannot update Demand with id=${id}. Maybe Demand was not found or req.body is empty!` }
         });
       }
     })

@@ -1,15 +1,15 @@
-import Axios from "axios";
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
-import api from "../../api/index"
+import CustomerService from "../../services/customer.service"
+
 
 export const CustomerContext = createContext();
 
 export const CustomerProvider = (props) => {
     const [customers, setCustomers] = useState([])
     useEffect(()=>{
-        api.get("/api/customers").then((response)=>{
+        CustomerService.get__customers().then((response)=>{
             setCustomers(response.data)
         })
     },[])

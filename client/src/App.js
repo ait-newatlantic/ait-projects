@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Footer from './components/footer/Footer'
 import NCTT from './components/kinhdoanh/nhaplieu/nhucauthucte'
@@ -13,7 +13,6 @@ import CN_NCTT from './components/kinhdoanh/capnhat/capnhatnctt.jsx'
 import KTKH from './components/khachhang/KTKH'
 import DSKH from "./components/khachhang/DSKH"
 import CNKH from "./components/khachhang/CNKH"
-import Thongbao from "./components/thongbao/Thongbao"
 
 import Login from "./components/user/login/Login";
 import Register from "./components/user/register/Register";
@@ -28,7 +27,6 @@ import { ProvinceProvider } from './context/province/ProvinceContext'
 import { ModelProvider } from './context/model/ModelContext'
 import { TypeProvider } from './context/type/TypeContext'
 import { CustomerProvider } from './context/customer/CustomerContext'
-import { NotificationProvider } from "./context/notification/NotificationContext"
 
 import AuthService from "./services/auth.service";
 
@@ -58,7 +56,6 @@ function App() {
           <ModelProvider>
             <TypeProvider>
               <CustomerProvider>
-                <NotificationProvider />
                 <main className="app-content">
                   <Router>
                     <Switch>
@@ -73,7 +70,6 @@ function App() {
                           <Route exact path="/login" component={Login} />
                           <Route exact path="/register" component={Register} />
                           <Route exact path="/profile" component={Profile} />
-                          <Route exact path="/thongbao" component={Thongbao} />
                           <Route path="/user" component={BoardUser} />
                           <Route path="/mod" component={BoardModerator} />
                           <Route path="/admin" component={BoardAdmin} />
@@ -95,9 +91,8 @@ function App() {
                           <Switch>
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/profile" component={Profile} />
-                            <Route exact path="/thongbao" component={Thongbao} />
                             <Route path="/user" component={BoardUser} />
-                            <Route path="/mod" component={BoardModerator} />
+                            <Route path="/mod" component={BoardModerator} /> 
                             <Route path="/admin" component={BoardAdmin} />
                             <Route path="/kinhdoanh/nhaplieu/demands" exact component={NCTT} />
                             <Route path="/kinhdoanh/capnhat/demands/:id" exact component={CN_NCTT} />
@@ -112,7 +107,6 @@ function App() {
                         </Router>
                   )}
                 </main>
-                <NotificationProvider />
               </CustomerProvider>
             </TypeProvider>
           </ModelProvider>

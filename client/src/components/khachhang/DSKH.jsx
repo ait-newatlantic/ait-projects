@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import api from "../../api/index"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import CustomerService from "../../services/customer.service"
 import "./style.css"
 
 export default function DSKH() {
@@ -8,7 +8,7 @@ export default function DSKH() {
     const [customerResult, setCustomerResult] = useState();
 
     useEffect(() => {
-        api.get("/api/customers").then((response) => {
+        CustomerService.get__customers().then((response) => {
             setCustomerResult(response.data)
         })
     }, [])
@@ -21,12 +21,12 @@ export default function DSKH() {
                     <ReactHTMLTableToExcel
                         className="btn btn-info"
                         table="emp"
-                        filename="Báo cáo kinh doanh"
+                        filename="Danh sách khách hàng"
                         sheet="Sheet"
                         buttonText="Export excel" />
                 </div>
                 <div className="table-container">
-                <table className="table-sm">
+                <table id="emp" className="table-sm">
                     <tbody >
                         <tr key="a">
                             <th>ID</th>

@@ -20,7 +20,7 @@ const create_demand = (date,
     customer_communication,
     color,
     note) => {
-    return axios.post(API_URL + "api/demands", {
+    return axios.post(API_URL + "demands", {
         date,
         employee,
         employee_field,
@@ -40,10 +40,6 @@ const create_demand = (date,
     });
 };
 
-const get_specific_demand = (id) => {
-    return axios.get(API_URL + `api/demands/${id}`);
-};
-
 const update_specific_demand = (
     id,
     ait,
@@ -52,7 +48,7 @@ const update_specific_demand = (
     note,
     status,
     color,) => {
-    return axios.put(API_URL + `api/demands/${id}`, {
+    return axios.put(API_URL + `demands/${id}`, {
         ait,
         kmt,
         date,
@@ -62,13 +58,77 @@ const update_specific_demand = (
     });
 };
 
-const get_overall = () => {
-    return axios.get(API_URL + `api/demands/overall`);
+const get_demands = () => {
+    return axios.get(API_URL + `demands`);
+};
+
+const get_specific_demand = (id) => {
+    return axios.get(API_URL + `demands/${id}`);
+};
+
+const get_overall = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/overall` ,{
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_total = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/total` ,{
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_date = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/date` ,{
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_createAt = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/createat` ,{
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_updateAt = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/updateat` ,{
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_goAt = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/goat` ,{
+        params:{
+            fromdate,
+            todate,
+        }
+    });
 };
 
 export default {
+    get_demands,
     create_demand,
     get_specific_demand,
     update_specific_demand,
     get_overall,
+    get_total,
+    get_date,
+    get_createAt,
+    get_updateAt,
+    get_goAt,
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
 import "./style.css"
-import api from "../../../api/index"
+import DemandService from "../../../services/demand.service"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 export default function BCCT() {
@@ -13,48 +13,28 @@ export default function BCCT() {
     // const [updateats, setUpdateAt] = useState([])
 
     const getDate = () => {
-        api.get("/api/demands/date", {
-            params: {
-                fromdate,
-                todate,
-            }
-        }).then((response) => {
+        DemandService.get_date(fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
     }
 
     const getUpdatedAt = () => {
-        api.get("/api/demands/updateat", {
-            params: {
-                fromdate,
-                todate,
-            }
-        }).then((response) => {
+        DemandService.get_updateAt(fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
     }
 
     const getCreatedAt = () => {
-        api.get("/api/demands/createdat", {
-            params: {
-                fromdate,
-                todate,
-            }
-        }).then((response) => {
+        DemandService.get_createAt(fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
     }
 
     const getGoAt = () => {
-        api.get("/api/demands/goat", {
-            params: {
-                fromdate,
-                todate,
-            }
-        }).then((response) => {
+        DemandService.get_goAt(fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
@@ -78,14 +58,20 @@ export default function BCCT() {
     const onChangeDateType = (e) => {
         const datetype = e.target.value;
         setDateType(datetype);
-        console.log(datetype)
+    };
+
+    const onChangeFromDate = (e) => {
+        const fromdate = e.target.value;
+        setFromDate(fromdate);
+    };
+
+    const onChangeToDate = (e) => {
+        const todate = e.target.value;
+        setToDate(todate);
     };
 
     useEffect(() => {
-        api.get("/api/demands").then((response) => {
-            // response.data.forEach(value => {
-            //      console.log(value.updatedAt.substring(0, 10))
-            // })
+        DemandService.get_demands().then((response) => {
             setYearResult(response.data)
         })
     }, [])
@@ -108,14 +94,14 @@ export default function BCCT() {
                         <div className="form-group">
                             <label htmlFor="exampleFormControlInput1" >Từ ngày</label>
                             <input type="date" className="form-control"
-                                id="exampleFormControlInput1" onChange={e => setFromDate(e.target.value)} />
+                                id="exampleFormControlInput1" onChange={onChangeFromDate} />
                         </div>
                     </div>
                     <div className="col-sm">
                         <div className="form-group">
                             <label htmlFor="exampleFormControlInput1" >Đến ngày</label>
                             <input type="date" className="form-control"
-                                id="exampleFormControlInput1" onChange={e => setToDate(e.target.value)} />
+                                id="exampleFormControlInput1" onChange={onChangeToDate} />
                         </div>
                     </div>
                 </div>

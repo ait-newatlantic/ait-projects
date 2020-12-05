@@ -1,14 +1,14 @@
 import React, { createContext } from "react"
 import { useEffect } from "react";
 import { useState } from "react";
-import api from "../../api/index"
+import ProvinceService from "../../services/province.service"
 
 export const ProvinceContext = createContext();
 
 export const ProvinceProvider = (props) => {
     const [provinces, setProvinces] = useState([])
     useEffect(()=>{
-        api.get("/api/provinces").then((response)=>{
+        ProvinceService.get_provinces().then((response)=>{
             setProvinces(response.data)
         })
     },[])

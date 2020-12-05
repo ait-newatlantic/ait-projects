@@ -2,7 +2,7 @@ import React from 'react'
 import GroupChart from "../../chart/group"
 import { useState } from 'react'
 import { Button } from "react-bootstrap";
-import api from "../../../api/index"
+import DemandService from "../../../services/demand.service"
 import "./style.css"
 
 export default function BDTQ() {
@@ -11,12 +11,10 @@ export default function BDTQ() {
     const [yearResult, setYearResult] = useState();
 
     const Submit = () => {
-        api.get("/api/demands/overall", {
-            params: {
-                fromdate,
-                todate,
-            }
-        }).then((response) => {
+        DemandService.get_overall(
+            fromdate,
+            todate,
+        ).then((response) => {
             setYearResult(response.data);
         });
     }

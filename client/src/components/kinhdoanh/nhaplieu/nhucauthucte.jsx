@@ -3,7 +3,7 @@ import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
 import { CustomerContext } from '../../../context/customer/CustomerContext'
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -11,15 +11,15 @@ import AuthService from "../../../services/auth.service";
 import UserService from "../../../services/user.service";
 import "./style.css"
 import { useCallback } from 'react';
-import api from "../../../api/index"
 import logo from "../../../static/imgs/ait_logo.jpg"
 import DemandService from "../../../services/demand.service";
+import CustomerService from "../../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import Tooltip from '@material-ui/core/Tooltip';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
@@ -62,6 +62,16 @@ export default function NCTT(props) {
     const form = useRef();
     const checkBtn = useRef();
 
+    const HtmlTooltip = withStyles((theme) => ({
+        tooltip: {
+            backgroundColor: '#f5f5f9',
+            color: 'rgba(0, 0, 0, 0.87)',
+            maxWidth: 220,
+            fontSize: theme.typography.pxToRem(12),
+            border: '1px solid #dadde9',
+        },
+    }))(Tooltip);
+
     const onChangeQuantity = (e) => {
         const quantity = e.target.value;
         setQuantity(quantity);
@@ -72,13 +82,43 @@ export default function NCTT(props) {
         setDate(date);
     };
 
+    const onChangeColor = (e) => {
+        const color = e.target.value;
+        setColor(color);
+    };
+
+    const onChangeNote = (e) => {
+        const note = e.target.value;
+        setNote(note);
+    };
+
+    const onChangeStatus = (e) => {
+        const status = e.target.value;
+        setStatus(status);
+    };
+
+    const onChangeCustomer_Type = (e) => {
+        const customer_type = e.target.value;
+        setCustomer_Type(customer_type);
+    };
+
+    const onChangeCustomer_Opinion = (e) => {
+        const customer_opinion = e.target.value;
+        setCustomer_Opinion(customer_opinion);
+    };
+
+    const onChangeCustomer_Communication = (e) => {
+        const customer_communication = e.target.value;
+        setCustomer_Communication(customer_communication);
+    };
+
     const onChangeEmployee_Field = (e) => {
         const employee_field = e.target.value;
         setEmployee_Field(employee_field);
     };
 
     const validQuanity = (value) => {
-        if (isNaN(value) || !value.trim().length || value<0) {
+        if (isNaN(value) || !value.trim().length || value < 0) {
             return (
                 <div className="alert alert-danger" role="alert">
                     The input type should not be empty, a string or a negative number.
@@ -109,11 +149,9 @@ export default function NCTT(props) {
 
     const handleRegister = (e) => {
         e.preventDefault();
-
         setMessage("");
         setSuccessful(false);
         form.current.validateAll();
-
         if (checkBtn.current.context._errors.length === 0) {
             DemandService.create_demand(
                 date,
@@ -150,14 +188,11 @@ export default function NCTT(props) {
                 );
         }
     };
-
-    // em attach throttle callback cho do bi call nhieu lan/s
+    
     const Autofill = useCallback(() => {
-        api.get("/api/customers/info", {
-            params: {
-                customer,
-            }
-        }).then((response) => {
+        CustomerService.get_specific_customer_info(
+            customer
+        ).then((response) => {
             setCustomerResult(response.data);
             response.data.forEach(value => {
                 setCustomer_Number(value.customer_number);
@@ -196,16 +231,6 @@ export default function NCTT(props) {
     useEffect(() => {
         Autofill();
     }, [customer, Autofill])
-
-    const HtmlTooltip = withStyles((theme) => ({
-        tooltip: {
-            backgroundColor: '#f5f5f9',
-            color: 'rgba(0, 0, 0, 0.87)',
-            maxWidth: 220,
-            fontSize: theme.typography.pxToRem(12),
-            border: '1px solid #dadde9',
-        },
-    }))(Tooltip);
 
     return (
         <div className="container p-3 my-3 border border-dark">
@@ -278,11 +303,10 @@ export default function NCTT(props) {
                                                 options={provinces.map((option) => option.province_name)}
                                                 renderInput={(params) => <TextField {...params} variant="outlined" />}
                                             />
-
                                         </div>
                                         <div className="col-sm">
                                             <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
-                                            <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={e => setStatus(e.target.value)}>
+                                            <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeStatus}>
                                                 <option value="" >Click để chọn</option>
                                                 <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
                                                 <option value="CHẠY THỬ">CHẠY THỬ</option>
@@ -303,35 +327,34 @@ export default function NCTT(props) {
                                             <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
                                             <Select className="form-control" id="exampleFormControlSelect1"
                                                 validations={[required]}
-                                                onClick={e => setCustomer_Type(e.target.value)}>
+                                                onClick={onChangeCustomer_Type}>
                                                 <option value="">Click để chọn</option>
                                                 <option value="DỰ KIẾN">DỰ KIẾN</option>
                                                 <option value="TIỀM NĂNG">TIỀM NĂNG</option>
                                                 <option value="ĐÃ SỬ DỤNG KAMAZ">ĐÃ SỬ DỤNG KAMAZ</option>
                                             </Select>
                                             <HtmlTooltip
-                                            title={
-                                                <React.Fragment>
-                                                    <Typography color="inherit"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></Typography>
-                                                    <b>{'DỰ KIẾN: '}</b>{"chỉ mới tiếp cận và chào hàng"}.{' '}
-                                                    <b>{'TIỀM NĂNG: '}</b>{"Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng"}.{' '}
-                                                    <b>{'ĐÃ SỬ DỤNG KAMAZ: '}</b>{"Khách hàng đã và đang sử dụng sản phẩm của mình"}.{' '}
-                                                </React.Fragment>
-                                            }
-                                        >
-                                            <IconButton aria-label="info">
-                                                <InfoIcon/>
-                                            </IconButton>
-                                        </HtmlTooltip>
+                                                title={
+                                                    <React.Fragment>
+                                                        <Typography color="inherit"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></Typography>
+                                                        <b>{'DỰ KIẾN: '}</b>{"chỉ mới tiếp cận và chào hàng"}.{' '}
+                                                        <b>{'TIỀM NĂNG: '}</b>{"Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng"}.{' '}
+                                                        <b>{'ĐÃ SỬ DỤNG KAMAZ: '}</b>{"Khách hàng đã và đang sử dụng sản phẩm của mình"}.{' '}
+                                                    </React.Fragment>
+                                                }>
+                                                <IconButton aria-label="info">
+                                                    <InfoIcon />
+                                                </IconButton>
+                                            </HtmlTooltip>
                                         </div>
-                                       
+
                                         <div className="col-sm-9" id="ykien-customers">
                                             <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
                                             <textarea type="customer_opinion"
                                                 className="form-control"
                                                 id="exampleFormControlTextarea1"
                                                 rows="3"
-                                                onChange={e => setCustomer_Opinion(e.target.value)}></textarea>
+                                                onChange={onChangeCustomer_Opinion}></textarea>
                                             {!!customerResult && customerResult.map(result => (
                                                 <p>{result.customer_opinion}</p>
                                             ))}
@@ -343,7 +366,7 @@ export default function NCTT(props) {
                                             <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
                                             <Select className="form-control" id="exampleFormControlSelect1"
                                                 validations={[required]}
-                                                onClick={e => setCustomer_Communication(e.target.value)}>
+                                                onClick={onChangeCustomer_Communication}>
                                                 <option value="">Click để chọn</option>
                                                 <option value="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
                                                 <option value="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
@@ -398,7 +421,7 @@ export default function NCTT(props) {
                                         </div>
                                         <div className="col-sm">
                                             <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
-                                            <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={e => setColor(e.target.value)}>
+                                            <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeColor}>
                                                 <option value="">Click để chọn</option>
                                                 <option value="Cam">Cam</option>
                                                 <option value="Trắng">Trắng</option>
@@ -449,7 +472,7 @@ export default function NCTT(props) {
                             <div className="form-group">
                                 <div className="container p-3 my-3 border border-dark" >
                                     <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
-                                    <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setNote(e.target.value)}></textarea>
+                                    <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeNote}></textarea>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -473,9 +496,15 @@ export default function NCTT(props) {
                                     className={successful ? "alert alert-success" : "alert alert-danger"}
                                     role="alert"
                                 >
-                                    <div className="card card-container" >
+                                    {/* <div className="card card-container" >
                                         <h1>{message}</h1>
-                                    </div>
+                                    </div> */}
+                                    <Alert key={message.message}>
+                                        <Alert.Heading>{message.heading}</Alert.Heading>
+                                        <p>
+                                            {message.message}
+                                        </p>
+                                    </Alert>
                                 </div>
                             </div>
                         </div>
