@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import { Alert, Button } from "react-bootstrap";
 import { ProvinceContext } from '../../context/province/ProvinceContext'
 import TextField from '@material-ui/core/TextField';
@@ -9,9 +9,10 @@ import CustomerService from "../../../src/services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import Select from "react-validation/build/select";
+import AuthService from "../../services/auth.service";
 
 export default function KTKH() {
+    const [employee, setEmployee] = useState("");
     const [customer, setCustomer] = useState("");
     const [customer_number, setCustomer_Number] = useState("");
     const [customer_representative, setCustomer_Representative] = useState(null);
@@ -23,6 +24,7 @@ export default function KTKH() {
     const [customer_address, setCustomer_Address] = useState(null);
     const [message, setMessage] = useState("");
     const [successful, setSuccessful] = useState(false);
+    const currentUser = AuthService.getCurrentUser();
     const form = useRef();
     const checkBtn = useRef();
 
@@ -90,13 +92,12 @@ export default function KTKH() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         setMessage("");
         setSuccessful(false);
-        form.current.validateAll();
-
+        form.current.validateAll();     
         if (checkBtn.current.context._errors.length === 0) {
             CustomerService.create_customer(
+                employee,
                 customer,
                 customer_number,
                 customer_representative,
@@ -125,6 +126,12 @@ export default function KTKH() {
             );
         }
     };
+
+    useEffect(() => {
+        const employee = currentUser.username
+        setEmployee(employee)
+        console.log(employee)
+    }, [])
 
     return (
         <div className="container-fluid p-3 my-3 border border-dark custom">
@@ -160,7 +167,7 @@ export default function KTKH() {
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
                                     <Autocomplete
-                                        style={{background: "white"}}
+                                        style={{ background: "white" }}
                                         size="small"
                                         value={customer_area}
                                         onChange={(event, newValue) => {
@@ -219,6 +226,8 @@ export default function KTKH() {
                                         <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
                                         <option value="TƯ NHÂN">TƯ NHÂN</option>
                                     </select>
+                                    <label htmlFor="exampleFormControlInput1" >Người nhập</label>
+                                    <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                                 </div>
                                 <div className="col-sm-9">
                                     <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
@@ -235,27 +244,27 @@ export default function KTKH() {
                     </div>
                 )}
                 {message && (
-                        <div className="form-group">
-                            <div className="container-fluid p-3 my-3 border border-dark">
-                                <div
-                                    className={successful ? "alert alert-success" : "alert alert-danger"}
-                                    role="alert"
-                                >
-                                    {/* <div className="card card-container-fluid" >
+                    <div className="form-group">
+                        <div className="container-fluid p-3 my-3 border border-dark">
+                            <div
+                                className={successful ? "alert alert-success" : "alert alert-danger"}
+                                role="alert"
+                            >
+                                {/* <div className="card card-container-fluid" >
                                         <h1>{message}</h1>
                                     </div> */}
-                                    <Alert key={message.message}>
-                                        <Alert.Heading>{message.heading}</Alert.Heading>
-                                        <p>
-                                            {message.message}
-                                        </p>
-                                    </Alert>
-                                </div>
+                                <Alert key={message.message}>
+                                    <Alert.Heading>{message.heading}</Alert.Heading>
+                                    <p>
+                                        {message.message}
+                                    </p>
+                                </Alert>
                             </div>
                         </div>
-                    )}
+                    </div>
+                )}
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
-        </div>
+        </div >
     )
 }

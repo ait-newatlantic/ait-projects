@@ -45,18 +45,65 @@ export default function BCCT() {
         });
     }
 
+    const getDate_Specific = () => {
+        const employee = currentUser.username.split('.')[0]
+        DemandService.get_date_specific(employee, fromdate, todate).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
+    const getUpdatedAt_Specific = () => {
+        const employee = currentUser.username.split('.')[0]
+        DemandService.get_updateAt_specific(employee, fromdate, todate).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
+    const getCreatedAt_Specific = () => {
+        const employee = currentUser.username.split('.')[0]
+        DemandService.get_createAt_specific(employee, fromdate, todate).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
+    const getGoAt_Specific = () => {
+        const employee = currentUser.username.split('.')[0]
+        DemandService.get_goAt_specific(employee, fromdate, todate).then((response) => {
+            setYearResult(response.data);
+            console.log(response.data)
+        });
+    }
+
     const Submit = () => {
-        if (datetype === "Ngày tạo form") {
-            getCreatedAt()
-        }
-        if (datetype === "Ngày cập nhật gần nhất") {
-            getUpdatedAt()
-        }
-        if (datetype === "Ngày đi thực tế") {
-            getGoAt()
-        }
-        if (datetype === "Tất cả các ngày") {
-            getDate()
+        if (currentUser.username.split('.')[0] === "AIT") {
+            if (datetype === "Ngày tạo form") {
+                getCreatedAt()
+            }
+            else if (datetype === "Ngày cập nhật gần nhất") {
+                getUpdatedAt()
+            }
+            else if (datetype === "Ngày đi thực tế") {
+                getGoAt()
+            }
+            else {
+                getDate()
+            }
+        } else{
+            if (datetype === "Ngày tạo form") {
+                getCreatedAt_Specific()
+            }
+            else if (datetype === "Ngày cập nhật gần nhất") {
+                getUpdatedAt_Specific()
+            }
+            else if (datetype === "Ngày đi thực tế") {
+                getGoAt_Specific()
+            }
+            else {
+                getDate_Specific()
+            }
         }
     }
 
@@ -126,82 +173,85 @@ export default function BCCT() {
                         </div>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-sm">
+                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                            <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
+                            <div>
+                                <ReactHTMLTableToExcel
+                                    className="btn btn-info"
+                                    table="emp"
+                                    filename="Báo cáo kinh doanh"
+                                    sheet="Sheet"
+                                    buttonText="Export excel" />
+                            </div>
+                            <div className="table-container">
+                                <table id="emp" className="table-lg">
+                                    <tbody >
+                                        <tr id="titles" key="a">
+                                            <th colSpan="2">Thông tin nhân viên</th>
+                                            <th colSpan="7">Thông tin khách hàng</th>
+                                            <th colSpan="4">Thông tin xe</th>
+                                            <th colSpan="4">Thông tin thêm</th>
+                                            <th rowSpan="2">Cập nhật</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Người nhập</th>
+                                            <th>Người đi thực tế</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại khách hàng</th>
+                                            <th>Loại khách hàng</th>
+                                            <th>Khách hàng thuộc khu vực</th>
+                                            <th>Ý kiến khách hàng</th>
+                                            <th>Phương thức liên lạc</th>
+                                            <th>Giai đoạn</th>
+                                            <th>Model xe</th>
+                                            <th>Loại xe</th>
+                                            <th>Số lượng</th>
+                                            <th>Màu xe</th>
+                                            <th>Ngày đi thực tế</th>
+                                            <th>Ngày tạo form</th>
+                                            <th>Ngày cập nhật gần nhất</th>
+                                            <th>Ghi chú</th>
 
-                <div className="container-fluid p-3 my-3 border border-dark custom">
-                    <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
-                    <div>
-                        <ReactHTMLTableToExcel
-                            className="btn btn-info"
-                            table="emp"
-                            filename="Báo cáo kinh doanh"
-                            sheet="Sheet"
-                            buttonText="Export excel" />
+                                        </tr>
+                                        {!!yearResult && yearResult.map(form => (
+                                            <tr className="content" key={form.id}>
+                                                <td>{form.employee}</td>
+                                                <td>{form.employee_field}</td>
+                                                <td>{form.customer}</td>
+                                                <td>{form.customer_number}</td>
+                                                <td>{form.customer_type}</td>
+                                                <td>{form.customer_area}</td>
+                                                <td>{form.customer_opinion}</td>
+                                                <td>{form.customer_communication}</td>
+                                                <td>{form.status}</td>
+                                                <td>{form.model}</td>
+                                                <td>{form.type}</td>
+                                                <td>{form.quantity}</td>
+                                                <td>{form.color}</td>
+                                                <td>{form.date}</td>
+                                                <td>{form.createdAt.substring(0, 10)}</td>
+                                                <td>{form.updatedAt.substring(0, 10)}</td>
+                                                <td>{form.note}</td>
+                                                <td>
+                                                    <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/demands/${form.id}`} role="button">Cập nhật</a>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div className="table-container">
-                        <table id="emp" className="table-lg">
-                            <tbody >
-                                <tr id="titles" key="a">
-                                    <th colSpan="2">Thông tin nhân viên</th>
-                                    <th colSpan="7">Thông tin khách hàng</th>
-                                    <th colSpan="4">Thông tin xe</th>
-                                    <th colSpan="4">Thông tin thêm</th>
-                                    <th rowSpan="2">Cập nhật</th>
-                                </tr>
-                                <tr>
-                                    <th>Người nhập</th>
-                                    <th>Người đi thực tế</th>
-                                    <th>Tên khách hàng</th>
-                                    <th>Số điện thoại khách hàng</th>
-                                    <th>Loại khách hàng</th>
-                                    <th>Khách hàng thuộc khu vực</th>
-                                    <th>Ý kiến khách hàng</th>
-                                    <th>Phương thức liên lạc</th>
-                                    <th>Giai đoạn</th>
-                                    <th>Model xe</th>
-                                    <th>Loại xe</th>
-                                    <th>Số lượng</th>
-                                    <th>Màu xe</th>
-                                    <th>Ngày đi thực tế</th>
-                                    <th>Ngày tạo form</th>
-                                    <th>Ngày cập nhật gần nhất</th>
-                                    <th>Ghi chú</th>
-
-                                </tr>
-                                {!!yearResult && yearResult.map(form => (
-                                    <tr className="content" key={form.id}>
-                                        <td>{form.employee}</td>
-                                        <td>{form.employee_field}</td>
-                                        <td>{form.customer}</td>
-                                        <td>{form.customer_number}</td>
-                                        <td>{form.customer_type}</td>
-                                        <td>{form.customer_area}</td>
-                                        <td>{form.customer_opinion}</td>
-                                        <td>{form.customer_communication}</td>
-                                        <td>{form.status}</td>
-                                        <td>{form.model}</td>
-                                        <td>{form.type}</td>
-                                        <td>{form.quantity}</td>
-                                        <td>{form.color}</td>
-                                        <td>{form.date}</td>
-                                        <td>{form.createdAt.substring(0, 10)}</td>
-                                        <td>{form.updatedAt.substring(0, 10)}</td>
-                                        <td>{form.note}</td>
-                                        <td>
-                                            <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/demands/${form.id}`} role="button">Cập nhật</a>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div className="col-sm">
-                <div className="container-fluid p-3 my-3 border border-dark custom">
-                    <h1>BIỂU ĐỒ KINH DOANH CHI TIẾT</h1>
-                    <div className="row">
-                        <div className="col-sm"><StackChart /></div>
-                        <div className="col-sm"><VerticalChart /></div>
+                    <div className="col-sm">
+                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                            <h1>BIỂU ĐỒ KINH DOANH CHI TIẾT</h1>
+                            <div className="row">
+                                <div className="col-sm"><StackChart /></div>
+                                <div className="col-sm"><VerticalChart /></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

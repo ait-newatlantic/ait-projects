@@ -1,6 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
     const Customers = sequelize.define("customers",
         {
+            employee: {
+                type: Sequelize.STRING
+            },
             customer: {
                 type: Sequelize.STRING
             },

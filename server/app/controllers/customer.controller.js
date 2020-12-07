@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Demands
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.customer || !req.body.customer_number || !req.body.customer_area || !req.body.customer_type) 
+  if (!req.body.customer || !req.body.customer_number || !req.body.customer_area || !req.body.customer_type || !req.body.employee) 
   {
     res.status(400).send({
       message: { heading: "Oh snap! You got an error!" , message:"Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng!!!"}
@@ -15,6 +15,7 @@ exports.create = (req, res) => {
 
   // Create a Customer
   const customer = {
+    employee: req.body.employee,
     customer: req.body.customer,
     customer_number: req.body.customer_number,
     customer_taxcode: req.body.customer_taxcode,

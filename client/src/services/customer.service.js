@@ -5,6 +5,7 @@ const API_URL = process.env.REACT_APP_BASE_URL
 console.log(API_URL)
 
 const create_customer = (
+    employee,
     customer,
     customer_number,
     customer_representative,
@@ -16,6 +17,7 @@ const create_customer = (
     customer_address
 ) => {
     return axios.post(API_URL + "customers", {
+        employee,
         customer,
         customer_number,
         customer_representative,

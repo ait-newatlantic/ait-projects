@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
 import AuthService from "../../../services/auth.service";
-import UserService from "../../../services/user.service";
 import "./style.css"
 import { useCallback } from 'react';
 import logo from "../../../static/imgs/ait_logo.jpg"
@@ -42,21 +41,12 @@ export default function NCTT(props) {
     const [color, setColor] = useState("");
     const [note, setNote] = useState(null);
     const [message, setMessage] = useState("");
-
     const [models, setModels] = useContext(ModelContext);
     const [provinces, setProvinces] = useContext(ProvinceContext);
     const [types, setTypes] = useContext(TypeContext);
     const [customers, setCustomers] = useContext(CustomerContext);
-
     const [customerResult, setCustomerResult] = useState();
-
-    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
-
-    const currentUsers = AuthService.getCurrentUser();
-    const [content, setContent] = useState("");
-
+    const currentUser = AuthService.getCurrentUser();
     const [successful, setSuccessful] = useState(false);
 
     const form = useRef();
@@ -203,28 +193,9 @@ export default function NCTT(props) {
     }, [customer])
 
     useEffect(() => {
-        UserService.getAdminBoard().then(
-            (response) => {
-                setContent(response.data);
-            },
-            (error) => {
-                const _content =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                setContent(_content);
-            }
-        );
-        setEmployee(currentUsers.username)
-        const user = AuthService.getCurrentUser();
-        if (user) {
-            setCurrentUser(user);
-            setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-        }
+        const employee = currentUser.username
+        setEmployee(employee)
+        console.log(employee)
     }, []);
 
 
@@ -448,7 +419,7 @@ export default function NCTT(props) {
                                             <div className="row">
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlInput1" >Người nhập</label>
-                                                    <input type="employee" defaultValue={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
+                                                    <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                                                 </div>
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>

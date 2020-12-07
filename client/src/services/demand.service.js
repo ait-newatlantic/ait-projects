@@ -63,7 +63,7 @@ const get_demands = () => {
 };
 
 const get_demands_specific = (employee) => {
-    return axios.get(API_URL + `demands/info` ,{
+    return axios.get(API_URL + `demands/specific` ,{
         params:{
             employee
         }
@@ -83,9 +83,30 @@ const get_overall = (fromdate, todate) => {
     });
 };
 
+const get_overall_specific = (employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/overall/specific` ,{
+        params:{
+            employee,
+            fromdate,
+            todate,
+        }
+    });
+};
+
+
 const get_total = (fromdate, todate) => {
     return axios.get(API_URL + `demands/total` ,{
         params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_total_specific = (employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/total/specific` ,{
+        params:{
+            employee,
             fromdate,
             todate,
         }
@@ -128,16 +149,62 @@ const get_goAt = (fromdate, todate) => {
     });
 };
 
+const get_date_specific = (employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/date/specific` ,{
+        params:{
+            employee,
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_createAt_specific = ( employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/createat/specific` ,{
+        params:{
+            employee,
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_updateAt_specific = ( employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/updateat/specific` ,{
+        params:{
+            employee,
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_goAt_specific = ( employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/goat/specific` ,{
+        params:{
+            employee,
+            fromdate,
+            todate,
+        }
+    });
+};
+
 export default {
-    get_demands,
-    get_demands_specific,
-    create_demand,
     get_specific_demand,
     update_specific_demand,
+    create_demand,
+    get_demands,
     get_overall,
     get_total,
     get_date,
     get_createAt,
     get_updateAt,
     get_goAt,
+    get_demands_specific,
+    get_overall_specific,
+    get_total_specific,
+    get_date_specific,
+    get_createAt_specific,
+    get_updateAt_specific,
+    get_goAt_specific,
 };
