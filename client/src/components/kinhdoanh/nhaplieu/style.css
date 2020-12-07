@@ -1,8 +1,8 @@
-.container{
+.container-fluid{
     background: white;
 }
 
-.container p{
+.container-fluid p{
     text-align: left;
 }
 .head h1{

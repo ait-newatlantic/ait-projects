@@ -10,7 +10,38 @@ body {
   position: relative;
   display: grid;
   grid-template: auto 1fr auto / 1fr;
-  background-image: url("../src/static/imgs/blue.jpg");
+  background-color: #a8d0e6;
+  /* background-image: url("../src/static/imgs/blue.jpg"); */
+}
+
+
+table,
+th,
+td {
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #374785;
+  color: white;
+}
+
+h1{
+  text-align: center;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+.table-container{
+  height: 50vh;
+  overflow: scroll;
+}
+
+.custom{
+  background-color: white;
 }
 
 .sticky {

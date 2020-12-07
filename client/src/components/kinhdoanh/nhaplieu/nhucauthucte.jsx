@@ -188,7 +188,7 @@ export default function NCTT(props) {
                 );
         }
     };
-    
+
     const Autofill = useCallback(() => {
         CustomerService.get_specific_customer_info(
             customer
@@ -233,7 +233,7 @@ export default function NCTT(props) {
     }, [customer, Autofill])
 
     return (
-        <div className="container p-3 my-3 border border-dark">
+        <div className="container-fluid p-3 my-3 border border-dark">
             <div>
                 <img
                     src={logo}
@@ -244,239 +244,244 @@ export default function NCTT(props) {
                 <Form onSubmit={handleRegister} ref={form}>
                     {!successful && (
                         <div>
-                            <div className="form-group">
-                                <div className="container p-3 my-3 border border-dark" >
-                                    <p><strong>Thông tin khách hàng</strong></p>
-                                    <div className="row">
-
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1">Tên khách hàng</label>
+                            <div className="row">
+                                <div className="col-sm">
+                                    <div className="form-group">
+                                        <div className="container-fluid p-3 my-3 border border-dark" >
+                                            <p><strong>Thông tin khách hàng</strong></p>
                                             <div className="row">
                                                 <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1">Tên khách hàng</label>
+                                                    <div className="row">
+                                                        <div className="col-sm">
+                                                            <Autocomplete
+                                                                freeSolo
+                                                                disableClearable
+                                                                size="small"
+                                                                value={customer}
+                                                                onChange={(event, newValue) => {
+                                                                    setCustomer(newValue);
+                                                                }}
+                                                                inputValue={customer}
+                                                                onInputChange={(event, newValue) => {
+                                                                    setCustomer(newValue);
+                                                                }}
+                                                                options={customers.map((option) => option.customer)}
+                                                                renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
                                                     <Autocomplete
+                                                        size="small"
                                                         freeSolo
                                                         disableClearable
-                                                        size="small"
-                                                        value={customer}
+                                                        value={customer_number}
                                                         onChange={(event, newValue) => {
-                                                            setCustomer(newValue);
+                                                            setCustomer_Number(newValue);
                                                         }}
-                                                        inputValue={customer}
+                                                        inputValue={customer_number}
                                                         onInputChange={(event, newValue) => {
-                                                            setCustomer(newValue);
+                                                            setCustomer_Number(newValue);
                                                         }}
-                                                        options={customers.map((option) => option.customer)}
+                                                        options={customers.map((option) => option.customer_number)}
                                                         renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                                    />
+                                                </div>
+
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
+                                                    <Autocomplete
+                                                        size="small"
+                                                        value={customer_area}
+                                                        onChange={(event, newValue) => {
+                                                            setCustomer_Area(newValue);
+                                                        }}
+                                                        options={provinces.map((option) => option.province_name)}
+                                                        renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                                    />
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
+                                                    <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeStatus}>
+                                                        <option value="" >Click để chọn</option>
+                                                        <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
+                                                        <option value="CHẠY THỬ">CHẠY THỬ</option>
+                                                        <option value="ĐÀM PHÁN">ĐÀM PHÁN</option>
+                                                        <option value="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
+                                                        <option value="ĐÃ CỌC">ĐÃ CỌC</option>
+                                                        <option value="LÊN HỢP ĐỒNG">LÊN HỢP ĐỒNG</option>
+                                                        <option value="ĐÃ THANH TOÁN TẠM ỨNG">ĐÃ THANH TOÁN TẠM ỨNG</option>
+                                                        <option value="HOÀN TẤT GIAO DỊCH">HOÀN TẤT GIAO DỊCH</option>
+                                                        <option value="BÀN GIAO CHƯA THANH TOÁN">BÀN GIAO CHƯA THANH TOÁN</option>
+                                                        <option value="GIAO DỊCH THẤT BẠI">GIAO DỊCH THẤT BẠI</option>
+                                                    </Select>
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
+                                                    <Select className="form-control" id="exampleFormControlSelect1"
+                                                        validations={[required]}
+                                                        onClick={onChangeCustomer_Type}>
+                                                        <option value="">Click để chọn</option>
+                                                        <option value="DỰ KIẾN">DỰ KIẾN</option>
+                                                        <option value="TIỀM NĂNG">TIỀM NĂNG</option>
+                                                        <option value="ĐÃ SỬ DỤNG KAMAZ">ĐÃ SỬ DỤNG KAMAZ</option>
+                                                    </Select>
+                                                    <HtmlTooltip
+                                                        title={
+                                                            <React.Fragment>
+                                                                <Typography color="inherit"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></Typography>
+                                                                <b>{'DỰ KIẾN: '}</b>{"chỉ mới tiếp cận và chào hàng"}.{' '}
+                                                                <b>{'TIỀM NĂNG: '}</b>{"Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng"}.{' '}
+                                                                <b>{'ĐÃ SỬ DỤNG KAMAZ: '}</b>{"Khách hàng đã và đang sử dụng sản phẩm của mình"}.{' '}
+                                                            </React.Fragment>
+                                                        }>
+                                                        <IconButton aria-label="info">
+                                                            <InfoIcon />
+                                                        </IconButton>
+                                                    </HtmlTooltip>
+                                                </div>
+
+                                                <div className="col-sm-9" id="ykien-customers">
+                                                    <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
+                                                    <textarea type="customer_opinion"
+                                                        className="form-control"
+                                                        id="exampleFormControlTextarea1"
+                                                        rows="3"
+                                                        onChange={onChangeCustomer_Opinion}></textarea>
+                                                    {!!customerResult && customerResult.map(result => (
+                                                        <p>{result.customer_opinion}</p>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
+                                                    <Select className="form-control" id="exampleFormControlSelect1"
+                                                        validations={[required]}
+                                                        onClick={onChangeCustomer_Communication}>
+                                                        <option value="">Click để chọn</option>
+                                                        <option value="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
+                                                        <option value="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
+                                                        <option value="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option>
+                                                    </Select>
+                                                </div>
+                                                <div className="col-sm-9" id="diadiem-giaodich">
+                                                    <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
+                                                    <textarea type="customer_meeting" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Meeting(e.target.value)}></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-sm">
+                                    <div className="form-group">
+                                        <div className="container-fluid p-3 my-3 border border-dark" >
+                                            <p><strong>Thông tin xe</strong></p>
+                                            <div className="row">
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1">Model xe</label>
+                                                    <Autocomplete
+                                                        size="small"
+                                                        value={model}
+                                                        onChange={(event, newValue) => {
+                                                            setModel(newValue);
+                                                        }}
+                                                        options={models.map((option) => option.model_name)}
+                                                        renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                                    />
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1">Loại xe</label>
+                                                    <Autocomplete
+                                                        size="small"
+                                                        value={type}
+                                                        onChange={(event, newValue) => {
+                                                            setType(newValue);
+                                                        }}
+                                                        options={types.map((option) => option.type_name)}
+                                                        renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                                    />
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="username">Số lượng</label>
+                                                    <Input
+                                                        type="number"
+                                                        className="form-control"
+                                                        name="quantity"
+                                                        value={quantity}
+                                                        onChange={onChangeQuantity}
+                                                        validations={[required, validQuanity]}
+                                                    />
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
+                                                    <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeColor}>
+                                                        <option value="">Click để chọn</option>
+                                                        <option value="Cam">Cam</option>
+                                                        <option value="Trắng">Trắng</option>
+                                                        <option value="Vàng">Vàng</option>
+                                                        <option value="Xanh">Xanh</option>
+                                                        <option value="Đỏ">Đỏ</option>
+                                                        <option value="Xanh quân đội">Xanh quân đội</option>
+                                                        <option value="Chưa quyết định">Chưa quyết định</option>
+                                                    </Select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <div className="container-fluid p-3 my-3 border border-dark" >
+                                            <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
+                                            <div className="row">
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlInput1" >Người nhập</label>
+                                                    <input type="employee" defaultValue={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
+                                                    <Input
+                                                        type="employee_field"
+                                                        className="form-control"
+                                                        name="demployee_field"
+                                                        value={employee_field}
+                                                        onChange={onChangeEmployee_Field}
+                                                        validations={[required, validEmployee_Field]}
+                                                    />
+                                                </div>
+
+                                                <div className="col-sm">
+                                                    <label htmlFor="example-date-input" >Ngày đi thực tế</label>
+                                                    <Input
+                                                        type="date"
+                                                        className="form-control"
+                                                        name="date"
+                                                        value={date}
+                                                        onChange={onChangeDate}
+                                                        validations={[required]}
                                                     />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
-                                            <Autocomplete
-                                                size="small"
-                                                freeSolo
-                                                disableClearable
-                                                value={customer_number}
-                                                onChange={(event, newValue) => {
-                                                    setCustomer_Number(newValue);
-                                                }}
-                                                inputValue={customer_number}
-                                                onInputChange={(event, newValue) => {
-                                                    setCustomer_Number(newValue);
-                                                }}
-                                                options={customers.map((option) => option.customer_number)}
-                                                renderInput={(params) => <TextField {...params} variant="outlined" />}
-                                            />
-                                        </div>
-
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
-                                            <Autocomplete
-                                                size="small"
-                                                value={customer_area}
-                                                onChange={(event, newValue) => {
-                                                    setCustomer_Area(newValue);
-                                                }}
-                                                options={provinces.map((option) => option.province_name)}
-                                                renderInput={(params) => <TextField {...params} variant="outlined" />}
-                                            />
-                                        </div>
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
-                                            <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeStatus}>
-                                                <option value="" >Click để chọn</option>
-                                                <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
-                                                <option value="CHẠY THỬ">CHẠY THỬ</option>
-                                                <option value="ĐÀM PHÁN">ĐÀM PHÁN</option>
-                                                <option value="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
-                                                <option value="ĐÃ CỌC">ĐÃ CỌC</option>
-                                                <option value="LÊN HỢP ĐỒNG">LÊN HỢP ĐỒNG</option>
-                                                <option value="ĐÃ THANH TOÁN TẠM ỨNG">ĐÃ THANH TOÁN TẠM ỨNG</option>
-                                                <option value="HOÀN TẤT GIAO DỊCH">HOÀN TẤT GIAO DỊCH</option>
-                                                <option value="BÀN GIAO CHƯA THANH TOÁN">BÀN GIAO CHƯA THANH TOÁN</option>
-                                                <option value="GIAO DỊCH THẤT BẠI">GIAO DỊCH THẤT BẠI</option>
-                                            </Select>
-                                        </div>
                                     </div>
-
-                                    <div className="row">
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
-                                            <Select className="form-control" id="exampleFormControlSelect1"
-                                                validations={[required]}
-                                                onClick={onChangeCustomer_Type}>
-                                                <option value="">Click để chọn</option>
-                                                <option value="DỰ KIẾN">DỰ KIẾN</option>
-                                                <option value="TIỀM NĂNG">TIỀM NĂNG</option>
-                                                <option value="ĐÃ SỬ DỤNG KAMAZ">ĐÃ SỬ DỤNG KAMAZ</option>
-                                            </Select>
-                                            <HtmlTooltip
-                                                title={
-                                                    <React.Fragment>
-                                                        <Typography color="inherit"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></Typography>
-                                                        <b>{'DỰ KIẾN: '}</b>{"chỉ mới tiếp cận và chào hàng"}.{' '}
-                                                        <b>{'TIỀM NĂNG: '}</b>{"Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng"}.{' '}
-                                                        <b>{'ĐÃ SỬ DỤNG KAMAZ: '}</b>{"Khách hàng đã và đang sử dụng sản phẩm của mình"}.{' '}
-                                                    </React.Fragment>
-                                                }>
-                                                <IconButton aria-label="info">
-                                                    <InfoIcon />
-                                                </IconButton>
-                                            </HtmlTooltip>
-                                        </div>
-
-                                        <div className="col-sm-9" id="ykien-customers">
-                                            <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
-                                            <textarea type="customer_opinion"
-                                                className="form-control"
-                                                id="exampleFormControlTextarea1"
-                                                rows="3"
-                                                onChange={onChangeCustomer_Opinion}></textarea>
-                                            {!!customerResult && customerResult.map(result => (
-                                                <p>{result.customer_opinion}</p>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
-                                            <Select className="form-control" id="exampleFormControlSelect1"
-                                                validations={[required]}
-                                                onClick={onChangeCustomer_Communication}>
-                                                <option value="">Click để chọn</option>
-                                                <option value="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
-                                                <option value="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
-                                                <option value="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option>
-                                            </Select>
-                                        </div>
-                                        <div className="col-sm-9" id="diadiem-giaodich">
-                                            <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
-                                            <textarea type="customer_meeting" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Meeting(e.target.value)}></textarea>
+                                    <div className="form-group">
+                                        <div className="container-fluid p-3 my-3 border border-dark" >
+                                            <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
+                                            <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeNote}></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <div className="container p-3 my-3 border border-dark" >
-                                    <p><strong>Thông tin xe</strong></p>
-                                    <div className="row">
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1">Model xe</label>
-                                            <Autocomplete
-                                                size="small"
-                                                value={model}
-                                                onChange={(event, newValue) => {
-                                                    setModel(newValue);
-                                                }}
-                                                options={models.map((option) => option.model_name)}
-                                                renderInput={(params) => <TextField {...params} variant="outlined" />}
-                                            />
-                                        </div>
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1">Loại xe</label>
-                                            <Autocomplete
-                                                size="small"
-                                                value={type}
-                                                onChange={(event, newValue) => {
-                                                    setType(newValue);
-                                                }}
-                                                options={types.map((option) => option.type_name)}
-                                                renderInput={(params) => <TextField {...params} variant="outlined" />}
-                                            />
-                                        </div>
-                                        <div className="col-sm">
-                                            <label htmlFor="username">Số lượng</label>
-                                            <Input
-                                                type="number"
-                                                className="form-control"
-                                                name="quantity"
-                                                value={quantity}
-                                                onChange={onChangeQuantity}
-                                                validations={[required, validQuanity]}
-                                            />
-                                        </div>
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
-                                            <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeColor}>
-                                                <option value="">Click để chọn</option>
-                                                <option value="Cam">Cam</option>
-                                                <option value="Trắng">Trắng</option>
-                                                <option value="Vàng">Vàng</option>
-                                                <option value="Xanh">Xanh</option>
-                                                <option value="Đỏ">Đỏ</option>
-                                                <option value="Xanh quân đội">Xanh quân đội</option>
-                                                <option value="Chưa quyết định">Chưa quyết định</option>
-                                            </Select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="container p-3 my-3 border border-dark" >
-                                    <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
-                                    <div className="row">
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlInput1" >Người nhập</label>
-                                            <input type="employee" defaultValue={currentUsers.username} className="form-control" id="exampleFormControlInput1" />
-                                        </div>
-                                        <div className="col-sm">
-                                            <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
-                                            <Input
-                                                type="employee_field"
-                                                className="form-control"
-                                                name="demployee_field"
-                                                value={employee_field}
-                                                onChange={onChangeEmployee_Field}
-                                                validations={[required, validEmployee_Field]}
-                                            />
-                                        </div>
 
-                                        <div className="col-sm">
-                                            <label htmlFor="example-date-input" >Ngày đi thực tế</label>
-                                            <Input
-                                                type="date"
-                                                className="form-control"
-                                                name="date"
-                                                value={date}
-                                                onChange={onChangeDate}
-                                                validations={[required]}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="form-group">
-                                <div className="container p-3 my-3 border border-dark" >
-                                    <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
-                                    <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeNote}></textarea>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <div className="container p-3 my-3 border border-dark" >
+                                <div className="container-fluid p-3 my-3 border border-dark" >
                                     <label htmlFor="exampleInputFile">Upload ảnh</label>
                                     <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
                                     <small id="fileHelp" className="form-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
@@ -491,12 +496,12 @@ export default function NCTT(props) {
                     )}
                     {message && (
                         <div className="form-group">
-                            <div className="container p-3 my-3 border border-dark">
+                            <div className="container-fluid p-3 my-3 border border-dark">
                                 <div
                                     className={successful ? "alert alert-success" : "alert alert-danger"}
                                     role="alert"
                                 >
-                                    {/* <div className="card card-container" >
+                                    {/* <div className="card card-container-fluid" >
                                         <h1>{message}</h1>
                                     </div> */}
                                     <Alert key={message.message}>
