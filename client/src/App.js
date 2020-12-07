@@ -7,8 +7,6 @@ import Footer from './components/footer/Footer'
 import NCTT from './components/kinhdoanh/nhaplieu/nhucauthucte'
 import BCTQKD from './components/kinhdoanh/baocaokinhdoanh/baocaotongquat'
 import BCCTKD from './components/kinhdoanh/baocaokinhdoanh/baocaochitiet'
-import BDTQKD from './components/kinhdoanh/bieudokd/bieudotongquat'
-import BDCTKD from './components/kinhdoanh/bieudokd/bieudochitiet'
 import CN_NCTT from './components/kinhdoanh/capnhat/capnhatnctt.jsx'
 import KTKH from './components/khachhang/KTKH'
 import DSKH from "./components/khachhang/DSKH"
@@ -77,8 +75,6 @@ function App() {
                           <Route path="/kinhdoanh/capnhat/demands/:id" exact component={CN_NCTT} />
                           <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
                           <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
-                          <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
-                          <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
                           <Route path="/customers/khoitao" exact component={KTKH} />
                           <Route path="/customers/danhsach" exact component={DSKH} />
                           <Route path="/customers/capnhat/:id" exact component={CNKH} />
@@ -98,8 +94,6 @@ function App() {
                             <Route path="/kinhdoanh/capnhat/demands/:id" exact component={CN_NCTT} />
                             <Route path="/kinhdoanh/baocao/tongquatkd" exact component={BCTQKD} />
                             <Route path="/kinhdoanh/baocao/chitietkd" exact component={BCCTKD} />
-                            <Route path="/kinhdoanh/bieudokd/bieudotq" exact component={BDTQKD} />
-                            <Route path="/kinhdoanh/bieudokd/bieudoct" exact component={BDCTKD} />
                             <Route path="/customers/khoitao" exact component={KTKH} />
                             <Route path="/customers/danhsach" exact component={DSKH} />
                             <Route path="/customers/capnhat/:id" exact component={CNKH} />

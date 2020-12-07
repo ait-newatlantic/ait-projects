@@ -127,7 +127,7 @@ export default function KTKH() {
     };
 
     return (
-        <div className="container-fluid p-3 my-3 border border-dark">
+        <div className="container-fluid p-3 my-3 border border-dark custom">
             <div className="head">
                 <img src={logo} alt="logo" width="100" height="100" />
                 <h1>FORM KHỞI TẠO KHÁCH HÀNG</h1>
@@ -160,6 +160,7 @@ export default function KTKH() {
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
                                     <Autocomplete
+                                        style={{background: "white"}}
                                         size="small"
                                         value={customer_area}
                                         onChange={(event, newValue) => {

@@ -122,7 +122,7 @@ export default function CNKH(props) {
 
 
     return (
-        <div className="container p-3 my-3 border border-dark">
+        <div className="container-fluid p-3 my-3 border border-dark custom">
             <Form onSubmit={handleUpdate} ref={form}>
                 {!successful && (
                     <div>
@@ -131,7 +131,7 @@ export default function CNKH(props) {
                             <h1>FORM CẬP NHẬT KHÁCH HÀNG</h1>
                         </div>
 
-                        <div className="container p-3 my-3 border border-dark" >
+                        <div className="container-fluid p-3 my-3 border border-dark" >
                             <p><strong>Thông tin khách hàng</strong></p>
                             <div className="row">
                                 <div className="col-sm">
@@ -213,7 +213,7 @@ export default function CNKH(props) {
                             </div>
                         </div>
 
-                        <div className="container p-3 my-3 border border-dark" >
+                        <div className="container-fluid p-3 my-3 border border-dark" >
                             <Button variant="success" block type="submit" onClick={handleUpdate}>
                                 Cập nhật
                     </Button>
@@ -222,12 +222,12 @@ export default function CNKH(props) {
                 )}
                 {message && (
                     <div className="form-group">
-                        <div className="container p-3 my-3 border border-dark">
+                        <div className="container-fluid p-3 my-3 border border-dark">
                             <div
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
                             >
-                                {/* <div className="card card-container" >
+                                {/* <div className="card card-container-fluid" >
                                         <h1>{message}</h1>
                                     </div> */}
                                 <Alert key={message.message}>

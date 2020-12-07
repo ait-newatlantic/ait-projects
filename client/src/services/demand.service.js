@@ -62,6 +62,14 @@ const get_demands = () => {
     return axios.get(API_URL + `demands`);
 };
 
+const get_demands_specific = (employee) => {
+    return axios.get(API_URL + `demands/info` ,{
+        params:{
+            employee
+        }
+    });
+};
+
 const get_specific_demand = (id) => {
     return axios.get(API_URL + `demands/${id}`);
 };
@@ -122,6 +130,7 @@ const get_goAt = (fromdate, todate) => {
 
 export default {
     get_demands,
+    get_demands_specific,
     create_demand,
     get_specific_demand,
     update_specific_demand,

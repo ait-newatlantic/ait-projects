@@ -233,7 +233,7 @@ export default function NCTT(props) {
     }, [customer, Autofill])
 
     return (
-        <div className="container-fluid p-3 my-3 border border-dark">
+        <div className="container-fluid p-3 my-3 border border-dark custom">
             <div>
                 <img
                     src={logo}
@@ -255,6 +255,7 @@ export default function NCTT(props) {
                                                     <div className="row">
                                                         <div className="col-sm">
                                                             <Autocomplete
+                                                                style={{ background: "white" }}
                                                                 freeSolo
                                                                 disableClearable
                                                                 size="small"
@@ -275,6 +276,7 @@ export default function NCTT(props) {
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
                                                     <Autocomplete
+                                                        style={{ background: "white" }}
                                                         size="small"
                                                         freeSolo
                                                         disableClearable
@@ -292,8 +294,9 @@ export default function NCTT(props) {
                                                 </div>
 
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
+                                                    <label htmlFor="exampleFormControlSelect1">Khu vực KH</label>
                                                     <Autocomplete
+                                                        style={{ background: "white" }}
                                                         size="small"
                                                         value={customer_area}
                                                         onChange={(event, newValue) => {
@@ -388,6 +391,7 @@ export default function NCTT(props) {
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlSelect1">Model xe</label>
                                                     <Autocomplete
+                                                        style={{ background: "white" }}
                                                         size="small"
                                                         value={model}
                                                         onChange={(event, newValue) => {
@@ -400,6 +404,7 @@ export default function NCTT(props) {
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlSelect1">Loại xe</label>
                                                     <Autocomplete
+                                                        style={{ background: "white" }}
                                                         size="small"
                                                         value={type}
                                                         onChange={(event, newValue) => {

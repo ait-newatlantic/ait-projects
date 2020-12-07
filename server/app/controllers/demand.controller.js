@@ -70,6 +70,14 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findAllSpecific = (req, res) => {
+  const employee = req.query.employee;
+  return db.sequelize.query(` SELECT * FROM demands WHERE employee LIKE "%${employee}%" `, 
+    { type: db.sequelize.QueryTypes.SELECT })
+  .then(queues => res.json(queues))
+  .catch(err => res.status(400).json(err));
+};
+
 // Find all published Demands
 exports.findAllDate = (req, res) => {
   fromdate = req.query.fromdate;

@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
-
+import "./style.css"
 
 export default function CN_NCTT(props) {
     const [date, setDate] = useState("");
@@ -161,249 +161,252 @@ export default function CN_NCTT(props) {
     }, [props.match.params.id])
 
     return (
-        <div className="container p-3 my-3 border border-dark">
+        <div className="container-fluid p-3 my-3 border border-dark custom">
+            <div>
+                <img
+                    src={logo}
+                    alt="logo-img"
+                    className="profile-img-card"
+                />
+                <h1>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h1>
+            </div>
             <Form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                     <div>
-                        <div>
-                            <div className="head">
-                                <img src={logo} alt="logo" width="100" height="100" />
-                                <h1>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h1>
-                            </div>
+                        <div className="row">
+                            <div className="col-sm">
+                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                    <p><strong>Thông tin khách hàng</strong></p>
+                                    <div className="row">
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1">Tên khách hàng</label>
+                                            <div className="row">
+                                                <div className="col-sm">
+                                                    <input type="customer" className="form-control" defaultValue={demands.customer} id="exampleFormControlInput1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
+                                            <input type="customer_number" className="form-control" defaultValue={demands.customer_number} id="exampleFormControlInput1" />
+                                        </div>
 
-                            <div className="container p-3 my-3 border border-dark" >
-                                <p><strong>Thông tin khách hàng</strong></p>
-                                <div className="row">
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1">Khu vực KH</label>
+                                            <input type="customer_area" className="form-control" defaultValue={demands.customer_area} id="exampleFormControlInput1" />
+                                        </div>
 
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
+                                            <Select className="form-control" id="exampleFormControlSelect1" style={{ background: "#add8e6" }} onChange={onChangeStatus}>
+                                                <option defaultValue={demands.status} >{demands.status}</option>
+                                                <option defaultValue="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
+                                                <option defaultValue="CHẠY THỬ">CHẠY THỬ</option>
+                                                <option defaultValue="ĐÀM PHÁN">ĐÀM PHÁN</option>
+                                                <option defaultValue="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
+                                                <option defaultValue="ĐÃ CỌC">ĐÃ CỌC</option>
+                                                <option defaultValue="LÊN HỢP ĐỒNG">LÊN HỢP ĐỒNG</option>
+                                                <option defaultValue="ĐÃ THANH TOÁN TẠM ỨNG">ĐÃ THANH TOÁN TẠM ỨNG</option>
+                                                <option defaultValue="HOÀN TẤT GIAO DỊCH">HOÀN TẤT GIAO DỊCH</option>
+                                                <option defaultValue="BÀN GIAO CHƯA THANH TOÁN">BÀN GIAO CHƯA THANH TOÁN</option>
+                                                <option defaultValue="GIAO DỊCH THẤT BẠI">GIAO DỊCH THẤT BẠI</option>
+                                            </Select>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
+                                            <input type="customer_type" className="form-control" defaultValue={demands.customer_type} id="exampleFormControlInput1" />
+                                            <HtmlTooltip
+                                                title={
+                                                    <React.Fragment>
+                                                        <Typography color="inherit"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></Typography>
+                                                        <b>{'DỰ KIẾN: '}</b>{"chỉ mới tiếp cận và chào hàng"}.{' '}
+                                                        <b>{'TIỀM NĂNG: '}</b>{"Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng"}.{' '}
+                                                        <b>{'ĐÃ SỬ DỤNG KAMAZ: '}</b>{"Khách hàng đã và đang sử dụng sản phẩm của mình"}.{' '}
+                                                    </React.Fragment>
+                                                }
+                                            >
+                                                <IconButton aria-label="info">
+                                                    <InfoIcon />
+                                                </IconButton>
+                                            </HtmlTooltip>
+                                        </div>
+                                        <div className="col-sm-9" id="ykien-customers">
+                                            <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
+                                            <textarea type="customer_opinion"
+                                                className="form-control"
+                                                id="exampleFormControlTextarea1"
+                                                defaultValue={demands.customer_opinion}
+                                                rows="3"
+                                            ></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
+                                            <Select className="form-control" id="exampleFormControlSelect1">
+                                                <option defaultValue="" >{demands.customer_communication}</option>
+                                                {/* <option defaultValue="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
+                                            <option defaultValue="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
+                                            <option defaultValue="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option> */}
+                                            </Select>
+                                        </div>
+                                        <div className="col-sm-9" id="diadiem-giaodich">
+                                            <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
+                                            <textarea type="customer_meeting"
+                                                className="form-control"
+                                                id="exampleFormControlTextarea1"
+                                                defaultValue={demands.customer_meeting}
+                                                rows="3"
+                                            ></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1">Tên khách hàng</label>
-                                        <div className="row">
-                                            <div className="col-sm">
-                                                <input type="customer" className="form-control" defaultValue={demands.customer} id="exampleFormControlInput1" />
+                            </div>
+                            <div className="col-sm">
+                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                    <p><strong>Thông tin xe</strong></p>
+                                    <div className="row">
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1">Model xe</label>
+                                            <input type="model" className="form-control" defaultValue={demands.model} id="exampleFormControlInput1" />
+                                        </div>
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1">Loại xe</label>
+                                            <input type="type" className="form-control" defaultValue={demands.type} id="exampleFormControlInput1" />
+                                        </div>
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlInput1" >Số lượng</label>
+                                            <input
+                                                type="quantity"
+                                                className="form-control"
+                                                defaultValue={demands.quantity}
+                                                id="exampleFormControlInput1" />
+                                        </div>
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
+                                            <Select className="form-control" id="exampleFormControlSelect1" onChange={onChangeColor} style={{ background: "#add8e6" }}>
+                                                <option defaultValue={demands.color}>{demands.color}</option>
+                                                <option defaultValue="Cam">Cam</option>
+                                                <option defaultValue="Trắng">Trắng</option>
+                                                <option defaultValue="Vàng">Vàng</option>
+                                                <option defaultValue="Xanh">Xanh</option>
+                                                <option defaultValue="Xanh quân đội">Xanh quân đội</option>
+                                                <option defaultValue="Đỏ">Đỏ</option>
+                                                <option defaultValue="Chưa quyết định">Chưa quyết định</option>
+                                            </Select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                    <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
+                                    <div className="row">
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlInput1" >Người nhập</label>
+                                            <input type="employee" defaultValue={demands.employee} className="form-control" id="exampleFormControlInput1" />
+                                        </div>
+                                        <div className="col-sm">
+                                            <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
+                                            <input type="employee_field" defaultValue={demands.employee_field} className="form-control" id="exampleFormControlInput1" />
+                                        </div>
+
+                                        <div className="col-sm">
+                                            <label htmlFor="example-date-input" >Ngày đi thực tế</label>
+                                            <Input
+                                                type="date"
+                                                style={{ background: "#add8e6" }}
+                                                className="form-control"
+                                                name="date"
+                                                onChange={onChangeDate}
+                                                validations={[required]}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                    <p><strong>Thông tin thêm</strong></p>
+                                    <div className="row">
+                                        <div className="col">
+                                            <div className="demands-group">
+                                                <label htmlFor="exampleFormControlInput1" >AIT</label>
+                                                <Input
+                                                    style={{ background: "#add8e6" }}
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="ait"
+                                                    placeholder={demands.ait}
+                                                    onChange={onChangeAit}
+                                                    validations={[validAit]}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="demands-group">
+                                                <label htmlFor="exampleFormControlInput1" >KMT</label>
+                                                <Input
+                                                    style={{ background: "#add8e6" }}
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="kmt"
+                                                    placeholder={demands.kmt}
+                                                    onChange={onChangeKmt}
+                                                    validations={[validKmt]}
+                                                />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
-                                        <input type="customer_number" className="form-control" defaultValue={demands.customer_number} id="exampleFormControlInput1" />
-                                    </div>
-
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
-                                        <input type="customer_area" className="form-control" defaultValue={demands.customer_area} id="exampleFormControlInput1" />
-                                    </div>
-
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
-                                        <Select className="form-control" id="exampleFormControlSelect1" style={{ background: "#add8e6" }} onChange={onChangeStatus}>
-                                            <option defaultValue={demands.status} >{demands.status}</option>
-                                            <option defaultValue="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
-                                            <option defaultValue="CHẠY THỬ">CHẠY THỬ</option>
-                                            <option defaultValue="ĐÀM PHÁN">ĐÀM PHÁN</option>
-                                            <option defaultValue="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
-                                            <option defaultValue="ĐÃ CỌC">ĐÃ CỌC</option>
-                                            <option defaultValue="LÊN HỢP ĐỒNG">LÊN HỢP ĐỒNG</option>
-                                            <option defaultValue="ĐÃ THANH TOÁN TẠM ỨNG">ĐÃ THANH TOÁN TẠM ỨNG</option>
-                                            <option defaultValue="HOÀN TẤT GIAO DỊCH">HOÀN TẤT GIAO DỊCH</option>
-                                            <option defaultValue="BÀN GIAO CHƯA THANH TOÁN">BÀN GIAO CHƯA THANH TOÁN</option>
-                                            <option defaultValue="GIAO DỊCH THẤT BẠI">GIAO DỊCH THẤT BẠI</option>
-                                        </Select>
-                                    </div>
                                 </div>
 
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
-                                        <input type="customer_type" className="form-control" defaultValue={demands.customer_type} id="exampleFormControlInput1" />
-                                        <HtmlTooltip
-                                            title={
-                                                <React.Fragment>
-                                                    <Typography color="inherit"><strong>GIẢI THÍCH LOẠI KHÁCH HÀNG</strong></Typography>
-                                                    <b>{'DỰ KIẾN: '}</b>{"chỉ mới tiếp cận và chào hàng"}.{' '}
-                                                    <b>{'TIỀM NĂNG: '}</b>{"Họ có nhu cầu và dự định sử dụng sản phẩm của mình, sau khi được chào hàng"}.{' '}
-                                                    <b>{'ĐÃ SỬ DỤNG KAMAZ: '}</b>{"Khách hàng đã và đang sử dụng sản phẩm của mình"}.{' '}
-                                                </React.Fragment>
-                                            }
-                                        >
-                                            <IconButton aria-label="info">
-                                                <InfoIcon />
-                                            </IconButton>
-                                        </HtmlTooltip>
-                                    </div>
-                                    <div className="col-sm-9" id="ykien-customers">
-                                        <label htmlFor="exampleFormControlTextarea1">Ý kiến khách hàng (Đối với khách hàng đã sử dụng xe Kamaz)</label>
-                                        <textarea type="customer_opinion"
-                                            className="form-control"
-                                            id="exampleFormControlTextarea1"
-                                            defaultValue={demands.customer_opinion}
-                                            rows="3"
-                                        ></textarea>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
-                                        <Select className="form-control" id="exampleFormControlSelect1">
-                                            <option defaultValue="" >{demands.customer_communication}</option>
-                                            {/* <option defaultValue="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
-                                            <option defaultValue="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
-                                            <option defaultValue="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option> */}
-                                        </Select>
-                                    </div>
-                                    <div className="col-sm-9" id="diadiem-giaodich">
-                                        <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
-                                        <textarea type="customer_meeting"
-                                            className="form-control"
-                                            id="exampleFormControlTextarea1"
-                                            defaultValue={demands.customer_meeting}
-                                            rows="3"
-                                        ></textarea>
-                                    </div>
+                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                    <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
+                                    <textarea type="note"
+                                        className="form-control"
+                                        id="exampleFormControlTextarea1"
+                                        placeholder={demands.note}
+                                        rows="3"
+                                        style={{ background: "#add8e6" }}
+                                        onChange={onChangeNote}
+                                    ></textarea>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="container p-3 my-3 border border-dark" >
-                                <p><strong>Thông tin xe</strong></p>
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1">Model xe</label>
-                                        <input type="model" className="form-control" defaultValue={demands.model} id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1">Loại xe</label>
-                                        <input type="type" className="form-control" defaultValue={demands.type} id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Số lượng</label>
-                                        <input
-                                            type="quantity"
-                                            className="form-control"
-                                            defaultValue={demands.quantity}
-                                            id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
-                                        <Select className="form-control" id="exampleFormControlSelect1" onChange={onChangeColor} style={{ background: "#add8e6" }}>
-                                            <option defaultValue={demands.color}>{demands.color}</option>
-                                            <option defaultValue="Cam">Cam</option>
-                                            <option defaultValue="Trắng">Trắng</option>
-                                            <option defaultValue="Vàng">Vàng</option>
-                                            <option defaultValue="Xanh">Xanh</option>
-                                            <option defaultValue="Xanh quân đội">Xanh quân đội</option>
-                                            <option defaultValue="Đỏ">Đỏ</option>
-                                            <option defaultValue="Chưa quyết định">Chưa quyết định</option>
-                                        </Select>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="container-fluid p-3 my-3 border border-dark" >
+                            <label htmlFor="exampleInputFile">Upload ảnh</label>
+                            <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
+                            <small id="fileHelp" className="demands-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
 
-                            <div className="container p-3 my-3 border border-dark" >
-                                <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Người nhập</label>
-                                        <input type="employee" defaultValue={demands.employee} className="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
-                                        <input type="employee_field" defaultValue={demands.employee_field} className="form-control" id="exampleFormControlInput1" />
-                                    </div>
-
-                                    <div className="col-sm">
-                                        <label htmlFor="example-date-input" >Ngày đi thực tế</label>
-                                        <Input
-                                            type="date"
-                                            style={{ background: "#add8e6" }}
-                                            className="form-control"
-                                            name="date"
-                                            onChange={onChangeDate}
-                                            validations={[required]}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="container p-3 my-3 border border-dark" >
-                                <p><strong>Thông tin thêm</strong></p>
-                                <div className="row">
-                                    <div className="col">
-                                        <div className="demands-group">
-                                            <label htmlFor="exampleFormControlInput1" >AIT</label>
-                                            <Input
-                                                style={{ background: "#add8e6" }}
-                                                type="text"
-                                                className="form-control"
-                                                name="ait"
-                                                placeholder={demands.ait}
-                                                onChange={onChangeAit}
-                                                validations={[validAit]}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="demands-group">
-                                            <label htmlFor="exampleFormControlInput1" >KMT</label>
-                                            <Input
-                                                style={{ background: "#add8e6" }}
-                                                type="text"
-                                                className="form-control"
-                                                name="kmt"
-                                                placeholder={demands.kmt}
-                                                onChange={onChangeKmt}
-                                                validations={[validKmt]}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="container p-3 my-3 border border-dark" >
-                                <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
-                                <textarea type="note"
-                                    className="form-control"
-                                    id="exampleFormControlTextarea1"
-                                    placeholder={demands.note}
-                                    rows="3"
-                                    style={{ background: "#add8e6" }}
-                                    onChange={onChangeNote}
-                                ></textarea>
-                            </div>
-
-                            <div className="container p-3 my-3 border border-dark" >
-                                <label htmlFor="exampleInputFile">Upload ảnh</label>
-                                <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                                <small id="fileHelp" className="demands-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
-
-                                <Button variant="success" block type="submit" onClick={handleRegister}>
-                                    Cập nhật
+                            <Button variant="success" block type="submit" onClick={handleRegister}>
+                                Cập nhật
                                     </Button>
+                        </div>
+                    </div>
+                )}
+                {message && (
+                    <div className="form-group">
+                        <div className="container-fluid p-3 my-3 border border-dark">
+                            <div
+                                className={successful ? "alert alert-success" : "alert alert-danger"}
+                                role="alert"
+                            >
+                                {/* <div className="card card-container-fluid" >
+                                        <h1>{message}</h1>
+                                    </div> */}
+                                <Alert key={message.message}>
+                                    <Alert.Heading>{message.heading}</Alert.Heading>
+                                    <p>
+                                        {message.message}
+                                    </p>
+                                </Alert>
                             </div>
                         </div>
                     </div>
                 )}
-                 {message && (
-                        <div className="form-group">
-                            <div className="container p-3 my-3 border border-dark">
-                                <div
-                                    className={successful ? "alert alert-success" : "alert alert-danger"}
-                                    role="alert"
-                                >
-                                    {/* <div className="card card-container" >
-                                        <h1>{message}</h1>
-                                    </div> */}
-                                    <Alert key={message.message}>
-                                        <Alert.Heading>{message.heading}</Alert.Heading>
-                                        <p>
-                                            {message.message}
-                                        </p>
-                                    </Alert>
-                                </div>
-                            </div>
-                        </div>
-                    )}
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
         </div>

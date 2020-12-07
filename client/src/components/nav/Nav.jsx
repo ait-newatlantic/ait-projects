@@ -50,12 +50,6 @@ export default function Nav() {
                                         <a className="dropdown-item" href="/kinhdoanh/baocao/chitietkd">Báo cáo chi tiết</a>
                                     </ul>
                                 </li>
-                                <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Biểu đồ KD</a>
-                                    <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="/kinhdoanh/bieudokd/bieudotq">Biểu đồ tổng quát</a>
-                                        <a className="dropdown-item" href="/kinhdoanh/bieudokd/bieudoct">Biểu đồ chi tiết</a>
-                                    </ul>
-                                </li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown active">
@@ -139,13 +133,7 @@ export default function Nav() {
                                             <a className="dropdown-item" href="/kinhdoanh/baocao/tongquatkd">Báo cáo tổng quát</a>
                                             <a className="dropdown-item" href="/kinhdoanh/baocao/chitietkd">Báo cáo chi tiết</a>
                                         </ul>
-                                    </li>
-                                    <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Biểu đồ KD</a>
-                                        <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/kinhdoanh/bieudokd/bieudotq">Biểu đồ tổng quát</a>
-                                            <a className="dropdown-item" href="/kinhdoanh/bieudokd/bieudoct">Biểu đồ chi tiết</a>
-                                        </ul>
-                                    </li>
+                                    </li> 
                                 </ul>
                             </li>
                             <li className="nav-item dropdown active">

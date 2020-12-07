@@ -8,6 +8,8 @@ module.exports = app => {
   
     // Retrieve all Tutorials
     router.get("/", demands.findAll);
+
+    router.get("/info", demands.findAllSpecific);
   
     // Retrieve all demands by date range
     router.get("/date", demands.findAllDate);
