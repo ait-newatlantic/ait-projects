@@ -62,6 +62,34 @@ const get_demands = () => {
     return axios.get(API_URL + `demands`);
 };
 
+const get_all_models = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/allmodels`, {
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_all_quantity = (fromdate, todate) => {
+    return axios.get(API_URL + `demands/allquantity`, {
+        params:{
+            fromdate,
+            todate,
+        }
+    });
+};
+
+const get_all_quantity_specific = (employee, fromdate, todate) => {
+    return axios.get(API_URL + `demands/allquantity/specific`, {
+        params:{
+            employee,
+            fromdate,
+            todate,
+        }
+    });
+};
+
 const get_demands_specific = (employee) => {
     return axios.get(API_URL + `demands/specific` ,{
         params:{
@@ -200,6 +228,8 @@ export default {
     get_createAt,
     get_updateAt,
     get_goAt,
+    get_all_models,
+    get_all_quantity,
     get_demands_specific,
     get_overall_specific,
     get_total_specific,
@@ -207,4 +237,5 @@ export default {
     get_createAt_specific,
     get_updateAt_specific,
     get_goAt_specific,
+    get_all_quantity_specific,
 };

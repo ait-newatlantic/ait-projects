@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import GroupChart from "../../chart/group"
 import DemandService from "../../../services/demand.service"
 import AuthService from "../../../services/auth.service";
+import useFullPageLoader from "../../../services/loader.service"
 
 export default function BCTQ(props) {
 
@@ -10,122 +11,107 @@ export default function BCTQ(props) {
     const [todate, setToDate] = useState('2030-01-01');
     const [yearResult, setYearResult] = useState();
     const [yearResult2, setYearResult2] = useState();
-
+    const [loader, showLoader, hideLoader] = useFullPageLoader()
     const currentUser = AuthService.getCurrentUser();
+
+    const FetchTotal = () => {
+        showLoader()
+        DemandService.get_total(
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult(response.data);
+        });
+    }
+
+    const FetchTotalSpecific = () => {
+        showLoader()
+        const employee = currentUser.username.split('.')[0]
+        DemandService.get_total_specific(
+            employee,
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult(response.data);
+        });
+    }
+
+    const FetchOverall = () => {
+        showLoader()
+        DemandService.get_overall(
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult2(response.data);
+        });
+    }
+
+    const FetchOverallSpecific = () => {
+        showLoader()
+        const employee = currentUser.username.split('.')[0]
+        DemandService.get_overall_specific(
+            employee,
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult2(response.data);
+        });
+    }
 
     const Submit = () => {
         if (currentUser.username.split('.')[0] === "AIT") {
-            DemandService.get_total(
-                fromdate,
-                todate,
-            ).then((response) => {
-                setYearResult(response.data);
-            });
-            DemandService.get_overall(
-                fromdate,
-                todate,
-            ).then((response) => {
-                setYearResult2(response.data);
-            });
-        } 
+            FetchTotal()
+            FetchOverall()
+        }
         else {
-            const employee = currentUser.username.split('.')[0]
-            DemandService.get_total_specific(
-                employee,
-                fromdate,
-                todate,
-            ).then((response) => {
-                setYearResult(response.data);
-            });
-            DemandService.get_overall_specific(
-                employee,
-                fromdate,
-                todate,
-            ).then((response) => {
-                setYearResult2(response.data);
-            });
+            FetchTotalSpecific()
+            FetchOverallSpecific()
         }
     }
 
-const FetchTotal = () => {
-    DemandService.get_total(
-        fromdate,
-        todate,
-    ).then((response) => {
-        setYearResult(response.data);
-    });
-}
 
-const FetchTotalSpecific = () => {
-    const employee = currentUser.username.split('.')[0]
-    DemandService.get_total_specific(
-        employee,
-        fromdate,
-        todate,
-    ).then((response) => {
-        setYearResult(response.data);
-    });
-}
+    useEffect(() => {
+        if (currentUser.username.split('.')[0] === "AIT") {
+            FetchOverall()
+            FetchTotal()
+        } else {
+            FetchOverallSpecific()
+            FetchTotalSpecific()
+        }
+    }, [])
 
-const FetchOverall = () => {
-    DemandService.get_overall(
-        fromdate,
-        todate,
-    ).then((response) => {
-        setYearResult2(response.data);
-    });
-}
-
-const FetchOverallSpecific = () => {
-    const employee = currentUser.username.split('.')[0]
-    DemandService.get_overall_specific(
-        employee,
-        fromdate,
-        todate,
-    ).then((response) => {
-        setYearResult2(response.data);
-    });
-}
-
-useEffect(() => {
-    if (currentUser.username.split('.')[0] === "AIT") {
-        FetchOverall()
-        FetchTotal()
-    } else {
-        FetchOverallSpecific()
-        FetchTotalSpecific()
-    }
-}, [])
-
-return (
-    <div>
-        <div className="container-fluid p-3 my-3 border border-dark custom">
-            <div className="row">
-                <div className="col-sm">
-                    <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1" >Từ ngày</label>
-                        <input type="date" className="form-control"
-                            id="exampleFormControlInput1" onChange={e => setFromDate(e.target.value)} />
+    return (
+        <>
+            <div>
+                <div className="container-fluid p-3 my-3 border border-dark custom">
+                    <div className="row">
+                        <div className="col-sm">
+                            <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1" >Từ ngày</label>
+                                <input type="date" className="form-control"
+                                    id="exampleFormControlInput1" onChange={e => setFromDate(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="col-sm">
+                            <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1" >Đến ngày</label>
+                                <input type="date" className="form-control"
+                                    id="exampleFormControlInput1" onChange={e => setToDate(e.target.value)} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div className="col-sm">
-                    <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1" >Đến ngày</label>
-                        <input type="date" className="form-control"
-                            id="exampleFormControlInput1" onChange={e => setToDate(e.target.value)} />
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-sm">
-                    <Button block type="submit" onClick={Submit}>
-                        Tra cứu
+                    <div className="row">
+                        <div className="col-sm">
+                            <Button block type="submit" onClick={Submit}>
+                                Tra cứu
                         </Button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-sm">
                 <div className="container-fluid p-3 my-3 border border-dark custom">
                     <h1>BÁO CÁO KINH DOANH TỔNG QUÁT</h1>
                     <table className="table">
@@ -161,8 +147,6 @@ return (
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div className="col-sm">
                 <div className="container-fluid p-3 my-3 border border-dark custom">
                     <h1>BIỂU ĐỒ KINH DOANH TỔNG QUÁT</h1>
                     {!!yearResult2 && yearResult2.map(month => (
@@ -182,7 +166,7 @@ return (
                     ))}
                 </div>
             </div>
-        </div>
-    </div>
-)
-    }
+            {loader}
+        </>
+    )
+}

@@ -27,6 +27,7 @@ import { TypeProvider } from './context/type/TypeContext'
 import { CustomerProvider } from './context/customer/CustomerContext'
 
 import AuthService from "./services/auth.service";
+import FullPageLoader from "./components/loader/FullPageLoader";
 
 require('dotenv').config()
 
@@ -35,17 +36,21 @@ function App() {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
+  //const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const user = AuthService.getCurrentUser();
-
     if (user) {
       setCurrentUser(user);
       setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
+    //setTimeout(()=> setLoading(false), 1000)
   }, []);
 
   return (
+    // <>
+    // {loading === false ?( 
     <div className="App">
       <header className="sticky">
         <Nav />
@@ -109,6 +114,10 @@ function App() {
         <Footer />
       </footer>
     </div>
+    // ):(    
+    // <FullPageLoader/>
+    // )}
+    // </>
   );
 }
 

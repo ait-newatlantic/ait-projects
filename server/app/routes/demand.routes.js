@@ -21,6 +21,9 @@ module.exports = app => {
     router.get("/overall", demands.findAllOverall);
 
     router.get("/allmodels", demands.findAllModels);
+    
+    router.get("/allquantity", demands.findAllQuantity);
+
     //MODERATOP
     router.get("/specific", demands.findAllSpecific);
 
@@ -35,6 +38,8 @@ module.exports = app => {
     router.get("/total/specific", demands.findAllTotalSpecific);
 
     router.get("/overall/specific", demands.findAllOverallSpecific);
+
+    router.get("/allquantity/specific", demands.findAllQuantitySpecific);
 
 
     //TOGETHER

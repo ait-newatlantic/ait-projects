@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 const Fn = db.Sequelize.fn;
 
 //ADMIN
-// Create and Save a new Demands
+
 exports.create = (req, res) => {
   // Validate request check if any thing missing!!!
   if (!req.body.customer || !
@@ -14,7 +14,7 @@ exports.create = (req, res) => {
     !req.body.model ||
     !req.body.type) {
     res.status(400).send({
-      message: { heading: "Oh snap! You got an error!" , message:" Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!"}
+      message: { heading: "Oh snap! You got an error!", message: " Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!" }
     });
     return;
   }
@@ -42,7 +42,7 @@ exports.create = (req, res) => {
   // Save Demand in the database
   Demand.create(demand)
     .then(data => {
-      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data});
+      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data });
       //res.send(data);
     })
     .catch(err => {
@@ -52,8 +52,6 @@ exports.create = (req, res) => {
       });
     });
 };
-
-
 
 exports.findAll = (req, res) => {
   const id = req.query.id;
@@ -71,7 +69,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-
 exports.findAllDate = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
@@ -79,15 +76,21 @@ exports.findAllDate = (req, res) => {
   Demand.findAll({
     where: {
       [Op.or]: [
-        {createdAt: {
-          [Op.between]: [fromdate, todate]
-        }},
-        {updatedAt: {
-          [Op.between]: [fromdate, todate]
-        }},
-        {date: {
-          [Op.between]: [fromdate, todate]
-        }}
+        {
+          createdAt: {
+            [Op.between]: [fromdate, todate]
+          }
+        },
+        {
+          updatedAt: {
+            [Op.between]: [fromdate, todate]
+          }
+        },
+        {
+          date: {
+            [Op.between]: [fromdate, todate]
+          }
+        }
       ]
     }
   })
@@ -186,10 +189,10 @@ exports.findAllTotal = (req, res) => {
     SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
     SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
     FROM demands
-         `, 
+         `,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
 
 exports.findAllOverall = (req, res) => {
@@ -222,12 +225,11 @@ exports.findAllOverall = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "11" THEN quantity END) as dukien11,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "12" THEN quantity END) as dukien12
-         FROM demands`, 
+         FROM demands`,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
-
 
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -241,7 +243,6 @@ exports.findOne = (req, res) => {
       });
     });
 };
-
 
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -288,8 +289,50 @@ exports.findAllModels = (req, res) => {
   todate = req.query.todate;
 
   return db.sequelize.query(
-    `SELECT 
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%AIT%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as ait_6540,
+    `SELECT
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" THEN quantity END) as nvl_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" THEN quantity END) as vungtau_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" THEN quantity END) as daklak_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" THEN quantity END) as lamdong_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" THEN quantity END) as dongnai_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" THEN quantity END) as gialai_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" THEN quantity END) as binhphuoc_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" THEN quantity END) as cantho_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" THEN quantity END) as danang_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" THEN quantity END) as quanqtri_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" THEN quantity END) as hungyen_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" THEN quantity END) as binhduong_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" THEN quantity END) as binhdinh_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as nvl_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as vungtau_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as daklak_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as lamdong_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as dongnai_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as gialai_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as binhphuoc_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as cantho_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as danang_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as quanqtri_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as hungyen_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as binhduong_total_s,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as binhdinh_total_s,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="6540" THEN quantity END) as nvl_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="6540" THEN quantity END) as vungtau_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="6540" THEN quantity END) as daklak_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="6540" THEN quantity END) as lamdong_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="6540" THEN quantity END) as dongnai_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="6540" THEN quantity END) as gialai_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="6540" THEN quantity END) as binhphuoc_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="6540" THEN quantity END) as cantho_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="6540" THEN quantity END) as danang_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="6540" THEN quantity END) as quanqtri_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="6540" THEN quantity END) as hungyen_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="6540" THEN quantity END) as binhduong_6540_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="6540" THEN quantity END) as binhdinh_6540_total,
+
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as nvl_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as vungtau_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as daklak_6540,
@@ -304,7 +347,20 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as binhduong_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as binhdinh_6540,
 
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%AIT%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as ait_6460,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="6460" THEN quantity END) as nvl_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="6460" THEN quantity END) as vungtau_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="6460" THEN quantity END) as daklak_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%"  AND model ="6460" THEN quantity END) as lamdong_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="6460" THEN quantity END) as dongnai_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%"  AND model ="6460" THEN quantity END) as gialai_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="6460" THEN quantity END) as binhphuoc_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%"  AND model ="6460" THEN quantity END) as cantho_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%"  AND model ="6460" THEN quantity END) as danang_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%"  AND model ="6460" THEN quantity END) as quanqtri_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%"  AND model ="6460" THEN quantity END) as hungyen_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%"  AND model ="6460" THEN quantity END) as binhduong_6460_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%"  AND model ="6460" THEN quantity END) as binhdinh_6460_total,
+
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as nvl_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as vungtau_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as daklak_6460,
@@ -317,18 +373,293 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as quanqtri_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as hungyen_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as binhduong_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as binhdinh_6460
-         FROM demands`, 
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as binhdinh_6460,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="43253" THEN quantity END) as nvl_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="43253" THEN quantity END) as vungtau_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="43253" THEN quantity END) as daklak_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="43253" THEN quantity END) as lamdong_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="43253" THEN quantity END) as dongnai_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="43253" THEN quantity END) as gialai_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="43253" THEN quantity END) as binhphuoc_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="43253" THEN quantity END) as cantho_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="43253" THEN quantity END) as danang_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="43253" THEN quantity END) as quanqtri_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="43253" THEN quantity END) as hungyen_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="43253" THEN quantity END) as binhduong_43253_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="43253" THEN quantity END) as binhdinh_43253_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as nvl_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as vungtau_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as daklak_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as lamdong_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as dongnai_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as gialai_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as binhphuoc_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as cantho_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as danang_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as quanqtri_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as hungyen_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as binhduong_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as binhdinh_43253,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="43265" THEN quantity END) as nvl_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="43265" THEN quantity END) as vungtau_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="43265" THEN quantity END) as daklak_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="43265" THEN quantity END) as lamdong_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="43265" THEN quantity END) as dongnai_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="43265" THEN quantity END) as gialai_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="43265" THEN quantity END) as binhphuoc_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="43265" THEN quantity END) as cantho_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="43265" THEN quantity END) as danang_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="43265" THEN quantity END) as quanqtri_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="43265" THEN quantity END) as hungyen_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="43265" THEN quantity END) as binhduong_43265_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="43265" THEN quantity END) as binhdinh_43265_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as nvl_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as vungtau_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as daklak_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as lamdong_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as dongnai_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as gialai_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as binhphuoc_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as cantho_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as danang_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as quanqtri_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as hungyen_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as binhduong_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as binhdinh_43265,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="43266" THEN quantity END) as nvl_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="43266" THEN quantity END) as vungtau_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="43266" THEN quantity END) as daklak_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="43266" THEN quantity END) as lamdong_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="43266" THEN quantity END) as dongnai_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="43266" THEN quantity END) as gialai_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="43266" THEN quantity END) as binhphuoc_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="43266" THEN quantity END) as cantho_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="43266" THEN quantity END) as danang_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="43266" THEN quantity END) as quanqtri_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="43266" THEN quantity END) as hungyen_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="43266" THEN quantity END) as binhduong_43266_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="43266" THEN quantity END) as binhdinh_43266_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as nvl_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as vungtau_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as daklak_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as lamdong_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as dongnai_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as gialai_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as binhphuoc_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as cantho_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as danang_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as quanqtri_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as hungyen_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as binhduong_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as binhdinh_43266,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="53228" THEN quantity END) as nvl_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="53228" THEN quantity END) as vungtau_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="53228" THEN quantity END) as daklak_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="53228" THEN quantity END) as lamdong_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="53228" THEN quantity END) as dongnai_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="53228" THEN quantity END) as gialai_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="53228" THEN quantity END) as binhphuoc_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="53228" THEN quantity END) as cantho_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="53228" THEN quantity END) as danang_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="53228" THEN quantity END) as quanqtri_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="53228" THEN quantity END) as hungyen_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="53228" THEN quantity END) as binhduong_53228_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="53228" THEN quantity END) as binhdinh_53228_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as nvl_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as vungtau_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as daklak_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as lamdong_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as dongnai_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as gialai_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as binhphuoc_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as cantho_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as danang_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as quanqtri_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as hungyen_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as binhduong_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as binhdinh_53228,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="53229" THEN quantity END) as nvl_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="53229" THEN quantity END) as vungtau_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="53229" THEN quantity END) as daklak_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="53229" THEN quantity END) as lamdong_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="53229" THEN quantity END) as dongnai_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="53229" THEN quantity END) as gialai_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="53229" THEN quantity END) as binhphuoc_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="53229" THEN quantity END) as cantho_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="53229" THEN quantity END) as danang_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="53229" THEN quantity END) as quanqtri_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="53229" THEN quantity END) as hungyen_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="53229" THEN quantity END) as binhduong_53229_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="53229" THEN quantity END) as binhdinh_53229_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as nvl_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as vungtau_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as daklak_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as lamdong_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as dongnai_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as gialai_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as binhphuoc_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as cantho_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as danang_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as quanqtri_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as hungyen_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as binhduong_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as binhdinh_53229,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="65115" THEN quantity END) as nvl_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="65115" THEN quantity END) as vungtau_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="65115" THEN quantity END) as daklak_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="65115" THEN quantity END) as lamdong_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="65115" THEN quantity END) as dongnai_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="65115" THEN quantity END) as gialai_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="65115" THEN quantity END) as binhphuoc_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="65115" THEN quantity END) as cantho_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="65115" THEN quantity END) as danang_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="65115" THEN quantity END) as quanqtri_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="65115" THEN quantity END) as hungyen_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="65115" THEN quantity END) as binhduong_65115_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="65115" THEN quantity END) as binhdinh_65115_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as nvl_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as vungtau_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as daklak_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as lamdong_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as dongnai_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as gialai_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as binhphuoc_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as cantho_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as danang_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as quanqtri_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as hungyen_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as binhduong_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as binhdinh_65115,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="65116" THEN quantity END) as nvl_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="65116" THEN quantity END) as vungtau_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="65116" THEN quantity END) as daklak_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="65116" THEN quantity END) as lamdong_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="65116" THEN quantity END) as dongnai_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="65116" THEN quantity END) as gialai_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="65116" THEN quantity END) as binhphuoc_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="65116" THEN quantity END) as cantho_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="65116" THEN quantity END) as danang_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="65116" THEN quantity END) as quanqtri_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="65116" THEN quantity END) as hungyen_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="65116" THEN quantity END) as binhduong_65116_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="65116" THEN quantity END) as binhdinh_65116_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as nvl_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as vungtau_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as daklak_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as lamdong_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as dongnai_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as gialai_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as binhphuoc_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as cantho_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as danang_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as quanqtri_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as hungyen_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as binhduong_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as binhdinh_65116,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="65117" THEN quantity END) as nvl_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="65117" THEN quantity END) as vungtau_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="65117" THEN quantity END) as daklak_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="65117" THEN quantity END) as lamdong_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="65117" THEN quantity END) as dongnai_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="65117" THEN quantity END) as gialai_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="65117" THEN quantity END) as binhphuoc_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="65117" THEN quantity END) as cantho_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="65117" THEN quantity END) as danang_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="65117" THEN quantity END) as quanqtri_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="65117" THEN quantity END) as hungyen_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="65117" THEN quantity END) as binhduong_65117_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="65117" THEN quantity END) as binhdinh_65117_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as nvl_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as vungtau_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as daklak_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as lamdong_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as dongnai_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as gialai_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as binhphuoc_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as cantho_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as danang_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as quanqtri_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as hungyen_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as binhduong_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as binhdinh_65117,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as nvl_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as vungtau_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as daklak_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as lamdong_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as dongnai_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as gialai_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhphuoc_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as cantho_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as danang_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as quanqtri_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as hungyen_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhduong_c57_total,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhdinh_c57_total,
+
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as nvl_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as vungtau_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as daklak_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as lamdong_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as dongnai_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as gialai_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhphuoc_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as cantho_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as danang_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as quanqtri_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as hungyen_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDUONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhduong_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHDINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhdinh_c57
+        
+         FROM demands`,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
 
+exports.findAllQuantity = (req, res) => {
+  fromdate = req.query.fromdate;
+  todate = req.query.todate;
+
+  return db.sequelize.query(
+    `SELECT 
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="6540" THEN quantity END) as c6540,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="6460" THEN quantity END) as c6460,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="43253" THEN quantity END) as c43253,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="43265" THEN quantity END) as c43265,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="43266" THEN quantity END) as c43266,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="53228" THEN quantity END) as c53228,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="53229" THEN quantity END) as c53229,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="65115" THEN quantity END) as c65115,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="65116" THEN quantity END) as c65116,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="65117" THEN quantity END) as c65117,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="Cẩu 5-7 tấn" THEN quantity END) as c57
+    FROM demands
+         `,
+    { type: db.sequelize.QueryTypes.SELECT })
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
+};
 
 exports.delete = (req, res) => {
 
 };
-
 
 exports.deleteAll = (req, res) => {
 
@@ -339,10 +670,35 @@ exports.deleteAll = (req, res) => {
 //MODERATOR
 exports.findAllSpecific = (req, res) => {
   const employee = req.query.employee;
-  return db.sequelize.query(` SELECT * FROM demands WHERE employee LIKE "%${employee}%" `, 
+  return db.sequelize.query(` SELECT * FROM demands WHERE employee LIKE "%${employee}%" `,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
+};
+
+exports.findAllQuantitySpecific = (req, res) => {
+  fromdate = req.query.fromdate;
+  todate = req.query.todate;
+  employee = req.query.employee
+
+  return db.sequelize.query(
+    `SELECT 
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="6540" THEN quantity END) as c6540,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="6460" THEN quantity END) as c6460,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="43253" THEN quantity END) as c43253,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="43265" THEN quantity END) as c43265,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="43266" THEN quantity END) as c43266,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="53228" THEN quantity END) as c53228,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="53229" THEN quantity END) as c53229,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="65115" THEN quantity END) as c65115,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="65116" THEN quantity END) as c65116,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="65117" THEN quantity END) as c65117,
+    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="Cẩu 5-7 tấn" THEN quantity END) as c57
+    FROM demands
+         `,
+    { type: db.sequelize.QueryTypes.SELECT })
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
 
 exports.findAllTotalSpecific = (req, res) => {
@@ -363,10 +719,10 @@ exports.findAllTotalSpecific = (req, res) => {
     SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
     SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
     FROM demands
-         `, 
+         `,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 
 };
 
@@ -400,10 +756,10 @@ exports.findAllOverallSpecific = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}')  AND employee LIKE "%${employee}%" AND MONTH(createdAt) = "11" THEN quantity END) as dukien11,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}')  AND employee LIKE "%${employee}%" AND MONTH(createdAt) = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
          SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}')  AND employee LIKE "%${employee}%" AND MONTH(createdAt) = "12" THEN quantity END) as dukien12
-         FROM demands`, 
+         FROM demands`,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 
 };
 
@@ -415,18 +771,24 @@ exports.findAllDateSpecific = (req, res) => {
   Demand.findAll({
     where: {
       employee: {
-        [Op.substring]: [employee] 
+        [Op.substring]: [employee]
       },
       [Op.or]: [
-        {createdAt: {
-          [Op.between]: [fromdate, todate]
-        }},
-        {updatedAt: {
-          [Op.between]: [fromdate, todate]
-        }},
-        {date: {
-          [Op.between]: [fromdate, todate]
-        }}
+        {
+          createdAt: {
+            [Op.between]: [fromdate, todate]
+          }
+        },
+        {
+          updatedAt: {
+            [Op.between]: [fromdate, todate]
+          }
+        },
+        {
+          date: {
+            [Op.between]: [fromdate, todate]
+          }
+        }
       ]
     }
   })
@@ -449,7 +811,7 @@ exports.findAllCreatedAtSpecific = (req, res) => {
   Demand.findAll({
     where: {
       employee: {
-        [Op.substring]: [employee] 
+        [Op.substring]: [employee]
       },
       createdAt: {
         [Op.between]: [fromdate, todate]
