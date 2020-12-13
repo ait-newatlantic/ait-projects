@@ -19,6 +19,7 @@ const create_demand = (date,
     customer_meeting,
     customer_communication,
     color,
+    arr,
     note) => {
     return axios.post(API_URL + "demands", {
         date,
@@ -36,6 +37,7 @@ const create_demand = (date,
         customer_meeting,
         customer_communication,
         color,
+        arr,
         note
     });
 };

@@ -218,7 +218,7 @@ export default function Nav() {
                             <a className="nav-link" href="/profile">{currentUser.username}</a>
                         </li>
                         <li className="nav-item active">
-                            <a href="/login" className="nav-link" onClick={logOut}>
+                            <a href="/login" className="nav-link" onChange={logOut}>
                                 Đăng xuất
                         </a>
                         </li>

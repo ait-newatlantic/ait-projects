@@ -6,7 +6,7 @@ const Fn = db.Sequelize.fn;
 
 //ADMIN
 
-exports.create = (req, res) => {
+exports.create =  (req, res) => {
   // Validate request check if any thing missing!!!
   if (!req.body.customer || !
     req.body.customer_number ||
@@ -19,31 +19,35 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Demand
-  const demand = {
-    date: req.body.date,
-    employee: req.body.employee,
-    employee_field: req.body.employee_field,
-    model: req.body.model,
-    type: req.body.type,
-    quantity: req.body.quantity,
-    status: req.body.status,
-    customer: req.body.customer,
-    customer_number: req.body.customer_number,
-    customer_type: req.body.customer_type,
-    customer_area: req.body.customer_area,
-    customer_opinion: req.body.customer_opinion,
-    customer_meeting: req.body.customer_meeting,
-    customer_communication: req.body.customer_communication,
-    color: req.body.color,
-    note: req.body.note,
-  };
+  const initial = {
+    arr: req.body.arr,
+  }
 
-  // Save Demand in the database
-  Demand.create(demand)
+  // Sav Demand in the database
+
+  const requestArr = initial.arr.map(item => {
+    return Demand.create({
+      date: req.body.date,
+      employee: req.body.employee,
+      employee_field: req.body.employee_field,
+      model: item.model,
+      type: item.type,
+      quantity: parseInt(item.quantity),
+      color: item.color,
+      status: req.body.status,
+      customer: req.body.customer,
+      customer_number: req.body.customer_number,
+      customer_type: req.body.customer_type,
+      customer_area: req.body.customer_area,
+      customer_opinion: req.body.customer_opinion,
+      customer_meeting: req.body.customer_meeting,
+      customer_communication: req.body.customer_communication,
+      note: req.body.note,
+    })
+  })
+  return Promise.all(requestArr)
     .then(data => {
       res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data });
-      //res.send(data);
     })
     .catch(err => {
       res.status(500).send({

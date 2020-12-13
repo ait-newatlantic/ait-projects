@@ -3,7 +3,7 @@ import { ProvinceContext } from '../../../context/province/ProvinceContext'
 import { ModelContext } from '../../../context/model/ModelContext'
 import { TypeContext } from '../../../context/type/TypeContext'
 import { CustomerContext } from '../../../context/customer/CustomerContext'
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button, ButtonToolbar, Table } from "react-bootstrap";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -22,6 +22,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 export default function NCTT(props) {
     const [date, setDate] = useState("");
@@ -48,9 +50,23 @@ export default function NCTT(props) {
     const [customerResult, setCustomerResult] = useState();
     const currentUser = AuthService.getCurrentUser();
     const [successful, setSuccessful] = useState(false);
-
+    const [arr, setArr] = useState([])
     const form = useRef();
     const checkBtn = useRef();
+
+    const addToList = () => {
+        arr.push({model, type, color, quantity})
+        //setArr(arr)
+        setArr((prevArr) => ([...prevArr]));
+        console.log(arr)
+    }
+
+    const removeFromList = () => {
+        arr.pop()
+        //setArr(arr)
+        setArr((prevArr) => ([...prevArr]));
+        console.log(arr)
+    }
 
     const HtmlTooltip = withStyles((theme) => ({
         tooltip: {
@@ -159,6 +175,7 @@ export default function NCTT(props) {
                 customer_meeting,
                 customer_communication,
                 color,
+                arr,
                 note).then(
                     (response) => {
                         setMessage(response.data.message);
@@ -197,7 +214,6 @@ export default function NCTT(props) {
         setEmployee(employee)
         console.log(employee)
     }, []);
-
 
     useEffect(() => {
         Autofill();
@@ -279,7 +295,7 @@ export default function NCTT(props) {
                                                 </div>
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
-                                                    <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeStatus}>
+                                                    <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onChange={onChangeStatus}>
                                                         <option value="" >Click để chọn</option>
                                                         <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
                                                         <option value="CHẠY THỬ">CHẠY THỬ</option>
@@ -300,7 +316,7 @@ export default function NCTT(props) {
                                                     <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
                                                     <Select className="form-control" id="exampleFormControlSelect1"
                                                         validations={[required]}
-                                                        onClick={onChangeCustomer_Type}>
+                                                        onChange={onChangeCustomer_Type}>
                                                         <option value="">Click để chọn</option>
                                                         <option value="DỰ KIẾN">DỰ KIẾN</option>
                                                         <option value="TIỀM NĂNG">TIỀM NĂNG</option>
@@ -339,7 +355,7 @@ export default function NCTT(props) {
                                                     <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
                                                     <Select className="form-control" id="exampleFormControlSelect1"
                                                         validations={[required]}
-                                                        onClick={onChangeCustomer_Communication}>
+                                                        onChange={onChangeCustomer_Communication}>
                                                         <option value="">Click để chọn</option>
                                                         <option value="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
                                                         <option value="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
@@ -351,6 +367,46 @@ export default function NCTT(props) {
                                                     <textarea type="customer_meeting" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Meeting(e.target.value)}></textarea>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="container-fluid p-3 my-3 border border-dark" >
+                                            <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
+                                            <div className="row">
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlInput1" >Người nhập</label>
+                                                    <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
+                                                </div>
+                                                <div className="col-sm">
+                                                    <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
+                                                    <Input
+                                                        type="employee_field"
+                                                        className="form-control"
+                                                        name="demployee_field"
+                                                        value={employee_field}
+                                                        onChange={onChangeEmployee_Field}
+                                                        validations={[required, validEmployee_Field]}
+                                                    />
+                                                </div>
+
+                                                <div className="col-sm">
+                                                    <label htmlFor="example-date-input" >Ngày đi thực tế</label>
+                                                    <Input
+                                                        type="date"
+                                                        className="form-control"
+                                                        name="date"
+                                                        value={date}
+                                                        onChange={onChangeDate}
+                                                        validations={[required]}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="container-fluid p-3 my-3 border border-dark" >
+                                            <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
+                                            <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeNote}></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -398,7 +454,7 @@ export default function NCTT(props) {
                                                 </div>
                                                 <div className="col-sm">
                                                     <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
-                                                    <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onClick={onChangeColor}>
+                                                    <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onChange={onChangeColor}>
                                                         <option value="">Click để chọn</option>
                                                         <option value="Cam">Cam</option>
                                                         <option value="Trắng">Trắng</option>
@@ -410,47 +466,32 @@ export default function NCTT(props) {
                                                     </Select>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <div className="container-fluid p-3 my-3 border border-dark" >
-                                            <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
                                             <div className="row">
-                                                <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlInput1" >Người nhập</label>
-                                                    <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
-                                                </div>
-                                                <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
-                                                    <Input
-                                                        type="employee_field"
-                                                        className="form-control"
-                                                        name="demployee_field"
-                                                        value={employee_field}
-                                                        onChange={onChangeEmployee_Field}
-                                                        validations={[required, validEmployee_Field]}
-                                                    />
-                                                </div>
-
-                                                <div className="col-sm">
-                                                    <label htmlFor="example-date-input" >Ngày đi thực tế</label>
-                                                    <Input
-                                                        type="date"
-                                                        className="form-control"
-                                                        name="date"
-                                                        value={date}
-                                                        onChange={onChangeDate}
-                                                        validations={[required]}
-                                                    />
-                                                </div>
+                                            <IconButton onClick={addToList}>
+                                                <AddIcon />
+                                            </IconButton>
+                                            <table className="table" >
+                                                <tbody>
+                                                    <tr id="titles">
+                                                        <th>MODEL XE</th>
+                                                        <th>LOẠI XE</th>
+                                                        <th>SỐ LƯỢNG</th>
+                                                        <th>MÀU YÊU CẦU</th>
+                                                    </tr>
+                                                    {arr.map((result, index) => (
+                                                        <tr className="content" key={index}>
+                                                            <td>{result.model}</td>
+                                                            <td>{result.type}</td>
+                                                            <td>{result.quantity}</td>
+                                                            <td>{result.color}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                            <IconButton onClick={removeFromList}>
+                                                <RemoveIcon />
+                                            </IconButton>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="container-fluid p-3 my-3 border border-dark" >
-                                            <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
-                                            <textarea type="note" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeNote}></textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -221,7 +221,7 @@ export default function KTKH() {
                             <div className="row">
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
-                                    <select className="form-control" id="exampleFormControlSelect1" onClick={onChangeCustomer_Type}>
+                                    <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
                                         <option value="" selected disabled hidden >Click để chọn </option>
                                         <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
                                         <option value="TƯ NHÂN">TƯ NHÂN</option>
