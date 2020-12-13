@@ -238,7 +238,7 @@ export default function NCTT(props) {
                                             <p><strong>Thông tin khách hàng</strong></p>
                                             <div className="row">
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1">Tên khách hàng</label>
+                                                    <label htmlFor="exampleFormControlSelect1">Tên khách hàng (bắt buộc)</label>
                                                     <div className="row">
                                                         <div className="col-sm">
                                                             <Autocomplete
@@ -261,7 +261,7 @@ export default function NCTT(props) {
                                                     </div>
                                                 </div>
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
+                                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng (bắt buộc)</label>
                                                     <Autocomplete
                                                         style={{ background: "white" }}
                                                         size="small"
@@ -281,7 +281,7 @@ export default function NCTT(props) {
                                                 </div>
 
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1">Khu vực KH</label>
+                                                    <label htmlFor="exampleFormControlSelect1">Khu vực KH (bắt buộc)</label>
                                                     <Autocomplete
                                                         style={{ background: "white" }}
                                                         size="small"
@@ -294,7 +294,7 @@ export default function NCTT(props) {
                                                     />
                                                 </div>
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1" >Giai đoạn</label>
+                                                    <label htmlFor="exampleFormControlSelect1" >Giai đoạn (bắt buộc)</label>
                                                     <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onChange={onChangeStatus}>
                                                         <option value="" >Click để chọn</option>
                                                         <option value="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
@@ -313,7 +313,7 @@ export default function NCTT(props) {
 
                                             <div className="row">
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
+                                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng (bắt buộc)</label>
                                                     <Select className="form-control" id="exampleFormControlSelect1"
                                                         validations={[required]}
                                                         onChange={onChangeCustomer_Type}>
@@ -352,7 +352,7 @@ export default function NCTT(props) {
 
                                             <div className="row">
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc</label>
+                                                    <label htmlFor="exampleFormControlSelect1" >Phương thức liên lạc (bắt buộc)</label>
                                                     <Select className="form-control" id="exampleFormControlSelect1"
                                                         validations={[required]}
                                                         onChange={onChangeCustomer_Communication}>
@@ -378,7 +378,7 @@ export default function NCTT(props) {
                                                     <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                                                 </div>
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlInput1" >Người đi thực tế</label>
+                                                    <label htmlFor="exampleFormControlInput1" >Người đi thực tế (bắt buộc)</label>
                                                     <Input
                                                         type="employee_field"
                                                         className="form-control"
@@ -390,7 +390,7 @@ export default function NCTT(props) {
                                                 </div>
 
                                                 <div className="col-sm">
-                                                    <label htmlFor="example-date-input" >Ngày đi thực tế</label>
+                                                    <label htmlFor="example-date-input" >Ngày đi thực tế (bắt buộc)</label>
                                                     <Input
                                                         type="date"
                                                         className="form-control"
@@ -416,7 +416,7 @@ export default function NCTT(props) {
                                             <p><strong>Thông tin xe</strong></p>
                                             <div className="row">
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1">Model xe</label>
+                                                    <label htmlFor="exampleFormControlSelect1">Model xe (bắt buộc)</label>
                                                     <Autocomplete
                                                         style={{ background: "white" }}
                                                         size="small"
@@ -429,7 +429,7 @@ export default function NCTT(props) {
                                                     />
                                                 </div>
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1">Loại xe</label>
+                                                    <label htmlFor="exampleFormControlSelect1">Loại xe (bắt buộc)</label>
                                                     <Autocomplete
                                                         style={{ background: "white" }}
                                                         size="small"
@@ -442,7 +442,7 @@ export default function NCTT(props) {
                                                     />
                                                 </div>
                                                 <div className="col-sm">
-                                                    <label htmlFor="username">Số lượng</label>
+                                                    <label htmlFor="username">Số lượng (bắt buộc) </label>
                                                     <Input
                                                         type="number"
                                                         className="form-control"
@@ -453,7 +453,7 @@ export default function NCTT(props) {
                                                     />
                                                 </div>
                                                 <div className="col-sm">
-                                                    <label htmlFor="exampleFormControlSelect1">Màu yêu cầu</label>
+                                                    <label htmlFor="exampleFormControlSelect1">Màu yêu cầu (bắt buộc)</label>
                                                     <Select className="form-control" id="exampleFormControlSelect1" validations={[required]} onChange={onChangeColor}>
                                                         <option value="">Click để chọn</option>
                                                         <option value="Cam">Cam</option>
