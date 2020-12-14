@@ -1,15 +1,16 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BASE_URL
+const API_URL = `${BASE_URL}/api/`
 
 console.log(API_URL)
 
 const get_car_models = () => {
-    return axios.get(API_URL + "api/car_models",);
+    return axios.get(API_URL + "car_models",);
 };
 
 const get_car_types = () => {
-    return axios.get(API_URL + "api/car_types",);
+    return axios.get(API_URL + "car_types",);
 };
 
 
