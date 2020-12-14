@@ -86,8 +86,8 @@ export default function BCTQ(props) {
 
     return (
         <>
-            <div>
-                <div className="container-fluid p-3 my-3 border border-dark custom">
+            <div className="custom">
+                <div className="card card-body">
                     <div className="row">
                         <div className="col-sm">
                             <div className="form-group">
@@ -114,7 +114,7 @@ export default function BCTQ(props) {
                 </div>
                 <div className="row">
                     <div className="col-sm">
-                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                        <div className="card card-body">
                             <h1>BÁO CÁO KINH DOANH TỔNG QUÁT</h1>
                             <table className="table">
                                 <tbody>
@@ -151,7 +151,7 @@ export default function BCTQ(props) {
                         </div>
                     </div>
                     <div className="col-sm">
-                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                        <div className="card card-body">
                             <h1>BIỂU ĐỒ KINH DOANH TỔNG QUÁT</h1>
                             {!!yearResult2 && yearResult2.map(month => (
                                 <GroupChart key="a"

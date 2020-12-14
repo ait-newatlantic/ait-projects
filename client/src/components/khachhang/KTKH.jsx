@@ -134,7 +134,7 @@ export default function KTKH() {
     }, [])
 
     return (
-        <div className="container-fluid p-3 my-3 border border-dark custom">
+        <div className="custom">
             <div className="head">
                 <img src={logo} alt="logo" width="100" height="100" />
                 <h1>FORM KHỞI TẠO KHÁCH HÀNG</h1>
@@ -142,7 +142,7 @@ export default function KTKH() {
             <Form onSubmit={handleSubmit} ref={form}>
                 {!successful && (
                     <div>
-                        <div className="container-fluid p-3 my-3 border border-dark" >
+                        <div className="card card-body" >
                             <p><strong>Thông tin khách hàng (bắt buộc)</strong></p>
                             <div className="row">
                                 <div className="col-sm">
@@ -245,7 +245,7 @@ export default function KTKH() {
                 )}
                 {message && (
                     <div className="form-group">
-                        <div className="container-fluid p-3 my-3 border border-dark">
+                        <div className="card card-body">
                             <div
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"

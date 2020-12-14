@@ -3,7 +3,7 @@ import { Bar } from '@reactchartjs/react-chart.js'
 
 export default function StackedBar(props){
   const data = {
-    labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Bình Định', 'Bình Dương', 'Đồng Nai'],
+    labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Bình Định', 'Bình Dương', 'Đồng Nai', 'PDA'],
     datasets: [
       {
         label: '6460',
@@ -20,7 +20,8 @@ export default function StackedBar(props){
           props.hungyen_6460, 
           props.binhdinh_6460, 
           props.binhduong_6460, 
-          props.dongnai_6460
+          props.dongnai_6460,
+          props.pda_6460
         ],
         backgroundColor: 'rgb(255, 99, 132)',
       },
@@ -39,7 +40,8 @@ export default function StackedBar(props){
           props.hungyen_6540, 
           props.binhdinh_6540, 
           props.binhduong_6540, 
-          props.dongnai_6540
+          props.dongnai_6540,
+          props.pda_6540
         ],
         backgroundColor: 'rgb(54, 150, 235)',
       },
@@ -58,7 +60,8 @@ export default function StackedBar(props){
           props.hungyen_43253, 
           props.binhdinh_43253, 
           props.binhduong_43253, 
-          props.dongnai_43253
+          props.dongnai_43253,
+          props.pda_43253
         ],
         backgroundColor: 'rgb(75, 75, 192)',
       },
@@ -77,7 +80,8 @@ export default function StackedBar(props){
           props.hungyen_43265, 
           props.binhdinh_43265, 
           props.binhduong_43265, 
-          props.dongnai_43265
+          props.dongnai_43265,
+          props.pda_43265
         ],
         backgroundColor: 'rgb(255, 99, 75)',
       },
@@ -96,7 +100,8 @@ export default function StackedBar(props){
           props.hungyen_43266, 
           props.binhdinh_43266, 
           props.binhduong_43266, 
-          props.dongnai_43266
+          props.dongnai_43266,
+          props.pda_43266
         ],
         backgroundColor: 'rgb(111, 162, 235)',
       },
@@ -115,7 +120,8 @@ export default function StackedBar(props){
           props.hungyen_53228, 
           props.binhdinh_53228, 
           props.binhduong_53228, 
-          props.dongnai_53228
+          props.dongnai_53228,
+          props.pda_53228
         ],
         backgroundColor: 'rgb(132, 192, 192)',
       },
@@ -134,7 +140,8 @@ export default function StackedBar(props){
           props.hungyen_53229, 
           props.binhdinh_53229, 
           props.binhduong_53229, 
-          props.dongnai_53229
+          props.dongnai_53229,
+          props.pda_53229
         ],
         backgroundColor: 'rgb(113, 99, 132)',
       },
@@ -153,7 +160,8 @@ export default function StackedBar(props){
           props.hungyen_65115, 
           props.binhdinh_65115, 
           props.binhduong_65115, 
-          props.dongnai_65115
+          props.dongnai_65115,
+          props.pda_65115
         ],
         backgroundColor: 'rgb(54, 152, 235)',
       },
@@ -172,7 +180,8 @@ export default function StackedBar(props){
           props.hungyen_65116, 
           props.binhdinh_65116, 
           props.binhduong_65116, 
-          props.dongnai_65116
+          props.dongnai_65116,
+          props.pda_65116
         ],
         backgroundColor: 'rgb(75, 142, 192)',
       },
@@ -191,7 +200,8 @@ export default function StackedBar(props){
           props.hungyen_65117, 
           props.binhdinh_65117, 
           props.binhduong_65117, 
-          props.dongnai_65117
+          props.dongnai_65117,
+          props.pda_65117
         ],
         backgroundColor: 'rgb(75, 12, 192)',
       },
@@ -210,7 +220,8 @@ export default function StackedBar(props){
           props.hungyen_c57, 
           props.binhdinh_c57, 
           props.binhduong_c57, 
-          props.dongnai_c57
+          props.dongnai_c57,
+          props.pda_c57
         ],
         backgroundColor: 'rgb(75, 102, 192)',
       },

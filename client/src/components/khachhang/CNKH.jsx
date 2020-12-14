@@ -122,7 +122,7 @@ export default function CNKH(props) {
 
 
     return (
-        <div className="container-fluid p-3 my-3 border border-dark custom">
+        <div className="custom">
             <Form onSubmit={handleUpdate} ref={form}>
                 {!successful && (
                     <div>
@@ -131,7 +131,7 @@ export default function CNKH(props) {
                             <h1>FORM CẬP NHẬT KHÁCH HÀNG</h1>
                         </div>
 
-                        <div className="container-fluid p-3 my-3 border border-dark" >
+                        <div className="card card-body" >
                             <p><strong>Thông tin khách hàng</strong></p>
                             <div className="row">
                                 <div className="col-sm">
@@ -213,7 +213,7 @@ export default function CNKH(props) {
                             </div>
                         </div>
 
-                        <div className="container-fluid p-3 my-3 border border-dark" >
+                        <div className="card card-body" >
                             <Button variant="success" block type="submit" onClick={handleUpdate}>
                                 Cập nhật
                     </Button>
@@ -222,7 +222,7 @@ export default function CNKH(props) {
                 )}
                 {message && (
                     <div className="form-group">
-                        <div className="container-fluid p-3 my-3 border border-dark">
+                        <div className="card card-body">
                             <div
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"

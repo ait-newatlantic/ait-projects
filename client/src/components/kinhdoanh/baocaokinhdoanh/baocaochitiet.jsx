@@ -207,11 +207,11 @@ export default function BCCT() {
     }, []);
 
     return (
-        <div>
+        <div className="custom">
             {showAdminBoard && (
                 <>
                     <div>
-                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                        <div className="card card-body">
                             <div className="row">
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlSelect1">Loại ngày</label>
@@ -246,7 +246,7 @@ export default function BCCT() {
                                 </div>
                             </div>
                         </div>
-                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                        <div className="card card-body">
                                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
                                 <div>
                                     <ReactHTMLTableToExcel
@@ -313,7 +313,7 @@ export default function BCCT() {
                                     </table>
                                 </div>
                         </div>
-                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                        <div className="card card-body">
                             <h1>BÁO CÁO TÌNH HÌNH KINH DOANH CHI NHÁNH (thực tế_dự kiến)</h1>
                             <div>
                                 <ReactHTMLTableToExcel
@@ -590,11 +590,30 @@ export default function BCCT() {
                                                 <td>{Math.round(parseInt(model.dongnai_total_s) / parseInt(model.total) * 10000) / 100}%</td>
                                             </tr>
                                         ))}
+                                        {!!yearResult2 && yearResult2.map(model => (
+                                            <tr className="content" key={model.id}>
+                                                <td>Phòng Dự Án</td>
+                                                <td>{model.pda_6540}_{model.pda_6540_total}</td>
+                                                <td>{model.pda_6460}_{model.pda_6460_total}</td>
+                                                <td>{model.pda_43253}_{model.pda_43253_total}</td>
+                                                <td>{model.pda_43265}_{model.pda_43265_total}</td>
+                                                <td>{model.pda_43266}_{model.pda_43266_total}</td>
+                                                <td>{model.pda_53228}_{model.pda_53228_total}</td>
+                                                <td>{model.pda_53229}_{model.pda_53229_total}</td>
+                                                <td>{model.pda_65115}_{model.pda_65115_total}</td>
+                                                <td>{model.pda_65116}_{model.pda_65116_total}</td>
+                                                <td>{model.pda_65117}_{model.pda_65117_total}</td>
+                                                <td>{model.pda_c57}_{model.pda_c57_total}</td>
+                                                <td>{model.pda_total_s}_{model.pda_total}</td>
+                                                <td>{Math.round(model.pda_total_s / model.pda_total * 10000) / 100}%</td>
+                                                <td>{Math.round(parseInt(model.pda_total_s) / parseInt(model.total) * 10000) / 100}%</td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div className="container-fluid p-3 my-3 border border-dark custom">
+                        <div className="card card-body">
                             {/* <h1>BIỂU ĐỒ KINH DOANH CHI TIẾT</h1> */}
                             <div className="row">
                                 <div className="col-sm">
@@ -614,6 +633,7 @@ export default function BCCT() {
                                             hungyen_6540={model.hungyen_6540}
                                             binhduong_6540={model.binhduong_6540}
                                             binhdinh_6540={model.binhdinh_6540}
+                                            pda_6540={model.pda_6540}
 
                                             nvl_6460={model.nvl_6460}
                                             vungtau_6460={model.vungtau_6460}
@@ -628,6 +648,7 @@ export default function BCCT() {
                                             hungyen_6460={model.hungyen_6460}
                                             binhduong_6460={model.binhduong_6460}
                                             binhdinh_6460={model.binhdinh_6460}
+                                            pda_6460={model.pda_6460}
 
                                             nvl_43253={model.nvl_43253}
                                             vungtau_43253={model.vungtau_43253}
@@ -642,6 +663,7 @@ export default function BCCT() {
                                             hungyen_43253={model.hungyen_43253}
                                             binhduong_43253={model.binhduong_43253}
                                             binhdinh_43253={model.binhdinh_43253}
+                                            pda_43253={model.pda_43253}
 
                                             nvl_43265={model.nvl_43265}
                                             vungtau_43265={model.vungtau_43265}
@@ -656,6 +678,7 @@ export default function BCCT() {
                                             hungyen_43265={model.hungyen_43265}
                                             binhduong_43265={model.binhduong_43265}
                                             binhdinh_43265={model.binhdinh_43265}
+                                            pda_43265={model.pda_43265}
 
                                             nvl_43266={model.nvl_43266}
                                             vungtau_43266={model.vungtau_43266}
@@ -670,6 +693,7 @@ export default function BCCT() {
                                             hungyen_43266={model.hungyen_43266}
                                             binhduong_43266={model.binhduong_43266}
                                             binhdinh_43266={model.binhdinh_43266}
+                                            pda_43266={model.pda_43266}
 
                                             nvl_53228={model.nvl_53228}
                                             vungtau_53228={model.vungtau_53228}
@@ -684,6 +708,7 @@ export default function BCCT() {
                                             hungyen_53228={model.hungyen_53228}
                                             binhduong_53228={model.binhduong_53228}
                                             binhdinh_53228={model.binhdinh_53228}
+                                            pda_53228={model.pda_53228}
 
                                             nvl_53229={model.nvl_53229}
                                             vungtau_53229={model.vungtau_53229}
@@ -698,6 +723,7 @@ export default function BCCT() {
                                             hungyen_53229={model.hungyen_53229}
                                             binhduong_53229={model.binhduong_53229}
                                             binhdinh_53229={model.binhdinh_53229}
+                                            pda_53229={model.pda_53229}
 
                                             nvl_65115={model.nvl_65115}
                                             vungtau_65115={model.vungtau_65115}
@@ -712,6 +738,7 @@ export default function BCCT() {
                                             hungyen_65115={model.hungyen_65115}
                                             binhduong_65115={model.binhduong_65115}
                                             binhdinh_65115={model.binhdinh_65115}
+                                            pda_65115={model.pda_65115}
 
                                             nvl_65116={model.nvl_65116}
                                             vungtau_65116={model.vungtau_65116}
@@ -726,6 +753,7 @@ export default function BCCT() {
                                             hungyen_65116={model.hungyen_65116}
                                             binhduong_65116={model.binhduong_65116}
                                             binhdinh_65116={model.binhdinh_65116}
+                                            pda_65116={model.pda_65116}
 
                                             nvl_65117={model.nvl_65117}
                                             vungtau_65117={model.vungtau_65117}
@@ -740,6 +768,7 @@ export default function BCCT() {
                                             hungyen_65117={model.hungyen_65117}
                                             binhduong_65117={model.binhduong_65117}
                                             binhdinh_65117={model.binhdinh_65117}
+                                            pda_65117={model.pda_65117}
 
                                             nvl_c57={model.nvl_c57}
                                             vungtau_c57={model.vungtau_c57}
@@ -754,6 +783,7 @@ export default function BCCT() {
                                             hungyen_c57={model.hungyen_c57}
                                             binhduong_c57={model.binhduong_c57}
                                             binhdinh_c57={model.binhdinh_c57}
+                                            pda_c57={model.pda_c57}
                                         />
 
                                     ))}
@@ -786,7 +816,7 @@ export default function BCCT() {
                 <>
                     <div className="row">
                         <div className="col-sm">
-                            <div className="container-fluid p-3 my-3 border border-dark custom">
+                            <div className="card card-body">
                                 <div className="row">
                                     <div className="col-sm">
                                         <label htmlFor="exampleFormControlSelect1">Loại ngày</label>
@@ -821,7 +851,7 @@ export default function BCCT() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="container-fluid p-3 my-3 border border-dark custom">
+                            <div className="card card-body">
                                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
                                 <div>
                                     <ReactHTMLTableToExcel
@@ -891,7 +921,7 @@ export default function BCCT() {
                             </div>
                             <div className="row">
                                 <div className="col-sm">
-                                    <div className="container-fluid p-3 my-3 border border-dark custom">
+                                    <div className="card card-body">
                                         <h1>BIỂU ĐỒ KINH DOANH CHI TIẾT</h1>
                                         <div className="row">
                                             <div className="col-sm">

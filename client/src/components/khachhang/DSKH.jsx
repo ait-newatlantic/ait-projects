@@ -31,8 +31,8 @@ export default function DSKH() {
     }, [])
 
     return (
-        <div>
-            <div className="container-fluid p-3 my-3 border border-dark custom">
+        <div className="custom">
+            <div className="card card-body">
                 <h1>DANH SÁCH KHÁCH HÀNG</h1>
                 <div>
                     <ReactHTMLTableToExcel
@@ -43,7 +43,7 @@ export default function DSKH() {
                         buttonText="Export excel" />
                 </div>
                 <div className="table-container">
-                <table id="emp" className="table-sm">
+                <table id="emp" className="table">
                     <tbody >
                         <tr key="a">
                             <th>ID</th>

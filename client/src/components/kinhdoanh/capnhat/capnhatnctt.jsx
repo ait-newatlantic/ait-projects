@@ -161,21 +161,19 @@ export default function CN_NCTT(props) {
     }, [props.match.params.id])
 
     return (
-        <div className="container-fluid p-3 my-3 border border-dark custom">
+        <div className="custom">
             <div>
-                <img
-                    src={logo}
-                    alt="logo-img"
-                    className="profile-img-card"
-                />
-                <h1>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h1>
+                <div className="head">
+                    <img src={logo} alt="logo" width="100" height="100" />
+                    <h1>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h1>
+                </div>
             </div>
             <Form onSubmit={handleRegister} ref={form}>
                 {!successful && (
                     <div>
                         <div className="row">
                             <div className="col-sm">
-                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                <div className="card card-body" >
                                     <p><strong>Thông tin khách hàng</strong></p>
                                     <div className="row">
                                         <div className="col-sm">
@@ -267,7 +265,7 @@ export default function CN_NCTT(props) {
                                 </div>
                             </div>
                             <div className="col-sm">
-                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                <div className="card card-body" >
                                     <p><strong>Thông tin xe</strong></p>
                                     <div className="row">
                                         <div className="col-sm">
@@ -302,7 +300,7 @@ export default function CN_NCTT(props) {
                                     </div>
                                 </div>
 
-                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                <div className="card card-body" >
                                     <p><strong>Thông tin nhân viên & ngày tháng</strong></p>
                                     <div className="row">
                                         <div className="col-sm">
@@ -328,7 +326,7 @@ export default function CN_NCTT(props) {
                                     </div>
                                 </div>
 
-                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                <div className="card card-body" >
                                     <p><strong>Thông tin thêm</strong></p>
                                     <div className="row">
                                         <div className="col">
@@ -362,7 +360,7 @@ export default function CN_NCTT(props) {
                                     </div>
                                 </div>
 
-                                <div className="container-fluid p-3 my-3 border border-dark" >
+                                <div className="card card-body" >
                                     <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>
                                     <textarea type="note"
                                         className="form-control"
@@ -376,7 +374,7 @@ export default function CN_NCTT(props) {
                             </div>
                         </div>
 
-                        <div className="container-fluid p-3 my-3 border border-dark" >
+                        <div className="card card-body" >
                             <label htmlFor="exampleInputFile">Upload ảnh</label>
                             <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
                             <small id="fileHelp" className="demands-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small>
@@ -389,7 +387,7 @@ export default function CN_NCTT(props) {
                 )}
                 {message && (
                     <div className="form-group">
-                        <div className="container-fluid p-3 my-3 border border-dark">
+                        <div className="card card-body">
                             <div
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
