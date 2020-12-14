@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import CustomerService from "../../services/customer.service"
+import AuthService from "../../services/auth.service";
 import "./style.css"
 
 export default function DSKH() {
     
     const [customerResult, setCustomerResult] = useState();
+    const currentUser = AuthService.getCurrentUser();
 
-    useEffect(() => {
-        CustomerService.get__customers().then((response) => {
+    const FetchAllData = () =>{
+        CustomerService.get_customers().then((response) => {
             setCustomerResult(response.data)
         })
+    }
+
+    const FetchSpecificData = () =>{
+        const employee = currentUser.username.split('.')[0]
+        CustomerService.get_specific_customers(employee).then((response) => {
+            setCustomerResult(response.data)
+        })
+    }
+
+    useEffect(() => {
+        if (currentUser.username.split('.')[0] === "AIT") {
+            FetchAllData()
+        } else {
+            FetchSpecificData()
+        }
     }, [])
 
     return (

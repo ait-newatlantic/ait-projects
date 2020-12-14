@@ -9,7 +9,7 @@ export const CustomerContext = createContext();
 export const CustomerProvider = (props) => {
     const [customers, setCustomers] = useState([])
     useEffect(()=>{
-        CustomerService.get__customers().then((response)=>{
+        CustomerService.get_customers().then((response)=>{
             setCustomers(response.data)
         })
     },[])

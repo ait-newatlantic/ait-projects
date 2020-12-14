@@ -143,10 +143,10 @@ export default function KTKH() {
                 {!successful && (
                     <div>
                         <div className="container-fluid p-3 my-3 border border-dark" >
-                            <p><strong>Thông tin khách hàng</strong></p>
+                            <p><strong>Thông tin khách hàng (bắt buộc)</strong></p>
                             <div className="row">
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên khách hàng</label>
+                                    <label htmlFor="exampleFormControlInput1" >Tên khách hàng (bắt buộc)</label>
                                     <Input
                                         type="customer"
                                         className="form-control"
@@ -156,7 +156,7 @@ export default function KTKH() {
                                     />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
+                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng (bắt buộc)</label>
                                     <Input
                                         type="customer_number"
                                         className="form-control"
@@ -165,7 +165,7 @@ export default function KTKH() {
                                         onChange={onChangeCustomer_Number} />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
+                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng (bắt buộc)</label>
                                     <Autocomplete
                                         style={{ background: "white" }}
                                         size="small"
@@ -178,7 +178,7 @@ export default function KTKH() {
                                     />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Mã số thuế</label>
+                                    <label htmlFor="exampleFormControlInput1" >Mã số thuế </label>
                                     <Input
                                         type="customer_taxcode"
                                         className="form-control"
@@ -220,7 +220,7 @@ export default function KTKH() {
 
                             <div className="row">
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
+                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng (bắt buộc)</label>
                                     <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
                                         <option value="" selected disabled hidden >Click để chọn </option>
                                         <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
@@ -230,7 +230,7 @@ export default function KTKH() {
                                     <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                                 </div>
                                 <div className="col-sm-9">
-                                    <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
+                                    <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng (bắt buộc) </label>
                                     <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
                                 </div>
                             </div>

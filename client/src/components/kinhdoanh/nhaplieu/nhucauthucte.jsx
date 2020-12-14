@@ -55,15 +55,18 @@ export default function NCTT(props) {
     const checkBtn = useRef();
 
     const addToList = () => {
-        arr.push({model, type, color, quantity})
-        //setArr(arr)
-        setArr((prevArr) => ([...prevArr]));
-        console.log(arr)
+        if (!model || !type || !color || !quantity) {
+            alert("Xin hãy nhập đủ thông tin xe!!!")
+        }
+        else {
+            arr.push({ model, type, color, quantity })
+            setArr((prevArr) => ([...prevArr]));
+            console.log(arr)
+        }
     }
 
     const removeFromList = () => {
         arr.pop()
-        //setArr(arr)
         setArr((prevArr) => ([...prevArr]));
         console.log(arr)
     }
@@ -467,30 +470,30 @@ export default function NCTT(props) {
                                                 </div>
                                             </div>
                                             <div className="row">
-                                            <IconButton onClick={addToList}>
-                                                <AddIcon />
-                                            </IconButton>
-                                            <table className="table" >
-                                                <tbody>
-                                                    <tr id="titles">
-                                                        <th>MODEL XE</th>
-                                                        <th>LOẠI XE</th>
-                                                        <th>SỐ LƯỢNG</th>
-                                                        <th>MÀU YÊU CẦU</th>
-                                                    </tr>
-                                                    {arr.map((result, index) => (
-                                                        <tr className="content" key={index}>
-                                                            <td>{result.model}</td>
-                                                            <td>{result.type}</td>
-                                                            <td>{result.quantity}</td>
-                                                            <td>{result.color}</td>
+                                                <IconButton onClick={addToList}>
+                                                    <AddIcon />
+                                                </IconButton>
+                                                <IconButton onClick={removeFromList}>
+                                                    <RemoveIcon />
+                                                </IconButton>
+                                                <table className="table" >
+                                                    <tbody>
+                                                        <tr id="titles">
+                                                            <th>MODEL XE</th>
+                                                            <th>LOẠI XE</th>
+                                                            <th>SỐ LƯỢNG</th>
+                                                            <th>MÀU YÊU CẦU</th>
                                                         </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                            <IconButton onClick={removeFromList}>
-                                                <RemoveIcon />
-                                            </IconButton>
+                                                        {arr.map((result, index) => (
+                                                            <tr className="content" key={index}>
+                                                                <td>{result.model}</td>
+                                                                <td>{result.type}</td>
+                                                                <td>{result.quantity}</td>
+                                                                <td>{result.color}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

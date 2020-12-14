@@ -247,10 +247,7 @@ export default function BCCT() {
                             </div>
                         </div>
                         <div className="container-fluid p-3 my-3 border border-dark custom">
-                            <div className="row">
                                 <h1>BÁO CÁO KINH DOANH CHI TIẾT</h1>
-                            </div>
-                            <div className="row">
                                 <div>
                                     <ReactHTMLTableToExcel
                                         className="btn btn-info"
@@ -259,8 +256,6 @@ export default function BCCT() {
                                         sheet="Sheet"
                                         buttonText="Export excel" />
                                 </div>
-                            </div>
-                            <div className="row">
                                 <div className="table-container">
                                     <table id="emp" className="table-lg" >
                                         <tbody >
@@ -317,10 +312,9 @@ export default function BCCT() {
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
                         </div>
                         <div className="container-fluid p-3 my-3 border border-dark custom">
-                            {/* <h1>BÁO CÁO TÌNH HÌNH KINH DOANH CHI NHÁNH (thực tế_dự kiến)</h1> */}
+                            <h1>BÁO CÁO TÌNH HÌNH KINH DOANH CHI NHÁNH (thực tế_dự kiến)</h1>
                             <div>
                                 <ReactHTMLTableToExcel
                                     className="btn btn-info"

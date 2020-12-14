@@ -27,7 +27,6 @@ import { TypeProvider } from './context/type/TypeContext'
 import { CustomerProvider } from './context/customer/CustomerContext'
 
 import AuthService from "./services/auth.service";
-import FullPageLoader from "./components/loader/FullPageLoader";
 
 require('dotenv').config()
 
@@ -70,7 +69,6 @@ function App() {
                     <div>
                       <Router>
                         <Switch>
-                          <Route exact path="/login" component={Login} />
                           <Route exact path="/register" component={Register} />
                           <Route exact path="/profile" component={Profile} />
                           <Route path="/user" component={BoardUser} />
@@ -90,7 +88,6 @@ function App() {
                   {showModeratorBoard && (
                         <Router>
                           <Switch>
-                            <Route exact path="/login" component={Login} />
                             <Route exact path="/profile" component={Profile} />
                             <Route path="/user" component={BoardUser} />
                             <Route path="/mod" component={BoardModerator} /> 

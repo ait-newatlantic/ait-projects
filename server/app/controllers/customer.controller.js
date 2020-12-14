@@ -126,3 +126,11 @@ exports.deleteAll = (req, res) => {
 exports.findAllYear = (req, res) => {
 
 };
+
+exports.findAllSpecific = (req, res) => {
+  const employee = req.query.employee;
+  return db.sequelize.query(` SELECT * FROM customers WHERE employee LIKE "%${employee}%" `,
+    { type: db.sequelize.QueryTypes.SELECT })
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
+};

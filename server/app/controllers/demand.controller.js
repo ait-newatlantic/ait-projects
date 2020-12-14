@@ -8,11 +8,12 @@ const Fn = db.Sequelize.fn;
 
 exports.create =  (req, res) => {
   // Validate request check if any thing missing!!!
-  if (!req.body.customer || !
-    req.body.customer_number ||
+  if (!req.body.customer || 
+    !req.body.customer_number ||
     !req.body.customer_area ||
     !req.body.model ||
-    !req.body.type) {
+    !req.body.type ||
+    req.body.arr && !req.body.arr.length ) {
     res.status(400).send({
       message: { heading: "Oh snap! You got an error!", message: " Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!" }
     });

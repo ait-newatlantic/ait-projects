@@ -30,8 +30,16 @@ const create_customer = (
     });
 };
 
-const get__customers = () => {
+const get_customers = () => {
     return axios.get(API_URL + `customers`);
+};
+
+const get_specific_customers = (employee) => {
+    return axios.get(API_URL + `customers/specific`  ,{
+        params:{
+            employee
+        }
+    });
 };
 
 const get_specific_customer = (id) => {
@@ -64,5 +72,6 @@ export default {
     get_specific_customer,
     update_specific_customer,
     get_specific_customer_info,
-    get__customers,
+    get_customers,
+    get_specific_customers,
 };
