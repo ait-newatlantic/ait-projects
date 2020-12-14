@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="main">
       <>
-        <ParticlesBg type="circle" bg={true} />
+        <ParticlesBg color="#97caef" num={200} type="cobweb" bg={true} />
       </>
       <div className="row banner">
         <div className="banner-text">
