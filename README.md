@@ -3,9 +3,7 @@
 client/ .env 
 
 PORT=8081 \
-REACT_APP_BASE_URL=http://localhost:8080/api/ \
-REACT_APP_AUTH_URL=http://localhost:8080/api/auth/ \
-REACT_APP_TEST_URL=http://localhost:8080/api/test/
+REACT_APP_BASE_URL=http://localhost:8080/
 
 server/.env 
 

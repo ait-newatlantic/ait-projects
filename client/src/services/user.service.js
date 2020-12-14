@@ -1,22 +1,22 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = process.env.REACT_APP_TEST_URL
+const API_URL = process.env.REACT_APP_BASE_URL
 
 const getPublicContent = () => {
-    return axios.get(API_URL + "all");
+    return axios.get(API_URL + "api/test/all");
 };
 
 const getUserBoard = () => {
-    return axios.get(API_URL + "user", { headers: authHeader() });
+    return axios.get(API_URL + "api/test/user", { headers: authHeader() });
 };
 
 const getModeratorBoard = () => {
-    return axios.get(API_URL + "mod", { headers: authHeader() });
+    return axios.get(API_URL + "api/test/mod", { headers: authHeader() });
 };
 
 const getAdminBoard = () => {
-    return axios.get(API_URL + "admin", { headers: authHeader() });
+    return axios.get(API_URL + "api/test/admin", { headers: authHeader() });
 };
 
 export default {

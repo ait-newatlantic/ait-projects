@@ -16,7 +16,7 @@ const create_customer = (
     customer_type,
     customer_address
 ) => {
-    return axios.post(API_URL + "customers", {
+    return axios.post(API_URL + "api/customers", {
         employee,
         customer,
         customer_number,
@@ -31,11 +31,11 @@ const create_customer = (
 };
 
 const get_customers = () => {
-    return axios.get(API_URL + `customers`);
+    return axios.get(API_URL + `api/customers`);
 };
 
 const get_specific_customers = (employee) => {
-    return axios.get(API_URL + `customers/specific`  ,{
+    return axios.get(API_URL + `api/customers/specific`  ,{
         params:{
             employee
         }
@@ -43,11 +43,11 @@ const get_specific_customers = (employee) => {
 };
 
 const get_specific_customer = (id) => {
-    return axios.get(API_URL + `customers/${id}`);
+    return axios.get(API_URL + `api/customers/${id}`);
 };
 
 const get_specific_customer_info = (customer) => {
-    return axios.get(API_URL + `customers/info`,{
+    return axios.get(API_URL + `api/customers/info`,{
         params:{customer}
     });
 };
@@ -59,7 +59,7 @@ const update_specific_customer = (
     customer_representative_email,
     customer_representative_number,
     ) => {
-    return axios.put(API_URL + `customers/${id}`, {
+    return axios.put(API_URL + `api/customers/${id}`, {
         customer_representative,
         customer_representative_email,
         customer_representative_number,
