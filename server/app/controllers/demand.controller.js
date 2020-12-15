@@ -11,6 +11,14 @@ exports.create =  (req, res) => {
   if (!req.body.customer || 
     !req.body.customer_number ||
     !req.body.customer_area ||
+    !req.body.customer_type ||
+    !req.body.status ||
+    !req.body.customer_communication||
+    !req.body.quantity ||
+    !req.body.color ||
+    !req.body.employee_field ||
+    !req.body.employee ||
+    !req.body.date ||
     !req.body.model ||
     !req.body.type ||
     req.body.arr && !req.body.arr.length ) {

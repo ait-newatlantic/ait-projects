@@ -5,10 +5,18 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Demands
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.customer || !req.body.customer_number || !req.body.customer_area || !req.body.customer_type || !req.body.employee) 
+  if (!req.body.customer || 
+    !req.body.customer_number || 
+    !req.body.customer_representative || 
+    !req.body.customer_representative_number || 
+    !req.body.customer_area || 
+    !req.body.customer_address || 
+    !req.body.customer_type ||
+    !req.body.taxcode && req.body.customer_type === "DOANH NGHIỆP" ||  
+    !req.body.employee) 
   {
     res.status(400).send({
-      message: { heading: "Oh snap! You got an error!" , message:"Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng!!!"}
+      message: { heading: "Oh snap! You got an error!" , message:"Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng, mã số thuế khách hàng đối với doanh nghiệp!!!"}
     });
     return;
   }
