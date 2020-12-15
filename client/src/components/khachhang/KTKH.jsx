@@ -40,16 +40,6 @@ export default function KTKH() {
         }
     };
 
-    const validString = (value) => {
-        if (!value.trim().length) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    The input type should not be empty.
-                </div>
-            );
-        }
-    };
-
     const onChangeCustomer = (e) => {
         const customer = e.target.value;
         setCustomer(customer);
@@ -63,6 +53,7 @@ export default function KTKH() {
     const onChangeCustomer_Type = (e) => {
         const customer_type = e.target.value;
         setCustomer_Type(customer_type);
+        //console.log(customer_type)
     };
 
     const onChangeCustomer_Address = (e) => {
@@ -94,7 +85,7 @@ export default function KTKH() {
         e.preventDefault();
         setMessage("");
         setSuccessful(false);
-        form.current.validateAll();     
+        form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
             CustomerService.create_customer(
                 employee,
@@ -143,10 +134,10 @@ export default function KTKH() {
                 {!successful && (
                     <div>
                         <div className="card card-body" >
-                            <p><strong>Thông tin khách hàng (bắt buộc)</strong></p>
+                            <p><strong>Thông tin khách hàng (*)</strong></p>
                             <div className="row">
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên khách hàng (bắt buộc)</label>
+                                    <label htmlFor="exampleFormControlInput1" >Tên khách hàng (1) (*)</label>
                                     <Input
                                         type="customer"
                                         className="form-control"
@@ -156,7 +147,7 @@ export default function KTKH() {
                                     />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng (bắt buộc)</label>
+                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng (*)</label>
                                     <Input
                                         type="customer_number"
                                         className="form-control"
@@ -165,7 +156,7 @@ export default function KTKH() {
                                         onChange={onChangeCustomer_Number} />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng (bắt buộc)</label>
+                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng (*)</label>
                                     <Autocomplete
                                         style={{ background: "white" }}
                                         size="small"
@@ -178,19 +169,19 @@ export default function KTKH() {
                                     />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Mã số thuế </label>
+                                    <label htmlFor="exampleFormControlInput1" >Mã số thuế (Đối với doanh nghiệp)</label>
                                     <Input
                                         type="customer_taxcode"
                                         className="form-control"
                                         name="customer_taxcode"
-                                        value={customer_taxcode}
+                                        value={customer_taxcode}                                       
                                         onChange={onChangeCustomer_Taxcode} />
                                 </div>
                             </div>
 
                             <div className="row">
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên người đại diện</label>
+                                    <label htmlFor="exampleFormControlInput1" >Tên người đại diện (*)</label>
                                     <Input
                                         type="customer_representative"
                                         className="form-control"
@@ -199,7 +190,7 @@ export default function KTKH() {
                                         onChange={onChangeCustomer_Representative} />
                                 </div>
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT người đại diện</label>
+                                    <label htmlFor="exampleFormControlInput1" >SĐT người đại diện (*)</label>
                                     <Input
                                         type="customer_representative_number"
                                         className="form-control"
@@ -220,7 +211,7 @@ export default function KTKH() {
 
                             <div className="row">
                                 <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng (bắt buộc)</label>
+                                    <label htmlFor="exampleFormControlSelect1" >Chọn loại khách hàng (*)</label>
                                     <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
                                         <option value="" selected disabled hidden >Click để chọn </option>
                                         <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
@@ -229,9 +220,18 @@ export default function KTKH() {
                                     <label htmlFor="exampleFormControlInput1" >Người nhập</label>
                                     <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                                 </div>
-                                <div className="col-sm-9">
-                                    <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng (bắt buộc) </label>
+                                <div className="col-sm-8">
+                                    <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng (*)</label>
                                     <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-sm">
+                                    <br/>
+                                    <p><strong>Chú thích:</strong></p>
+                                    <p><strong>(*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
+                                    <p><strong>(1)</strong> Vui lòng điền đầy đủ họ tên đối với khách hàng tư nhân.</p>
                                 </div>
                             </div>
                         </div>

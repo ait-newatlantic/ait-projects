@@ -68,7 +68,7 @@ const update_specific_customer = (
 };
 
 
-export default {
+export default{
     create_customer,
     get_specific_customer,
     update_specific_customer,
