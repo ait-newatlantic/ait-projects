@@ -119,7 +119,7 @@ export default function BCTQ(props) {
                             <table className="table">
                                 <tbody>
                                     <tr id="titles">
-                                        <th>TỔNG CỘNG</th>
+                                        <th>TỔNG CỘNG (XE)</th>
                                         <th>TIẾP CẬN CHÀO HÀNG</th>
                                         <th>CHẠY THỬ</th>
                                         <th>ĐÀM PHÁN</th>
