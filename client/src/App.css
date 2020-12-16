@@ -72,12 +72,14 @@ tr:hover {
 }
 
 .table-container {
+  margin: auto;
   max-height: 50vh;
+  max-width: 85vw;
   overflow: auto;
 }
 
-.table {
-  table-layout: auto;
+.table-container table{
+  margin: 0 auto;
 }
 
 table.dataTable thead .sorting:after,

@@ -40,6 +40,16 @@ export default function KTKH() {
         }
     };
 
+    const ValidTaxcode = (value) => {
+        if (!value) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    This field is required!
+                </div>
+            );
+        }
+    };
+
     const onChangeCustomer = (e) => {
         const customer = e.target.value;
         setCustomer(customer);
@@ -168,14 +178,18 @@ export default function KTKH() {
                                         renderInput={(params) => <TextField {...params} variant="outlined" />}
                                     />
                                 </div>
+                                
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlInput1" >Mã số thuế (Đối với doanh nghiệp)</label>
-                                    <Input
+                                    {customer_type=="DOANH NGHIỆP"    
+                                    ?<Input
                                         type="customer_taxcode"
                                         className="form-control"
                                         name="customer_taxcode"
-                                        value={customer_taxcode}                                       
+                                        value={customer_taxcode}                               
                                         onChange={onChangeCustomer_Taxcode} />
+                                    : <p>Không cần nhập</p>
+                                    }
                                 </div>
                             </div>
 

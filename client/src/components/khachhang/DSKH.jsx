@@ -13,7 +13,7 @@ export default function DSKH() {
     const FetchAllData = () => {
         CustomerService.get_customers().then((response) => {
             setCustomerResult(response.data)
-            setTotal(response.data[response.data.length-1].id)
+            setTotal(response.data.length)
         })
     }
 
@@ -21,6 +21,7 @@ export default function DSKH() {
         const employee = currentUser.username.split('.')[0]
         CustomerService.get_specific_customers(employee).then((response) => {
             setCustomerResult(response.data)
+            setTotal(response.data.length)
         })
     }
 
@@ -37,15 +38,15 @@ export default function DSKH() {
             <div className="card card-body">
                 <h1>DANH SÁCH KHÁCH HÀNG</h1>
                 <h6>Số khách hàng: {total}</h6>
-                <div>
-                    <ReactHTMLTableToExcel
-                        className="btn btn-info"
-                        table="emp"
-                        filename="Danh sách khách hàng"
-                        sheet="Sheet"
-                        buttonText="Export excel" />
-                </div>
                 <div className="table-container">
+                    <div>
+                        <ReactHTMLTableToExcel
+                            className="btn btn-info"
+                            table="emp"
+                            filename="Danh sách khách hàng"
+                            sheet="Sheet"
+                            buttonText="Export excel" />
+                    </div>
                     <table id="emp" className="table">
                         <tbody >
                             <tr key="a">

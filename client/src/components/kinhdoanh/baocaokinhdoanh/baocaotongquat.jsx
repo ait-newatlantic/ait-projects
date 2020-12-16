@@ -116,6 +116,7 @@ export default function BCTQ(props) {
                     <div className="col-sm">
                         <div className="card card-body">
                             <h1>BÁO CÁO KINH DOANH TỔNG QUÁT</h1>
+                            <div className="table-container">
                             <table className="table">
                                 <tbody>
                                     <tr id="titles">
@@ -148,6 +149,7 @@ export default function BCTQ(props) {
                                     ))}
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                     <div className="col-sm">
