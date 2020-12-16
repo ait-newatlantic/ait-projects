@@ -12,7 +12,6 @@ exports.create = (req, res) => {
     !req.body.customer_area || 
     !req.body.customer_address || 
     !req.body.customer_type ||
-    !req.body.taxcode && req.body.customer_type === "DOANH NGHIỆP" ||  
     !req.body.employee) 
   {
     res.status(400).send({
