@@ -1,6 +1,5 @@
 import React from "react";
 import "./style.css";
-import Slider from "../slider/slide"
 import ParticlesBg from "particles-bg";
 
 export default function Home() {
@@ -20,7 +19,7 @@ export default function Home() {
               <a href="https://www.newatlantic.vn/" class="btn btn-warning btn-lg" role="button" aria-disabled="true">NewAtlantic</a>
             </li>
             <li>
-              <a href="#" class="btn btn-info btn-lg" role="button" aria-disabled="true">Hướng dẫn sử dụng</a>
+              <a href="#" class="btn btn-info btn-lg" role="button" aria-disabled="true">Hướng dẫn</a>
             </li>
             <li>
               <a href="https://www.facebook.com/newait.kamaz/?view_public_for=108681160997508" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Facebook</a>

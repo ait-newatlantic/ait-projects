@@ -324,7 +324,7 @@ export default function BCCT() {
                                     buttonText="Export excel" />
                             </div>
                             <div className="table-container">
-                                <table id="emp1" className="table">
+                                <table id="emp1" className="table-lg">
                                     <tbody >
                                         <tr id="titles" key="a">
                                             <th>Chi nhánh</th>
