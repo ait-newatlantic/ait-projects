@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
-import GroupChart from "../Chart/group"
+import DemandChart from "../DemandChart/DemandChart"
 import DemandService from "../../services/demand.service"
 import AuthService from "../../services/auth.service";
 import useFullPageLoader from "../../services/loader.service"
@@ -156,7 +156,7 @@ export default function DemandOverallReport(props) {
                         <div className="card card-body">
                             <h1>BIỂU ĐỒ KINH DOANH TỔNG QUÁT</h1>
                             {!!yearResult2 && yearResult2.map(month => (
-                                <GroupChart key="a"
+                                <DemandChart key="a"
                                     dukien1={month.dukien1} thucte1={month.thucte1}
                                     dukien2={month.dukien2} thucte2={month.thucte2}
                                     dukien3={month.dukien3} thucte3={month.thucte3}

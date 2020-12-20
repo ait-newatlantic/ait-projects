@@ -326,7 +326,7 @@ export default function DemandUpdate(props) {
                                     </div>
                                 </div>
 
-                                <div className="card card-body" >
+                                {/* <div className="card card-body" >
                                     <p><strong>Thông tin thêm</strong></p>
                                     <div className="row">
                                         <div className="col">
@@ -358,7 +358,7 @@ export default function DemandUpdate(props) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="card card-body" >
                                     <label htmlFor="exampleFormControlTextarea1"><strong>Ghi chú</strong></label>

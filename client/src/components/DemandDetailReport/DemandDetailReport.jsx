@@ -3,8 +3,8 @@ import { Button } from "react-bootstrap";
 import "./style.css"
 import DemandService from "../../services/demand.service"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import StackChart from "../Chart/stack"
-import VerticalChart from "../Chart/vertical"
+import BranchChart from "../BranchChart/BranchChart"
+import CarChart from "../CarChart/CarChart"
 import AuthService from "../../services/auth.service";
 import useFullPageLoader from "../../services/loader.service"
 
@@ -303,7 +303,7 @@ export default function DemandDetailReport() {
                                                 <td>{form.updatedAt.substring(0, 10)}</td>
                                                 <td>{form.note}</td>
                                                 <td>
-                                                    <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/demands/${form.id}`} role="button">Cập nhật</a>
+                                                    <a className="btn btn-warning btn-sm" href={`/demands/update/${form.id}`} role="button">Cập nhật</a>
                                                 </td>
                                             </tr>
                                         ))}
@@ -616,7 +616,7 @@ export default function DemandDetailReport() {
                                 <div className="col-sm">
                                     <h4>BIỂU ĐỒ ĐÁNH GIÁ KINH DOANH TỪNG CHI NHÁNH</h4>
                                     {!!yearResult2 && yearResult2.map(model => (
-                                        <StackChart key="a"
+                                        <BranchChart key="a"
                                             nvl_6540={model.nvl_6540}
                                             vungtau_6540={model.vungtau_6540}
                                             daklak_6540={model.daklak_6540}
@@ -788,7 +788,7 @@ export default function DemandDetailReport() {
                                 <div className="col-sm">
                                     <h4>BIỂU ĐỒ ĐÁNH GIÁ SỐ LƯỢNG XE ĐÃ BÁN</h4>
                                     {!!yearResult3 && yearResult3.map(quantity => (
-                                        <VerticalChart key="a"
+                                        <CarChart key="a"
                                             c6540={quantity.c6540}
                                             c6460={quantity.c6460}
                                             c43253={quantity.c43253}
@@ -908,7 +908,7 @@ export default function DemandDetailReport() {
                                                     <td>{form.updatedAt.substring(0, 10)}</td>
                                                     <td>{form.note}</td>
                                                     <td>
-                                                        <a className="btn btn-warning btn-sm" href={`/kinhdoanh/capnhat/demands/${form.id}`} role="button">Cập nhật</a>
+                                                        <a className="btn btn-warning btn-sm" href={`/demands/update/${form.id}`} role="button">Cập nhật</a>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -924,7 +924,7 @@ export default function DemandDetailReport() {
                                             <div className="col-sm">
                                                 <h4>BIỂU ĐỒ ĐÁNH GIÁ SỐ LƯỢNG XE ĐÃ BÁN</h4>
                                                 {!!yearResult3 && yearResult3.map(quantity => (
-                                                    <VerticalChart key="a"
+                                                    <CarChart key="a"
                                                         c6540={quantity.c6540}
                                                         c6460={quantity.c6460}
                                                         c43253={quantity.c43253}

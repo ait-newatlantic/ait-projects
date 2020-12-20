@@ -3,22 +3,20 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-//Pages
-import DemandInput from './pages/demands/input/DemandInputPage'
-import DemandOverallReport from './pages/demands/report/overall/DemandOverallReportPage'
-import DemandDetailReport from './pages/demands/report/detail/DemandDetailReportPage'
-import DemandUpdate from './pages/demands/update/DemandUpdatePage'
-import CustomerInput from './pages/customers/input/CustomerInputPage'
-import CustomerList from "./pages/customers/list/CustomerListPage"
-import CustomerUpdate from "./pages/customers/update/CustomerUpdatePage"
+import DemandInput from './components/DemandInput/DemandInput'
+import DemandOverallReport from './components/DemandOverallReport/DemandOverallReport'
+import DemandDetailReport from './components/DemandDetailReport/DemandDetailReport'
+import DemandUpdate from './components/DemandUpdate/DemandUpdate'
+import CustomerInput from './components/CustomerInput/CustomerInput'
+import CustomerList from "./components/CustomerList/CustomerList"
+import CustomerUpdate from './components/CustomerUpdate/CustomerUpdate'
+import Register from "./components/Register/Register";
 
-//Components
 import Footer from './components/Footer/Footer'
 import About from './components/About/About'
 import Error from './components/Error/Error'
 import Support from './components/Support/Support'
 import Login from "./components/Login/Login";
-import Register from "./components/Register/Register";
 import Profile from "./components/Profile/Profile";
 import Home from "./components/Home/Home";
 import BoardUser from "./components/BoardUser/BoardUser";
