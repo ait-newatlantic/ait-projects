@@ -3,8 +3,8 @@ import { Button } from "react-bootstrap";
 import "./style.css"
 import DemandService from "../../services/demand.service"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import StackChart from "../chart/stack"
-import VerticalChart from "../chart/vertical"
+import StackChart from "../Chart/stack"
+import VerticalChart from "../Chart/vertical"
 import AuthService from "../../services/auth.service";
 import useFullPageLoader from "../../services/loader.service"
 

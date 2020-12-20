@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
-import GroupChart from "../chart/group"
+import GroupChart from "../Chart/group"
 import DemandService from "../../services/demand.service"
 import AuthService from "../../services/auth.service";
 import useFullPageLoader from "../../services/loader.service"

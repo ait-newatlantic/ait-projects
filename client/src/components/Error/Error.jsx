@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useEffect, useState } from "react"
+import "./style.css"
 import UserService from "../../services/user.service";
-import Home from "../home/Home"
 
-const Home1 = () => {
+export default function Error() {
     const [content, setContent] = useState("");
 
     useEffect(() => {
@@ -23,10 +22,11 @@ const Home1 = () => {
     }, []);
 
     return (
-        <div className="container-fuild">
-            <Home/>
+        <div className="err-container">
+            <div className="err">
+                <h1>Whoops!</h1>
+                <p>404 - Trang không tồn tại</p>
+            </div>
         </div>
-    );
-};
-
-export default Home1;
+    )
+}

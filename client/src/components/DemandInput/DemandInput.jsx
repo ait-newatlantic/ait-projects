@@ -360,7 +360,7 @@ export default function DemandInput(props) {
                                                 </Select>
                                             </div>
                                             <div className="col-sm-9" id="diadiem-giaodich">
-                                                <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp) (*)</label>
+                                                <label htmlFor="exampleFormControlTextarea1">Địa điểm giao dịch (Đối với trường hợp gặp trực tiếp)</label>
                                                 <textarea type="customer_meeting" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setCustomer_Meeting(e.target.value)}></textarea>
                                             </div>
                                         </div>

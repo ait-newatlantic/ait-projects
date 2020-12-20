@@ -1,5 +1,5 @@
 import React from "react";
-import AuthService from "../../../services/auth.service";
+import AuthService from "../../services/auth.service";
 
 const Profile = () => {
     const currentUser = AuthService.getCurrentUser();
@@ -11,10 +11,10 @@ const Profile = () => {
                     Hồ sơ <strong>{currentUser.username}</strong>
         </h3>
             </header>
-            <p>
+            {/* <p>
                 <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
                 {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-            </p>
+            </p> */}
             <p>
                 <strong>Id:</strong> {currentUser.id}
             </p>

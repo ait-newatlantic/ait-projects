@@ -23,10 +23,10 @@ export default function Footer() {
                                     <a href="/home" class="text-dark">Trang chủ</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-dark">Giới thiệu</a>
+                                    <a href="/about" class="text-dark">Giới thiệu</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-dark">Hỗ trợ</a>
+                                    <a href="/support" class="text-dark">Hỗ trợ</a>
                                 </li>
                             </ul>
                         </div>
