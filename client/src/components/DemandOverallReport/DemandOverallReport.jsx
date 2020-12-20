@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
-import GroupChart from "../../chart/group"
-import DemandService from "../../../services/demand.service"
-import AuthService from "../../../services/auth.service";
-import useFullPageLoader from "../../../services/loader.service"
+import GroupChart from "../chart/group"
+import DemandService from "../../services/demand.service"
+import AuthService from "../../services/auth.service";
+import useFullPageLoader from "../../services/loader.service"
 
-export default function BCTQ(props) {
+export default function DemandOverallReport(props) {
 
     const [fromdate, setFromDate] = useState('2020-01-01');
     const [todate, setToDate] = useState('2030-01-01');

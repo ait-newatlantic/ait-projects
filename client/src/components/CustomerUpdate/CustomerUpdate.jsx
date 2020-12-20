@@ -3,12 +3,12 @@ import { Alert, Button } from "react-bootstrap";
 import { ProvinceContext } from '../../context/province/ProvinceContext'
 import 'react-pro-sidebar/dist/css/styles.css';
 import logo from "../../static/imgs/ait_logo.jpg"
-import CustomerService from "../../../src/services/customer.service";
+import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 
-export default function CNKH(props) {
+export default function CustomerUpdate(props) {
     const [customer_representative, setCustomer_Representative] = useState(null);
     const [customer_representative_number, setCustomer_Representative_Number] = useState(null);
     const [customer_representative_email, setCustomer_Representative_Email] = useState(null);

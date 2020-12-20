@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import logo from "../../../static/imgs/ait_logo.jpg"
-import DemandService from "../../../services/demand.service";
+import logo from "../../static/imgs/ait_logo.jpg"
+import DemandService from "../../services/demand.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -13,7 +13,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import "./style.css"
 
-export default function CN_NCTT(props) {
+export default function DemandUpdate(props) {
     const [date, setDate] = useState("");
     const [status, setStatus] = useState("");
     const [color, setColor] = useState("");

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "react-bootstrap";
 import "./style.css"
-import DemandService from "../../../services/demand.service"
+import DemandService from "../../services/demand.service"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import StackChart from "../../chart/stack"
-import VerticalChart from "../../chart/vertical"
-import AuthService from "../../../services/auth.service";
-import useFullPageLoader from "../../../services/loader.service"
+import StackChart from "../chart/stack"
+import VerticalChart from "../chart/vertical"
+import AuthService from "../../services/auth.service";
+import useFullPageLoader from "../../services/loader.service"
 
-export default function BCCT() {
+export default function DemandDetailReport() {
 
     const [fromdate, setFromDate] = useState('2020-01-01');
     const [todate, setToDate] = useState('2030-01-01');
@@ -16,8 +16,6 @@ export default function BCCT() {
     const [yearResult, setYearResult] = useState();
     const [yearResult2, setYearResult2] = useState();
     const [yearResult3, setYearResult3] = useState();
-    //const [user, setUser] = useState('');
-    // const [updateats, setUpdateAt] = useState([])
     const [loader, showLoader, hideLoader] = useFullPageLoader()
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);

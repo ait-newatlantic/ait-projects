@@ -1,19 +1,18 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { ProvinceContext } from '../../../context/province/ProvinceContext'
-import { ModelContext } from '../../../context/model/ModelContext'
-import { TypeContext } from '../../../context/type/TypeContext'
-import { CustomerContext } from '../../../context/customer/CustomerContext'
-import { Alert, Button, ButtonToolbar, Table } from "react-bootstrap";
+import React, { useState, useContext, useEffect, useRef, useCallback} from 'react'
+
+import { ProvinceContext } from '../../context/province/ProvinceContext'
+import { ModelContext } from '../../context/model/ModelContext'
+import { TypeContext } from '../../context/type/TypeContext'
+import { CustomerContext } from '../../context/customer/CustomerContext'
+
+import DemandService from "../../services/demand.service";
+import CustomerService from "../../services/customer.service";
+import AuthService from "../../services/auth.service";
+
+import CheckButton from "react-validation/build/button";
+import { Alert, Button} from "react-bootstrap";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import 'react-pro-sidebar/dist/css/styles.css';
-import AuthService from "../../../services/auth.service";
-import "./style.css"
-import { useCallback } from 'react';
-import logo from "../../../static/imgs/ait_logo.jpg"
-import DemandService from "../../../services/demand.service";
-import CustomerService from "../../../services/customer.service";
-import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
@@ -25,7 +24,11 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-export default function NCTT(props) {
+import logo from "../../static/imgs/ait_logo.jpg"
+import "./style.css"
+import 'react-pro-sidebar/dist/css/styles.css';
+
+export default function DemandInput(props) {
     const [date, setDate] = useState("");
     const [employee, setEmployee] = useState("");
     const [employee_field, setEmployee_Field] = useState("");
@@ -272,7 +275,6 @@ export default function NCTT(props) {
                                                     className="form-control"
                                                     name="customer_number"
                                                     value={customer_number}
-                                                    //onChange={onChangeCustomer_Number}
                                                     validations={[required]}
                                                 />
                                             </div>
@@ -516,9 +518,6 @@ export default function NCTT(props) {
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
                             >
-                                {/* <div className="card card-container-fluid" >
-                                        <h1>{message}</h1>
-                                    </div> */}
                                 <Alert key={message.message}>
                                     <Alert.Heading>{message.heading}</Alert.Heading>
                                     <p>

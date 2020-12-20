@@ -13,22 +13,18 @@ export default function Home() {
           <div className="w-100 text-white">
             <form className="item-center">
               <h1>CÔNG TY CỔ PHẦN TÂN ĐẠI TÂY DƯƠNG</h1>
-              <h3>Chinh phục mọi nẻo đường</h3>
+              <h5>Phần mềm doanh nghiệp AIT</h5>
               <hr />
-              <button type="button" class="btn btn-primary" href="https://www.facebook.com/newait.kamaz">
-                Facebook
+              <a href="/about">
+                <button type="button" class="btn btn-warning">
+                  Tìm hiểu thêm
               </button>{" "}
-              <button type="button" class="btn btn-danger" href="https://www.youtube.com/channel/UCyDJ_4eE0k7R66dns8WZZWg">
-                Youtube
-              </button>{" "}
-              <button type="button" class="btn btn-warning" href="https://newatlantic.vn/">
-                NewAIT
-              </button>{" "}
+              </a>
             </form>
           </div>
         </div>
       </div>
-      <ParticlesBg color="#97caef" num={200} type="cobweb" bg={true} />
+      {/* <ParticlesBg color="#97caef" num={200} type="cobweb" bg={true} /> */}
     </>
   );
 }

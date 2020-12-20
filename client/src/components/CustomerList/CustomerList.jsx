@@ -4,7 +4,7 @@ import CustomerService from "../../services/customer.service"
 import AuthService from "../../services/auth.service";
 import "./style.css"
 
-export default function DSKH() {
+export default function CustomerList() {
 
     const [customerResult, setCustomerResult] = useState();
     const [total, setTotal] = useState(0);

@@ -57,12 +57,12 @@ export default function Nav() {
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="/customers/khoitao">Khởi tạo khách hàng</a>
+                                        <a className="dropdown-item" href="/customers/input">Khởi tạo khách hàng</a>
                                     </ul>
                                 </li>
                                 <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
                                     <ul className="dropdown-menu">
-                                        <a className="dropdown-item" href="/customers/danhsach">Danh sách khách hàng</a>
+                                        <a className="dropdown-item" href="/customers/list">Danh sách khách hàng</a>
                                     </ul>
                                 </li>
                             </ul>
@@ -141,12 +141,12 @@ export default function Nav() {
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Khởi tạo</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/customers/khoitao">Khởi tạo KH</a>
+                                            <a className="dropdown-item" href="/customers/input">Khởi tạo KH</a>
                                         </ul>
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/customers/danhsach">Danh sách KH</a>
+                                            <a className="dropdown-item" href="/customers/list">Danh sách KH</a>
                                         </ul>
                                     </li>
                                 </ul>

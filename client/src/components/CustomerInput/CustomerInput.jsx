@@ -5,13 +5,13 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import 'react-pro-sidebar/dist/css/styles.css';
 import logo from "../../static/imgs/ait_logo.jpg"
-import CustomerService from "../../../src/services/customer.service";
+import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from "../../services/auth.service";
 
-export default function KTKH() {
+export default function CustomerInput() {
     const [employee, setEmployee] = useState("");
     const [customer, setCustomer] = useState("");
     const [customer_number, setCustomer_Number] = useState("");
