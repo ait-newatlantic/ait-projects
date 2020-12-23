@@ -212,6 +212,7 @@ export default function Nav() {
                                 </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a className="dropdown-item" href="/register">Đăng kí User</a>
+                                    <a className="dropdown-item" href="#">Danh sách User</a>
                                     <a className="dropdown-item" href="#">Cấp quyền User</a>
                                 </div>
                             </li> 
