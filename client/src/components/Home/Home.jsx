@@ -32,7 +32,7 @@ const Home = () => {
                                 <h5>Phần mềm doanh nghiệp AIT</h5>
                                 <hr />
                                 <a href="/about">
-                                    <button type="button" class="btn btn-warning">
+                                    <button type="button" className="btn btn-warning">
                                         Tìm hiểu thêm
                             </button>{" "}
                                 </a>

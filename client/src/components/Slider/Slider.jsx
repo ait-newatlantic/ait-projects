@@ -16,21 +16,21 @@ export default function Slide() {
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <img className="d-block w-100" src={slide1} alt="First slide" />
-                        <div class="carousel-caption d-none d-md-block">
+                        <div className="carousel-caption d-none d-md-block">
                             <h5>PHÂN TÍCH VÀ ĐÁNH GIÁ</h5>
                             <p>Chính xác và nhanh chóng</p>
                         </div>
                     </div>
                     <div className="carousel-item">
                         <img className="d-block w-100" src={slide2} alt="Second slide" />
-                        <div class="carousel-caption d-none d-md-block">
+                        <div className="carousel-caption d-none d-md-block">
                             <h5>NHẬP LIỆU</h5>
                             <p>Thuận tiện và tối ưu</p>
                         </div>
                     </div>
                     <div className="carousel-item">
                         <img className="d-block w-100" src={slide3} alt="Third slide" />
-                        <div class="carousel-caption d-none d-md-block">
+                        <div className="carousel-caption d-none d-md-block">
                             <h5>CÔNG NGHỆ HIỆN ĐẠI</h5>
                             <p>Bảo mật và an toàn</p>
                         </div>

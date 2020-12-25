@@ -23,6 +23,8 @@ import BoardUser from "./components/BoardUser/BoardUser";
 import BoardModerator from "./components/BoardModerator/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin/BoardAdmin";
 import Nav from "./components/Nav/Nav"
+import UserList from "./components/UserList/UserList"
+import UserUpdate from "./components/UserUpdate/UserUpdate"
 
 import { ProvinceProvider } from './context/province/ProvinceContext'
 import { ModelProvider } from './context/model/ModelContext'
@@ -39,6 +41,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
+    console.log("*Developed by Nam Tran*\n*Contact: namtrhg@gmail.com*")
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
@@ -70,6 +73,8 @@ function App() {
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/profile" component={Profile} />
                             <Route path="/user" component={BoardUser} />
+                            <Route path="/userlist" exact component={UserList} />
+                            <Route path="/userlist/update/:id" exact component={UserUpdate} />
                             <Route path="/mod" component={BoardModerator} />
                             <Route path="/admin" component={BoardAdmin} />
                             <Route path="/demands/input" exact component={DemandInput} />
