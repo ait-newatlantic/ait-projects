@@ -24,7 +24,7 @@ export default function Error() {
     return (
         <div className="err-container">
             <div className="err">
-                <h1>Whoops!</h1>
+                <h1>Lỗi!</h1>
                 <p>404 - Trang không tồn tại</p>
             </div>
         </div>
