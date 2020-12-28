@@ -58,7 +58,6 @@ function App() {
       <ProvinceProvider>
         <ModelProvider>
           <TypeProvider>
-            <CustomerProvider>
               <main className="app-content">
                 <Router>
                   <Switch>
@@ -110,7 +109,6 @@ function App() {
                   </Switch>
                 </Router>
               </main>
-            </CustomerProvider>
           </TypeProvider>
         </ModelProvider>
       </ProvinceProvider>

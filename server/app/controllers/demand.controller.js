@@ -800,7 +800,6 @@ exports.findAllOverallSpecific = (req, res) => {
 
 };
 
-
 exports.findAllDateSpecific = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;

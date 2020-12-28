@@ -2,6 +2,7 @@ const db = require("../models");
 const Customer = db.customer;
 const Op = db.Sequelize.Op;
 
+//ADMIN
 // Create and Save a new Demands
 exports.create = (req, res) => {
   // Validate request
@@ -141,3 +142,5 @@ exports.findAllSpecific = (req, res) => {
     .then(queues => res.json(queues))
     .catch(err => res.status(400).json(err));
 };
+
+

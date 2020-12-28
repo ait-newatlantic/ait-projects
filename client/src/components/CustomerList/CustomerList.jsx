@@ -51,6 +51,7 @@ export default function CustomerList() {
                         <tbody >
                             <tr key="a">
                                 <th>ID</th>
+                                <th>User</th>
                                 <th>Tên khách hàng</th>
                                 <th>Số điện thoại khách hàng</th>
                                 <th>Loại khách hàng</th>
@@ -65,6 +66,7 @@ export default function CustomerList() {
                             {!!customerResult && customerResult.map(form => (
                                 <tr className="content" key={form.id}>
                                     <td>{form.id}</td>
+                                    <td>{form.employee}</td>
                                     <td>{form.customer}</td>
                                     <td>{form.customer_number}</td>
                                     <td>{form.customer_type}</td>

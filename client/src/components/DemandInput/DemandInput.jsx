@@ -49,7 +49,7 @@ export default function DemandInput(props) {
     const [models, setModels] = useContext(ModelContext);
     const [provinces, setProvinces] = useContext(ProvinceContext);
     const [types, setTypes] = useContext(TypeContext);
-    const [customers, setCustomers] = useContext(CustomerContext);
+    const [customers, setCustomers] = useState([]);
     const [customerResult, setCustomerResult] = useState();
     const currentUser = AuthService.getCurrentUser();
     const [successful, setSuccessful] = useState(false);
@@ -232,7 +232,18 @@ export default function DemandInput(props) {
     }, []);
 
     useEffect(() => {
-        Autofill();
+        if (currentUser.username.split('.')[0] === "AIT") {
+            CustomerService.get_customers().then((response) => {
+                setCustomers(response.data)
+            })
+            Autofill();
+        }
+        else{
+            CustomerService.get_specific_customers(currentUser.username.split('.')[0]).then((response) => {
+                setCustomers(response.data)
+            })
+            Autofill();
+        }
     }, [customer, Autofill])
 
     return (
