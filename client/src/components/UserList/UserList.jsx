@@ -18,11 +18,19 @@ export default function DemandOverallReport(props) {
         });
     }
 
+    const FetchUsersSpecific = () => {
+        showLoader()
+        UserService.get_users_specific(currentUser.username.split('.')[0]).then((response) => {
+            hideLoader()
+            setUserResult(response.data);
+        });
+    }
+
     useEffect(() => {
         if (currentUser.username.split('.')[0] === "AIT") {
             FetchUsers()
         } else {
-            FetchUsers()
+            FetchUsersSpecific()
         }
     }, [])
 

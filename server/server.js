@@ -74,6 +74,10 @@ app.listen(PORT, () => {
 //     id: 3,
 //     name: "admin"
 //   });
+//   Role.create({
+//     id: 4,
+//     name: "employee"
+//   });
 //   Model.create({
 //     id: 1,
 //     model_name: "6460"
@@ -173,18 +177,6 @@ app.listen(PORT, () => {
 //   Type.create({
 //     id: 14,
 //     type_name: "Xe đầu kéo"
-//   });
-//   Customer.create({
-//     id: 1,
-//     customer: "CÔNG TY CỔ PHẦN THƯƠNG MẠI QUỐC TẾ TÂN ĐẠI TÂY DƯƠNG",
-//     customer_number: "028 3873 3686",
-//     customer_representative: "Trần Văn Trung",
-//     customer_representative_number : "nodata",
-//     customer_representative_email : "nodata",
-//     customer_area: "Thành phố Hồ Chí Minh",
-//     customer_taxcode: "0302937039",
-//     customer_type: "DOANH NGHIỆP",
-//     customer_address: "A60 đường Phú Thuận – P.Phú Thuận – Quận 7 – TP. Hồ Chí Minh"
 //   });
 //   Province.create({
 //     id: 1,

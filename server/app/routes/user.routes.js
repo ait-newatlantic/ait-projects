@@ -36,7 +36,11 @@ module.exports = function (app) {
 
   router.get("/", users.findAll);
 
+  router.get("/specific", users.findAllSpecific);
+
   router.get("/:id", users.findOne);
+
+  router.put("/:id", users.update);
 
   router.delete("/:id", users.delete);
 

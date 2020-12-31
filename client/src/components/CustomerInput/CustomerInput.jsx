@@ -10,6 +10,8 @@ import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from "../../services/auth.service";
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import SendIcon from '@material-ui/icons/Send';
 
 export default function CustomerInput() {
     const [employee, setEmployee] = useState("");
@@ -137,123 +139,144 @@ export default function CustomerInput() {
     return (
         <div className="custom">
             <div className="head">
-                <img src={logo} alt="logo" width="100" height="100" />
-                <h1>FORM KHỞI TẠO KHÁCH HÀNG</h1>
+                <h5>FORM KHỞI TẠO KHÁCH HÀNG</h5>
             </div>
             <Form onSubmit={handleSubmit} ref={form}>
                 {!successful && (
-                    <div>
-                        <div className="card card-body" >
-                            <p><strong>Thông tin khách hàng (*)</strong></p>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên khách hàng (1) (*)</label>
-                                    <Input
-                                        type="customer"
-                                        className="form-control"
-                                        name="customer"
-                                        value={customer}
-                                        onChange={onChangeCustomer}
-                                    />
+                    <div className="card-group">
+                        <div className="card">
+                            <div className="card-body">
+                                <h6><strong>Thông tin khách hàng</strong></h6>
+                                <div className="row">
+                                    <label className="col-lg-4" >Tên KH (1) (*): </label>
+                                    <div className="col-sm">
+                                        <Input
+                                            type="customer"
+                                            className="form-control"
+                                            name="customer"
+                                            value={customer}
+                                            onChange={onChangeCustomer}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng (*)</label>
-                                    <Input
-                                        type="customer_number"
-                                        className="form-control"
-                                        name="customer_number"
-                                        value={customer_number}
-                                        onChange={onChangeCustomer_Number} />
+                                <div className="row">
+                                    <label className="col-lg-4" >SĐT KH (*): </label>
+                                    <div className="col-sm">
+                                        <Input
+                                            type="customer_number"
+                                            className="form-control"
+                                            name="customer_number"
+                                            value={customer_number}
+                                            onChange={onChangeCustomer_Number} />
+                                    </div>
                                 </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng (*)</label>
-                                    <Autocomplete
-                                        style={{ background: "white" }}
-                                        size="small"
-                                        value={customer_area}
-                                        onChange={(event, newValue) => {
-                                            setCustomer_Area(newValue);
-                                        }}
-                                        options={provinces.map((option) => option.province_name)}
-                                        renderInput={(params) => <TextField {...params} variant="outlined" />}
-                                    />
+                                <div className="row">
+                                    <label className="col-lg-4">Khu vực KH (*): </label>
+                                    <div className="col-sm">
+                                        <Autocomplete
+                                            style={{ background: "white" }}
+                                            size="small"
+                                            value={customer_area}
+                                            onChange={(event, newValue) => {
+                                                setCustomer_Area(newValue);
+                                            }}
+                                            options={provinces.map((option) => option.province_name)}
+                                            renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                        />
+                                    </div>
                                 </div>
-                                
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Mã số thuế (Đối với doanh nghiệp)</label>
-                                    {customer_type=="DOANH NGHIỆP"    
-                                    ?<Input
-                                        type="customer_taxcode"
-                                        className="form-control"
-                                        name="customer_taxcode"
-                                        value={customer_taxcode}                               
-                                        onChange={onChangeCustomer_Taxcode} />
-                                    : <p>Không cần nhập</p>
-                                    }
-                                </div>
-                            </div>
 
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên người đại diện (*)</label>
-                                    <Input
-                                        type="customer_representative"
-                                        className="form-control"
-                                        name="customer_number"
-                                        value={customer_representative}
-                                        onChange={onChangeCustomer_Representative} />
+                                <div className="row">
+                                    <label className="col-lg-4" >Chọn loại KH (*): </label>
+                                    <div className="col-sm">
+                                        <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
+                                            <option value="" selected disabled hidden >Click để chọn </option>
+                                            <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
+                                            <option value="TƯ NHÂN">TƯ NHÂN</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT người đại diện (*)</label>
-                                    <Input
-                                        type="customer_representative_number"
-                                        className="form-control"
-                                        name="customer_representative_number"
-                                        value={customer_representative_number}
-                                        onChange={onChangeCustomer_Representative_Number} />
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Email người đại diện</label>
-                                    <Input
-                                        type="customer_representative_email"
-                                        className="form-control"
-                                        name="customer_representative_email"
-                                        value={customer_representative_email}
-                                        onChange={onChangeCustomer_Representative_Email} />
-                                </div>
-                            </div>
 
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1" >Chọn loại khách hàng (*)</label>
-                                    <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
-                                        <option value="" selected disabled hidden >Click để chọn </option>
-                                        <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
-                                        <option value="TƯ NHÂN">TƯ NHÂN</option>
-                                    </select>
-                                    <label htmlFor="exampleFormControlInput1" >Người nhập</label>
-                                    <input type="employee" value={currentUser.username} className="form-control" id="exampleFormControlInput1" />
-                                </div>
-                                <div className="col-sm-8">
-                                    <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng (*)</label>
-                                    <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
-                                </div>
-                            </div>
+                                {customer_type == "DOANH NGHIỆP" ?
+                                    <div className="row">
+                                        <label className="col-lg-4" >Mã số thuế: </label>
+                                        <div className="col-sm">
+                                            <Input
+                                                type="customer_taxcode"
+                                                className="form-control"
+                                                name="customer_taxcode"
+                                                value={customer_taxcode}
+                                                onChange={onChangeCustomer_Taxcode} /></div>
+                                    </div>
+                                    : <div></div>
+                                }
 
-                            <div className="row">
-                                <div className="col-sm">
-                                    <br/>
-                                    <p><strong>Chú thích:</strong></p>
-                                    <p><strong>(*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
-                                    <p><strong>(1)</strong> Vui lòng điền đầy đủ họ tên đối với khách hàng tư nhân.</p>
+                                <div className="row">
+                                    <label className="col-lg-4">Địa chỉ KH (*): </label>
+                                    <div className="col-sm">
+                                        <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div>
-                            <Button variant="success" block type="submit" onClick={handleSubmit}>
-                                Gửi form
+                        <div className="card">
+                            <div className="card-body">
+                                <h6><strong>Thông tin người đại diện</strong></h6>
+                                <div className="row">
+                                    <label className="col-lg-4" >Tên người đại diện (*): </label>
+                                    <div className="col-sm">
+                                        <Input
+                                            type="customer_representative"
+                                            className="form-control"
+                                            name="customer_number"
+                                            value={customer_representative}
+                                            onChange={onChangeCustomer_Representative} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <label className="col-lg-4" >SĐT người đại diện (*): </label>
+                                    <div className="col-sm">
+                                        <Input
+                                            type="customer_representative_number"
+                                            className="form-control"
+                                            name="customer_representative_number"
+                                            value={customer_representative_number}
+                                            onChange={onChangeCustomer_Representative_Number} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <label className="col-lg-4" >Email người đại diện: </label>
+                                    <div className="col-sm">
+                                        <Input
+                                            type="customer_representative_email"
+                                            className="form-control"
+                                            name="customer_representative_email"
+                                            value={customer_representative_email}
+                                            onChange={onChangeCustomer_Representative_Email} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card">
+                            <div className="card-body">
+                                <h6><strong>Thông tin nhân viên</strong></h6>
+                                <div className="row">
+                                    <label className="col-lg-4" >Người nhập</label>
+                                    <div className="col-sm">
+                                        <p className="form-control">{currentUser.username}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <Button variant="success" block type="submit" onClick={handleSubmit}>
+                                        Gửi form <SendIcon/>
                     </Button>
+                                </div>
+                                <div>
+                                    <strong>Chú thích:</strong>
+                                    <p><ArrowRightAltIcon /><strong> (1)</strong> Vui lòng điền đầy đủ họ tên khách hàng.</p>
+                                    <p><ArrowRightAltIcon /><strong> (*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}

@@ -11,6 +11,8 @@ import CustomerInput from './components/CustomerInput/CustomerInput'
 import CustomerList from "./components/CustomerList/CustomerList"
 import CustomerUpdate from './components/CustomerUpdate/CustomerUpdate'
 import Register from "./components/Register/Register";
+import Test from "./components/Test/Test"
+import ResetPassword from "./components/ResetPassword/ResetPassword"
 
 import Footer from './components/Footer/Footer'
 import About from './components/About/About'
@@ -83,6 +85,7 @@ function App() {
                             <Route path="/customers/input" exact component={CustomerInput} />
                             <Route path="/customers/list" exact component={CustomerList} />
                             <Route path="/customers/update/:id" exact component={CustomerUpdate} />
+                            <Route path='/test' component={Test} />
                             <Route path='*' component={Error} />
                           </Switch>
                         </Router>
@@ -102,6 +105,8 @@ function App() {
                           <Route path="/customers/input" exact component={CustomerInput} />
                           <Route path="/customers/list" exact component={CustomerList} />
                           <Route path="/customers/update/:id" exact component={CustomerUpdate} />
+                          <Route path='/test' component={Test} />
+                          <Route path='/resetpassword' component={ResetPassword} />
                           <Route path='*' component={Error} />
                         </Switch>
                       </Router>

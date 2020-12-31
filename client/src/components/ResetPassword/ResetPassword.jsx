@@ -5,25 +5,22 @@ import logo from "../../static/imgs/ait_logo.jpg"
 import UserService from "../../services/user.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
+import AuthService from "../../services/auth.service";
 
-export default function UserUpdate(props) {
-    const [username, setUsername] = useState(null);
+export default function ResetPassword(props) {
     const [password, setPassword] = useState(null);
-    const [email, setEmail] = useState(null);
     const [id, setId] = useState("");
 
-    const [users, setUsers] = useState({});
+    const currentUser = AuthService.getCurrentUser();
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
     const form = useRef();
     const checkBtn = useRef();
 
-
     const handleUpdate = (e) => {
         e.preventDefault();
-        setId(props.match.params.id)
+        setId(currentUser.id)
         setMessage("");
         setSuccessful(false);
         form.current.validateAll();
@@ -32,7 +29,6 @@ export default function UserUpdate(props) {
             UserService.update_specific_user(
                 id,
                 password,
-                email,
             ).then(
                 (response) => {
                     setMessage(response.data.message);
@@ -52,37 +48,22 @@ export default function UserUpdate(props) {
             );
         }
     };
-
-    const FetchData = id => {
-        UserService.get_specific_user(id)
-            .then(response => {
-                setUsers(response.data);
-                setId(props.match.params.id);
-                setUsername(response.data.username);
-                setPassword(response.data.password);
-                setEmail(response.data.email);
-                console.log(response.data)
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    const onChangeEmail = (e) => {
-        const email = e.target.value;
-        setEmail(email);
-    };
-
+    
+    const Init=()=>{
+        setId(currentUser.id);
+        setPassword(currentUser.password);
+    }
+    
     const onChangePassword = (e) => {
         const password = e.target.value;
         setPassword(password);
     };
 
     useEffect(() => {
-        FetchData(props.match.params.id)
+        Init()
         return () => {
         }
-    }, [props.match.params.id])
+    }, [])
 
 
     return (
@@ -92,7 +73,7 @@ export default function UserUpdate(props) {
                     <div>
                         <div className="head">
                             <img src={logo} alt="logo" width="100" height="100" />
-                            <h1>CẬP NHẬT USER</h1>
+                            <h1>CẬP NHẬT</h1>
                         </div>
 
                         <div className="card card-body" >
@@ -100,16 +81,16 @@ export default function UserUpdate(props) {
                             <div className="row">
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlInput1" >Username</label>
-                                    <input type="customer" defaultValue={users.username} className="form-control" id="exampleFormControlInput1" />
+                                    <input type="customer" defaultValue={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                                 </div>
                                 <div className="col-sm">
                                     <label htmlFor="exampleFormControlInput1" >Password</label>
                                     <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={onChangePassword}/>
                                 </div>
-                                <div className="col-sm">
+                                {/* <div className="col-sm">
                                     <label htmlFor="exampleFormControlSelect1">Email</label>
-                                    <input type="customer_number" defaultValue={users.email} className="form-control" id="exampleFormControlInput1"  onChange={onChangeEmail}/>
-                                </div>
+                                    <input type="customer_number" defaultValue={currentUser.email} className="form-control" id="exampleFormControlInput1"  onChange={onChangeEmail}/>
+                                </div> */}
                             </div>
                         </div>
 

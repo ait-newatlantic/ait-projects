@@ -2,6 +2,8 @@ const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
 
+var bcrypt = require("bcryptjs");
+
 exports.allAccess = (req, res) => {
   res.status(200).send("Public Content");
 };
@@ -14,8 +16,12 @@ exports.adminBoard = (req, res) => {
   res.status(200).send("Chức vụ: Admin");
 };
 
-exports.moderatorBoard = (req, res) => {
+exports.employeeBoard = (req, res) => {
   res.status(200).send("Chức vụ: Chuyên viên");
+};
+
+exports.moderatorBoard = (req, res) => {
+  res.status(200).send("Chức vụ: Trưởng Chi Nhánh");
 };
 
 exports.findAll = (req, res) => {
@@ -50,20 +56,8 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  if (!req.body.date) {
-    res.status(400).send({
-      message: "Xin vui lòng nhập thông tin đầy đủ!"
-    });
-    return;
-  }
-
   const user = {
-    date: req.body.date,
-    status: req.body.status,
-    ait: req.body.ait,
-    kmt: req.body.kmt,
-    color: req.body.color,
-    note: req.body.note,
+    password: bcrypt.hashSync(req.body.password, 8),
   };
 
   User.update(user, {
@@ -109,4 +103,13 @@ exports.delete = (req, res) => {
         message: "Could not delete user with id=" + id
       });
     });
+};
+
+exports.findAllSpecific = (req, res) => {
+  // const username = req.query.employee;
+  const username = "NVL";
+  return db.sequelize.query(` SELECT * FROM users WHERE username LIKE "%${username}%" `,
+    { type: db.sequelize.QueryTypes.SELECT })
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
