@@ -223,7 +223,7 @@ export default function CustomerInput() {
                             <div className="card-body">
                                 <h6><strong>Thông tin người đại diện</strong></h6>
                                 <div className="row">
-                                    <label className="col-lg-4" >Tên người đại diện (*): </label>
+                                    <label className="col-lg-4" >Tên người đại diện: </label>
                                     <div className="col-sm">
                                         <Input
                                             type="customer_representative"
@@ -234,7 +234,7 @@ export default function CustomerInput() {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <label className="col-lg-4" >SĐT người đại diện (*): </label>
+                                    <label className="col-lg-4" >SĐT người đại diện: </label>
                                     <div className="col-sm">
                                         <Input
                                             type="customer_representative_number"

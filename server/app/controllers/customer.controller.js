@@ -8,8 +8,6 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.customer || 
     !req.body.customer_number || 
-    !req.body.customer_representative || 
-    !req.body.customer_representative_number || 
     !req.body.customer_area || 
     !req.body.customer_address || 
     !req.body.customer_type ||

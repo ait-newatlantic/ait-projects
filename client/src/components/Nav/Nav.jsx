@@ -54,8 +54,8 @@ export default function Nav() {
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/demands/overallreport">Báo cáo tổng quát</a>
-                                            <a className="dropdown-item" href="/demands/detailreport">Báo cáo chi tiết</a>
+                                            <a className="dropdown-item" href="/branch/demands/overallreport">Báo cáo tổng quát</a>
+                                            <a className="dropdown-item" href="/branch/demands/detailreport">Báo cáo chi tiết</a>
                                         </ul>
                                     </li>
                                 </ul>
@@ -97,8 +97,8 @@ export default function Nav() {
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/demands/overallreport">Báo cáo tổng quát</a>
-                                            <a className="dropdown-item" href="/demands/detailreport">Báo cáo chi tiết</a>
+                                            <a className="dropdown-item" href="/branch/demands/overallreport">Báo cáo tổng quát</a>
+                                            <a className="dropdown-item" href="/branch/demands/detailreport">Báo cáo chi tiết</a>
                                         </ul>
                                     </li>
                                 </ul>
@@ -143,8 +143,8 @@ export default function Nav() {
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo KD</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/demands/overallreport">Báo cáo tổng quát</a>
-                                            <a className="dropdown-item" href="/demands/detailreport">Báo cáo chi tiết</a>
+                                            <a className="dropdown-item" href="/admin/demands/overallreport">Báo cáo tổng quát</a>
+                                            <a className="dropdown-item" href="/admin/demands/detailreport">Báo cáo chi tiết</a>
                                         </ul>
                                     </li>
                                 </ul>
@@ -159,7 +159,7 @@ export default function Nav() {
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/customers/list">Danh sách KH</a>
+                                            <a className="dropdown-item" href="/admin/customers/list">Danh sách KH</a>
                                         </ul>
                                     </li>
                                 </ul>
@@ -220,6 +220,7 @@ export default function Nav() {
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a className="dropdown-item" href="/register">Đăng kí User</a>
                                     <a className="dropdown-item" href="/userlist">Danh sách User</a>
+                                    <a className="dropdown-item" href="/resetpassword">Đổi mật khẩu</a>
                                     {/* <a className="dropdown-item" href="#">Cấp quyền User</a> */}
                                 </div>
                             </li>

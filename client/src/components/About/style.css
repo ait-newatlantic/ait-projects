@@ -1,0 +1,18 @@
+.about-section {
+  background: rgb(55, 71, 133);
+  background: linear-gradient(
+    90deg,
+    rgba(55, 71, 133, 1) 0%,
+    rgba(124, 185, 232, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+
+.about-section p {
+    text-align: center;
+    color: white;
+}
+
+.about-section h1 {
+    color: white;
+}

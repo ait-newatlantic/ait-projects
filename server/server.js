@@ -212,7 +212,7 @@ app.listen(PORT, () => {
 //   });
 //   Province.create({
 //     id: 9,
-//     province_name: "Bình Định"
+//     province_name: "Tây Ninh"
 //   });
 //   Province.create({
 //     id: 10,

@@ -55,6 +55,8 @@ td {
 }
 
 th {
+  position: sticky;
+  top: 0;
   background-color: #374785;
   color: white;
 }

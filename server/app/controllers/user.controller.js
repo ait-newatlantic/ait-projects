@@ -9,19 +9,19 @@ exports.allAccess = (req, res) => {
 };
 
 exports.userBoard = (req, res) => {
-  res.status(200).send("Chức vụ: Nhân viên");
+  res.status(200).send("Nhân viên");
 };
 
 exports.adminBoard = (req, res) => {
-  res.status(200).send("Chức vụ: Admin");
+  res.status(200).send("Admin");
 };
 
 exports.employeeBoard = (req, res) => {
-  res.status(200).send("Chức vụ: Chuyên viên");
+  res.status(200).send("Chuyên viên");
 };
 
 exports.moderatorBoard = (req, res) => {
-  res.status(200).send("Chức vụ: Trưởng Chi Nhánh");
+  res.status(200).send("Trưởng Chi Nhánh");
 };
 
 exports.findAll = (req, res) => {

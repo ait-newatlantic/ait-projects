@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import logo from "../../static/imgs/ait_logo.jpg"
 import DemandService from "../../services/demand.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
@@ -8,9 +7,6 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import InfoIcon from '@material-ui/icons/Info';
-import IconButton from '@material-ui/core/IconButton';
 import UpdateIcon from '@material-ui/icons/Update';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import "./style.css"
@@ -47,39 +43,9 @@ export default function DemandUpdate(props) {
         setStatus(status);
     };
 
-    const onChangeAit = (e) => {
-        const ait = e.target.value;
-        setAit(ait);
-    };
-
-    const onChangeKmt = (e) => {
-        const kmt = e.target.value;
-        setKmt(kmt);
-    };
-
     const onChangeNote = (e) => {
         const note = e.target.value;
         setNote(note);
-    };
-
-    const validAit = (value) => {
-        if (value < 0) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    The input type should not be empty, a string or a negative number.
-                </div>
-            );
-        }
-    };
-
-    const validKmt = (value) => {
-        if (value < 0) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    The input type should not be empty, a string or a negative number.
-                </div>
-            );
-        }
     };
 
     const required = (value) => {
@@ -297,40 +263,6 @@ export default function DemandUpdate(props) {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* <div className="card card-body" >
-                                    <p><strong>Thông tin thêm</strong></p>
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="demands-group">
-                                                <label htmlFor="exampleFormControlInput1" >AIT</label>
-                                                <Input
-                                                    style={{ background: "#add8e6" }}
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="ait"
-                                                    placeholder={demands.ait}
-                                                    onChange={onChangeAit}
-                                                    validations={[validAit]}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="demands-group">
-                                                <label htmlFor="exampleFormControlInput1" >KMT</label>
-                                                <Input
-                                                    style={{ background: "#add8e6" }}
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="kmt"
-                                                    placeholder={demands.kmt}
-                                                    onChange={onChangeKmt}
-                                                    validations={[validKmt]}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                             <div className="card">
                                 <div className="card-body" >
@@ -366,7 +298,7 @@ export default function DemandUpdate(props) {
                                             <textarea type="note"
                                                 className="form-control"
                                                 id="exampleFormControlTextarea1"
-                                                placeholder={demands.note}
+                                                defaultValue={demands.note}
                                                 rows="3"
                                                 style={{ background: "#add8e6" }}
                                                 onChange={onChangeNote}
@@ -375,10 +307,6 @@ export default function DemandUpdate(props) {
                                     </div>
                                     <br />
                                     <div>
-                                        {/* <label htmlFor="exampleInputFile">Upload ảnh</label>
-                            <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-                            <small id="fileHelp" className="demands-text text-muted">Yêu cầu đính kèm theo ảnh minh chứng</small> */}
-
                                         <Button variant="success" block type="submit" onClick={handleRegister}>
                                             Cập nhật <UpdateIcon />
                                         </Button>
@@ -399,9 +327,6 @@ export default function DemandUpdate(props) {
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
                             >
-                                {/* <div className="card card-container-fluid" >
-                                        <h1>{message}</h1>
-                                    </div> */}
                                 <Alert key={message.message}>
                                     <Alert.Heading>{message.heading}</Alert.Heading>
                                     <p>
