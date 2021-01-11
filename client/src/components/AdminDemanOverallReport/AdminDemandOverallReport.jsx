@@ -24,7 +24,9 @@ export default function DemandOverallReport() {
 
     const FetchTotal = () => {
         showLoader()
+        const employee = ""
         DemandService.get_total(
+            employee,
             fromdate,
             todate,
         ).then((response) => {
@@ -35,7 +37,9 @@ export default function DemandOverallReport() {
 
     const FetchOverall = () => {
         showLoader()
+        const employee = ""
         DemandService.get_overall(
+            employee,
             fromdate,
             todate,
         ).then((response) => {
