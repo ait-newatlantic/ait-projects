@@ -66,184 +66,6 @@ exports.create =  (req, res) => {
     });
 };
 
-exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
-
-  Demand.findAll({ where: condition })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
-};
-
-exports.findAllDate = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  Demand.findAll({
-    where: {
-      [Op.or]: [
-        {
-          createdAt: {
-            [Op.between]: [fromdate, todate]
-          }
-        },
-        {
-          updatedAt: {
-            [Op.between]: [fromdate, todate]
-          }
-        },
-        {
-          date: {
-            [Op.between]: [fromdate, todate]
-          }
-        }
-      ]
-    }
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
-};
-
-exports.findAllCreatedAt = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  Demand.findAll({
-    where: {
-      createdAt: {
-        [Op.between]: [fromdate, todate]
-      }
-    }
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
-};
-
-exports.findAllUpdatedAt = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  Demand.findAll({
-    where: {
-      updatedAt: {
-        [Op.between]: [fromdate, todate]
-      }
-    }
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
-};
-
-exports.findAllGoAt = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  Demand.findAll({
-    where: {
-      date: {
-        [Op.between]: [fromdate, todate]
-      }
-    }
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
-};
-
-exports.findAllTotal = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  return db.sequelize.query(
-    `SELECT 
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}')  THEN quantity END) as tongcong,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="TIẾP CẬN CHÀO HÀNG" THEN quantity END) as tiepcanchaohang,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="CHẠY THỬ" THEN quantity END) as chaythu,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="ĐÀM PHÁN" THEN quantity END) as damphan,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="CHỐT ĐƠN HÀNG" THEN quantity END) as chotdonhang,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="ĐÃ CỌC" THEN quantity END) as dacoc,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="ĐÃ THANH TOÁN TẠM ỨNG" THEN quantity END) as dathanhtoantamung,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" THEN quantity END) as hoantatgiaodich,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="LÊN HỢP ĐỒNG" THEN quantity END) as lenhopdong,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
-    FROM demands
-         `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-};
-
-exports.findAllOverall = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  return db.sequelize.query(
-    `SELECT 
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "1" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte1,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "1" THEN quantity END) as dukien1,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "2" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte2,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "2" THEN quantity END) as dukien2,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "3" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte3,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "3" THEN quantity END) as dukien3,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "4" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte4,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "4" THEN quantity END) as dukien4,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "5" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte5,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "5" THEN quantity END) as dukien5,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "6" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte6,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "6" THEN quantity END) as dukien6,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "7" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte7,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "7" THEN quantity END) as dukien7,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "8" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte8,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "8" THEN quantity END) as dukien8,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "9" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte9,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "9" THEN quantity END) as dukien9,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "10" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte10,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "10" THEN quantity END) as dukien10,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "11" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte11,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "11" THEN quantity END) as dukien11,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
-         SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND MONTH(createdAt) = "12" THEN quantity END) as dukien12
-         FROM demands`,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-};
-
 exports.findOne = (req, res) => {
   const id = req.params.id;
   Demand.findByPk(id)
@@ -474,40 +296,7 @@ exports.findAllModels = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
-exports.findAllQuantity = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  return db.sequelize.query(
-    `SELECT 
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="6540" THEN quantity END) as c6540,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="6460" THEN quantity END) as c6460,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="43253" THEN quantity END) as c43253,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="43265" THEN quantity END) as c43265,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="43266" THEN quantity END) as c43266,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="53228" THEN quantity END) as c53228,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="53229" THEN quantity END) as c53229,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="65115" THEN quantity END) as c65115,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="65116" THEN quantity END) as c65116,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="65117" THEN quantity END) as c65117,
-    SUM(CASE WHEN UNIX_TIMESTAMP(createdAt) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND status="HOÀN TẤT GIAO DỊCH" AND model="Cẩu 5-7 tấn" THEN quantity END) as c57
-    FROM demands
-         `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-};
-
-exports.delete = (req, res) => {
-
-};
-
-exports.deleteAll = (req, res) => {
-
-};
-
-//MODERATOR
-exports.findAllSpecific = (req, res) => {
+exports.findAll = (req, res) => {
   const employee = req.query.employee;
   return db.sequelize.query(` SELECT * FROM demands WHERE employee LIKE "%${employee}%" `,
     { type: db.sequelize.QueryTypes.SELECT })
@@ -515,7 +304,7 @@ exports.findAllSpecific = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
-exports.findAllQuantitySpecific = (req, res) => {
+exports.findAllQuantity = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
   employee = req.query.employee
@@ -540,7 +329,7 @@ exports.findAllQuantitySpecific = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
-exports.findAllTotalSpecific = (req, res) => {
+exports.findAllTotal = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
   employee = req.query.employee
@@ -565,7 +354,7 @@ exports.findAllTotalSpecific = (req, res) => {
 
 };
 
-exports.findAllOverallSpecific = (req, res) => {
+exports.findAllOverall = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
 
@@ -602,7 +391,7 @@ exports.findAllOverallSpecific = (req, res) => {
 
 };
 
-exports.findAllDateSpecific = (req, res) => {
+exports.findAllDate = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
   employee = req.query.employee;
@@ -641,7 +430,7 @@ exports.findAllDateSpecific = (req, res) => {
     });
 };
 
-exports.findAllCreatedAtSpecific = (req, res) => {
+exports.findAllCreatedAt = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
   employee = req.query.employee;
@@ -667,7 +456,7 @@ exports.findAllCreatedAtSpecific = (req, res) => {
     });
 };
 
-exports.findAllUpdatedAtSpecific = (req, res) => {
+exports.findAllUpdatedAt = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
 
@@ -689,7 +478,7 @@ exports.findAllUpdatedAtSpecific = (req, res) => {
     });
 };
 
-exports.findAllGoAtSpecific = (req, res) => {
+exports.findAllGoAt = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
 

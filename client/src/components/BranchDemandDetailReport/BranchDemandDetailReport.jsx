@@ -22,33 +22,33 @@ export default function DemandDetailReport() {
     const [content, setContent] = useState("");
     const [total, setTotal] = useState(0);
 
-    const getDate_Specific = () => {
+    const getDate = () => {
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_date_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_date(employee, fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
     }
 
-    const getUpdatedAt_Specific = () => {
+    const getUpdatedAt = () => {
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_updateAt_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_updateAt(employee, fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
     }
 
-    const getCreatedAt_Specific = () => {
+    const getCreatedAt = () => {
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_createAt_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_createAt(employee, fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
     }
 
-    const getGoAt_Specific = () => {
+    const getGoAt = () => {
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_goAt_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_goAt(employee, fromdate, todate).then((response) => {
             setYearResult(response.data);
             console.log(response.data)
         });
@@ -56,16 +56,16 @@ export default function DemandDetailReport() {
 
     const Submit = () => {
         if (datetype === "Ngày tạo form") {
-            getCreatedAt_Specific()
+            getCreatedAt()
         }
         else if (datetype === "Ngày cập nhật gần nhất") {
-            getUpdatedAt_Specific()
+            getUpdatedAt()
         }
         else if (datetype === "Ngày đi thực tế") {
-            getGoAt_Specific()
+            getGoAt()
         }
         else {
-            getDate_Specific()
+            getDate()
         }
     }
 
@@ -84,17 +84,17 @@ export default function DemandDetailReport() {
         setToDate(todate);
     };
 
-    const FetchDemandSpecific = () => {
+    const FetchDemand = () => {
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_demands_specific(employee).then((response) => {
+        DemandService.get_demands(employee).then((response) => {
             setYearResult(response.data)
             setTotal(response.data.length)
         })
     }
 
-    const FetchDemandQuantitySpecific = () => {
+    const FetchDemandQuantity = () => {
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_all_quantity_specific(
+        DemandService.get_all_quantity(
             employee,
             fromdate,
             todate,
@@ -104,8 +104,8 @@ export default function DemandDetailReport() {
     }
 
     useEffect(() => {
-        FetchDemandSpecific()
-        FetchDemandQuantitySpecific()
+        FetchDemand()
+        FetchDemandQuantity()
 
     }, [])
 

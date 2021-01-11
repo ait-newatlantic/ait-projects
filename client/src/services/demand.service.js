@@ -61,10 +61,6 @@ const update_specific_demand = (
     });
 };
 
-const get_demands = () => {
-    return axios.get(API_URL + `demands`);
-};
-
 const get_all_models = (fromdate, todate) => {
     return axios.get(API_URL + `demands/allmodels`, {
         params:{
@@ -74,17 +70,8 @@ const get_all_models = (fromdate, todate) => {
     });
 };
 
-const get_all_quantity = (fromdate, todate) => {
+const get_all_quantity = (employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/allquantity`, {
-        params:{
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_all_quantity_specific = (employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/allquantity/specific`, {
         params:{
             employee,
             fromdate,
@@ -93,8 +80,8 @@ const get_all_quantity_specific = (employee, fromdate, todate) => {
     });
 };
 
-const get_demands_specific = (employee) => {
-    return axios.get(API_URL + `demands/specific` ,{
+const get_demands = (employee) => {
+    return axios.get(API_URL + `demands` ,{
         params:{
             employee
         }
@@ -105,18 +92,9 @@ const get_specific_demand = (id) => {
     return axios.get(API_URL + `demands/${id}`);
 };
 
-const get_overall = (fromdate, todate) => {
+const get_overall = (employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/overall` ,{
         params:{
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_overall_specific = (employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/overall/specific` ,{
-        params:{
             employee,
             fromdate,
             todate,
@@ -124,19 +102,9 @@ const get_overall_specific = (employee, fromdate, todate) => {
     });
 };
 
-
-const get_total = (fromdate, todate) => {
+const get_total = (employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/total` ,{
         params:{
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_total_specific = (employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/total/specific` ,{
-        params:{
             employee,
             fromdate,
             todate,
@@ -144,74 +112,38 @@ const get_total_specific = (employee, fromdate, todate) => {
     });
 };
 
-const get_date = (fromdate, todate) => {
+const get_date = (employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/date` ,{
         params:{
+            employee,
             fromdate,
             todate,
         }
     });
 };
 
-const get_createAt = (fromdate, todate) => {
+const get_createAt = ( employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/createat` ,{
         params:{
+            employee,
             fromdate,
             todate,
         }
     });
 };
 
-const get_updateAt = (fromdate, todate) => {
+const get_updateAt = ( employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/updateat` ,{
         params:{
+            employee,
             fromdate,
             todate,
         }
     });
 };
 
-const get_goAt = (fromdate, todate) => {
+const get_goAt = ( employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/goat` ,{
-        params:{
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_date_specific = (employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/date/specific` ,{
-        params:{
-            employee,
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_createAt_specific = ( employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/createat/specific` ,{
-        params:{
-            employee,
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_updateAt_specific = ( employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/updateat/specific` ,{
-        params:{
-            employee,
-            fromdate,
-            todate,
-        }
-    });
-};
-
-const get_goAt_specific = ( employee, fromdate, todate) => {
-    return axios.get(API_URL + `demands/goat/specific` ,{
         params:{
             employee,
             fromdate,
@@ -233,12 +165,4 @@ export default {
     get_goAt,
     get_all_models,
     get_all_quantity,
-    get_demands_specific,
-    get_overall_specific,
-    get_total_specific,
-    get_date_specific,
-    get_createAt_specific,
-    get_updateAt_specific,
-    get_goAt_specific,
-    get_all_quantity_specific,
 };

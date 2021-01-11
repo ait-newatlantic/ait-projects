@@ -8,7 +8,7 @@ import BranchDemandOverallReport from './components/BranchDemandOverallReport/Br
 import BranchDemandDetailReport from './components/BranchDemandDetailReport/BranchDemandDetailReport'
 import DemandUpdate from './components/DemandUpdate/DemandUpdate'
 import CustomerInput from './components/CustomerInput/CustomerInput'
-import CustomerList from "./components/CustomerList/CustomerList"
+import BranchCustomerList from "./components/BranchCustomerList/BranchCustomerList"
 import AdminCustomerList from "./components/AdminCustomerList/AdminCustomerList"
 import CustomerUpdate from './components/CustomerUpdate/CustomerUpdate'
 import Register from "./components/Register/Register";
@@ -69,7 +69,7 @@ function App() {
                   <Route path="/userlist" exact component={UserList} />
                   <Route path="/userlist/update/:id" exact component={UserUpdate} />
                   <Route path="/customers/input" exact component={CustomerInput} />
-                  <Route path="/customers/list" exact component={CustomerList} />
+                  <Route path="/branch/customers/list" exact component={BranchCustomerList} />
                   <Route path="/customers/update/:id" exact component={CustomerUpdate} />
                   <Route path='/resetpassword' component={ResetPassword} />
                   <Route path='/test' component={Test} />

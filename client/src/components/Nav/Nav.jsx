@@ -113,7 +113,7 @@ export default function Nav() {
                                     </li>
                                     <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" data-toggle="dropdown">Báo cáo</a>
                                         <ul className="dropdown-menu">
-                                            <a className="dropdown-item" href="/customers/list">Danh sách khách hàng</a>
+                                            <a className="dropdown-item" href="/branch/customers/list">Danh sách khách hàng</a>
                                         </ul>
                                     </li>
                                 </ul>

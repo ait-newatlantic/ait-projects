@@ -25,7 +25,7 @@ export default function AdminDemandDetailReport() {
 
     const getDate = () => {
         const employee = branch
-        DemandService.get_date_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_date(employee, fromdate, todate).then((response) => {
             setYearResult(response.data);
             setTotal(response.data.length)
             console.log(response.data)
@@ -34,7 +34,7 @@ export default function AdminDemandDetailReport() {
 
     const getUpdatedAt = () => {
         const employee = branch
-        DemandService.get_updateAt_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_updateAt(employee, fromdate, todate).then((response) => {
             hideLoader()
             setYearResult(response.data);
             setTotal(response.data.length)
@@ -44,7 +44,7 @@ export default function AdminDemandDetailReport() {
 
     const getCreatedAt = () => {
         const employee = branch
-        DemandService.get_createAt_specific(employee ,fromdate, todate).then((response) => {
+        DemandService.get_createAt(employee ,fromdate, todate).then((response) => {
             setYearResult(response.data);
             setTotal(response.data.length)
             console.log(response.data)
@@ -53,7 +53,7 @@ export default function AdminDemandDetailReport() {
 
     const getGoAt = () => {
         const employee = branch
-        DemandService.get_goAt_specific(employee, fromdate, todate).then((response) => {
+        DemandService.get_goAt(employee, fromdate, todate).then((response) => {
             setYearResult(response.data);
             setTotal(response.data.length)
             console.log(response.data)
@@ -86,7 +86,7 @@ export default function AdminDemandDetailReport() {
     const onChangeBranch = (e) => {
         const branch = e.target.value;
         setBranch(branch);
-        DemandService.get_demands_specific(branch).then((response) => {
+        DemandService.get_demands(branch).then((response) => {
             setYearResult(response.data)
             setTotal(response.data.length)
             setNum(num)
@@ -110,7 +110,7 @@ export default function AdminDemandDetailReport() {
 
     const FetchDemand = () => {
         const branch = ""
-        DemandService.get_demands_specific(branch).then((response) => {
+        DemandService.get_demands(branch).then((response) => {
             setYearResult(response.data)
             setTotal(response.data.length)
             setNum(num)

@@ -24,10 +24,10 @@ export default function DemandOverallReport(props) {
     const [customertResult, setCustomerResult] = useState();
     const currentUser = AuthService.getCurrentUser();
 
-    const FetchTotalSpecific = () => {
+    const FetchTotal = () => {
         showLoader()
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_total_specific(
+        DemandService.get_total(
             employee,
             fromdate,
             todate,
@@ -37,10 +37,10 @@ export default function DemandOverallReport(props) {
         });
     }
 
-    const FetchOverallSpecific = () => {
+    const FetchOverall = () => {
         showLoader()
         const employee = currentUser.username.split('.')[0]
-        DemandService.get_overall_specific(
+        DemandService.get_overall(
             employee,
             fromdate,
             todate,
@@ -53,7 +53,7 @@ export default function DemandOverallReport(props) {
     const FetchUsers = () => {
         showLoader()
         const employee = currentUser.username.split('.')[0]
-        UserService.get_specific_user(employee).then((response) => {
+        UserService.get_users_specific(employee).then((response) => {
             hideLoader()
             setUserResult(response.data.length);
         });
@@ -69,15 +69,15 @@ export default function DemandOverallReport(props) {
     }
 
     const Submit = () => {
-        FetchTotalSpecific()
-        FetchOverallSpecific()
+        FetchTotal()
+        FetchOverall()
     }
 
     useEffect(() => {
         FetchUsers()
         FetchCustomers()
-        FetchOverallSpecific()
-        FetchTotalSpecific()
+        FetchOverall()
+        FetchTotal()
     }, [])
 
     useEffect(() => {
