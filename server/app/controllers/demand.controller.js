@@ -1,11 +1,8 @@
 const db = require("../models");
 const Demand = db.demand;
-const Sequelize = require('sequelize')
 const Op = db.Sequelize.Op;
-const Fn = db.Sequelize.fn;
 
 //ADMIN
-
 exports.create =  (req, res) => {
   // Validate request check if any thing missing!!!
   if (!req.body.customer || 
@@ -30,8 +27,7 @@ exports.create =  (req, res) => {
     arr: req.body.arr,
   }
 
-  // Sav Demand in the database
-
+  // Save Demand in the database
   const requestArr = initial.arr.map(item => {
     return Demand.create({
       date: req.body.date,
