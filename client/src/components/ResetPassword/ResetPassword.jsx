@@ -48,12 +48,12 @@ export default function ResetPassword(props) {
             );
         }
     };
-    
-    const Init=()=>{
+
+    const Init = () => {
         setId(currentUser.id);
         setPassword(currentUser.password);
     }
-    
+
     const onChangePassword = (e) => {
         const password = e.target.value;
         setPassword(password);
@@ -70,31 +70,22 @@ export default function ResetPassword(props) {
         <div className="custom">
             <Form onSubmit={handleUpdate} ref={form}>
                 {!successful && (
-                    <div>
-                        <div className="head">
-                            <img src={logo} alt="logo" width="100" height="100" />
-                            <h1>CẬP NHẬT</h1>
+                    <div className="card" style={{maxWidth:"18rem"}}>
+                        <div className="card-title">
+                            <h5>ĐỔI MẬT KHẨU</h5>
                         </div>
-
-                        <div className="card card-body" >
-                            <p><strong>Thông tin user</strong></p>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Username</label>
-                                    <input type="customer" defaultValue={currentUser.username} className="form-control" id="exampleFormControlInput1" />
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Password</label>
-                                    <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={onChangePassword}/>
-                                </div>
-                                {/* <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1">Email</label>
-                                    <input type="customer_number" defaultValue={currentUser.email} className="form-control" id="exampleFormControlInput1"  onChange={onChangeEmail}/>
-                                </div> */}
+                        <div>
+                            <div>
+                                <label htmlFor="exampleFormControlInput1" >Username</label>
+                                <input type="customer" defaultValue={currentUser.username} className="form-control" id="exampleFormControlInput1" />
+                            </div>
+                            <div>
+                                <label htmlFor="exampleFormControlInput1" >Password</label>
+                                <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={onChangePassword} />
                             </div>
                         </div>
-
-                        <div className="card card-body" >
+                        <br/>
+                        <div >
                             <Button variant="success" block type="submit" onClick={handleUpdate}>
                                 Cập nhật
                     </Button>

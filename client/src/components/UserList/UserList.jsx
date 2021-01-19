@@ -36,6 +36,7 @@ export default function DemandOverallReport(props) {
 
     return (
         <>
+            {loader}
             <div className="custom">
                 <div className="card card-body">
                     <h1>DANH SÁCH USERS</h1>
@@ -63,7 +64,6 @@ export default function DemandOverallReport(props) {
                     </div>
                 </div>
             </div>
-            {loader}
         </>
     )
 }

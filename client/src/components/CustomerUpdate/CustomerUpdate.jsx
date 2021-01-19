@@ -1,25 +1,22 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import { ProvinceContext } from '../../context/province/ProvinceContext'
 import 'react-pro-sidebar/dist/css/styles.css';
 import logo from "../../static/imgs/ait_logo.jpg"
 import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import UserService from "../../services/user.service";
 
 export default function CustomerUpdate(props) {
     const [customer_representative, setCustomer_Representative] = useState(null);
     const [customer_representative_number, setCustomer_Representative_Number] = useState(null);
     const [customer_representative_email, setCustomer_Representative_Email] = useState(null);
     const [id, setId] = useState("");
-
-    const [provinces, setProvinces] = useContext(ProvinceContext);
-
     const [customers, setCustomers] = useState({});
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-
+    const [content, setContent] = useState("");
     const form = useRef();
     const checkBtn = useRef();
 
@@ -36,16 +33,6 @@ export default function CustomerUpdate(props) {
     const onChangeCustomer_Representative = (e) => {
         const customer_representative = e.target.value;
         setCustomer_Representative(customer_representative);
-    };
-
-    const validString = (value) => {
-        if (!value.trim().length) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    The input type should not be empty.
-                </div>
-            );
-        }
     };
 
     const validEmail = (value) => {
@@ -120,128 +107,149 @@ export default function CustomerUpdate(props) {
         }
     }, [props.match.params.id])
 
+    useEffect(() => {
+        UserService.getUserBoard().then(
+            (response) => {
+                setContent(response.data);
+            },
+            (error) => {
+                const _content =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+
+                setContent(_content);
+            }
+        );
+    }, []);
 
     return (
         <div className="custom">
-            <Form onSubmit={handleUpdate} ref={form}>
-                {!successful && (
-                    <div>
-                        <div className="head">
-                            <img src={logo} alt="logo" width="100" height="100" />
-                            <h1>FORM CẬP NHẬT KHÁCH HÀNG</h1>
-                        </div>
+            { content == "Nhân viên" ?
+                <Form onSubmit={handleUpdate} ref={form}>
+                    {!successful && (
+                        <div>
+                            <div className="head">
+                                <img src={logo} alt="logo" width="100" height="100" />
+                                <h1>FORM CẬP NHẬT KHÁCH HÀNG</h1>
+                            </div>
 
-                        <div className="card card-body" >
-                            <p><strong>Thông tin khách hàng</strong></p>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên khách hàng</label>
-                                    <input type="customer" defaultValue={customers.customer} className="form-control" id="exampleFormControlInput1" />
+                            <div className="card card-body" >
+                                <p><strong>Thông tin khách hàng</strong></p>
+                                <div className="row">
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlInput1" >Tên khách hàng</label>
+                                        <input type="customer" defaultValue={customers.customer} className="form-control" id="exampleFormControlInput1" />
+                                    </div>
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
+                                        <input type="customer_number" defaultValue={customers.customer_number} className="form-control" id="exampleFormControlInput1" />
+                                    </div>
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
+                                        <input
+                                            type="customer_number"
+                                            defaultValue={customers.customer_area} className="form-control" id="exampleFormControlInput1" />
+                                    </div>
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlInput1" >Mã số thuế</label>
+                                        <input type="customer_taxcode" defaultValue={customers.customer_taxcode} className="form-control" id="exampleFormControlInput1" />
+                                    </div>
                                 </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
-                                    <input type="customer_number" defaultValue={customers.customer_number} className="form-control" id="exampleFormControlInput1" />
+
+                                <div className="row">
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlInput1" >Tên người đại diện</label>
+                                        <Input
+                                            style={{ background: "#add8e6" }}
+                                            type="text"
+                                            className="form-control"
+                                            name="customer_representative"
+                                            validations={[validName]}
+                                            placeholder={customers.customer_representative}
+                                            onChange={onChangeCustomer_Representative}
+                                        />
+                                    </div>
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlInput1" >SĐT người đại diện</label>
+                                        <Input
+                                            style={{ background: "#add8e6" }}
+                                            type="text"
+                                            className="form-control"
+                                            name="customer_representative_number"
+                                            validations={[validNumber]}
+                                            placeholder={customers.customer_representative_number}
+                                            onChange={onChangeCustomer_Representative_Number}
+                                        />
+                                    </div>
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlInput1" >Email người đại diện</label>
+                                        <Input
+                                            style={{ background: "#add8e6" }}
+                                            type="text"
+                                            className="form-control"
+                                            name="customer_representative"
+                                            validations={[validEmail]}
+                                            placeholder={customers.customer_representative_email}
+                                            onChange={onChangeCustomer_Representative_Email}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
-                                    <input
-                                        type="customer_number"
-                                        defaultValue={customers.customer_area} className="form-control" id="exampleFormControlInput1" />
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Mã số thuế</label>
-                                    <input type="customer_taxcode" defaultValue={customers.customer_taxcode} className="form-control" id="exampleFormControlInput1" />
+
+                                <div className="row">
+                                    <div className="col-sm">
+                                        <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
+                                        <select className="form-control" id="exampleFormControlSelect1">
+                                            <option defaultValue="" >{customers.customer_type}</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-sm-9">
+                                        <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
+                                        <textarea
+                                            type="customer_address"
+                                            className="form-control"
+                                            id="exampleFormControlTextarea1"
+                                            defaultValue={customers.customer_address}
+                                            rows="3">
+                                        </textarea>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Tên người đại diện</label>
-                                    <Input
-                                        style={{ background: "#add8e6" }}
-                                        type="text"
-                                        className="form-control"
-                                        name="customer_representative"
-                                        validations={[validName]}
-                                        placeholder={customers.customer_representative}
-                                        onChange={onChangeCustomer_Representative}
-                                    />
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >SĐT người đại diện</label>
-                                    <Input
-                                        style={{ background: "#add8e6" }}
-                                        type="text"
-                                        className="form-control"
-                                        name="customer_representative_number"
-                                        validations={[validNumber]}
-                                        placeholder={customers.customer_representative_number}
-                                        onChange={onChangeCustomer_Representative_Number}
-                                    />
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Email người đại diện</label>
-                                    <Input
-                                        style={{ background: "#add8e6" }}
-                                        type="text"
-                                        className="form-control"
-                                        name="customer_representative"
-                                        validations={[validEmail]}
-                                        placeholder={customers.customer_representative_email}
-                                        onChange={onChangeCustomer_Representative_Email}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
-                                    <select className="form-control" id="exampleFormControlSelect1">
-                                        <option defaultValue="" >{customers.customer_type}</option>
-                                    </select>
-                                </div>
-                                <div className="col-sm-9">
-                                    <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
-                                    <textarea
-                                        type="customer_address"
-                                        className="form-control"
-                                        id="exampleFormControlTextarea1"
-                                        defaultValue={customers.customer_address}
-                                        rows="3">
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="card card-body" >
-                            <Button variant="success" block type="submit" onClick={handleUpdate}>
-                                Cập nhật
+                            <div className="card card-body" >
+                                <Button variant="success" block type="submit" onClick={handleUpdate}>
+                                    Cập nhật
                     </Button>
+                            </div>
                         </div>
-                    </div>
-                )}
-                {message && (
-                    <div className="form-group">
-                        <div className="card card-body">
-                            <div
-                                className={successful ? "alert alert-success" : "alert alert-danger"}
-                                role="alert"
-                            >
-                                {/* <div className="card card-container-fluid" >
+                    )}
+                    {message && (
+                        <div className="form-group">
+                            <div className="card card-body">
+                                <div
+                                    className={successful ? "alert alert-success" : "alert alert-danger"}
+                                    role="alert"
+                                >
+                                    {/* <div className="card card-container-fluid" >
                                         <h1>{message}</h1>
                                     </div> */}
-                                <Alert key={message.message}>
-                                    <Alert.Heading>{message.heading}</Alert.Heading>
-                                    <p>
-                                        {message.message}
-                                    </p>
-                                </Alert>
+                                    <Alert key={message.message}>
+                                        <Alert.Heading>{message.heading}</Alert.Heading>
+                                        <p>
+                                            {message.message}
+                                        </p>
+                                    </Alert>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-                <CheckButton style={{ display: "none" }} ref={checkBtn} />
-            </Form>
+                    )}
+                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                </Form>
+                :
+                <div>{content}</div>
+            }
         </div>
     )
 }

@@ -8,8 +8,8 @@ module.exports = app => {
 
   // Retrieve all Tutorials
   router.get("/", customers.findAll);
-
-  router.get("/specific", customers.findAllSpecific);
+  
+  router.get("/quantity", customers.findQuantity);
 
   // Retrieve a single Tutorial with id
   router.get("/info", customers.findOneCustomer);
@@ -19,12 +19,6 @@ module.exports = app => {
 
   // Update a Tutorial with id
   router.put("/:id", customers.update);
-
-  // Delete a Tutorial with id
-  router.delete("/:id", customers.delete);
-
-  // Delete all Tutorials
-  router.delete("/", customers.deleteAll);
 
   app.use('/api/customers', router);
 };

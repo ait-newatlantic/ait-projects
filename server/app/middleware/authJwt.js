@@ -15,7 +15,7 @@ verifyToken = (req, res, next) => {
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: "Unauthorized!"
+        message: "Lỗi truy cập, xin vui lòng đăng xuất và login lại!"
       });
     }
     req.userId = decoded.id;
@@ -34,7 +34,7 @@ isAdmin = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Require Admin Role!"
+        message: "Cần quyền Admin!"
       });
       return;
     });
@@ -52,7 +52,7 @@ isModerator = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Require Moderator Role!"
+        message: "Cần quyền quản trị viên!"
       });
     });
   });
@@ -69,7 +69,7 @@ isEmployee = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Require Employee Role!"
+        message: "Cần quyền nhân viên!"
       });
     });
   });
@@ -91,7 +91,7 @@ isModeratorOrAdmin = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Require Moderator or Admin Role!"
+        message: "Cần quyền quản trị viên hoặc admin!"
       });
     });
   });

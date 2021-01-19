@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import CustomerService from "../../services/customer.service"
 import UserService from "../../services/user.service";
-import ImportExportIcon from '@material-ui/icons/ImportExport';
+import useFullPageLoader from "../../services/loader.service"
 import "./style.css"
 
 export default function AdminCustomerList() {
@@ -10,9 +10,22 @@ export default function AdminCustomerList() {
     const [customerResult, setCustomerResult] = useState();
     const [total, setTotal] = useState(0);
     const [content, setContent] = useState("");
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
+    const [branch, setBranch] = useState("");
 
     const FetchAllData = () => {
-        CustomerService.get_customers().then((response) => {
+        showLoader()
+        CustomerService.get_customers("").then((response) => {
+            hideLoader()
+            setCustomerResult(response.data)
+            setTotal(response.data.length)
+        })
+    }
+
+    const onChangeBranch = (e) => {
+        const branch = e.target.value;
+        setBranch(branch);
+        CustomerService.get_customers(branch).then((response) => {
             setCustomerResult(response.data)
             setTotal(response.data.length)
         })
@@ -41,27 +54,59 @@ export default function AdminCustomerList() {
     }, []);
 
     return (
+        <>
+        {loader}
         <div className="custom">
             { content == "Admin" ?
                 <div className="card card-body">
                     <h5>DANH SÁCH KHÁCH HÀNG</h5>
-                    <h6>Số khách hàng: {total}</h6>
-                    <h6>
-                        <ReactHTMLTableToExcel
-                            className="btn btn-info"
-                            table="emp"
-                            filename="Danh sách khách hàng"
-                            sheet="Sheet"
-                            buttonText="Export excel"
-                        />
-                    </h6>
+                    <div className="row">
+                        <div className="col-sm">
+                            <h6>
+                                Số khách hàng: {total}
+                            </h6>
+                        </div>
+                        <div className="col-sm">
+                            <h6>
+                                <ReactHTMLTableToExcel
+                                    className="btn btn-info"
+                                    table="emp"
+                                    filename="Danh sách khách hàng"
+                                    sheet="Sheet"
+                                    buttonText="Export excel"
+                                />
+                            </h6>
+                        </div>
+                    </div>
                     <div className="table-container">
-                        <table id="emp" className="table">
+                        <table id="emp" className="table-lg">
                             <thead>
                                 <tr key="a">
                                     <th>#</th>
-                                    <th>Chi nhánh</th>
-                                    <th>Tên khách hàng</th>
+                                    <th>
+                                        Chi nhánh
+                                        <br/>
+                                        <select className="branch" id="branch" onChange={onChangeBranch}>
+                                            <option value="">Total</option>
+                                            <option value="NVL">NVL</option>
+                                            <option value="PDA">PDA</option>
+                                            <option value="DONGNAI">DONGNAI</option>
+                                            <option value="QUANGTRI">QUANGTRI</option>
+                                            <option value="DANANG">DANANG</option>
+                                            <option value="VUNGTAU">VUNGTAU</option>
+                                            <option value="GIALAI">GIALAI</option>
+                                            <option value="TAYNINH">TAYNINH</option>
+                                            <option value="DAKLAK">DAKLAK</option>
+                                            <option value="LAMDONG">LAMDONG</option>
+                                            <option value="CANTHO">CANTHO</option>
+                                            <option value="BINHPHUOC">BINHPHUOC</option>
+                                            <option value="HUNGYEN">HUNGYEN</option>
+                                            <option value="BINHDINH">BINHDINH</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        Tên khách hàng
+                                    </th>
                                     <th>Số điện thoại khách hàng</th>
                                     <th>Loại khách hàng</th>
                                     <th>Tên người đại diện</th>
@@ -100,5 +145,6 @@ export default function AdminCustomerList() {
                 <div>{content}</div>
             }
         </div>
+        </>
     )
 }

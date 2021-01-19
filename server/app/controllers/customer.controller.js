@@ -6,15 +6,14 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Demands
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.customer || 
-    !req.body.customer_number || 
-    !req.body.customer_area || 
-    !req.body.customer_address || 
+  if (!req.body.customer ||
+    !req.body.customer_number ||
+    !req.body.customer_area ||
+    !req.body.customer_address ||
     !req.body.customer_type ||
-    !req.body.employee) 
-  {
+    !req.body.employee) {
     res.status(400).send({
-      message: { heading: "Oh snap! You got an error!" , message:"Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng, mã số thuế khách hàng đối với doanh nghiệp!!!"}
+      message: { heading: "Oh snap! You got an error!", message: "Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng, mã số thuế khách hàng đối với doanh nghiệp!!!" }
     });
     return;
   }
@@ -36,7 +35,7 @@ exports.create = (req, res) => {
   // Save Customer in the database
   Customer.create(customer)
     .then(data => {
-      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data});
+      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data });
       //res.send(data);
     })
     .catch(err => {
@@ -49,19 +48,11 @@ exports.create = (req, res) => {
 
 // Retrieve all Customers from the database.
 exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { customer: { [Op.like]: `%${id}%` } } : null;
-
-  Customer.findAll({ where: condition })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving customers."
-      });
-    });
+  const employee = req.query.employee;
+  return db.sequelize.query(` SELECT * FROM customers WHERE employee LIKE "%${employee}%" `,
+    { type: db.sequelize.QueryTypes.SELECT })
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
 
 // Find a single Customer with an id
@@ -81,10 +72,10 @@ exports.findOne = (req, res) => {
 
 exports.findOneCustomer = (req, res) => {
   const customer = req.query.customer;
-  return db.sequelize.query(` SELECT * FROM customers WHERE customer="${customer}" `, 
+  return db.sequelize.query(` SELECT * FROM customers WHERE customer="${customer}" `,
     { type: db.sequelize.QueryTypes.SELECT })
-  .then(queues => res.json(queues))
-  .catch(err => res.status(400).json(err));
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 };
 
 // Update a Customer by the id in the request
@@ -118,27 +109,31 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a Customer with the specified id in the request
-exports.delete = (req, res) => {
-
-};
-
-// Delete all Customers from the database.
-exports.deleteAll = (req, res) => {
-
-};
-
-// Find all published Customers
-exports.findAllYear = (req, res) => {
-
-};
-
-exports.findAllSpecific = (req, res) => {
-  const employee = req.query.employee;
-  return db.sequelize.query(` SELECT * FROM customers WHERE employee LIKE "%${employee}%" `,
+exports.findQuantity = (req, res) => {
+  employee = req.query.employee
+  return db.sequelize.query(
+    `SELECT
+    SUM(employee LIKE '%NVL%') AS nvl,
+    SUM(employee LIKE '%VUNGTAU%') AS vungtau,
+    SUM(employee LIKE '%DONGNAI%') AS dongnai,
+    SUM(employee LIKE '%QUANGTRI%') AS quangtri,
+    SUM(employee LIKE '%PDA%') AS pda,
+    SUM(employee LIKE '%TAYNINH%') AS tayninh,
+    SUM(employee LIKE '%DALAK%') AS dalak,
+    SUM(employee LIKE '%CANTHO%') AS cantho,
+    SUM(employee LIKE '%BINHPHUOC%') AS binhphuoc,
+    SUM(employee LIKE '%HUNGYEN%') AS hungyen,
+    SUM(employee LIKE '%LAMDONG%') AS lamdong,
+    SUM(employee LIKE '%DONGNAI%') AS dongnai,
+    SUM(employee LIKE '%BINHDINH%') AS binhdinh,
+    SUM(employee LIKE '%GIALAI%') AS gialai
+    FROM customers`,
     { type: db.sequelize.QueryTypes.SELECT })
     .then(queues => res.json(queues))
     .catch(err => res.status(400).json(err));
 };
+
+
+
 
 

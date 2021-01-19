@@ -9,8 +9,6 @@ const Fn = db.Sequelize.fn;
 exports.create =  (req, res) => {
   // Validate request check if any thing missing!!!
   if (!req.body.customer || 
-    !req.body.customer_number ||
-    !req.body.customer_area ||
     !req.body.customer_type ||
     !req.body.status ||
     !req.body.customer_communication||
@@ -122,6 +120,7 @@ exports.update = (req, res) => {
 exports.findAllModels = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
+  employee = req.query.employee
 
   return db.sequelize.query(
     `SELECT

@@ -21,7 +21,7 @@ exports.employeeBoard = (req, res) => {
 };
 
 exports.moderatorBoard = (req, res) => {
-  res.status(200).send("Trưởng Chi Nhánh");
+  res.status(200).send("Moderator");
 };
 
 exports.findAll = (req, res) => {

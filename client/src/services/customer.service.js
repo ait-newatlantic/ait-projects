@@ -31,12 +31,8 @@ const create_customer = (
     });
 };
 
-const get_customers = () => {
-    return axios.get(API_URL + `customers`);
-};
-
-const get_specific_customers = (employee) => {
-    return axios.get(API_URL + `customers/specific`  ,{
+const get_customers = (employee) => {
+    return axios.get(API_URL + `customers`  ,{
         params:{
             employee
         }
@@ -67,12 +63,14 @@ const update_specific_customer = (
     });
 };
 
-
+const get_quantity = () =>{
+    return axios.get(API_URL + `customers/quantity`);
+}
 export default{
     create_customer,
     get_specific_customer,
     update_specific_customer,
     get_specific_customer_info,
     get_customers,
-    get_specific_customers,
+    get_quantity,
 };

@@ -61,9 +61,10 @@ const update_specific_demand = (
     });
 };
 
-const get_all_models = (fromdate, todate) => {
+const get_all_models = (employee, fromdate, todate) => {
     return axios.get(API_URL + `demands/allmodels`, {
         params:{
+            employee,
             fromdate,
             todate,
         }

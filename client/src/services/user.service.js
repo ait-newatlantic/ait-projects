@@ -57,6 +57,7 @@ export default {
     getUserBoard,
     getModeratorBoard,
     getAdminBoard,
+    getEmployeeBoard,
     get_users,
     get_users_specific,
     delete_user,
