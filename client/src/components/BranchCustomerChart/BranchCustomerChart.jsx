@@ -6,7 +6,7 @@ export default function BranchCustomerChart(props) {
     labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Tây Ninh', 'Bình Dương', 'Đồng Nai', 'PDA'],
     datasets: [
       {
-        label: 'BIỂU ĐỒ ĐÁNH GIÁ SỐ XE ĐÃ BÁN',
+        label: 'BIỂU ĐỒ SỐ KHÁCH HÀNG TỪNG CHI NHÁNH',
         data: [
           props.nvl,
           props.gialai,
@@ -15,7 +15,7 @@ export default function BranchCustomerChart(props) {
           props.binhphuoc,
           props.cantho,
           props.daklak,
-          props.dangnang,
+          props.danang,
           props.quangtri,
           props.hungyen,
           props.tayninh,
