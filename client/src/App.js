@@ -23,7 +23,7 @@ import Support from './components/Support/Support'
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import Home from "./components/Home/Home";
-import Navbar from "./components/Nav/Nav"
+import Navbar from "./components/Navbar/Navbar"
 import UserList from "./components/UserList/UserList"
 import UserUpdate from "./components/UserUpdate/UserUpdate"
 import AdminDemandDetailReport from "./components/AdminDemandDetailReport/AdminDemandDetailReport"
@@ -40,9 +40,9 @@ function App() {
 
   return (
     <div className="App">
-      <header className="sticky">
+      {/* <header className="sticky">
         <Navbar />
-      </header>
+      </header> */}
       <ProvinceProvider>
         <ModelProvider>
           <TypeProvider>

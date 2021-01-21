@@ -1,9 +1,13 @@
 import React from "react"
+import Navbar from "../Navbar/Navbar"
 import "./style.css"
 
 export default function About() {
     return (
         <div>
+            <header className="sticky">
+                <Navbar />
+            </header>
             <div class="about-section">
                 <h1>Giới thiệu</h1>
                 <p>Công ty cổ phần TMQT Tân Đại Tây Dương</p>

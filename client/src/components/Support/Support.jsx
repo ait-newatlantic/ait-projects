@@ -5,10 +5,14 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import img from "../../static/imgs/hoangnam.jpg"
 import "./style.css"
+import Navbar from "../Navbar/Navbar";
 
 export default function Support() {
     return (
         <div>
+            <header className="sticky">
+                <Navbar />
+            </header>
             <div class="about-section">
                 <h1>Liên hệ</h1>
                 <p>Công ty cổ phần TMQT Tân Đại Tây Dương</p>
@@ -19,7 +23,7 @@ export default function Support() {
                     <div class="row m-l-0 m-r-0">
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center text-white">
-                                <div class="m-b-25"> <img src={img} class="img-thumbnail" alt="User-Profile-Image" style={{height:"35vh"}}/> </div>
+                                <div class="m-b-25"> <img src={img} class="img-thumbnail" alt="User-Profile-Image" style={{ height: "35vh" }} /> </div>
                                 <h6 class="f-w-600" style={{ color: "white" }}>Trần Hoàng Nam</h6>
                                 <p>Software Engineer</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                             </div>
