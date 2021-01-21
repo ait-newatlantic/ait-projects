@@ -3,7 +3,7 @@ import AuthService from "../../services/auth.service";
 import "./style.css"
 import logo from "../../../src/static/imgs/ait_logo.jpg"
 
-export default function Nav() {
+export default function Navbar() {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);

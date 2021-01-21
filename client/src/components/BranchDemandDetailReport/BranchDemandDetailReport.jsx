@@ -9,7 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 export default function DemandDetailReport() {
 
-    const [fromdate, setFromDate] = useState('2020-01-01');
+    const [fromdate, setFromDate] = useState('2015-01-01');
     const [todate, setToDate] = useState('2030-01-01');
     const [datetype, setDateType] = useState('');
     const [yearResult, setYearResult] = useState();

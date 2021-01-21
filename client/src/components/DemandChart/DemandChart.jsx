@@ -9,7 +9,7 @@ export default function GroupedBar(props) {
       {
         label: 'Dự kiến',
         data: [props.dukien1, props.dukien2, props.dukien3, props.dukien4, 
-          props.dukien5, props.dukien6, props.dukien7, props.dukie8, 
+          props.dukien5, props.dukien6, props.dukien7, props.dukien8, 
           props.dukien9, props.dukien10, props.dukien11, props.dukien12],
         backgroundColor: 'rgb(255, 99, 132)',
       },

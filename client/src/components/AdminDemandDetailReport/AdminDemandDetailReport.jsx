@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from "react-bootstrap";
 import "./style.css"
 import DemandService from "../../services/demand.service"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
@@ -9,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 export default function AdminDemandDetailReport() {
 
-    const [fromdate, setFromDate] = useState('2020-01-01');
+    const [fromdate, setFromDate] = useState('2015-01-01');
     const [todate, setToDate] = useState('2030-01-01');
     const [datetype, setDateType] = useState('');
     const [yearResult, setYearResult] = useState();
@@ -141,8 +140,8 @@ export default function AdminDemandDetailReport() {
 
     return (
         <>
-            {loader}
             <div className="custom">
+            {loader}
                 {content == "Admin" ?
                     <div>
                         <div className="card-deck">

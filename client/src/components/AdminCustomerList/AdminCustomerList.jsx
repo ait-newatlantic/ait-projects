@@ -55,8 +55,8 @@ export default function AdminCustomerList() {
 
     return (
         <>
-        {loader}
         <div className="custom">
+        {loader}
             { content == "Admin" ?
                 <div className="card card-body">
                     <h5>DANH SÁCH KHÁCH HÀNG</h5>
