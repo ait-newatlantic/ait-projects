@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import 'react-pro-sidebar/dist/css/styles.css';
 import logo from "../../static/imgs/ait_logo.jpg"
 import UserService from "../../services/user.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
 
 export default function UserUpdate(props) {
     const [username, setUsername] = useState(null);

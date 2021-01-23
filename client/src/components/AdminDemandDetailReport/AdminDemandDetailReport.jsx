@@ -140,13 +140,13 @@ export default function AdminDemandDetailReport() {
 
     return (
         <>
-            <div className="custom">
+            {/* <div className="custom"> */}
             {loader}
                 {content == "Admin" ?
                     <div>
                         <div className="card-deck">
                             <div className="card">
-                                <h5>BÁO CÁO KINH DOANH CHI TIẾT</h5>
+                                {/* <h5>BÁO CÁO KINH DOANH CHI TIẾT</h5> */}
                                 <div className="row">
                                     <div className="col-sm">
                                         <h6> Số records: {total} </h6>
@@ -294,7 +294,7 @@ export default function AdminDemandDetailReport() {
                     :
                     <div>{content}</div>
                 }
-            </div>
+            {/* </div> */}
         </>
     )
 }

@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import 'react-pro-sidebar/dist/css/styles.css';
 import logo from "../../static/imgs/ait_logo.jpg"
 import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";

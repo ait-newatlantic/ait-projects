@@ -39,7 +39,7 @@ export default function DemandOverallReport(props) {
             {loader}
             <div className="custom">
                 <div className="card card-body">
-                    <h1>DANH SÁCH USERS</h1>
+                    <h5>DANH SÁCH USERS</h5>
                     <div className="table-container">
                         <table className="table">
                             <tbody>

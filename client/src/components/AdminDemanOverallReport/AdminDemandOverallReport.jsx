@@ -16,6 +16,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import SearchIcon from '@material-ui/icons/Search';
 import "./style.css"
 import Sidebar from '../Sidebar/Sidebar'
+import AdminDemandDetailReport from '../AdminDemandDetailReport/AdminDemandDetailReport'
 
 export default function DemandOverallReport() {
 
@@ -225,7 +226,7 @@ export default function DemandOverallReport() {
                                 </div>
                             </div>
                         ))}
-                        <div className="card-group">
+                        <div className="card-deck">
                             <div className="card" style={{ width: "18rem" }}>
                                 <div className="card-body">
                                     <div className="card-deck">
@@ -606,6 +607,7 @@ export default function DemandOverallReport() {
                                 </div>
                             </div>
                         </div>
+                        <AdminDemandDetailReport/>
                     </div> :
                     <div>{content}</div>
                 }
