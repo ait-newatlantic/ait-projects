@@ -231,9 +231,6 @@ export default function CustomerUpdate(props) {
                                     className={successful ? "alert alert-success" : "alert alert-danger"}
                                     role="alert"
                                 >
-                                    {/* <div className="card card-container-fluid" >
-                                        <h1>{message}</h1>
-                                    </div> */}
                                     <Alert key={message.message}>
                                         <Alert.Heading>{message.heading}</Alert.Heading>
                                         <p>

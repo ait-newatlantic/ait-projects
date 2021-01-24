@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
+import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import "./style.css"
 
@@ -45,6 +46,9 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            <footer className="footer">
+                <Footer />
+            </footer>
         </div>
     );
 };

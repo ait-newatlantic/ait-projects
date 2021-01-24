@@ -88,6 +88,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 .custom {
   padding: 1rem;
+  min-height: 100vh;
 }
 
 .sticky {

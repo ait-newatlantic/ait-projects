@@ -1,4 +1,5 @@
 import React from "react"
+import Footer from "../Footer/Footer"
 import Navbar from "../Navbar/Navbar"
 import "./style.css"
 
@@ -41,6 +42,9 @@ export default function About() {
                     </div>
                 </div>
             </div>
+            <footer className="footer">
+                <Footer />
+            </footer>
         </div>
     )
 }

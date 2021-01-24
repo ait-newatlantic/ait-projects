@@ -245,11 +245,6 @@ export default function DemandOverallReport() {
                                                 <br />
                                                 <div className="row">
                                                     <div className="col-sm">
-                                                        <button type="button" className="btn btn-secondary btn-block" onClick={OnClickReport}>
-                                                            Báo cáo
-                                                        </button>
-                                                    </div>
-                                                    <div className="col-sm">
                                                         <button type="button" className="btn btn-success btn-block" onClick={OnClickChart}>
                                                             {btnName}
                                                         </button>
@@ -565,49 +560,48 @@ export default function DemandOverallReport() {
                                             }
                                         </div>
                                     </div>
-                                    {flag1 == 1 ?
-                                        <div>
-                                            <div className="table-container">
-                                                <div className="card-header text-white bg-secondary">BÁO CÁO KINH DOANH TỔNG QUÁT</div>
-                                                <table className="table">
-                                                    <tbody>
-                                                        <tr id="titles">
-                                                            <th>TỔNG CỘNG (XE)</th>
-                                                            <th>TIẾP CẬN CHÀO HÀNG</th>
-                                                            <th>CHẠY THỬ</th>
-                                                            <th>ĐÀM PHÁN</th>
-                                                            <th>CHỐT ĐƠN HÀNG</th>
-                                                            <th>ĐÃ CỌC</th>
-                                                            <th>ĐÃ THANH TOÁN TẠM ỨNG</th>
-                                                            <th>HOÀN TẤT GIAO DỊCH</th>
-                                                            <th>BÀN GIAO CHƯA THANH TOÁN</th>
-                                                            <th>LÊN HỢP ĐỒNG</th>
-                                                            <th>GIAO DỊCH THẤT BẠI</th>
+                                    <div>
+                                        <div className="table-container">
+                                            <div className="card-header text-white bg-dark">BÁO CÁO KINH DOANH TỔNG QUÁT</div>
+                                            <table className="table">
+                                                <tbody>
+                                                    <tr id="titles">
+                                                        <th>TỔNG CỘNG (XE)</th>
+                                                        <th>TIẾP CẬN CHÀO HÀNG</th>
+                                                        <th>CHẠY THỬ</th>
+                                                        <th>ĐÀM PHÁN</th>
+                                                        <th>CHỐT ĐƠN HÀNG</th>
+                                                        <th>ĐÃ CỌC</th>
+                                                        <th>ĐÃ THANH TOÁN TẠM ỨNG</th>
+                                                        <th>HOÀN TẤT GIAO DỊCH</th>
+                                                        <th>BÀN GIAO CHƯA THANH TOÁN</th>
+                                                        <th>LÊN HỢP ĐỒNG</th>
+                                                        <th>GIAO DỊCH THẤT BẠI</th>
+                                                    </tr>
+                                                    {!!yearResult && yearResult.map(form => (
+                                                        <tr className="content" key={form._id}>
+                                                            <td>{form.tongcong}</td>
+                                                            <td>{form.tiepcanchaohang}</td>
+                                                            <td>{form.chaythu}</td>
+                                                            <td>{form.damphan}</td>
+                                                            <td>{form.chotdonhang}</td>
+                                                            <td>{form.dacoc}</td>
+                                                            <td>{form.dathanhtoantamung}</td>
+                                                            <td>{form.hoantatgiaodich}</td>
+                                                            <td>{form.bangiaochuathanhtoan}</td>
+                                                            <td>{form.lenhopdong}</td>
+                                                            <td>{form.giaodichthatbai}</td>
                                                         </tr>
-                                                        {!!yearResult && yearResult.map(form => (
-                                                            <tr className="content" key={form._id}>
-                                                                <td>{form.tongcong}</td>
-                                                                <td>{form.tiepcanchaohang}</td>
-                                                                <td>{form.chaythu}</td>
-                                                                <td>{form.damphan}</td>
-                                                                <td>{form.chotdonhang}</td>
-                                                                <td>{form.dacoc}</td>
-                                                                <td>{form.dathanhtoantamung}</td>
-                                                                <td>{form.hoantatgiaodich}</td>
-                                                                <td>{form.bangiaochuathanhtoan}</td>
-                                                                <td>{form.lenhopdong}</td>
-                                                                <td>{form.giaodichthatbai}</td>
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div></div> :
-                                        <div></div>
-                                    }
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <AdminDemandDetailReport />
                                 </div>
                             </div>
                         </div>
-                        <AdminDemandDetailReport/>
                     </div> :
                     <div>{content}</div>
                 }

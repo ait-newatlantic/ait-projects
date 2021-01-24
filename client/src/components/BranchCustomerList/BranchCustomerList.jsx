@@ -99,7 +99,7 @@ export default function CustomerList() {
                                         <td>{form.customer_area}</td>
                                         <td>{form.customer_address}</td>
                                         <td>
-                                            <a className="btn btn-warning btn-sm" href={`/customers/update/${form.id}`} role="button">Cập nhật</a>
+                                            <a className="btn btn-warning btn-sm" href={`/dashboard/customers/update/${form.id}`} role="button">Cập nhật</a>
                                         </td>
                                     </tr>
                                 ))}

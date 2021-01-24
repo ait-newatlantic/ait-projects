@@ -22,6 +22,7 @@ export default function Navbar() {
     const logOut = () => {
         AuthService.logout();
     };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,12 +36,22 @@ export default function Navbar() {
                     <li className="nav-item active">
                         <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
                     </li>
-                    <li className="nav-item active">
+                    {/* <li className="nav-item active">
                         <a className="nav-link" href="/about">Giới thiệu<span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item active">
                         <a className="nav-link" href="/support">Hỗ trợ<span className="sr-only">(current)</span></a>
-                    </li>
+                    </li> */}
+                    {showModeratorBoard && (
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/dashboard">Dashboard<span className="sr-only">(current)</span></a>
+                        </li>
+                    )}
+                    {showAdminBoard && (
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/dashboard">Dashboard <span className="sr-only">(current)</span></a>
+                        </li>
+                    )}
                 </ul>
                 {currentUser ? (
                     <ul className="navbar-nav ml-auto">
