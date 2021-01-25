@@ -1,55 +1,104 @@
-import React from 'react'
-import "./style.css"
+import React from "react";
 
-export default function Footer() {
-    return (
-        <div className="footer-custom">
-            <footer className="bg-light text-center text-lg-start">
-                <div className="container p-4">
-                    <div className="row">
-                        <div className="col-lg-6 col-md-12 mb-4 mb-md-0 text-left">
-                            <h5 className="text-uppercase">Liên hệ  </h5>
-                            Địa chỉ: A60 đường Phú Thuận, P.Phú Thuận, Quận 7, TP. Hồ Chí Minh
-                            <br/>
-                            Điện thoại : 028.3873.3686
-                            <br/>
-                            Fax: 028.3873.3500
-                        </div>
+import { animateScroll as scroll } from "react-scroll";
+import {
+  FooterContainer,
+  FooterWrap,
+  FooterLinksContainer,
+  FooterLinksWrapper,
+  FooterLinkItems,
+  FooterLinkTitle,
+  FooterLink,
+  SocialMedia,
+  SocialMediaWrap,
+  SocialLogo,
+  WebsiteRights,
+  SocialIcons,
+  SocialIconLink,
+} from "./FooterElements";
 
-                        <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 className="text-uppercase mb-0">DANH MỤC</h5>
-                            <ul className="list-unstyled">
-                                <li>
-                                    <a href="/home" className="text-dark">Trang chủ</a>
-                                </li>
-                                <li>
-                                    <a href="/about" className="text-dark">Giới thiệu</a>
-                                </li>
-                                <li>
-                                    <a href="/support" className="text-dark">Hỗ trợ</a>
-                                </li>
-                            </ul>
-                        </div>
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaTwitter,
+  FaLinkedin,
+} from "react-icons/fa";
 
-                        <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 className="text-uppercase">MXH</h5>
+function Footer() {
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
 
-                            <ul className="list-unstyled mb-0">
-                                <li>
-                                    <a href="https://www.facebook.com/newait.kamaz" className="text-dark">Facebook</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.youtube.com/channel/UCyDJ_4eE0k7R66dns8WZZWg" className="text-dark">Youtube</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div className="text-center p-3 text-white" style={{ background: "#24305E" }}>
-                    © 2020 Copyright:
-                        <a className="text-white" href="https://newatlantic.vn/"> NewAtlantic.vn</a>
-                </div>
-            </footer>
-        </div>
-    )
+  return (
+    <FooterContainer>
+      <FooterWrap>
+        <FooterLinksContainer>
+          <FooterLinksWrapper>
+            <FooterLinkItems>
+              <FooterLinkTitle>About Us</FooterLinkTitle>
+              <FooterLink to="/signin">How it works</FooterLink>
+              <FooterLink to="/signin">Testimonials</FooterLink>
+              <FooterLink to="/signin">Careers</FooterLink>
+              <FooterLink to="/signin">Investors</FooterLink>
+              <FooterLink to="/signin">Terms of Service</FooterLink>
+            </FooterLinkItems>
+            <FooterLinkItems>
+              <FooterLinkTitle>Contact Us</FooterLinkTitle>
+              <FooterLink to="/signin">Contact</FooterLink>
+              <FooterLink to="/signin">Support</FooterLink>
+              <FooterLink to="/signin">Destinations</FooterLink>
+              <FooterLink to="/signin">Sponsorships</FooterLink>
+            </FooterLinkItems>
+          </FooterLinksWrapper>
+          <FooterLinksWrapper>
+            <FooterLinkItems>
+              <FooterLinkTitle>Videos</FooterLinkTitle>
+              <FooterLink to="/signin">Submit Video</FooterLink>
+              <FooterLink to="/signin">Ambassadors</FooterLink>
+              <FooterLink to="/signin">Agency</FooterLink>
+              <FooterLink to="/signin">Influencer</FooterLink>
+            </FooterLinkItems>
+            <FooterLinkItems>
+              <FooterLinkTitle>Social Media</FooterLinkTitle>
+              <FooterLink to="/signin">Instagram</FooterLink>
+              <FooterLink to="/signin">Facebook</FooterLink>
+              <FooterLink to="/signin">Youtube</FooterLink>
+              <FooterLink to="/signin">Twitter</FooterLink>
+            </FooterLinkItems>
+          </FooterLinksWrapper>
+        </FooterLinksContainer>
+        <SocialMedia>
+          <SocialMediaWrap>
+            <SocialLogo to="/" onClick={toggleHome}>
+              AIT
+            </SocialLogo>
+            <WebsiteRights>
+              AIT &copy; {new Date().getFullYear()} All Rights Reserved.
+            </WebsiteRights>
+
+            <SocialIcons>
+              <SocialIconLink href="/" target="_blank" aria-label="Facebook">
+                <FaFacebook />
+              </SocialIconLink>
+              <SocialIconLink href="/" target="_blank" aria-label="Instagram">
+                <FaInstagram />
+              </SocialIconLink>
+              <SocialIconLink href="/" target="_blank" aria-label="Youtube">
+                <FaYoutube />
+              </SocialIconLink>
+              <SocialIconLink href="/" target="_blank" aria-label="Twitter">
+                <FaTwitter />
+              </SocialIconLink>
+              <SocialIconLink href="/" target="_blank" aria-label="Linkedin">
+                <FaLinkedin />
+              </SocialIconLink>
+            </SocialIcons>
+          </SocialMediaWrap>
+        </SocialMedia>
+      </FooterWrap>
+    </FooterContainer>
+  );
 }
+
+export default Footer;

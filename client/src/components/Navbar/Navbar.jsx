@@ -1,77 +1,118 @@
 import React, { useEffect, useState } from "react"
 import AuthService from "../../services/auth.service";
-import logo from "../../../src/static/imgs/ait_logo.jpg"
+import { FaBars } from "react-icons/fa";
+import { animateScroll as scroll } from "react-scroll";
+import {
+  Nav,
+  NavbarContainer,
+  NavLogo,
+  MobileIcon,
+  NavMenu,
+  NavItem,
+  NavLinks,
+  NavBtn,
+  NavBtnLink,
+} from "./NavbarElements";
 
-export default function Navbar() {
-    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState(undefined);
+export default function Test({ toggle }) {
+  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
+  const [scrollNav, setScrollNav] = useState(false);
 
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
+  const changeNav = () => {
+    if (window.scrollY >= 80) {
+      setScrollNav(true);
+    } else {
+      setScrollNav(false);
+    }
+  };
 
-        if (user) {
-            setCurrentUser(user);
-            setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-            setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"))
-        }
-    }, []);
+  const toggleHome = () => {
+    scroll.scrollToTop();
+  };
 
-    const logOut = () => {
-        AuthService.logout();
-    };
+  useEffect(() => {
+    window.addEventListener("scroll", changeNav);
+  }, []);
 
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <a className="navbar-brand" href="/home">
-                    <img src={logo} alt="logo" height="50vh" />
-                </a>
-                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li className="nav-item active">
-                        <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
-                    </li>
-                    {/* <li className="nav-item active">
-                        <a className="nav-link" href="/about">Giới thiệu<span className="sr-only">(current)</span></a>
-                    </li>
-                    <li className="nav-item active">
-                        <a className="nav-link" href="/support">Hỗ trợ<span className="sr-only">(current)</span></a>
-                    </li> */}
-                    {showModeratorBoard && (
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/dashboard">Dashboard<span className="sr-only">(current)</span></a>
-                        </li>
-                    )}
-                    {showAdminBoard && (
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/dashboard">Dashboard <span className="sr-only">(current)</span></a>
-                        </li>
-                    )}
-                </ul>
-                {currentUser ? (
-                    <ul className="navbar-nav ml-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/profile">{currentUser.username}</a>
-                        </li>
-                        <li className="nav-item active">
-                            <a href="/login" className="nav-link" onClick={logOut}>
-                                Đăng xuất
-                        </a>
-                        </li>
-                    </ul>
-                ) : (
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="/login">Login</a>
-                            </li>
-                        </ul>
-                    )}
-            </div>
-        </nav>
-    )
+  const scrollProps = {
+    activeClass: "border-solid border-b-4 border-green-500",
+    smooth: true,
+    duration: 500,
+    spy: true,
+    exact: "true",
+    offset: -80,
+  };
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"))
+    }
+  }, []);
+
+  const logOut = () => {
+    AuthService.logout();
+  };
+  return (
+    <>
+      <Nav scrollNav={scrollNav}>
+        <NavbarContainer>
+          <NavLogo to="/" onClick={toggleHome}>
+            AIT
+          </NavLogo>
+          <MobileIcon onClick={toggle}>
+            <FaBars />
+          </MobileIcon>
+          <NavMenu>
+            <NavItem>
+              <NavLinks to="about" {...scrollProps}>
+                Giới thiệu
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="discover" {...scrollProps}>
+                Khám phá
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="services" {...scrollProps}>
+                Chức năng
+              </NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks to="signup" {...scrollProps}>
+                Hỗ trợ
+              </NavLinks>
+            </NavItem>
+          </NavMenu>
+          {showModeratorBoard && (
+            <NavBtn>
+              <NavBtnLink to="/dashboard">Dashboard</NavBtnLink>
+            </NavBtn>
+          )}
+          {showAdminBoard && (
+            <NavBtn>
+              <NavBtnLink to="/dashboard">Dashboard</NavBtnLink>
+            </NavBtn>
+          )}
+          {currentUser ? (
+            <NavBtn>
+              <NavBtnLink to="/login" onClick={logOut}>Đăng Xuất</NavBtnLink>
+            </NavBtn>
+          ) : (
+              <NavBtn>
+                <NavBtnLink to="/login">Đăng nhập</NavBtnLink>
+              </NavBtn>
+            )}
+        </NavbarContainer>
+      </Nav>
+    </>
+  )
 }

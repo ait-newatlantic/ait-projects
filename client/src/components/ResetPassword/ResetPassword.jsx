@@ -4,6 +4,17 @@ import UserService from "../../services/user.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import AuthService from "../../services/auth.service";
+import {
+    Container,
+    FormWrap,
+    Icon,
+    FormContent,
+    FormH1,
+    FormLabel,
+    FormInput,
+    FormButton,
+    Text,
+} from "../ResetPassword/ResetElements";
 
 export default function ResetPassword(props) {
     const [password, setPassword] = useState(null);
@@ -66,25 +77,23 @@ export default function ResetPassword(props) {
 
     return (
         <div className="custom">
-            <Form onSubmit={handleUpdate} ref={form}>
+            <Form className="bg-blue-800 max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleUpdate} ref={form}>
                 {!successful && (
-                    <div className="card" style={{maxWidth:"18rem"}}>
-                        <div className="card-title">
-                            <h5>ĐỔI MẬT KHẨU</h5>
-                        </div>
+                    <div>
                         <div>
+                            <FormH1>Đổi mật khẩu</FormH1>
                             <div>
-                                <label htmlFor="exampleFormControlInput1" >Username</label>
+                                <FormLabel htmlFor="for">Tên đăng nhập</FormLabel>
                                 <input type="customer" defaultValue={currentUser.username} className="form-control" id="exampleFormControlInput1" />
                             </div>
                             <div>
-                                <label htmlFor="exampleFormControlInput1" >Password</label>
+                                <FormLabel htmlFor="for">Password</FormLabel>
                                 <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={onChangePassword} />
                             </div>
                         </div>
-                        <br/>
+                        <br />
                         <div >
-                            <Button variant="success" block type="submit" onClick={handleUpdate}>
+                            <Button variant="primary" block type="submit" onClick={handleUpdate}>
                                 Cập nhật
                     </Button>
                         </div>
@@ -97,9 +106,6 @@ export default function ResetPassword(props) {
                                 className={successful ? "alert alert-success" : "alert alert-danger"}
                                 role="alert"
                             >
-                                {/* <div className="card card-container-fluid" >
-                                        <h1>{message}</h1>
-                                    </div> */}
                                 <Alert key={message.message}>
                                     <Alert.Heading>{message.heading}</Alert.Heading>
                                     <p>
@@ -112,6 +118,6 @@ export default function ResetPassword(props) {
                 )}
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
-        </div>
+        </div >
     )
 }

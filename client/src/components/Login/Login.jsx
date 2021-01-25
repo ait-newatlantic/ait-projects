@@ -4,7 +4,18 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../../services/auth.service";
-import Navbar from "../Navbar/Navbar";
+
+import {
+  Container,
+  FormWrap,
+  Icon,
+  FormContent,
+  FormH1,
+  FormLabel,
+  FormInput,
+  FormButton,
+  Text,
+} from "../ResetPassword/ResetElements";
 
 const required = (value) => {
   if (!value) {
@@ -68,20 +79,14 @@ const Login = (props) => {
 
   return (
     <div>
-      <header className="sticky">
-        <Navbar />
-      </header>
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
-          <Form onSubmit={handleLogin} ref={form}>
+       <Container>
+      <FormWrap>
+        <Icon to="/">AIT</Icon>
+        <FormContent>
+          <Form className="bg-blue-800 max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleLogin} ref={form}>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <FormH1>Đăng nhập vào tài khoản</FormH1>
+              <FormLabel htmlFor="for">Tên đăng nhập</FormLabel>
               <Input
                 type="text"
                 className="form-control"
@@ -91,9 +96,8 @@ const Login = (props) => {
                 validations={[required]}
               />
             </div>
-
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <FormLabel htmlFor="for">Mật khẩu</FormLabel>
               <Input
                 type="password"
                 className="form-control"
@@ -103,9 +107,9 @@ const Login = (props) => {
                 validations={[required]}
               />
             </div>
-
+            <br />
             <div className="form-group">
-              <button className="btn btn-primary btn-block" disabled={loading}>
+              <button className="btn btn-warning btn-block" disabled={loading}>
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
@@ -122,9 +126,10 @@ const Login = (props) => {
             )}
             <CheckButton style={{ display: "none" }} ref={checkBtn} />
           </Form>
-        </div>
-      </div>
-    </div> 
+        </FormContent>
+      </FormWrap>
+    </Container>
+    </div>
   );
 };
 
