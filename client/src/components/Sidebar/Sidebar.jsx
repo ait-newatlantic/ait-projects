@@ -18,7 +18,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import AuthService from "../../services/auth.service";
 
 import DemandInput from '../DemandInput/DemandInput'
@@ -56,6 +55,7 @@ export default function Sidebar() {
     const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
+
     const logOut = () => {
         AuthService.logout();
     };
@@ -216,44 +216,100 @@ export default function Sidebar() {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    <ListItem button component={Link} to="/dashboard/demands/input">
-                        <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
-                        <ListItemText primary="Nhập nhu cầu thực tế" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/dashboard/admin/demands/overallreport">
-                        <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
-                        <ListItemText primary="Báo cáo kinh doanh" />
-                    </ListItem>
-                </List>
-                <Divider />
-                <List>
-                    <ListItem button component={Link} to="/dashboard/customers/input">
-                        <ListItemIcon> <MaterialUIIcons.PersonAdd style={{ fill: "white" }} /> </ListItemIcon>
-                        <ListItemText primary="Tạo khách hàng mới" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/dashboard/admin/customers/list">
-                        <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
-                        <ListItemText primary="Danh sách khách hàng" />
-                    </ListItem>
-                </List>
-                <Divider />
-                <List>
-                    <ListItem button component={Link} to="/dashboard/resetpassword">
-                        <ListItemIcon> <MaterialUIIcons.VpnKey style={{ fill: "white" }} /> </ListItemIcon>
-                        <ListItemText primary="Đổi mật khẩu" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/dashboard/userlist">
-                        <ListItemIcon> <MaterialUIIcons.RecentActors style={{ fill: "white" }} /> </ListItemIcon>
-                        <ListItemText primary="Danh sách users" />
-                    </ListItem>
-                    <ListItem button component={Link} to="/login" onClick={logOut}>
-                        <ListItemIcon>
-                            <MaterialUIIcons.ExitToApp style={{ fill: "white" }} />
-                        </ListItemIcon>
-                        <ListItemText primary="Đăng xuất" />
-                    </ListItem>
-                </List>
+                {showAdminBoard && (
+                    <div>
+                        <List>
+                            <ListItem button component={Link} to="/home">
+                                <ListItemIcon> <MaterialUIIcons.Home style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Trang chủ" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button component={Link} to="/dashboard/demands/input">
+                                <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Nhập nhu cầu thực tế" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/admin/demands/overallreport">
+                                <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Báo cáo kinh doanh" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button component={Link} to="/dashboard/customers/input">
+                                <ListItemIcon> <MaterialUIIcons.PersonAdd style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Tạo khách hàng mới" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/admin/customers/list">
+                                <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Danh sách khách hàng" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button component={Link} to="/dashboard/resetpassword">
+                                <ListItemIcon> <MaterialUIIcons.VpnKey style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Đổi mật khẩu" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/userlist">
+                                <ListItemIcon> <MaterialUIIcons.RecentActors style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Danh sách users" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/login" onClick={logOut}>
+                                <ListItemIcon>
+                                    <MaterialUIIcons.ExitToApp style={{ fill: "white" }} />
+                                </ListItemIcon>
+                                <ListItemText primary="Đăng xuất" />
+                            </ListItem>
+                        </List>
+                    </div>
+                )}
+                {showModeratorBoard && (
+                    <div>
+                        <List>
+                            <ListItem button component={Link} to="/home">
+                                <ListItemIcon> <MaterialUIIcons.Home style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Trang chủ" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button component={Link} to="/dashboard/demands/input">
+                                <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Nhập nhu cầu thực tế" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/branch/demands/overallreport">
+                                <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Báo cáo kinh doanh" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button component={Link} to="/dashboard/customers/input">
+                                <ListItemIcon> <MaterialUIIcons.PersonAdd style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Tạo khách hàng mới" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/branch/customers/list">
+                                <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Danh sách khách hàng" />
+                            </ListItem>
+                        </List>
+                        <Divider />
+                        <List>
+                            <ListItem button component={Link} to="/dashboard/resetpassword">
+                                <ListItemIcon> <MaterialUIIcons.VpnKey style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Đổi mật khẩu" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/login" onClick={logOut}>
+                                <ListItemIcon>
+                                    <MaterialUIIcons.ExitToApp style={{ fill: "white" }} />
+                                </ListItemIcon>
+                                <ListItemText primary="Đăng xuất" />
+                            </ListItem>
+                        </List>
+                    </div>
+                )}
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
