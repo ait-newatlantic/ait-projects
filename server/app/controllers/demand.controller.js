@@ -386,7 +386,7 @@ exports.findAllDate = (req, res) => {
       },
       [Op.or]: [
         {
-          date: {
+          createdAt: {
             [Op.between]: [fromdate, todate]
           }
         },
@@ -468,7 +468,7 @@ exports.findAllGoAt = (req, res) => {
 
   Demand.findAll({
     where: {
-      createdAt: {
+      date: {
         [Op.between]: [fromdate, todate]
       }
     }
