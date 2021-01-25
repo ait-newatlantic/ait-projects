@@ -64,8 +64,8 @@ tr:hover {
 
 .table-container {
   margin: auto;
-  max-height: 50vh;
-  max-width: 85vw;
+  max-height: 70vh;
+  max-width: 84vw;
   overflow: auto;
 }
 

@@ -194,41 +194,41 @@ export default function DemandOverallReport() {
                 {loader}
                 {content == "Admin" ?
                     <div>
-                        {!!yearResult && yearResult.map(form => (
-                            <div className="card-deck">
-                                <div className="card text-white bg-primary mb-3" style={{ width: "18rem" }}>
-                                    <div className="card-header">Kinh doanh <AttachMoneyIcon /></div>
-                                    <div className="card-body">
-                                        <h5 className="card-title" style={{ color: "white" }}>Số xe đã bán</h5>
-                                        <h4 className="card-text" style={{ color: "white" }}>{form.hoantatgiaodich}/{form.tongcong}</h4>
-                                    </div>
-                                </div>
-                                <div className="card bg-danger text-white mb-3" style={{ width: "18rem" }}>
-                                    <div className="card-header">Khách hàng <PeopleIcon /></div>
-                                    <div className="card-body">
-                                        <h5 className="card-title" style={{ color: "white" }}>Số khách hàng</h5>
-                                        <h4 className="card-text" style={{ color: "white" }}>{customertResult}</h4>
-                                    </div>
-                                </div>
-                                <div className="card text-white mb-3" style={{ backgroundColor: "#6a0dad", width: "18rem" }}>
-                                    <div className="card-header">Users <PersonIcon /></div>
-                                    <div className="card-body">
-                                        <h5 className="card-title" style={{ color: "white" }}>Số Users</h5>
-                                        <h4 className="card-text" style={{ color: "white" }}>{usertResult}</h4>
-                                    </div>
-                                </div>
-                                <div className="card text-white bg-warning mb-3" style={{ width: "18rem" }}>
-                                    <div className="card-header">Chi nhánh <BusinessIcon /></div>
-                                    <div className="card-body">
-                                        <h5 className="card-title" style={{ color: "white" }}>Số chi nhánh</h5>
-                                        <h4 className="card-text" style={{ color: "white" }}>14</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
                         <div className="card-deck">
                             <div className="card" style={{ width: "18rem" }}>
                                 <div className="card-body">
+                                    {!!yearResult && yearResult.map(form => (
+                                        <div className="card-deck">
+                                            <div className="card text-white bg-primary mb-3" style={{ width: "18rem" }}>
+                                                <div className="card-header">Kinh doanh <AttachMoneyIcon /></div>
+                                                <div className="card-body">
+                                                    <h5 className="card-title" style={{ color: "white" }}>Số xe đã bán</h5>
+                                                    <h4 className="card-text" style={{ color: "white" }}>{form.hoantatgiaodich}/{form.tongcong}</h4>
+                                                </div>
+                                            </div>
+                                            <div className="card bg-danger text-white mb-3" style={{ width: "18rem" }}>
+                                                <div className="card-header">Khách hàng <PeopleIcon /></div>
+                                                <div className="card-body">
+                                                    <h5 className="card-title" style={{ color: "white" }}>Số khách hàng</h5>
+                                                    <h4 className="card-text" style={{ color: "white" }}>{customertResult}</h4>
+                                                </div>
+                                            </div>
+                                            <div className="card text-white mb-3" style={{ backgroundColor: "#6a0dad", width: "18rem" }}>
+                                                <div className="card-header">Users <PersonIcon /></div>
+                                                <div className="card-body">
+                                                    <h5 className="card-title" style={{ color: "white" }}>Số Users</h5>
+                                                    <h4 className="card-text" style={{ color: "white" }}>{usertResult}</h4>
+                                                </div>
+                                            </div>
+                                            <div className="card text-white bg-warning mb-3" style={{ width: "18rem" }}>
+                                                <div className="card-header">Chi nhánh <BusinessIcon /></div>
+                                                <div className="card-body">
+                                                    <h5 className="card-title" style={{ color: "white" }}>Số chi nhánh</h5>
+                                                    <h4 className="card-text" style={{ color: "white" }}>14</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                                     <div className="card-deck">
                                         <div className="card bg-light mb-3">
                                             <div className="card-header">Tìm kiếm <SearchIcon /></div>
@@ -560,44 +560,42 @@ export default function DemandOverallReport() {
                                             }
                                         </div>
                                     </div>
-                                    <div>
-                                        <div className="table-container">
-                                            <div className="card-header text-white bg-dark">BÁO CÁO KINH DOANH TỔNG QUÁT</div>
-                                            <table className="table">
-                                                <tbody>
-                                                    <tr id="titles">
-                                                        <th>TỔNG CỘNG (XE)</th>
-                                                        <th>TIẾP CẬN CHÀO HÀNG</th>
-                                                        <th>CHẠY THỬ</th>
-                                                        <th>ĐÀM PHÁN</th>
-                                                        <th>CHỐT ĐƠN HÀNG</th>
-                                                        <th>ĐÃ CỌC</th>
-                                                        <th>ĐÃ THANH TOÁN TẠM ỨNG</th>
-                                                        <th>HOÀN TẤT GIAO DỊCH</th>
-                                                        <th>BÀN GIAO CHƯA THANH TOÁN</th>
-                                                        <th>LÊN HỢP ĐỒNG</th>
-                                                        <th>GIAO DỊCH THẤT BẠI</th>
+                                    <div className="table-container">
+                                        <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>BÁO CÁO KINH DOANH TỔNG QUÁT</div>
+                                        <table className="table-lg">
+                                            <tbody>
+                                                <tr id="titles">
+                                                    <th>TỔNG CỘNG (XE)</th>
+                                                    <th>TIẾP CẬN CHÀO HÀNG</th>
+                                                    <th>CHẠY THỬ</th>
+                                                    <th>ĐÀM PHÁN</th>
+                                                    <th>CHỐT ĐƠN HÀNG</th>
+                                                    <th>ĐÃ CỌC</th>
+                                                    <th>ĐÃ THANH TOÁN TẠM ỨNG</th>
+                                                    <th>HOÀN TẤT GIAO DỊCH</th>
+                                                    <th>BÀN GIAO CHƯA THANH TOÁN</th>
+                                                    <th>LÊN HỢP ĐỒNG</th>
+                                                    <th>GIAO DỊCH THẤT BẠI</th>
+                                                </tr>
+                                                {!!yearResult && yearResult.map(form => (
+                                                    <tr className="content" key={form._id}>
+                                                        <td>{form.tongcong}</td>
+                                                        <td>{form.tiepcanchaohang}</td>
+                                                        <td>{form.chaythu}</td>
+                                                        <td>{form.damphan}</td>
+                                                        <td>{form.chotdonhang}</td>
+                                                        <td>{form.dacoc}</td>
+                                                        <td>{form.dathanhtoantamung}</td>
+                                                        <td>{form.hoantatgiaodich}</td>
+                                                        <td>{form.bangiaochuathanhtoan}</td>
+                                                        <td>{form.lenhopdong}</td>
+                                                        <td>{form.giaodichthatbai}</td>
                                                     </tr>
-                                                    {!!yearResult && yearResult.map(form => (
-                                                        <tr className="content" key={form._id}>
-                                                            <td>{form.tongcong}</td>
-                                                            <td>{form.tiepcanchaohang}</td>
-                                                            <td>{form.chaythu}</td>
-                                                            <td>{form.damphan}</td>
-                                                            <td>{form.chotdonhang}</td>
-                                                            <td>{form.dacoc}</td>
-                                                            <td>{form.dathanhtoantamung}</td>
-                                                            <td>{form.hoantatgiaodich}</td>
-                                                            <td>{form.bangiaochuathanhtoan}</td>
-                                                            <td>{form.lenhopdong}</td>
-                                                            <td>{form.giaodichthatbai}</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <br/>
+                                    <br />
                                     <AdminDemandDetailReport />
                                 </div>
                             </div>

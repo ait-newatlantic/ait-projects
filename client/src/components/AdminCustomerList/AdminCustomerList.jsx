@@ -66,15 +66,15 @@ export default function AdminCustomerList() {
 
     return (
         <>
-            <div className="custom">
-                {loader}
-                {content == "Admin" ?
-                    <div className="card card-body">
-                        <div className="card-header text-white bg-dark">
+            {loader}
+            {content == "Admin" ?
+                <div>
+                    <div className="card pt-3">
+                        <div className="card-header text-white" style={{backgroundColor:"#24305E"}}>
                             <div className="row">
                                 <div className="col-sm">
                                     DANH SÁCH KHÁCH HÀNG (TỔNG KHÁCH HÀNG: {total})
-                                </div>
+                                    </div>
                                 <div className="col-sm text-right">
                                     <ReactHTMLTableToExcel
                                         className="btn btn-info"
@@ -93,7 +93,7 @@ export default function AdminCustomerList() {
                         </div>
                         {flag == 1 ?
                             <div>
-                                <div className="row p-2">
+                                <div className="row">
                                     <div className="col-sm">
                                         <div className="row">
                                             <label className="col-lg-4" >Chi nhánh</label>
@@ -133,7 +133,7 @@ export default function AdminCustomerList() {
                         <div className="table-container">
                             <table id="emp" className="table-lg">
                                 <thead>
-                                    <tr key="a">
+                                    <tr id="titles" key="a">
                                         <th>#</th>
                                         <th>Chi nhánh</th>
                                         <th>Tên khách hàng</th>
@@ -171,10 +171,10 @@ export default function AdminCustomerList() {
                             </table>
                         </div>
                     </div>
-                    :
-                    <div>{content}</div>
-                }
-            </div>
+                </div>
+                :
+                <div>{content}</div>
+            }
         </>
     )
 }

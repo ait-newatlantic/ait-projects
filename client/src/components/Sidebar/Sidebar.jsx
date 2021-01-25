@@ -119,6 +119,7 @@ export default function Sidebar() {
         },
         content: {
             flexGrow: 1,
+            justifyContent: "center",
             // padding: theme.spacing(3),
         },
     }));
@@ -235,13 +236,13 @@ export default function Sidebar() {
                         <ListItemIcon> <MaterialUIIcons.VpnKey /> </ListItemIcon>
                         <ListItemText primary="Đổi mật khẩu" />
                     </ListItem>
-                    <ListItem button component={Link} to="/dashboard/admin/customers/list">
+                    <ListItem button component={Link} to="/dashboard/userlist">
                         <ListItemIcon> <MaterialUIIcons.RecentActors /> </ListItemIcon>
                         <ListItemText primary="Danh sách users" />
                     </ListItem>
                     <ListItem button component={Link} to="/login" onClick={logOut}>
                         <ListItemIcon>
-                                <MaterialUIIcons.RecentActors />
+                                <MaterialUIIcons.ExitToApp />
                         </ListItemIcon>
                         <ListItemText primary="Đăng xuất" />
                     </ListItem>
