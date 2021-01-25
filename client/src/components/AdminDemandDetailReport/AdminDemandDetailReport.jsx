@@ -6,10 +6,10 @@ import useFullPageLoader from "../../services/loader.service"
 import UserService from "../../services/user.service";
 import SearchIcon from '@material-ui/icons/Search';
 
-export default function AdminDemandDetailReport() {
+export default function AdminDemandDetailReport(props) {
 
-    const [fromdate, setFromDate] = useState('2015-01-01');
-    const [todate, setToDate] = useState('2030-01-01');
+    const [fromdate, setFromDate] = useState(props.fromdate);
+    const [todate, setToDate] = useState(props.todate);
     const [datetype, setDateType] = useState('');
     const [yearResult, setYearResult] = useState();
     const [loader, showLoader, hideLoader] = useFullPageLoader()
@@ -140,14 +140,13 @@ export default function AdminDemandDetailReport() {
 
     return (
         <>
-            {/* <div className="custom"> */}
             {loader}
             {content == "Admin" ?
                 <div>
                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         <div className="row">
                             <div className="col-sm">
-                                BÁO CÁO KINH DOANH CHI TIẾT (TỔNG RECORDS: {total})
+                                BÁO CÁO KINH DOANH CHI TIẾT ({total} RECORDS TỪ {fromdate} ĐẾN {todate})
                                     </div>
                             <div className="col-sm text-right">
                                 <ReactHTMLTableToExcel
@@ -157,10 +156,9 @@ export default function AdminDemandDetailReport() {
                                     sheet="Sheet"
                                     buttonText="Export excel"
                                 />
-                            </div>
-                            <div className="col-sm text-right">
-                                <button type="button" className="btn btn-success" onClick={OnClickSearchTool}>
-                                    Tìm kiếm nâng cao
+
+                                <button type="button" className="btn btn-success" style={{marginLeft:"5px"}} onClick={OnClickSearchTool}>
+                                    Tra cứu nâng cao
                                                 </button>
                             </div>
                         </div>

@@ -122,7 +122,6 @@ exports.findQuantity = (req, res) => {
     SUM(employee LIKE '%DANANG%') AS danang,
     SUM(employee LIKE '%CANTHO%') AS cantho,
     SUM(employee LIKE '%BINHPHUOC%') AS binhphuoc,
-    SUM(employee LIKE '%BINHDUONG%') AS binhduong,
     SUM(employee LIKE '%HUNGYEN%') AS hungyen,
     SUM(employee LIKE '%LAMDONG%') AS lamdong,
     SUM(employee LIKE '%DONGNAI%') AS dongnai,

@@ -144,7 +144,7 @@ export default function CustomerInput() {
                                         <div className="card">
                                             <div className="card-body">
                                                 <h6><strong>Thông tin khách hàng</strong></h6>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >Tên KH (1) (*): </label>
                                                     <div className="col-sm">
                                                         <Input
@@ -156,7 +156,7 @@ export default function CustomerInput() {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >SĐT KH (*): </label>
                                                     <div className="col-sm">
                                                         <Input
@@ -167,7 +167,7 @@ export default function CustomerInput() {
                                                             onChange={onChangeCustomer_Number} />
                                                     </div>
                                                 </div>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4">Khu vực KH (*): </label>
                                                     <div className="col-sm">
                                                         <Autocomplete
@@ -183,7 +183,7 @@ export default function CustomerInput() {
                                                     </div>
                                                 </div>
 
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >Hình thức KH (*): </label>
                                                     <div className="col-sm">
                                                         <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
@@ -195,7 +195,7 @@ export default function CustomerInput() {
                                                 </div>
 
                                                 {customer_type == "DOANH NGHIỆP" ?
-                                                    <div className="row">
+                                                    <div className="row p-2">
                                                         <label className="col-lg-4" >Mã số thuế: </label>
                                                         <div className="col-sm">
                                                             <Input
@@ -208,7 +208,7 @@ export default function CustomerInput() {
                                                     : <div></div>
                                                 }
 
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4">Địa chỉ KH (*): </label>
                                                     <div className="col-sm">
                                                         <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
@@ -219,7 +219,7 @@ export default function CustomerInput() {
                                         <div className="card">
                                             <div className="card-body">
                                                 <h6><strong>Thông tin người đại diện</strong></h6>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >Tên người đại diện: </label>
                                                     <div className="col-sm">
                                                         <Input
@@ -230,7 +230,7 @@ export default function CustomerInput() {
                                                             onChange={onChangeCustomer_Representative} />
                                                     </div>
                                                 </div>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >SĐT người đại diện: </label>
                                                     <div className="col-sm">
                                                         <Input
@@ -241,7 +241,7 @@ export default function CustomerInput() {
                                                             onChange={onChangeCustomer_Representative_Number} />
                                                     </div>
                                                 </div>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >Email người đại diện: </label>
                                                     <div className="col-sm">
                                                         <Input
@@ -257,7 +257,7 @@ export default function CustomerInput() {
                                         <div className="card">
                                             <div className="card-body">
                                                 <h6><strong>Thông tin người nhập</strong></h6>
-                                                <div className="row">
+                                                <div className="row p-2">
                                                     <label className="col-lg-4" >Người nhập</label>
                                                     <div className="col-sm">
                                                         <p className="form-control">{currentUser.username}</p>
@@ -266,8 +266,13 @@ export default function CustomerInput() {
                                             </div>
                                         </div>
                                     </div>
-                                    <br/>
-                                    <div className="card">
+                                    <br />
+                                    <div className="text-right">
+                                        <Button variant="success" type="submit" onClick={handleSubmit}>
+                                            GỬI FORM  <SendIcon />
+                                        </Button>
+                                    </div>
+                                    {/* <div className="card">
                                         <div className="text-center">
                                             <Button variant="success" type="submit" onClick={handleSubmit}>
                                                 Gửi form <SendIcon />
@@ -278,7 +283,7 @@ export default function CustomerInput() {
                                             <p><ArrowRightAltIcon /><strong> (1)</strong> Vui lòng điền đầy đủ họ tên khách hàng.</p>
                                             <p><ArrowRightAltIcon /><strong> (*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             )}
                             {message && (

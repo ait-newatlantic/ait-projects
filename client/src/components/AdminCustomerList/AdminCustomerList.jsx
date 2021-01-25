@@ -68,9 +68,9 @@ export default function AdminCustomerList() {
         <>
             {loader}
             {content == "Admin" ?
-                <div>
+                <div className="custom">
                     <div className="card pt-3">
-                        <div className="card-header text-white" style={{backgroundColor:"#24305E"}}>
+                        <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                             <div className="row">
                                 <div className="col-sm">
                                     DANH SÁCH KHÁCH HÀNG (TỔNG KHÁCH HÀNG: {total})
@@ -83,9 +83,7 @@ export default function AdminCustomerList() {
                                         sheet="Sheet"
                                         buttonText="Export excel"
                                     />
-                                </div>
-                                <div className="col-sm text-right">
-                                    <button type="button" className="btn btn-success" onClick={OnClickSearchTool}>
+                                    <button type="button" className="btn btn-success" style={{ marginLeft: "5px" }} onClick={OnClickSearchTool}>
                                         Tìm kiếm nâng cao
                                                 </button>
                                 </div>

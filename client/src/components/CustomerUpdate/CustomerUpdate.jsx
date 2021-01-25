@@ -1,11 +1,17 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import { Alert, Button } from "react-bootstrap";
-import logo from "../../static/imgs/ait_logo.jpg"
+import { ProvinceContext } from '../../context/province/ProvinceContext'
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import AuthService from "../../services/auth.service";
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import SendIcon from '@material-ui/icons/Send';
 import UserService from "../../services/user.service";
+
 
 export default function CustomerUpdate(props) {
     const [customer_representative, setCustomer_Representative] = useState(null);
@@ -18,6 +24,8 @@ export default function CustomerUpdate(props) {
     const [content, setContent] = useState("");
     const form = useRef();
     const checkBtn = useRef();
+
+    const currentUser = AuthService.getCurrentUser();
 
     const onChangeCustomer_Representative_Number = (e) => {
         const customer_representative_number = e.target.value;
@@ -130,97 +138,114 @@ export default function CustomerUpdate(props) {
                 <Form onSubmit={handleUpdate} ref={form}>
                     {!successful && (
                         <div>
-                            <div className="head">
-                                <img src={logo} alt="logo" width="100" height="100" />
-                                <h1>FORM CẬP NHẬT KHÁCH HÀNG</h1>
+                            <div className="card-deck">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h6><strong>Thông tin khách hàng</strong></h6>
+                                        <div className="row">
+                                            <label className="col-lg-4" >Tên KH (1) (*): </label>
+                                            <div className="col-sm">
+                                                <div className="form-control" style={{overflow: "auto"}}>
+                                                    {customers.customer}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <label className="col-lg-4" >SĐT KH (*): </label>
+                                            <div className="col-sm">
+                                                <div className="form-control">
+                                                    {customers.customer_number}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <label className="col-lg-4">Khu vực KH (*): </label>
+                                            <div className="col-sm">
+                                                <div className="form-control">
+                                                    {customers.customer_area}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="row">
+                                            <label className="col-lg-4" >Hình thức KH (*): </label>
+                                            <div className="col-sm">
+                                                <div className="form-control">
+                                                    {customers.customer_type}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="row">
+                                            <label className="col-lg-4">Địa chỉ KH (*): </label>
+                                            <div className="col-sm">
+                                                <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" value={customers.customer_address}></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h6><strong>Thông tin người đại diện</strong></h6>
+                                        <div className="row">
+                                            <label className="col-lg-4" >Tên người đại diện: </label>
+                                            <div className="col-sm">
+                                                <Input
+                                                    type="customer_representative"
+                                                    className="form-control"
+                                                    name="customer_number"
+                                                    placeholder={customer_representative}
+                                                    onChange={onChangeCustomer_Representative} />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <label className="col-lg-4" >SĐT người đại diện: </label>
+                                            <div className="col-sm">
+                                                <Input
+                                                    type="customer_representative_number"
+                                                    className="form-control"
+                                                    name="customer_representative_number"
+                                                    placeholder={customer_representative_number}
+                                                    onChange={onChangeCustomer_Representative_Number} />
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <label className="col-lg-4" >Email người đại diện: </label>
+                                            <div className="col-sm">
+                                                <Input
+                                                    type="customer_representative_email"
+                                                    className="form-control"
+                                                    name="customer_representative_email"
+                                                    placeholder={customer_representative_email}
+                                                    onChange={onChangeCustomer_Representative_Email} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h6><strong>Thông tin người nhập</strong></h6>
+                                        <div className="row">
+                                            <label className="col-lg-4" >Người nhập</label>
+                                            <div className="col-sm">
+                                                <p className="form-control">{currentUser.username}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div className="card card-body" >
-                                <p><strong>Thông tin khách hàng</strong></p>
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Tên khách hàng</label>
-                                        <input type="customer" defaultValue={customers.customer} className="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >SĐT khách hàng</label>
-                                        <input type="customer_number" defaultValue={customers.customer_number} className="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1">Khu vực khách hàng</label>
-                                        <input
-                                            type="customer_number"
-                                            defaultValue={customers.customer_area} className="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Mã số thuế</label>
-                                        <input type="customer_taxcode" defaultValue={customers.customer_taxcode} className="form-control" id="exampleFormControlInput1" />
-                                    </div>
+                            <br />
+                            <div className="card">
+                                <div className="text-center">
+                                    <Button variant="success" type="submit" onClick={handleUpdate}>
+                                        Gửi form <SendIcon />
+                                    </Button>
                                 </div>
-
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Tên người đại diện</label>
-                                        <Input
-                                            style={{ background: "#add8e6" }}
-                                            type="text"
-                                            className="form-control"
-                                            name="customer_representative"
-                                            validations={[validName]}
-                                            placeholder={customers.customer_representative}
-                                            onChange={onChangeCustomer_Representative}
-                                        />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >SĐT người đại diện</label>
-                                        <Input
-                                            style={{ background: "#add8e6" }}
-                                            type="text"
-                                            className="form-control"
-                                            name="customer_representative_number"
-                                            validations={[validNumber]}
-                                            placeholder={customers.customer_representative_number}
-                                            onChange={onChangeCustomer_Representative_Number}
-                                        />
-                                    </div>
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlInput1" >Email người đại diện</label>
-                                        <Input
-                                            style={{ background: "#add8e6" }}
-                                            type="text"
-                                            className="form-control"
-                                            name="customer_representative"
-                                            validations={[validEmail]}
-                                            placeholder={customers.customer_representative_email}
-                                            onChange={onChangeCustomer_Representative_Email}
-                                        />
-                                    </div>
+                                <div>
+                                    <strong>Chú thích:</strong>
+                                    <p><ArrowRightAltIcon /><strong> (1)</strong> Vui lòng điền đầy đủ họ tên khách hàng.</p>
+                                    <p><ArrowRightAltIcon /><strong> (*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
                                 </div>
-
-                                <div className="row">
-                                    <div className="col-sm">
-                                        <label htmlFor="exampleFormControlSelect1" >Loại khách hàng</label>
-                                        <select className="form-control" id="exampleFormControlSelect1">
-                                            <option defaultValue="" >{customers.customer_type}</option>
-                                        </select>
-                                    </div>
-                                    <div className="col-sm-9">
-                                        <label htmlFor="exampleFormControlTextarea1">Địa chỉ khách hàng</label>
-                                        <textarea
-                                            type="customer_address"
-                                            className="form-control"
-                                            id="exampleFormControlTextarea1"
-                                            defaultValue={customers.customer_address}
-                                            rows="3">
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="card card-body" >
-                                <Button variant="success" block type="submit" onClick={handleUpdate}>
-                                    Cập nhật
-                    </Button>
                             </div>
                         </div>
                     )}

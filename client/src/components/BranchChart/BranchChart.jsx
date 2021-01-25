@@ -3,7 +3,7 @@ import { Bar } from '@reactchartjs/react-chart.js'
 
 export default function StackedBar(props){
   const data = {
-    labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Tây Ninh', 'Bình Dương', 'Đồng Nai', 'PDA'],
+    labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Tây Ninh', 'Đồng Nai', 'PDA'],
     datasets: [
       {
         label: '6460',
@@ -19,7 +19,6 @@ export default function StackedBar(props){
           props.quangtri_6460, 
           props.hungyen_6460, 
           props.tayninh_6460, 
-          props.binhduong_6460, 
           props.dongnai_6460,
           props.pda_6460
         ],
@@ -39,7 +38,6 @@ export default function StackedBar(props){
           props.quangtri_6540, 
           props.hungyen_6540, 
           props.tayninh_6540, 
-          props.binhduong_6540, 
           props.dongnai_6540,
           props.pda_6540
         ],
@@ -59,7 +57,6 @@ export default function StackedBar(props){
           props.quangtri_43253, 
           props.hungyen_43253, 
           props.tayninh_43253, 
-          props.binhduong_43253, 
           props.dongnai_43253,
           props.pda_43253
         ],
@@ -79,7 +76,6 @@ export default function StackedBar(props){
           props.quangtri_43265, 
           props.hungyen_43265, 
           props.tayninh_43265, 
-          props.binhduong_43265, 
           props.dongnai_43265,
           props.pda_43265
         ],
@@ -99,7 +95,6 @@ export default function StackedBar(props){
           props.quangtri_43266, 
           props.hungyen_43266, 
           props.tayninh_43266, 
-          props.binhduong_43266, 
           props.dongnai_43266,
           props.pda_43266
         ],
@@ -119,7 +114,6 @@ export default function StackedBar(props){
           props.quangtri_53228, 
           props.hungyen_53228, 
           props.tayninh_53228, 
-          props.binhduong_53228, 
           props.dongnai_53228,
           props.pda_53228
         ],
@@ -139,7 +133,6 @@ export default function StackedBar(props){
           props.quangtri_53229, 
           props.hungyen_53229, 
           props.tayninh_53229, 
-          props.binhduong_53229, 
           props.dongnai_53229,
           props.pda_53229
         ],
@@ -159,7 +152,6 @@ export default function StackedBar(props){
           props.quangtri_65115, 
           props.hungyen_65115, 
           props.tayninh_65115, 
-          props.binhduong_65115, 
           props.dongnai_65115,
           props.pda_65115
         ],
@@ -179,7 +171,6 @@ export default function StackedBar(props){
           props.quangtri_65116, 
           props.hungyen_65116, 
           props.tayninh_65116, 
-          props.binhduong_65116, 
           props.dongnai_65116,
           props.pda_65116
         ],
@@ -199,7 +190,6 @@ export default function StackedBar(props){
           props.quangtri_65117, 
           props.hungyen_65117, 
           props.tayninh_65117, 
-          props.binhduong_65117, 
           props.dongnai_65117,
           props.pda_65117
         ],
@@ -219,7 +209,6 @@ export default function StackedBar(props){
           props.quangtri_c57, 
           props.hungyen_c57, 
           props.tayninh_c57, 
-          props.binhduong_c57, 
           props.dongnai_c57,
           props.pda_c57
         ],

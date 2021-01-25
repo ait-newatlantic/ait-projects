@@ -38,29 +38,33 @@ export default function DemandOverallReport(props) {
         <>
             {loader}
             <div className="custom">
-                <div className="card card-body">
-                    <h5>DANH SÁCH USERS</h5>
-                    <div className="table-container">
-                        <table className="table">
-                            <tbody>
-                                <tr id="titles">
-                                    <th>ID</th>
-                                    <th>USERNAME</th>
-                                    <th>EMAIL</th>
-                                    <th>CẬP NHẬT</th>
-                                </tr>
-                                {!!userResult && userResult.map(form => (
-                                    <tr className="content" key={form._id}>
-                                        <td>{form.id}</td>
-                                        <td>{form.username}</td>
-                                        <td>{form.email}</td>
-                                        <td>
-                                            <a className="btn btn-warning btn-sm" href={`/userlist/update/${form.id}`} role="button">Cập nhật</a>
-                                        </td>
+                <div className="card">
+                    <div className="card-body">
+                        <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
+                            DANH SÁCH USERS
+                    </div>
+                        <div className="table-container">
+                            <table className="table">
+                                <tbody>
+                                    <tr id="titles" key="a">
+                                        <th>ID</th>
+                                        <th>USERNAME</th>
+                                        <th>EMAIL</th>
+                                        <th>CẬP NHẬT</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                    {!!userResult && userResult.map(form => (
+                                        <tr className="content" key={form._id}>
+                                            <td>{form.id}</td>
+                                            <td>{form.username}</td>
+                                            <td>{form.email}</td>
+                                            <td>
+                                                <a className="btn btn-warning btn-sm" href={`/userlist/update/${form.id}`} role="button">Cập nhật</a>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

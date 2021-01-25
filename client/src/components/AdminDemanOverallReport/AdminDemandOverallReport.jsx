@@ -15,13 +15,15 @@ import PeopleIcon from '@material-ui/icons/People';
 import BusinessIcon from '@material-ui/icons/Business';
 import SearchIcon from '@material-ui/icons/Search';
 import "./style.css"
-import Sidebar from '../Sidebar/Sidebar'
 import AdminDemandDetailReport from '../AdminDemandDetailReport/AdminDemandDetailReport'
 
 export default function DemandOverallReport() {
 
-    const [fromdate, setFromDate] = useState('2015-01-01');
-    const [todate, setToDate] = useState('2030-01-01');
+    const newDate = new Date()
+    const year = newDate.getFullYear()
+
+    const [fromdate, setFromDate] = useState(`${year}-1-1`);
+    const [todate, setToDate] = useState(`${year}-12-31`);
     const [usertResult, setUserResult] = useState();
     const [customertResult, setCustomerResult] = useState();
     const [branchcustomertResult, setBranchCustomerResult] = useState();
@@ -31,8 +33,6 @@ export default function DemandOverallReport() {
     const [yearResult4, setYearResult4] = useState();
     const [content, setContent] = useState("");
     const [flag, setFlag] = useState(0)
-    const [flag1, setFlag1] = useState(0)
-    const [flag2, setFlag2] = useState(0)
     const [btnName, setbtnName] = useState("")
     const [loader, showLoader, hideLoader] = useFullPageLoader()
 
@@ -101,22 +101,22 @@ export default function DemandOverallReport() {
     }
 
     const OnClickChart = () => {
-        if (flag == 0 || flag == 4) {
+        if (flag === 0 || flag === 4) {
             FetchDemandQuantity()
             setFlag(1)
             setbtnName("Biểu đồ (2/4)")
         }
-        else if (flag == 1 || flag == 5) {
+        else if (flag === 1 || flag === 5) {
             FetchBranchCustomerQuantity()
             setFlag(2)
             setbtnName("Biểu đồ (3/4)")
         }
-        else if (flag == 2) {
+        else if (flag === 2) {
             FetchDemandModels()
             setFlag(3)
             setbtnName("Biểu đồ (4/4)")
         }
-        else if (flag == 3) {
+        else if (flag === 3) {
             FetchOverall()
             setFlag(0)
             setbtnName("Biểu đồ (1/4)")
@@ -125,21 +125,11 @@ export default function DemandOverallReport() {
             FetchOverall()
             setFlag(0)
             setbtnName("Biểu đồ (1/4)")
-        }
-    }
-
-    const OnClickReport = () => {
-        if (flag1 == 0) {
-            FetchDemandQuantity()
-            setFlag1(1)
-        }
-        else {
-            setFlag1(0)
         }
     }
 
     const OnClickLineChart = () => {
-        if (flag == 0) {
+        if (flag === 0) {
             FetchOverall()
             setFlag(4)
         }
@@ -149,7 +139,7 @@ export default function DemandOverallReport() {
     }
 
     const OnClickPieChart = () => {
-        if (flag == 1) {
+        if (flag === 1) {
             setFlag(5)
         }
         else {
@@ -181,18 +171,18 @@ export default function DemandOverallReport() {
     }, []);
 
     useEffect(() => {
+        setbtnName("Biểu đồ (1/4)")
         FetchOverall()
         FetchTotal()
         FetchCustomers()
         FetchUsers()
-        setbtnName("Biểu đồ (1/4)")
     }, [])
 
     return (
         <>
             <div className="custom">
                 {loader}
-                {content == "Admin" ?
+                {content === "Admin" ?
                     <div>
                         <div className="card-deck">
                             <div className="card" style={{ width: "18rem" }}>
@@ -202,8 +192,11 @@ export default function DemandOverallReport() {
                                             <div className="card text-white bg-primary mb-3" style={{ width: "18rem" }}>
                                                 <div className="card-header">Kinh doanh <AttachMoneyIcon /></div>
                                                 <div className="card-body">
-                                                    <h5 className="card-title" style={{ color: "white" }}>Số xe đã bán</h5>
+                                                    <h5 className="card-title" style={{ color: "white" }}>Số xe</h5>
                                                     <h4 className="card-text" style={{ color: "white" }}>{form.hoantatgiaodich}/{form.tongcong}</h4>
+                                                </div>
+                                                <div className="card-footer">
+                                                    <small class="text-white">Từ {fromdate} đến {todate}</small>
                                                 </div>
                                             </div>
                                             <div className="card bg-danger text-white mb-3" style={{ width: "18rem" }}>
@@ -212,6 +205,9 @@ export default function DemandOverallReport() {
                                                     <h5 className="card-title" style={{ color: "white" }}>Số khách hàng</h5>
                                                     <h4 className="card-text" style={{ color: "white" }}>{customertResult}</h4>
                                                 </div>
+                                                <div className="card-footer">
+                                                    <small class="text-white">Từ 2015 đến {year}</small>
+                                                </div>
                                             </div>
                                             <div className="card text-white mb-3" style={{ backgroundColor: "#6a0dad", width: "18rem" }}>
                                                 <div className="card-header">Users <PersonIcon /></div>
@@ -219,19 +215,25 @@ export default function DemandOverallReport() {
                                                     <h5 className="card-title" style={{ color: "white" }}>Số Users</h5>
                                                     <h4 className="card-text" style={{ color: "white" }}>{usertResult}</h4>
                                                 </div>
+                                                <div className="card-footer">
+                                                    <small class="text-white">Từ 2015 đến {year}</small>
+                                                </div>
                                             </div>
                                             <div className="card text-white bg-warning mb-3" style={{ width: "18rem" }}>
                                                 <div className="card-header">Chi nhánh <BusinessIcon /></div>
                                                 <div className="card-body">
                                                     <h5 className="card-title" style={{ color: "white" }}>Số chi nhánh</h5>
-                                                    <h4 className="card-text" style={{ color: "white" }}>14</h4>
+                                                    <h4 className="card-text" style={{ color: "white" }}>13</h4>
+                                                </div>
+                                                <div className="card-footer">
+                                                    <small class="text-white">Từ 2015 đến {year}</small>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
                                     <div className="card-deck">
                                         <div className="card bg-light mb-3">
-                                            <div className="card-header">Tìm kiếm <SearchIcon /></div>
+                                            <div className="card-header">TRA CỨU BIỂU ĐỒ VÀ BÁO CÁO TỔNG QUÁT <SearchIcon /></div>
                                             <div className="card-body">
                                                 <h6>TỪ NGÀY</h6>
                                                 <input type="date" className="form-control form-control-sm" id="colFormLabelSm" onChange={e => setFromDate(e.target.value)} />
@@ -239,11 +241,12 @@ export default function DemandOverallReport() {
                                                 <h6>ĐẾN NGÀY</h6>
                                                 <input type="date" className="form-control form-control-sm" id="colFormLabelSm" onChange={e => setToDate(e.target.value)} />
                                                 <br />
-                                                <button type="button" className="btn btn-info btn-block" onClick={Submit}>
-                                                    Tra cứu
-                                                </button>
-                                                <br />
                                                 <div className="row">
+                                                    <div className="col-sm">
+                                                        <button type="button" className="btn btn-info btn-block" onClick={Submit}>
+                                                            Tra cứu
+                                                        </button>
+                                                    </div>
                                                     <div className="col-sm">
                                                         <button type="button" className="btn btn-success btn-block" onClick={OnClickChart}>
                                                             {btnName}
@@ -253,13 +256,19 @@ export default function DemandOverallReport() {
                                             </div>
                                         </div>
                                         <div className="card bg-light mb-3" style={{ width: "18rem" }}>
-                                            {flag == 0 ?
+                                            {flag === 0 ?
                                                 <div>
                                                     <div className="card-header text-white bg-dark">
-                                                        BIỂU ĐỒ KINH DOANH 12 THÁNG
-                                                        <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickLineChart}>
-                                                            Biểu đồ đường
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                BIỂU ĐỒ KINH DOANH 12 THÁNG ({fromdate} đến {todate})
+                                                        </div>
+                                                            <div className="col-sm">
+                                                                <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickLineChart}>
+                                                                    Biểu đồ đường
                                                         </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     {!!yearResult2 && yearResult2.map(month => (
                                                         <DemandChart key="a"
@@ -279,13 +288,19 @@ export default function DemandOverallReport() {
                                                 </div> :
                                                 <div></div>
                                             }
-                                            {flag == 1 ?
+                                            {flag === 1 ?
                                                 <div>
                                                     <div className="card-header text-white bg-primary">
-                                                        BIỂU ĐỒ SỐ LƯỢNG XE ĐÃ BÁN
-                                                        <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickPieChart}>
-                                                            Biểu đồ bánh
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                BIỂU ĐỒ SỐ LƯỢNG XE ĐÃ BÁN ({fromdate} đến {todate})
+                                                        </div>
+                                                            <div className="col-sm">
+                                                                <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickPieChart}>
+                                                                    Biểu đồ bánh
                                                         </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     {!!yearResult4 && yearResult4.map(quantity => (
                                                         <CarChart key="a"
@@ -305,10 +320,10 @@ export default function DemandOverallReport() {
                                                 </div> :
                                                 <div></div>
                                             }
-                                            {flag == 2 ?
+                                            {flag === 2 ?
                                                 <div>
                                                     <div className="card-header text-white bg-danger">
-                                                        BIỂU ĐỒ SỐ KHÁCH HÀNG TỪNG CHI NHÁNH
+                                                        BIỂU ĐỒ SỐ KHÁCH HÀNG TỪNG CHI NHÁNH ({fromdate} đến {todate})
                                                     </div>
                                                     {!!branchcustomertResult && branchcustomertResult.map(quantity => (
                                                         <BranchCustomerChart key="a"
@@ -331,9 +346,9 @@ export default function DemandOverallReport() {
                                                 </div> :
                                                 <div></div>
                                             }
-                                            {flag == 3 ?
+                                            {flag === 3 ?
                                                 <div>
-                                                    <div className="card-header text-white bg-warning">BIỂU ĐỒ KINH DOANH TỪNG CHI NHÁNH</div>
+                                                    <div className="card-header text-white bg-warning">BIỂU ĐỒ KINH DOANH TỪNG CHI NHÁNH ({fromdate} đến {todate})</div>
                                                     {!!yearResult3 && yearResult3.map(model => (
                                                         <BranchChart key="a"
                                                             nvl_6540={model.nvl_6540}
@@ -347,7 +362,6 @@ export default function DemandOverallReport() {
                                                             danang_6540={model.danang_6540}
                                                             quangtri_6540={model.quangtri_6540}
                                                             hungyen_6540={model.hungyen_6540}
-                                                            binhduong_6540={model.binhduong_6540}
                                                             tayninh_6540={model.tayninh_6540}
                                                             pda_6540={model.pda_6540}
 
@@ -362,7 +376,6 @@ export default function DemandOverallReport() {
                                                             danang_6460={model.danang_6460}
                                                             quangtri_6460={model.quangtri_6460}
                                                             hungyen_6460={model.hungyen_6460}
-                                                            binhduong_6460={model.binhduong_6460}
                                                             tayninh_6460={model.tayninh_6460}
                                                             pda_6460={model.pda_6460}
 
@@ -377,7 +390,6 @@ export default function DemandOverallReport() {
                                                             danang_43253={model.danang_43253}
                                                             quangtri_43253={model.quangtri_43253}
                                                             hungyen_43253={model.hungyen_43253}
-                                                            binhduong_43253={model.binhduong_43253}
                                                             tayninh_43253={model.tayninh_43253}
                                                             pda_43253={model.pda_43253}
 
@@ -392,7 +404,6 @@ export default function DemandOverallReport() {
                                                             danang_43265={model.danang_43265}
                                                             quangtri_43265={model.quangtri_43265}
                                                             hungyen_43265={model.hungyen_43265}
-                                                            binhduong_43265={model.binhduong_43265}
                                                             tayninh_43265={model.tayninh_43265}
                                                             pda_43265={model.pda_43265}
 
@@ -407,7 +418,6 @@ export default function DemandOverallReport() {
                                                             danang_43266={model.danang_43266}
                                                             quangtri_43266={model.quangtri_43266}
                                                             hungyen_43266={model.hungyen_43266}
-                                                            binhduong_43266={model.binhduong_43266}
                                                             tayninh_43266={model.tayninh_43266}
                                                             pda_43266={model.pda_43266}
 
@@ -422,7 +432,6 @@ export default function DemandOverallReport() {
                                                             danang_53228={model.danang_53228}
                                                             quangtri_53228={model.quangtri_53228}
                                                             hungyen_53228={model.hungyen_53228}
-                                                            binhduong_53228={model.binhduong_53228}
                                                             tayninh_53228={model.tayninh_53228}
                                                             pda_53228={model.pda_53228}
 
@@ -437,7 +446,6 @@ export default function DemandOverallReport() {
                                                             danang_53229={model.danang_53229}
                                                             quangtri_53229={model.quangtri_53229}
                                                             hungyen_53229={model.hungyen_53229}
-                                                            binhduong_53229={model.binhduong_53229}
                                                             tayninh_53229={model.tayninh_53229}
                                                             pda_53229={model.pda_53229}
 
@@ -452,7 +460,6 @@ export default function DemandOverallReport() {
                                                             danang_65115={model.danang_65115}
                                                             quangtri_65115={model.quangtri_65115}
                                                             hungyen_65115={model.hungyen_65115}
-                                                            binhduong_65115={model.binhduong_65115}
                                                             tayninh_65115={model.tayninh_65115}
                                                             pda_65115={model.pda_65115}
 
@@ -467,7 +474,6 @@ export default function DemandOverallReport() {
                                                             danang_65116={model.danang_65116}
                                                             quangtri_65116={model.quangtri_65116}
                                                             hungyen_65116={model.hungyen_65116}
-                                                            binhduong_65116={model.binhduong_65116}
                                                             tayninh_65116={model.tayninh_65116}
                                                             pda_65116={model.pda_65116}
 
@@ -482,7 +488,6 @@ export default function DemandOverallReport() {
                                                             danang_65117={model.danang_65117}
                                                             quangtri_65117={model.quangtri_65117}
                                                             hungyen_65117={model.hungyen_65117}
-                                                            binhduong_65117={model.binhduong_65117}
                                                             tayninh_65117={model.tayninh_65117}
                                                             pda_65117={model.pda_65117}
 
@@ -497,7 +502,6 @@ export default function DemandOverallReport() {
                                                             danang_c57={model.danang_c57}
                                                             quangtri_c57={model.quangtri_c57}
                                                             hungyen_c57={model.hungyen_c57}
-                                                            binhduong_c57={model.binhduong_c57}
                                                             tayninh_c57={model.tayninh_c57}
                                                             pda_c57={model.pda_c57}
                                                         />
@@ -506,13 +510,19 @@ export default function DemandOverallReport() {
                                                 </div> :
                                                 <div></div>
                                             }
-                                            {flag == 4 ?
+                                            {flag === 4 ?
                                                 <div>
                                                     <div className="card-header text-white bg-dark">
-                                                        BIỂU ĐỒ KINH DOANH 12 THÁNG
-                                                    <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickLineChart}>
-                                                            Biểu đồ cột
-                                                    </button>
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                BIỂU ĐỒ KINH DOANH 12 THÁNG ({fromdate} đến {todate})
+                                                        </div>
+                                                            <div className="col-sm">
+                                                                <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickLineChart}>
+                                                                    Biểu đồ cột
+                                                        </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     {!!yearResult2 && yearResult2.map(month => (
                                                         <DemandLineChart key="a"
@@ -532,13 +542,19 @@ export default function DemandOverallReport() {
                                                 </div> :
                                                 <div></div>
                                             }
-                                            {flag == 5 ?
+                                            {flag === 5 ?
                                                 <div>
                                                     <div className="card-header text-white bg-primary">
-                                                        BIỂU ĐỒ SỐ LƯỢNG XE ĐÃ BÁN
-                                                  <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickPieChart}>
-                                                            Biểu đồ cột ngang
-                                                  </button>
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                BIỂU ĐỒ SỐ LƯỢNG XE ĐÃ BÁN ({fromdate} đến {todate})
+                                                        </div>
+                                                            <div className="col-sm">
+                                                                <button type="button" className="btn btn-secondary btn-sm" style={{ float: "right" }} onClick={OnClickPieChart}>
+                                                                    Biểu đồ cột ngang
+                                                        </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     {!!yearResult4 && yearResult4.map(quantity => (
                                                         <CarPieChart key="a"
@@ -560,43 +576,45 @@ export default function DemandOverallReport() {
                                             }
                                         </div>
                                     </div>
-                                    <div className="table-container">
-                                        <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>BÁO CÁO KINH DOANH TỔNG QUÁT</div>
-                                        <table className="table-lg">
-                                            <tbody>
-                                                <tr id="titles">
-                                                    <th>TỔNG CỘNG (XE)</th>
-                                                    <th>TIẾP CẬN CHÀO HÀNG</th>
-                                                    <th>CHẠY THỬ</th>
-                                                    <th>ĐÀM PHÁN</th>
-                                                    <th>CHỐT ĐƠN HÀNG</th>
-                                                    <th>ĐÃ CỌC</th>
-                                                    <th>ĐÃ THANH TOÁN TẠM ỨNG</th>
-                                                    <th>HOÀN TẤT GIAO DỊCH</th>
-                                                    <th>BÀN GIAO CHƯA THANH TOÁN</th>
-                                                    <th>LÊN HỢP ĐỒNG</th>
-                                                    <th>GIAO DỊCH THẤT BẠI</th>
-                                                </tr>
-                                                {!!yearResult && yearResult.map(form => (
-                                                    <tr className="content" key={form._id}>
-                                                        <td>{form.tongcong}</td>
-                                                        <td>{form.tiepcanchaohang}</td>
-                                                        <td>{form.chaythu}</td>
-                                                        <td>{form.damphan}</td>
-                                                        <td>{form.chotdonhang}</td>
-                                                        <td>{form.dacoc}</td>
-                                                        <td>{form.dathanhtoantamung}</td>
-                                                        <td>{form.hoantatgiaodich}</td>
-                                                        <td>{form.bangiaochuathanhtoan}</td>
-                                                        <td>{form.lenhopdong}</td>
-                                                        <td>{form.giaodichthatbai}</td>
+                                    <div>
+                                        <div className="table-container">
+                                            <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>BÁO CÁO KINH DOANH TỔNG QUÁT ({fromdate} đến {todate})</div>
+                                            <table className="table" key="a">
+                                                <tbody>
+                                                    <tr id="titles">
+                                                        <th>TỔNG CỘNG (XE)</th>
+                                                        <th>TIẾP CẬN CHÀO HÀNG</th>
+                                                        <th>CHẠY THỬ</th>
+                                                        <th>ĐÀM PHÁN</th>
+                                                        <th>CHỐT ĐƠN HÀNG</th>
+                                                        <th>ĐÃ CỌC</th>
+                                                        <th>ĐÃ THANH TOÁN TẠM ỨNG</th>
+                                                        <th>HOÀN TẤT GIAO DỊCH</th>
+                                                        <th>BÀN GIAO CHƯA THANH TOÁN</th>
+                                                        <th>LÊN HỢP ĐỒNG</th>
+                                                        <th>GIAO DỊCH THẤT BẠI</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                    {!!yearResult && yearResult.map(form => (
+                                                        <tr className="content" key={form._id}>
+                                                            <td>{form.tongcong}</td>
+                                                            <td>{form.tiepcanchaohang}</td>
+                                                            <td>{form.chaythu}</td>
+                                                            <td>{form.damphan}</td>
+                                                            <td>{form.chotdonhang}</td>
+                                                            <td>{form.dacoc}</td>
+                                                            <td>{form.dathanhtoantamung}</td>
+                                                            <td>{form.hoantatgiaodich}</td>
+                                                            <td>{form.bangiaochuathanhtoan}</td>
+                                                            <td>{form.lenhopdong}</td>
+                                                            <td>{form.giaodichthatbai}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <br />
-                                    <AdminDemandDetailReport />
+                                    <AdminDemandDetailReport fromdate={fromdate} todate={todate} />
                                 </div>
                             </div>
                         </div>

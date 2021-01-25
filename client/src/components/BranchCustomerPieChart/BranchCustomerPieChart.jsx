@@ -3,7 +3,7 @@ import { Pie } from '@reactchartjs/react-chart.js'
 
 export default function BranchCustomerPieChart(props) {
     const data = {
-        labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Tây Ninh', 'Bình Dương', 'Đồng Nai', 'PDA'],
+        labels: ['NVL', 'Gia Lai', 'Lâm Đồng', 'Vũng Tàu', 'Bình Phước', 'Cần Thơ', 'Đăk Lăk', 'Đà Nẵng', 'Quảng Trị', 'Hưng Yên', 'Tây Ninh', 'Đồng Nai', 'PDA'],
         datasets: [
             {
                 label: 'BIỂU ĐỒ SỐ KHÁCH HÀNG TỪNG CHI NHÁNH',
@@ -19,7 +19,6 @@ export default function BranchCustomerPieChart(props) {
                     props.quangtri,
                     props.hungyen,
                     props.tayninh,
-                    props.binhduong,
                     props.dongnai,
                     props.pda,
                 ],
@@ -35,7 +34,6 @@ export default function BranchCustomerPieChart(props) {
                     '#bcf60c',
                     '#fabebe',
                     '#008080',
-                    '#e6beff',
                     '#9a6324',
                     '#fffac8'
                 ],
