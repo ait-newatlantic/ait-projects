@@ -19,13 +19,13 @@ function Sidebar2({ isOpen, toggle }) {
       <SidebarWrapper>
         <SidebarMenu>
           <SidebarLink to="about" onClick={toggle}>
-            Giới thiệu
+            Mục tiêu
           </SidebarLink>
           <SidebarLink to="discover" onClick={toggle}>
-            Khám phá
+            Nền tảng
           </SidebarLink>
           <SidebarLink to="services" onClick={toggle}>
-            Chức năng
+            Web-app
           </SidebarLink>
           <SidebarLink to="signup" onClick={toggle}>
             Hỗ trợ

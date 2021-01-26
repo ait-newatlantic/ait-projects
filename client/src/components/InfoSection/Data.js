@@ -1,17 +1,17 @@
-import car from "../../images/svg-1.svg";
-import piggybank from "../../images/svg-2.svg";
-import signup from "../../images/svg-3.svg";
+import car from "../../images/img1.svg";
+import piggybank from "../../images/img2.svg";
+import signup from "../../images/img3.svg";
 
 export const homeObjOne = {
   id: "about",
   lightBg: false,
   lightText: true,
   lightTextDesc: true,
-  topLine: "Premium Bank",
-  headline: "Unlimited Transactions with zero fees",
+  topLine: "PHẦN MỀM DOANH NGHIỆP AIT",
+  headline: "Mục tiêu phát triển",
   description:
-    "Get access to our exclusive app that allows you to send unlimited transactions without getting charged any fees.",
-  buttonLabel: "Get started",
+    "Phần mềm được phát triển với mục tiêu để các chi nhánh có thể nhập liệu và tạo báo cáo hàng tuần trực tiếp trên phần mềm.",
+  buttonLabel: "Bắt đầu",
   imgStart: false,
   img: car,
   alt: "Car",
@@ -25,11 +25,11 @@ export const homeObjTwo = {
   lightBg: true,
   lightText: false,
   lightTextDesc: false,
-  topLine: "Unlimited Access",
-  headline: "Login to your account at any time",
+  topLine: "PHẦN MỀM DOANH NGHIỆP AIT",
+  headline: "Truy cập mọi lúc, mọi nơi",
   description:
-    "We have you covered no matter where you are located. All you need is an internet connection and a phone or computer.",
-  buttonLabel: "Learn More",
+    "Giao diện phần mềm được xây dựng trên nền tảng React, Node, Express giúp người dùng có thể truy cập trên nhiều thiết bị khác nhau với tốc độ cao.",
+  buttonLabel: "Tìm hiểu thêm",
   imgStart: true,
   img: piggybank,
   alt: "Piggybank",
@@ -43,11 +43,11 @@ export const homeObjThree = {
   lightBg: true,
   lightText: false,
   lightTextDesc: false,
-  topLine: "Join our Team",
-  headline: "Creating an account is extremely easy",
+  topLine: "PHẦN MỀM DOANH NGHIỆP AIT",
+  headline: "Hỗ trợ 24/7",
   description:
-    "Get everything set up and ready in under 10 minutes. All you need to do is add your information and you're ready to go.",
-  buttonLabel: "Start Now",
+    "Liên hệ: 0918.628.660 (Mr.Nam).",
+  buttonLabel: "Tìm hiểu thêm",
   imgStart: false,
   img: signup,
   alt: "Papers",

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const FooterContainer = ({ children }) => (
-  <footer className="bg-blue-800">{children}</footer>
+  <footer className="bg-black">{children}</footer>
 );
 
 export const FooterWrap = ({ children }) => (

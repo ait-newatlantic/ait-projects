@@ -83,7 +83,7 @@ const Login = (props) => {
       <FormWrap>
         <Icon to="/">AIT</Icon>
         <FormContent>
-          <Form className="bg-blue-800 max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleLogin} ref={form}>
+          <Form className="bg-black max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleLogin} ref={form}>
             <div className="form-group">
               <FormH1>Đăng nhập vào tài khoản</FormH1>
               <FormLabel htmlFor="for">Tên đăng nhập</FormLabel>

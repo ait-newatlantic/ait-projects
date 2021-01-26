@@ -11,7 +11,7 @@ export const SidebarContainer = ({ children, isOpen }) => {
 
   return (
     <aside
-      className={`fixed ${zIndex} w-full h-full bg-blue-800 grid items-center top-0 left-0 ${opacity} ${top}`}
+      className={`fixed ${zIndex} w-full h-full bg-black grid items-center top-0 left-0 ${opacity} ${top}`}
     >
       {children}
     </aside>

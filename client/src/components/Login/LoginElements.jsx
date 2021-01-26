@@ -4,7 +4,7 @@ import Form from "react-validation/build/form";
 import { Link } from "react-router-dom";
 
 export const Container = ({ children }) => (
-  <div className="min-h-692 fixed bottom-0 left-0 right-0 top-0 z-0 overflow-hidden bg-gradient-to-r from-blue-500 to-blue-200">
+  <div className="min-h-692 fixed bottom-0 left-0 right-0 top-0 z-0 overflow-hidden bg-gradient-to-r from-green-500 to-green-200">
     {children}
   </div>
 );
@@ -51,7 +51,7 @@ export const FormInput = ({ type }) => (
 );
 
 export const FormButton = ({ children }) => (
-  <button className="bg-yellow-500 py-4 px-0 border-none rounded-md text-white text-xl cursor-pointer">
+  <button className="bg-green-500 py-4 px-0 border-none rounded-md text-white text-xl cursor-pointer">
     {children}
   </button>
 );

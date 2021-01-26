@@ -1,8 +1,8 @@
 import React from "react";
 
-import Icon1 from "../../images/svg-1.svg";
-import Icon2 from "../../images/svg-2.svg";
-import Icon3 from "../../images/svg-3.svg";
+import Icon1 from "../../images/img1.svg";
+import Icon2 from "../../images/img2.svg";
+import Icon3 from "../../images/img3.svg";
 import {
   ServicesContainer,
   ServicesH1,
@@ -16,27 +16,27 @@ import {
 function Services() {
   return (
     <ServicesContainer id="services">
-      <ServicesH1>Our Services</ServicesH1>
+      <ServicesH1>Web-app</ServicesH1>
       <ServicesWrapper>
         <ServicesCard>
           <ServicesIcon src={Icon1} />
-          <ServicesH2>Reduce Expenses</ServicesH2>
+          <ServicesH2>Giảm thiểu công việc</ServicesH2>
           <ServicesP>
-            We help reduce your fees and increase your overall revenue.
+            Phần mềm giúp công việc báo cáo đồng bộ và chính xác.
           </ServicesP>
         </ServicesCard>
         <ServicesCard>
           <ServicesIcon src={Icon2} />
-          <ServicesH2>Virtual Offices</ServicesH2>
+          <ServicesH2>Nhanh và tiện lợi</ServicesH2>
           <ServicesP>
-            You can access our platform online anywhere in the world.
+            Phần mềm có thể truy cập ở mọi nơi.
           </ServicesP>
         </ServicesCard>
         <ServicesCard>
           <ServicesIcon src={Icon3} />
-          <ServicesH2>Premium Benefits</ServicesH2>
+          <ServicesH2>Hỗ trợ 24/7</ServicesH2>
           <ServicesP>
-            Unlock our special membership card that returns 5% cash back.
+            Nhân viên kỹ thuật hỗ trợ nhiệt tình.
           </ServicesP>
         </ServicesCard>
       </ServicesWrapper>

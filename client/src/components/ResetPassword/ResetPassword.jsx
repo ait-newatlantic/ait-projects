@@ -77,7 +77,7 @@ export default function ResetPassword(props) {
 
     return (
         <div className="custom">
-            <Form className="bg-blue-800 max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleUpdate} ref={form}>
+            <Form className="bg-black max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleUpdate} ref={form}>
                 {!successful && (
                     <div>
                         <div>

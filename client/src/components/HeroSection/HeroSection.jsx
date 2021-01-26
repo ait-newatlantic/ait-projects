@@ -27,9 +27,9 @@ function HeroSection() {
           <VideoBg autoPlay loop muted src={video} type="video/mp4" />
         </HeroBg>
         <HeroContent>
-          <HeroH1>Phần mềm doanh nghiệp AIT</HeroH1>
+          <HeroH1>PHẦN MỀM DOANH NGHIỆP AIT</HeroH1>
           <HeroP>
-            Chúc mừng năm mới
+            CHÚC MỪNG NĂM TÂN SỬU 2021
           </HeroP>
           <HeroP>
             An Khang - Thịnh Vượng

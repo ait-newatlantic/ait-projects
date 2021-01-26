@@ -1,7 +1,7 @@
 import React from "react";
 
 export const InfoContainer = ({ children, lightBg, ...rest }) => {
-  const background = lightBg ? "bg-gray-100" : "bg-blue-800";
+  const background = lightBg ? "bg-gray-100" : "bg-black";
   return (
     <div {...rest} className={`text-white ${background} md:py-24 md:px-0 z-10`}>
       {children}

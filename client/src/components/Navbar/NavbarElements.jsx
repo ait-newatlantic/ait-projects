@@ -3,7 +3,7 @@ import { Link as LinkRouter } from "react-router-dom";
 import { Link as LinkScroll } from "react-scroll";
 
 export const Nav = ({ children, scrollNav }) => {
-  const background = scrollNav ? "bg-blue-800" : "bg-transparent";
+  const background = scrollNav ? "bg-black" : "bg-transparent";
   return (
     <nav
       className={`${background} h-20 -mt-20 flex justify-center items-center text-base sticky top-0 z-10 lg:transition-all lg:duration-500 lg:ease-linear`}

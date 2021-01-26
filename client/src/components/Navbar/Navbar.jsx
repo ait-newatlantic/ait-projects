@@ -73,17 +73,17 @@ export default function Test({ toggle }) {
           <NavMenu>
             <NavItem>
               <NavLinks to="about" {...scrollProps}>
-                Giới thiệu
+                Mục tiêu
               </NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks to="discover" {...scrollProps}>
-                Khám phá
+                Nền tảng
               </NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks to="services" {...scrollProps}>
-                Chức năng
+                Web-app
               </NavLinks>
             </NavItem>
             <NavItem>

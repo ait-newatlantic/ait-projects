@@ -3,7 +3,7 @@ import React from "react";
 import { MdArrowForward, MdKeyboardArrowRight } from "react-icons/md";
 
 export const HeroContainer = ({ children }) => (
-  <div className="flex justify-center bg-blue-800 items-center px-4 h-800 relative">
+  <div className="flex justify-center bg-black items-center px-4 h-800 relative">
     {children}
   </div>
 );
