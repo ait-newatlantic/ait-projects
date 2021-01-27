@@ -102,7 +102,7 @@ export default function DemandDetailReport(props) {
     }
 
     const OnClickSearchTool = () => {
-        if (flag == 0) {
+        if (flag === 0) {
             setFlag(1)
         }
         else {
@@ -138,7 +138,7 @@ export default function DemandDetailReport(props) {
     return (
         <>
             {loader}
-            {content == "Moderator" ?
+            {content === "Moderator" ?
                 <div>
                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         <div className="row">
@@ -160,7 +160,7 @@ export default function DemandDetailReport(props) {
                             </div>
                         </div>
                     </div>
-                    {flag == 1 ?
+                    {flag === 1 ?
                         <div>
                             <div className="row">
                                 <div className="col-sm">

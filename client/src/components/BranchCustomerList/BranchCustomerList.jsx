@@ -43,7 +43,7 @@ export default function CustomerList() {
     }, []);
 
     useEffect(() => {
-        if (content == "Moderator") {
+        if (content === "Moderator") {
             FetchData()
         }
     }, [content])
@@ -52,7 +52,7 @@ export default function CustomerList() {
     return (
         <>
             {loader}
-            {content == "Moderator" ?
+            {content === "Moderator" ?
                 <div className="card pt-3">
                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         <div className="row">

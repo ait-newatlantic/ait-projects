@@ -19,7 +19,7 @@ import { Button } from "../ButtonElements";
 function InfoSection(props) {
   return (
     <>
-      <InfoContainer id={props.id} lightBg={props.lightBg}>
+      <InfoContainer id={props.id} lightBg={props.lightBg}  style={{height:"100vh"}}>
         <InfoWrapper>
           <InfoRow imgStart={props.imgStart}>
             <Column1>
@@ -31,7 +31,7 @@ function InfoSection(props) {
                 </Subtitle>
                 <BtnWrap>
                   <Button
-                    to="home"
+                    to="about"
                     smooth={true}
                     duration={500}
                     spy={true}

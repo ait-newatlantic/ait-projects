@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-scroll";
 
 export const Button = ({ children, primary, big, dark, fontBig, ...rest }) => {
-  const background = primary ? "bg-blue-600" : "bg-black";
+  const background = primary ? "bg-yellow-600" : "bg-black";
   const padding = big ? "py-3.5 px-12 " : "py-3 px-7";
   const color = dark ? "text-black" : "text-white";
   const fontSize = fontBig ? "text-xl" : "text-base";
-  const hoverBg = primary ? "bg-white" : "bg-blue-600";
+  const hoverBg = primary ? "bg-pink-400" : "bg-yellow-600";
   return (
     <Link
       {...rest}

@@ -38,7 +38,7 @@ export default function Test({ toggle }) {
   }, []);
 
   const scrollProps = {
-    activeClass: "border-solid border-b-4 border-blue-600",
+    activeClass: "border-solid border-b-4 border-yellow-600",
     smooth: true,
     duration: 500,
     spy: true,

@@ -82,12 +82,12 @@ export default function DemandOverallReport() {
     }
 
     const OnClickChart = () => {
-        if (flag == 0 || flag == 3) {
+        if (flag === 0 || flag === 3) {
             FetchDemandQuantity()
             setFlag(1)
             setbtnName("Biểu đồ (2/2)")
         }
-        else if (flag == 2) {
+        else if (flag === 2) {
             FetchOverall()
             setFlag(0)
             setbtnName("Biểu đồ (1/2)")
@@ -100,7 +100,7 @@ export default function DemandOverallReport() {
     }
 
     const OnClickLineChart = () => {
-        if (flag == 0) {
+        if (flag === 0) {
             FetchOverall()
             setFlag(2)
         }
@@ -110,7 +110,7 @@ export default function DemandOverallReport() {
     }
 
     const OnClickPieChart = () => {
-        if (flag == 1) {
+        if (flag === 1) {
             setFlag(3)
         }
         else {

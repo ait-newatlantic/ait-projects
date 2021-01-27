@@ -33,7 +33,7 @@ export default function AdminCustomerList() {
     }
 
     const OnClickSearchTool = () => {
-        if (flag == 0) {
+        if (flag === 0) {
             setFlag(1)
         }
         else {
@@ -67,7 +67,7 @@ export default function AdminCustomerList() {
     return (
         <>
             {loader}
-            {content == "Admin" ?
+            {content === "Admin" ?
                 <div className="card pt-3">
                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         <div className="row">
@@ -88,7 +88,7 @@ export default function AdminCustomerList() {
                             </div>
                         </div>
                     </div>
-                    {flag == 1 ?
+                    {flag === 1 ?
                         <div>
                             <div className="row">
                                 <div className="col-sm">

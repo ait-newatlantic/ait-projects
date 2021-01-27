@@ -234,7 +234,7 @@ export default function DemandInput(props) {
     }, []);
 
     useEffect(() => {
-        if (currentUser.username.split('.')[0] == "AIT") {
+        if (currentUser.username.split('.')[0] === "AIT") {
             CustomerService.get_customers("").then((response) => {
                 setCustomers(response.data)
             })
@@ -250,7 +250,7 @@ export default function DemandInput(props) {
 
     return (
         <div className="custom">
-            { content == "Nhân viên" ?
+            { content === "Nhân viên" ?
                 <div>
                      <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         NHẬP NHU CẦU THỰC TẾ
@@ -328,7 +328,7 @@ export default function DemandInput(props) {
                                                         </Select>
                                                     </div>
                                                 </div>
-                                                {customer_type == "ĐÃ SỬ DỤNG KAMAZ" ?
+                                                {customer_type === "ĐÃ SỬ DỤNG KAMAZ" ?
                                                     <div className="row p-2">
                                                         <label className="col-lg-4">Ý kiến khách hàng</label>
                                                         <div className="col-sm">
@@ -356,7 +356,7 @@ export default function DemandInput(props) {
                                                     </div>
                                                 </div>
 
-                                                {customer_communication == "GẶP TRỰC TIẾP" ?
+                                                {customer_communication === "GẶP TRỰC TIẾP" ?
                                                     <div className="row p-2">
                                                         <label className="col-lg-4">Địa điểm giao dịch</label>
                                                         <div className="col-sm">

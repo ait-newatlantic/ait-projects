@@ -29,10 +29,7 @@ function HeroSection() {
         <HeroContent>
           <HeroH1>PHẦN MỀM DOANH NGHIỆP AIT</HeroH1>
           <HeroP>
-            CHÚC MỪNG NĂM TÂN SỬU 2021
-          </HeroP>
-          <HeroP>
-            An Khang - Thịnh Vượng
+            Chúc mừng năm mới
           </HeroP>
           <HeroBtnWrapper>
             <Button

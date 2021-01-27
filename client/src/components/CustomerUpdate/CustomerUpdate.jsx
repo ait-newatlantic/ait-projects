@@ -134,7 +134,7 @@ export default function CustomerUpdate(props) {
 
     return (
         <div className="custom">
-            { content == "Nhân viên" ?
+            { content === "Nhân viên" ?
                 <Form onSubmit={handleUpdate} ref={form}>
                     {!successful && (
                         <div>

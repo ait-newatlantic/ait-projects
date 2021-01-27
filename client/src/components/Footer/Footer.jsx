@@ -75,7 +75,7 @@ function Footer() {
               <SocialIconLink href="/" target="_blank" aria-label="Instagram">
                 <FaInstagram />
               </SocialIconLink>
-              <SocialIconLink href="/" target="_blank" aria-label="Youtube">
+              <SocialIconLink href="https://www.youtube.com/channel/UCyDJ_4eE0k7R66dns8WZZWg" target="_blank" aria-label="Youtube">
                 <FaYoutube />
               </SocialIconLink>
               <SocialIconLink href="/" target="_blank" aria-label="Twitter">

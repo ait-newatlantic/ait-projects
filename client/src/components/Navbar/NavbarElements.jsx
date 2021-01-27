@@ -59,7 +59,7 @@ export const NavBtn = ({ children }) => (
 );
 
 export const NavBtnLink = ({ children, ...rest }) => (
-  <LinkRouter {...rest} className="btn-blue">
+  <LinkRouter {...rest} className="btn-yellow">
     {children}
   </LinkRouter>
 );

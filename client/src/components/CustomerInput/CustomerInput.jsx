@@ -132,11 +132,9 @@ export default function CustomerInput() {
     return (
         <>
             <div className="custom">
-                {content == "Nhân viên" ?
+                {content === "Nhân viên" ?
                     <div>
-                        <div className="head">
-                            <h5>FORM KHỞI TẠO KHÁCH HÀNG</h5>
-                        </div>
+                         <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>TẠO KHÁCH HÀNG MỚI</div>
                         <Form onSubmit={handleSubmit} ref={form}>
                             {!successful && (
                                 <div>
@@ -194,7 +192,7 @@ export default function CustomerInput() {
                                                     </div>
                                                 </div>
 
-                                                {customer_type == "DOANH NGHIỆP" ?
+                                                {customer_type === "DOANH NGHIỆP" ?
                                                     <div className="row p-2">
                                                         <label className="col-lg-4" >Mã số thuế: </label>
                                                         <div className="col-sm">
