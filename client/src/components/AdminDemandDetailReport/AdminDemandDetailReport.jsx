@@ -291,7 +291,7 @@ export default function AdminDemandDetailReport(props) {
                                         <td>{form.updatedAt.substring(0, 10)}</td>
                                         <td>{form.note}</td>
                                         <td>
-                                            <a className="btn btn-warning btn-sm" href={`/demands/update/${form.id}`} role="button">Cập nhật</a>
+                                            <a className="btn btn-warning btn-sm" href={`/dashboard/demands/update/${form.id}`} role="button">Cập nhật</a>
                                         </td>
                                     </tr>
                                 ))}

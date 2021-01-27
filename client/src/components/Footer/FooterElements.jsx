@@ -32,7 +32,7 @@ export const FooterLinkTitle = ({ children }) => (
 export const FooterLink = ({ children, ...rest }) => (
   <Link
     {...rest}
-    className="text-white no-underline mb-2 text-sm hover:text-green-500 hover:transition hover:duration-300 hover:ease-out"
+    className="text-white no-underline mb-2 text-sm hover:text-blue-600 hover:transition hover:duration-300 hover:ease-out"
   >
     {children}
   </Link>

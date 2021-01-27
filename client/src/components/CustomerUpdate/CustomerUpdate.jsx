@@ -138,6 +138,7 @@ export default function CustomerUpdate(props) {
                 <Form onSubmit={handleUpdate} ref={form}>
                     {!successful && (
                         <div>
+                             <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>CẬP NHẬT KHÁCH HÀNG</div>
                             <div className="card-deck">
                                 <div className="card">
                                     <div className="card-body">
@@ -145,7 +146,7 @@ export default function CustomerUpdate(props) {
                                         <div className="row">
                                             <label className="col-lg-4" >Tên KH (1) (*): </label>
                                             <div className="col-sm">
-                                                <div className="form-control" style={{overflow: "auto"}}>
+                                                <div className="form-control" style={{ overflow: "auto" }}>
                                                     {customers.customer}
                                                 </div>
                                             </div>
@@ -235,17 +236,10 @@ export default function CustomerUpdate(props) {
                                 </div>
                             </div>
                             <br />
-                            <div className="card">
-                                <div className="text-center">
-                                    <Button variant="success" type="submit" onClick={handleUpdate}>
-                                        Gửi form <SendIcon />
-                                    </Button>
-                                </div>
-                                <div>
-                                    <strong>Chú thích:</strong>
-                                    <p><ArrowRightAltIcon /><strong> (1)</strong> Vui lòng điền đầy đủ họ tên khách hàng.</p>
-                                    <p><ArrowRightAltIcon /><strong> (*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
-                                </div>
+                            <div className="text-right">
+                                <Button variant="success" type="submit" onClick={handleUpdate}>
+                                    GỬI FORM <SendIcon />
+                                </Button>
                             </div>
                         </div>
                     )}

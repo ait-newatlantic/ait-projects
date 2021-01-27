@@ -51,9 +51,8 @@ export default function CustomerList() {
 
     return (
         <>
-        {loader}
-        {content == "Moderator" ?
-            <div className="custom">
+            {loader}
+            {content == "Moderator" ?
                 <div className="card pt-3">
                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         <div className="row">
@@ -115,10 +114,9 @@ export default function CustomerList() {
                         </table>
                     </div>
                 </div>
-            </div>
-            :
-            <div>{content}</div>
-        }
-    </>
+                :
+                <div>{content}</div>
+            }
+        </>
     )
 }

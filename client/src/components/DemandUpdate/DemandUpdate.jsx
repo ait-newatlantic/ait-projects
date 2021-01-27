@@ -140,11 +140,9 @@ export default function DemandUpdate(props) {
         <div className="custom">
             { content == "Nhân viên" ?
                 <div>
-                    <div>
-                        <div className="head">
-                            <h5>FORM CẬP NHẬT NHU CẦU THỰC TẾ</h5>
+                    <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
+                        CẬP NHẬT NHU CẦU THỰC TẾ
                         </div>
-                    </div>
                     <Form onSubmit={handleRegister} ref={form}>
                         {!successful && (
                             <div>
@@ -170,6 +168,7 @@ export default function DemandUpdate(props) {
                                                     <input type="customer_area" className="form-control" defaultValue={demands.customer_area} id="exampleFormControlInput1" />
                                                 </div>
                                             </div>
+                                            <br />
                                             <div className="row">
                                                 <label className="col-lg-4" >Giai đoạn</label>
                                                 <div className="col-sm">
@@ -188,13 +187,14 @@ export default function DemandUpdate(props) {
                                                     </Select>
                                                 </div>
                                             </div>
-
+                                            <br />
                                             <div className="row">
                                                 <label className="col-lg-4" >Loại KH: </label>
                                                 <div className="col-sm">
                                                     <input type="customer_type" className="form-control" defaultValue={demands.customer_type} id="exampleFormControlInput1" />
                                                 </div>
                                             </div>
+                                            <br />
                                             <div className="row" id="ykien-customers">
                                                 <label className="col-lg-4">Ý kiến KH: </label>
                                                 <div className="col-sm">
@@ -206,7 +206,7 @@ export default function DemandUpdate(props) {
                                                     ></textarea>
                                                 </div>
                                             </div>
-
+                                            <br />
                                             <div className="row">
                                                 <label className="col-lg-4" >Phương thức liên lạc:</label>
                                                 <div className="col-sm">
@@ -257,6 +257,7 @@ export default function DemandUpdate(props) {
                                                         id="exampleFormControlInput1" />
                                                 </div>
                                             </div>
+                                            <br />
                                             <div className="row">
                                                 <label className="col-lg-4">Màu xe: </label>
                                                 <div className="col-sm">
@@ -302,6 +303,7 @@ export default function DemandUpdate(props) {
                                                     />
                                                 </div>
                                             </div>
+                                            <br />
                                             <div className="row">
                                                 <label className="col-lg-4">Ghi chú :</label>
                                                 <div className="col-sm">
@@ -316,17 +318,14 @@ export default function DemandUpdate(props) {
                                                 </div>
                                             </div>
                                             <br />
-                                            <div>
-                                                <Button variant="success" block type="submit" onClick={handleRegister}>
-                                                    Cập nhật <UpdateIcon />
-                                                </Button>
-                                                <div>
-                                                    <strong>Chú thích:</strong>
-                                                    <p><ArrowRightAltIcon /> Vui lòng cập nhật ngày gặp khách hàng.</p>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <br />
+                                <div className="text-right">
+                                    <Button variant="success" type="submit" onClick={handleRegister}>
+                                        CẬP NHẬT <UpdateIcon />
+                                    </Button>
                                 </div>
                             </div>
                         )}

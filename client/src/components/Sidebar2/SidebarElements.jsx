@@ -42,7 +42,7 @@ export const SidebarMenu = ({ children }) => (
 export const SidebarLink = ({ children, ...rest }) => (
   <LinkScroll
     {...rest}
-    className="flex items-center justify-center text-2xl text-white hover:text-green-500 cursor-pointer no-underline list-none transition ease-in-out duration-200"
+    className="flex items-center justify-center text-2xl text-white hover:text-blue-600 cursor-pointer no-underline list-none transition ease-in-out duration-200"
   >
     {children}
   </LinkScroll>
@@ -53,7 +53,7 @@ export const SideBtnWrap = ({ children }) => (
 );
 
 export const SidebarRoute = ({ children, ...rest }) => (
-  <LinkRouter {...rest} className="btn-green">
+  <LinkRouter {...rest} className="btn-blue">
     {children}
   </LinkRouter>
 );

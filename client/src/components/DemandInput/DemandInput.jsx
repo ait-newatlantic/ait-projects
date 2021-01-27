@@ -36,7 +36,7 @@ export default function DemandInput(props) {
     const [quantity, setQuantity] = useState(null);
     const [status, setStatus] = useState("");
     const [customer, setCustomer] = useState("");
-    const [customer_number, setCustomer_Number] = useState("");
+    const [customer_number, setCustomer_Number] = useState(null);
     const [customer_type, setCustomer_Type] = useState("");
     const [customer_area, setCustomer_Area] = useState("");
     const [customer_opinion, setCustomer_Opinion] = useState(null);
@@ -163,7 +163,6 @@ export default function DemandInput(props) {
         setMessage("");
         setSuccessful(false);
         form.current.validateAll();
-        setEmployee(currentUser.username)
         if (checkBtn.current.context._errors.length === 0) {
             DemandService.create_demand(
                 date,
@@ -216,6 +215,7 @@ export default function DemandInput(props) {
     }, [customer])
 
     useEffect(() => {
+        setEmployee(currentUser.username)
         UserService.getUserBoard().then(
             (response) => {
                 setContent(response.data);
@@ -252,8 +252,8 @@ export default function DemandInput(props) {
         <div className="custom">
             { content == "Nhân viên" ?
                 <div>
-                    <div className="head">
-                        <h5>FORM NHẬP NHU CẦU THỰC TẾ</h5>
+                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
+                        NHẬP NHU CẦU THỰC TẾ
                     </div>
                     <Form onSubmit={handleRegister} ref={form}>
                         {!successful && (

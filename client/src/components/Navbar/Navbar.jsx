@@ -38,7 +38,7 @@ export default function Test({ toggle }) {
   }, []);
 
   const scrollProps = {
-    activeClass: "border-solid border-b-4 border-green-500",
+    activeClass: "border-solid border-b-4 border-blue-600",
     smooth: true,
     duration: 500,
     spy: true,
@@ -57,9 +57,6 @@ export default function Test({ toggle }) {
     }
   }, []);
 
-  const logOut = () => {
-    AuthService.logout();
-  };
   return (
     <>
       <Nav scrollNav={scrollNav}>
@@ -92,19 +89,14 @@ export default function Test({ toggle }) {
               </NavLinks>
             </NavItem>
           </NavMenu>
-          {showModeratorBoard && (
-            <NavBtn>
-              <NavBtnLink to="/dashboard">Dashboard</NavBtnLink>
-            </NavBtn>
-          )}
-          {showAdminBoard && (
-            <NavBtn>
-              <NavBtnLink to="/dashboard">Dashboard</NavBtnLink>
-            </NavBtn>
-          )}
           {currentUser ? (
             <NavBtn>
-              <NavBtnLink to="/login" onClick={logOut}>Đăng Xuất</NavBtnLink>
+              {showModeratorBoard && (
+                <NavBtnLink to="/dashboard">Dashboard</NavBtnLink>
+              )}
+              {showAdminBoard && (
+                <NavBtnLink to="/dashboard">Dashboard</NavBtnLink>
+              )}
             </NavBtn>
           ) : (
               <NavBtn>

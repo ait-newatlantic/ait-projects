@@ -46,7 +46,7 @@ export const TextWrapper = ({ children }) => (
 );
 
 export const TopLine = ({ children }) => (
-  <p className="text-green-500 text-base leading-4 font-bold tracking-widest uppercase mb-1">
+  <p className="text-blue-600 text-base leading-4 font-bold tracking-widest uppercase mb-1">
     {children}
   </p>
 );

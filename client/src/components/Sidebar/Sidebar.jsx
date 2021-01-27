@@ -46,6 +46,7 @@ import {
     useWindowWidth,
     useWindowHeight,
 } from '@react-hook/window-size'
+import Dashboard from '../Dashboard/Dashboard';
 
 require('dotenv').config()
 
@@ -186,12 +187,10 @@ export default function Sidebar() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="p" noWrap>
-                        AIT ERP SOFTWARE
-                    </Typography>
+                    <IconButton href="/dashboard"><MaterialUIIcons.Apps /></IconButton>
                     <MaterialUIIcons.Notifications className="ml-auto" style={{ marginRight: "10px" }} />
                     <MaterialUIIcons.Mail className="ml" style={{ marginRight: "10px" }} />
-                    <MaterialUIIcons.BugReport className="ml" />
+                    <MaterialUIIcons.BugReport className="ml" style={{ marginRight: "10px" }} />
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -209,7 +208,7 @@ export default function Sidebar() {
             >
                 <div className={classes.toolbar}>
                     <Typography variant="p" noWrap>
-                        DASHBOARD
+                        NEWAIT SOFTWARE
                     </Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -218,6 +217,13 @@ export default function Sidebar() {
                 <Divider />
                 {showAdminBoard && (
                     <div>
+                        <List>
+                            <ListItem button component={Link} to="#">
+                                <ListItemIcon> <MaterialUIIcons.Person style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary={currentUser.username}/>
+                            </ListItem>
+                        </List>
+                        <Divider/>
                         <List>
                             <ListItem button component={Link} to="/home">
                                 <ListItemIcon> <MaterialUIIcons.Home style={{ fill: "white" }} /> </ListItemIcon>
@@ -313,6 +319,7 @@ export default function Sidebar() {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
+                <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/dashboard/register" component={Register} />
                 <Route exact path="/dashboard/profile" component={Profile} />
                 <Route exact path="/dashboard/admin/demands/overallreport" component={AdminDemandOverallReport} />
