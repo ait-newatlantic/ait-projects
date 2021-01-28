@@ -12,7 +12,7 @@ RUN npm install -g serve
 
 # npm ci modules and build
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 COPY . .
 RUN npm run build
 
