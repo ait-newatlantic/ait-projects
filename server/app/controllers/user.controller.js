@@ -9,7 +9,7 @@ exports.allAccess = (req, res) => {
 };
 
 exports.userBoard = (req, res) => {
-  res.status(200).send("Nhân viên");
+  res.status(200).send("User");
 };
 
 exports.adminBoard = (req, res) => {
