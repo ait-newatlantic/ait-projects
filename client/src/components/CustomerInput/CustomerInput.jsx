@@ -132,7 +132,7 @@ export default function CustomerInput() {
     return (
         <>
             <div className="custom">
-                {content === "Nhân viên" ?
+                {content === "User" ?
                     <div>
                          <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>TẠO KHÁCH HÀNG MỚI</div>
                         <Form onSubmit={handleSubmit} ref={form}>

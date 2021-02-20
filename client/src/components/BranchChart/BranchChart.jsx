@@ -155,7 +155,7 @@ export default function StackedBar(props){
           props.dongnai_65115,
           props.pda_65115
         ],
-        backgroundColor: 'rgb(54, 152, 235)',
+        backgroundColor: 'rgb(54, 152, 200)',
       },
       {
         label: '65116',

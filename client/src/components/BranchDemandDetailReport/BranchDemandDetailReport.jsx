@@ -56,7 +56,7 @@ export default function DemandDetailReport(props) {
         if (datetype === "Ngày tạo form") {
             getCreatedAt()
         }
-        else if (datetype === "Ngày cập nhật gần nhất") {
+        else if (datetype === "Ngày cập nhật") {
             getUpdatedAt()
         }
         else if (datetype === "Ngày đi thực tế") {
@@ -169,7 +169,7 @@ export default function DemandDetailReport(props) {
                                         <select className="form-control col-sm" id="exampleFormControlSelect1" onChange={onChangeDateType}>
                                             <option defaultValue="">Click để chọn</option>
                                             <option defaultValue="Ngày tạo form">Ngày tạo form</option>
-                                            <option defaultValue="Ngày cập nhật gần nhất">Ngày cập nhật gần nhất</option>
+                                            <option defaultValue="Ngày cập nhật">Ngày cập nhật</option>
                                             <option defaultValue="Ngày đi thực tế">Ngày đi thực tế</option>
                                             <option defaultValue="Tất cả các ngày">Tất cả các ngày</option>
                                         </select>
@@ -228,7 +228,7 @@ export default function DemandDetailReport(props) {
                                     <th>Màu xe</th>
                                     <th>Ngày đi thực tế</th>
                                     <th>Ngày tạo form</th>
-                                    <th>Ngày cập nhật gần nhất</th>
+                                    <th>Ngày cập nhật</th>
                                     <th>Ghi chú</th>
                                     <th>Cập nhật</th>
                                 </tr>

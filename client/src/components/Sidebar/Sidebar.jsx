@@ -37,6 +37,8 @@ import AdminDemandDetailReport from "../AdminDemandDetailReport/AdminDemandDetai
 import AdminDemandOverallReport from "../AdminDemanOverallReport/AdminDemandOverallReport"
 import Profile from "../Profile/Profile";
 
+import logo from "../../static/imgs/ait_logo.jpg"
+
 import * as MaterialUIIcons from '@material-ui/icons/';
 
 import "./sidebar.css"
@@ -98,7 +100,7 @@ export default function Sidebar() {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
-            background: '#24305E',
+            background: '#4169e1',
             color: 'white'
         },
         drawerClose: {
@@ -111,7 +113,7 @@ export default function Sidebar() {
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing(9) + 1,
             },
-            background: '#24305E',
+            background: '#4169e1',
             color: 'white'
         },
         toolbar: {
@@ -208,7 +210,7 @@ export default function Sidebar() {
             >
                 <div className={classes.toolbar}>
                     <Typography variant="p" noWrap>
-                        NEWAIT SOFTWARE
+                        ENTERPRISE SOFTWARE
                     </Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -218,38 +220,32 @@ export default function Sidebar() {
                 {showAdminBoard && (
                     <div>
                         <List>
-                            <ListItem button component={Link} to="#">
-                                <ListItemIcon> <MaterialUIIcons.Person style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary={currentUser.username}/>
+                            <ListItem button component={Link} to="/dashboard/admin/demands/overallreport">
+                                <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Dashboard" />
                             </ListItem>
-                        </List>
-                        <Divider/>
-                        <List>
-                            <ListItem button component={Link} to="/home">
-                                <ListItemIcon> <MaterialUIIcons.Home style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Trang chủ" />
+                            <ListItem button component={Link} to="/dashboard/admin/demands/detailreport">
+                                <ListItemIcon> <MaterialUIIcons.Ballot style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Báo cáo kinh doanh" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/admin/customers/list">
+                                <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Danh sách khách hàng" />
+                            </ListItem>
+                            <ListItem button component={Link} to="/dashboard/userlist">
+                                <ListItemIcon> <MaterialUIIcons.CardMembership style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemText primary="Danh sách tài khoản" />
                             </ListItem>
                         </List>
                         <Divider />
                         <List>
                             <ListItem button component={Link} to="/dashboard/demands/input">
                                 <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Nhập nhu cầu thực tế" />
+                                <ListItemText primary="Nhu cầu khách hàng" />
                             </ListItem>
-                            <ListItem button component={Link} to="/dashboard/admin/demands/overallreport">
-                                <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Báo cáo kinh doanh" />
-                            </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
                             <ListItem button component={Link} to="/dashboard/customers/input">
                                 <ListItemIcon> <MaterialUIIcons.PersonAdd style={{ fill: "white" }} /> </ListItemIcon>
                                 <ListItemText primary="Tạo khách hàng mới" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/admin/customers/list">
-                                <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Danh sách khách hàng" />
                             </ListItem>
                         </List>
                         <Divider />
@@ -257,10 +253,6 @@ export default function Sidebar() {
                             <ListItem button component={Link} to="/dashboard/resetpassword">
                                 <ListItemIcon> <MaterialUIIcons.VpnKey style={{ fill: "white" }} /> </ListItemIcon>
                                 <ListItemText primary="Đổi mật khẩu" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/userlist">
-                                <ListItemIcon> <MaterialUIIcons.RecentActors style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Danh sách users" />
                             </ListItem>
                             <ListItem button component={Link} to="/login" onClick={logOut}>
                                 <ListItemIcon>
@@ -274,19 +266,12 @@ export default function Sidebar() {
                 {showModeratorBoard && (
                     <div>
                         <List>
-                            <ListItem button component={Link} to="/home">
-                                <ListItemIcon> <MaterialUIIcons.Home style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Trang chủ" />
-                            </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
                             <ListItem button component={Link} to="/dashboard/demands/input">
                                 <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Nhập nhu cầu thực tế" />
+                                <ListItemText primary="Nhu cầu khách hàng" />
                             </ListItem>
                             <ListItem button component={Link} to="/dashboard/branch/demands/overallreport">
-                                <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
+                                <ListItemIcon> <MaterialUIIcons.Ballot style={{ fill: "white" }} /> </ListItemIcon>
                                 <ListItemText primary="Báo cáo kinh doanh" />
                             </ListItem>
                         </List>

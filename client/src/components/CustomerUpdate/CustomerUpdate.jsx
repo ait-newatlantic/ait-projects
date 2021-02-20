@@ -42,24 +42,6 @@ export default function CustomerUpdate(props) {
         setCustomer_Representative(customer_representative);
     };
 
-    const validEmail = (value) => {
-        if (!value.trim().length) {
-            setCustomer_Representative_Email(customers.customer_representative_email)
-        }
-    };
-
-    const validName = (value) => {
-        if (!value.trim().length) {
-            setCustomer_Representative(customers.customer_representative)
-        }
-    };
-
-    const validNumber = (value) => {
-        if (!value.trim().length) {
-            setCustomer_Representative_Number(customers.customer_representative_number)
-        }
-    };
-
     const handleUpdate = (e) => {
         e.preventDefault();
         setId(props.match.params.id)
@@ -134,7 +116,7 @@ export default function CustomerUpdate(props) {
 
     return (
         <div className="custom">
-            { content === "Nhân viên" ?
+            { content === "User" ?
                 <Form onSubmit={handleUpdate} ref={form}>
                     {!successful && (
                         <div>
@@ -143,7 +125,7 @@ export default function CustomerUpdate(props) {
                                 <div className="card">
                                     <div className="card-body">
                                         <h6><strong>Thông tin khách hàng</strong></h6>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >Tên KH (1) (*): </label>
                                             <div className="col-sm">
                                                 <div className="form-control" style={{ overflow: "auto" }}>
@@ -151,7 +133,7 @@ export default function CustomerUpdate(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >SĐT KH (*): </label>
                                             <div className="col-sm">
                                                 <div className="form-control">
@@ -159,7 +141,7 @@ export default function CustomerUpdate(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4">Khu vực KH (*): </label>
                                             <div className="col-sm">
                                                 <div className="form-control">
@@ -168,7 +150,7 @@ export default function CustomerUpdate(props) {
                                             </div>
                                         </div>
 
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >Hình thức KH (*): </label>
                                             <div className="col-sm">
                                                 <div className="form-control">
@@ -177,7 +159,7 @@ export default function CustomerUpdate(props) {
                                             </div>
                                         </div>
 
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4">Địa chỉ KH (*): </label>
                                             <div className="col-sm">
                                                 <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" value={customers.customer_address}></textarea>
@@ -188,7 +170,7 @@ export default function CustomerUpdate(props) {
                                 <div className="card">
                                     <div className="card-body">
                                         <h6><strong>Thông tin người đại diện</strong></h6>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >Tên người đại diện: </label>
                                             <div className="col-sm">
                                                 <Input
@@ -199,7 +181,7 @@ export default function CustomerUpdate(props) {
                                                     onChange={onChangeCustomer_Representative} />
                                             </div>
                                         </div>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >SĐT người đại diện: </label>
                                             <div className="col-sm">
                                                 <Input
@@ -210,7 +192,7 @@ export default function CustomerUpdate(props) {
                                                     onChange={onChangeCustomer_Representative_Number} />
                                             </div>
                                         </div>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >Email người đại diện: </label>
                                             <div className="col-sm">
                                                 <Input
@@ -226,7 +208,7 @@ export default function CustomerUpdate(props) {
                                 <div className="card">
                                     <div className="card-body">
                                         <h6><strong>Thông tin người nhập</strong></h6>
-                                        <div className="row">
+                                        <div className="row p-2">
                                             <label className="col-lg-4" >Người nhập</label>
                                             <div className="col-sm">
                                                 <p className="form-control">{currentUser.username}</p>

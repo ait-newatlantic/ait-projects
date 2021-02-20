@@ -27,7 +27,7 @@ export default function CarPieChart(props) {
           'rgb(111, 162, 235)',
           'rgb(132, 192, 192)',
           'rgb(113, 99, 132)',
-          'rgb(54, 152, 235)',
+          'rgb(54, 152, 200)',
           'rgb(75, 142, 192)',
           'rgb(75, 12, 192)',
           'rgb(75, 102, 192)',

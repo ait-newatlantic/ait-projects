@@ -1,21 +1,113 @@
 import React, { useEffect, useState } from 'react'
-import "./style.css"
 import DemandService from "../../services/demand.service"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import useFullPageLoader from "../../services/loader.service"
 import UserService from "../../services/user.service";
-import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
+import PropTypes from 'prop-types';
+import * as MaterialUIIcons from '@material-ui/icons/';
+import "./style.css"
 
-export default function AdminDemandDetailReport(props) {
+const useStyles1 = makeStyles((theme) => ({
+    root: {
+        flexShrink: 0,
+        marginLeft: theme.spacing(2.5),
+    },
+}));
 
-    const [fromdate, setFromDate] = useState(props.fromdate);
-    const [todate, setToDate] = useState(props.todate);
+const useStyles = makeStyles({
+    root: {
+        minWidth: '100%',
+    },
+    container: {
+        maxHeight: 700,
+    },
+});
+
+function TablePaginationActions(props) {
+    const classes = useStyles1();
+    const theme = useTheme();
+    const { count, page, rowsPerPage, onChangePage } = props;
+
+    const handleFirstPageButtonClick = (event) => {
+        onChangePage(event, 0);
+    };
+
+    const handleBackButtonClick = (event) => {
+        onChangePage(event, page - 1);
+    };
+
+    const handleNextButtonClick = (event) => {
+        onChangePage(event, page + 1);
+    };
+
+    const handleLastPageButtonClick = (event) => {
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    };
+
+    return (
+        <div className={classes.root}>
+            <IconButton
+                onClick={handleFirstPageButtonClick}
+                disabled={page === 0}
+                aria-label="first page"
+            >
+                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+            </IconButton>
+            <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </IconButton>
+            <IconButton
+                onClick={handleNextButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="next page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </IconButton>
+            <IconButton
+                onClick={handleLastPageButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="last page"
+            >
+                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+            </IconButton>
+        </div>
+    );
+}
+
+TablePaginationActions.propTypes = {
+    count: PropTypes.number.isRequired,
+    onChangePage: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+};
+
+export default function AdminDemandDetailReport() {
+    const newDate = new Date()
+    const year = newDate.getFullYear()
+    const classes = useStyles();
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(50);
+    const [fromdate, setFromDate] = useState(`${year}-1-1`);
+    const [todate, setToDate] = useState(`${year}-12-31`);
     const [datetype, setDateType] = useState('');
     const [yearResult, setYearResult] = useState();
     const [loader, showLoader, hideLoader] = useFullPageLoader()
     const [content, setContent] = useState("");
     const [total, setTotal] = useState(0);
-    const [flag, setFlag] = useState(0);
     const [branch, setBranch] = useState("");
     const [num, setNum] = useState(0);
 
@@ -60,7 +152,7 @@ export default function AdminDemandDetailReport(props) {
         if (datetype === "Ngày tạo form") {
             getCreatedAt()
         }
-        else if (datetype === "Ngày cập nhật gần nhất") {
+        else if (datetype === "Ngày cập nhật") {
             getUpdatedAt()
         }
         else if (datetype === "Ngày đi thực tế") {
@@ -96,15 +188,6 @@ export default function AdminDemandDetailReport(props) {
         setToDate(todate);
     };
 
-    const OnClickSearchTool = () => {
-        if (flag === 0) {
-            setFlag(1)
-        }
-        else {
-            setFlag(0)
-        }
-    }
-
     const FetchDemand = () => {
         showLoader()
         const branch = ""
@@ -115,9 +198,130 @@ export default function AdminDemandDetailReport(props) {
             setNum(num)
         })
     }
+    
+    const columns = [
+        {
+            id: 'employee_field',
+            label: 'Người đi thực tế',
+            align: 'left',
+            minWidth: 120
+        },
+        {
+            id: 'customer',
+            label: 'Tên khách hàng',
+            align: 'left',
+            minWidth: 120
+        },
+        {
+            id: 'customer_number',
+            label: 'SĐT khách hàng',
+            align: 'left',
+            minWidth: 120
+        },
+        {
+            id: 'customer_area',
+            label: 'Khu vực khách hàng',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'customer_type',
+            label: 'Loại khách hàng',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'customer_opinion',
+            label: 'Ý kiến khách hàng',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'customer_communication',
+            label: 'Phương thưc liên lạc',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'status',
+            label: 'Giai đoạn',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'model',
+            label: 'Model xe',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'type',
+            label: 'Loại xe',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'quantity',
+            label: 'Số lượng xe',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'color',
+            label: 'Màu xe',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'date',
+            label: 'Ngày đi thực tế',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'createdAt',
+            label: 'Ngày tạo form',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'updatedAt',
+            label: 'Ngày cập nhật',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'note',
+            label: 'Ghi chú',
+            minWidth: 120,
+            align: 'left',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+    ];
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
 
     useEffect(() => {
-        FetchDemand()
+        getGoAt()
     }, [])
 
     useEffect(() => {
@@ -143,161 +347,157 @@ export default function AdminDemandDetailReport(props) {
             {loader}
             {content === "Admin" ?
                 <div>
-                    <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
-                        <div className="row">
-                            <div className="col-sm">
-                                BÁO CÁO KINH DOANH CHI TIẾT ({total} RECORDS TỪ {fromdate} ĐẾN {todate})
-                                    </div>
-                            <div className="col-sm text-right">
-                                <ReactHTMLTableToExcel
-                                    className="btn btn-info"
-                                    table="emp"
-                                    filename="Báo cáo kinh doanh"
-                                    sheet="Sheet"
-                                    buttonText="Export excel"
-                                />
-
-                                <button type="button" className="btn btn-success" style={{marginLeft:"5px"}} onClick={OnClickSearchTool}>
-                                    Tra cứu nâng cao
-                                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    {flag === 1 ?
-                        <div>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <div className="row">
-                                        <label className="col-lg-4">Loại ngày</label>
-                                        <select className="form-control col-sm" id="exampleFormControlSelect1" onChange={onChangeDateType}>
-                                            <option defaultValue="">Click để chọn</option>
-                                            <option defaultValue="Ngày tạo form">Ngày tạo form</option>
-                                            <option defaultValue="Ngày cập nhật gần nhất">Ngày cập nhật gần nhất</option>
-                                            <option defaultValue="Ngày đi thực tế">Ngày đi thực tế</option>
-                                            <option defaultValue="Tất cả các ngày">Tất cả các ngày</option>
-                                        </select>
-                                    </div>
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div className="d-flex md:flex-col mr-auto">
+                                <div className="d-inline-flex">
+                                    <input className="form-control" type="date"
+                                        id="exampleFormControlInput1" onChange={onChangeFromDate} />
                                 </div>
-                                <div className="col-sm">
-                                    <div className="row">
-                                        <label className="col-lg-4" >Từ ngày</label>
-                                        <input className="form-control col-sm" type="date"
-                                            id="exampleFormControlInput1" onChange={onChangeFromDate} />
-                                    </div>
+                                <div className="d-inline-flex p-2">
+                                    <MaterialUIIcons.ArrowForward />
                                 </div>
-                                <div className="col-sm">
-                                    <div className="row">
-                                        <label className="col-lg-4" >Đến ngày</label>
-                                        <input type="date" className="form-control col-sm"
-                                            id="exampleFormControlInput1" onChange={onChangeToDate} />
-                                    </div>
+                                <div className="d-inline-flex">
+                                    <input type="date" className="form-control"
+                                        id="exampleFormControlInput1" onChange={onChangeToDate} />
                                 </div>
-                                <div className="col-sm">
+                                <div className="d-inline-flex pl-2">
                                     <button type="button" className="btn btn-primary" onClick={Submit}>
-                                        <SearchIcon />
-                                    </button>
+                                        <MaterialUIIcons.Search />Tra cứu
+                                                </button>
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <div className="row">
-                                        <label className="col-lg-4" >Chi nhánh</label>
-                                        <select className="form-control col-sm" name="branch" id="branch" onChange={onChangeBranch}>
-                                            <option value="">Total</option>
-                                            <option value="NVL">NVL</option>
-                                            <option value="PDA">PDA</option>
-                                            <option value="DONGNAI">DONGNAI</option>
-                                            <option value="QUANGTRI">QUANGTRI</option>
-                                            <option value="DANANG">DANANG</option>
-                                            <option value="VUNGTAU">VUNGTAU</option>
-                                            <option value="GIALAI">GIALAI</option>
-                                            <option value="TAYNINH">TAYNINH</option>
-                                            <option value="DAKLAK">DAKLAK</option>
-                                            <option value="LAMDONG">LAMDONG</option>
-                                            <option value="CANTHO">CANTHO</option>
-                                            <option value="BINHPHUOC">BINHPHUOC</option>
-                                            <option value="HUNGYEN">HUNGYEN</option>
-                                            <option value="BINHDINH">BINHDINH</option>
-                                        </select>
-                                    </div>
+                            <span>
+                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                            </span>
+                        </div>
+                    </nav>
+                    <Paper className={classes.root}>
+                        <div className="card-header text-black" style={{ margin: "auto" }}>
+                            <div className="d-flex row">
+                                <div className="d-inline-flex p-2 mr-auto">
+                                    BÁO CÁO CHI TIẾT ({total} nhu cầu từ {fromdate} đến {todate})
+                        </div>
+                                <div className="d-inline-flex p-2">
+                                    <select className="form-control" onChange={onChangeDateType}>
+                                        <option defaultValue="">Loại ngày</option>
+                                        <option defaultValue="Ngày tạo form">Ngày tạo form</option>
+                                        <option defaultValue="Ngày cập nhật">Ngày cập nhật</option>
+                                        <option defaultValue="Ngày đi thực tế">Ngày đi thực tế</option>
+                                        <option defaultValue="Tất cả các ngày">Tất cả các ngày</option>
+                                    </select>
                                 </div>
-                                <div className="col-sm">
-
+                                <div className="d-inline-flex p-2">
+                                    <select className="form-control col-sm" name="branch" id="branch" onChange={onChangeBranch}>
+                                        <option value="">Chi nhánh</option>
+                                        <option value="NVL">NVL</option>
+                                        <option value="PDA">PDA</option>
+                                        <option value="DONGNAI">DONGNAI</option>
+                                        <option value="QUANGTRI">QUANGTRI</option>
+                                        <option value="DANANG">DANANG</option>
+                                        <option value="VUNGTAU">VUNGTAU</option>
+                                        <option value="GIALAI">GIALAI</option>
+                                        <option value="TAYNINH">TAYNINH</option>
+                                        <option value="DAKLAK">DAKLAK</option>
+                                        <option value="LAMDONG">LAMDONG</option>
+                                        <option value="CANTHO">CANTHO</option>
+                                        <option value="BINHPHUOC">BINHPHUOC</option>
+                                        <option value="HUNGYEN">HUNGYEN</option>
+                                        <option value="BINHDINH">BINHDINH</option>
+                                    </select>
                                 </div>
-                                <div className="col-sm">
-
-                                </div>
-                                <div className="col-sm">
-
+                                <div className="d-inline-flex p-2">
+                                    <ReactHTMLTableToExcel
+                                        className="btn btn-info"
+                                        table="emp"
+                                        filename="Báo cáo kinh doanh"
+                                        sheet="Sheet"
+                                        buttonText="Export excel"
+                                    />
                                 </div>
                             </div>
                         </div>
-                        :
-                        <div></div>
-                    }
-                    <div className="table-container">
-                        <table id="emp" className="table-lg" >
-                            <thead>
-                                <tr id="titles" key="a">
-                                    <th rowSpan="1">STT</th>
-                                    <th colSpan="1">Chi nhánh</th>
-                                    <th colSpan="1">Thông tin người nhập</th>
-                                    <th colSpan="7">Thông tin khách hàng</th>
-                                    <th colSpan="4">Thông tin xe</th>
-                                    <th colSpan="4">Thông tin thêm</th>
-                                    <th colSpan="1">Chức năng</th>
-                                </tr>
-                                <tr>
-                                    <th>#</th>
-                                    <th></th>
-                                    <th>Người đi thực tế</th>
-                                    <th>Tên khách hàng</th>
-                                    <th>Số điện thoại khách hàng</th>
-                                    <th>Loại khách hàng</th>
-                                    <th>Khách hàng thuộc khu vực</th>
-                                    <th>Ý kiến khách hàng</th>
-                                    <th>Phương thức liên lạc</th>
-                                    <th>Giai đoạn</th>
-                                    <th>Model xe</th>
-                                    <th>Loại xe</th>
-                                    <th>Số lượng</th>
-                                    <th>Màu xe</th>
-                                    <th>Ngày đi thực tế</th>
-                                    <th>Ngày tạo form</th>
-                                    <th>Ngày cập nhật gần nhất</th>
-                                    <th>Ghi chú</th>
-                                    <th>Cập nhật</th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {!!yearResult && yearResult.map((form, index) => (
-                                    <tr className="content" key={form.id}>
-                                        <td>{index + 1}</td>
-                                        <td>{form.employee.split('.')[0]}</td>
-                                        <td>{form.employee_field}</td>
-                                        <td>{form.customer}</td>
-                                        <td>{form.customer_number}</td>
-                                        <td>{form.customer_type}</td>
-                                        <td>{form.customer_area}</td>
-                                        <td>{form.customer_opinion}</td>
-                                        <td>{form.customer_communication}</td>
-                                        <td>{form.status}</td>
-                                        <td>{form.model}</td>
-                                        <td>{form.type}</td>
-                                        <td>{form.quantity}</td>
-                                        <td>{form.color}</td>
-                                        <td>{form.date}</td>
-                                        <td>{form.createdAt.substring(0, 10)}</td>
-                                        <td>{form.updatedAt.substring(0, 10)}</td>
-                                        <td>{form.note}</td>
-                                        <td>
-                                            <a className="btn btn-warning btn-sm" href={`/dashboard/demands/update/${form.id}`} role="button">Cập nhật</a>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                        <TableContainer className="table-container">
+                            <Table id="emp" stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell
+                                            key="idf"
+                                            align="center"
+                                            style={{ minWidth: "120" }}
+                                        >
+                                            <strong>#</strong>
+                                        </TableCell>
+                                        <TableCell
+                                            key="idv"
+                                            align="center"
+                                            style={{ minWidth: "120" }}
+                                        >
+                                            <strong>Chi nhánh</strong>
+                                        </TableCell>
+                                        {columns.map((column) => (
+                                            <TableCell
+                                                key={column.id}
+                                                align={column.align}
+                                                style={{ minWidth: column.minWidth }}
+                                            >
+                                                <strong>{column.label}</strong>
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {yearResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                                <TableCell
+                                                    key="idx"
+                                                    align="center"
+                                                    style={{ minWidth: "120" }}
+                                                >
+                                                    <a href={`/dashboard/demands/update/${row.id}`}>
+                                                        {index + 1}
+                                                    </a>
+                                                </TableCell>
+                                                <TableCell
+                                                    key="ide"
+                                                    align="center"
+                                                    style={{ minWidth: "120" }}
+                                                >
+                                                    {row.employee.split('.')[0]}
+                                                </TableCell>
+                                                {columns.map((column) => {
+                                                    const value = row[column.id]
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <TablePagination
+                            rowsPerPageOptions={[50, 100, 200, 500, 1000, { label: 'All', value: -1 }]}
+                            component="div"
+                            count={yearResult.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            SelectProps={{
+                                inputProps: { 'aria-label': 'rows per page' },
+                                native: true,
+                            }}
+                            onChangePage={handleChangePage}
+                            onChangeRowsPerPage={handleChangeRowsPerPage}
+                            ActionsComponent={TablePaginationActions}
+                        />
+                    </Paper>
                 </div>
                 :
                 <div>{content}</div>

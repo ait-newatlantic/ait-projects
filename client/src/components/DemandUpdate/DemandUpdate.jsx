@@ -138,7 +138,7 @@ export default function DemandUpdate(props) {
 
     return (
         <div className="custom">
-            { content == "Nhân viên" ?
+            { content == "User" ?
                 <div>
                     <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
                         CẬP NHẬT NHU CẦU THỰC TẾ
