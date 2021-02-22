@@ -34,11 +34,12 @@ export default function DemandOverallReport() {
     const [content, setContent] = useState("");
     const [flag, setFlag] = useState(0)
     const [btnName, setbtnName] = useState("")
+    const [branch, setBranch] = useState("");
     const [loader, showLoader, hideLoader] = useFullPageLoader()
 
     const FetchTotal = () => {
         showLoader()
-        const employee = ""
+        const employee = branch
         DemandService.get_total(
             employee,
             fromdate,
@@ -57,6 +58,20 @@ export default function DemandOverallReport() {
             todate,
         ).then((response) => {
             setYearResult2(response.data);
+        });
+    }
+
+    const onChangeBranch = (e) => {
+        const branch = e.target.value;
+        setBranch(branch);
+        const employee = branch
+        DemandService.get_total(
+            employee,
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult(response.data);
         });
     }
 
@@ -150,6 +165,9 @@ export default function DemandOverallReport() {
     const Submit = () => {
         FetchTotal()
         FetchOverall()
+        FetchDemandModels()
+        FetchDemandQuantity()
+        FetchBranchCustomerQuantity()
     }
 
     useEffect(() => {
@@ -266,7 +284,23 @@ export default function DemandOverallReport() {
                                                 BÁO CÁO TỔNG QUÁT ({fromdate} đến {todate})
                                             </div>
                                             <div className="d-inline-flex">
-                                                <a href="/dashboard/admin/demands/detailreport" className="btn btn-primary btn-small">Chi tiết</a>
+                                                <select className="form-control col-sm" name="branch" id="branch" onChange={onChangeBranch}>
+                                                    <option value="">Tất cả</option>
+                                                    <option value="NVL">NVL</option>
+                                                    <option value="PDA">PDA</option>
+                                                    <option value="DONGNAI">DONGNAI</option>
+                                                    <option value="QUANGTRI">QUANGTRI</option>
+                                                    <option value="DANANG">DANANG</option>
+                                                    <option value="VUNGTAU">VUNGTAU</option>
+                                                    <option value="GIALAI">GIALAI</option>
+                                                    <option value="TAYNINH">TAYNINH</option>
+                                                    <option value="DAKLAK">DAKLAK</option>
+                                                    <option value="LAMDONG">LAMDONG</option>
+                                                    <option value="CANTHO">CANTHO</option>
+                                                    <option value="BINHPHUOC">BINHPHUOC</option>
+                                                    <option value="HUNGYEN">HUNGYEN</option>
+                                                    <option value="BINHDINH">BINHDINH</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

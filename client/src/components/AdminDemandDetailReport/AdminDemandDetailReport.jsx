@@ -103,8 +103,9 @@ export default function AdminDemandDetailReport() {
     const [rowsPerPage, setRowsPerPage] = React.useState(50);
     const [fromdate, setFromDate] = useState(`${year}-1-1`);
     const [todate, setToDate] = useState(`${year}-12-31`);
-    const [datetype, setDateType] = useState('');
+    const [datetype, setDateType] = useState('Tất cả các ngày');
     const [yearResult, setYearResult] = useState();
+    const [yearResult2, setYearResult2] = useState();
     const [loader, showLoader, hideLoader] = useFullPageLoader()
     const [content, setContent] = useState("");
     const [total, setTotal] = useState(0);
@@ -148,35 +149,45 @@ export default function AdminDemandDetailReport() {
         });
     }
 
+    const FetchTotal = () => {
+        showLoader()
+        const employee = branch
+        DemandService.get_total(
+            employee,
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult2(response.data);
+        });
+    }
+
     const Submit = () => {
-        if (datetype === "Ngày tạo form") {
-            getCreatedAt()
-        }
-        else if (datetype === "Ngày cập nhật") {
-            getUpdatedAt()
-        }
-        else if (datetype === "Ngày đi thực tế") {
-            getGoAt()
-        }
-        else {
-            getDate()
-        }
+        const employee = branch
+        DemandService.get_goAt(employee, fromdate, todate).then((response) => {
+            setYearResult(response.data);
+            setTotal(response.data.length)
+            console.log(response.data)
+        });
+        DemandService.get_total(
+            employee,
+            fromdate,
+            todate,
+        ).then((response) => {
+            hideLoader()
+            setYearResult2(response.data);
+        });
     }
 
     const onChangeBranch = (e) => {
         const branch = e.target.value;
         setBranch(branch);
-        DemandService.get_demands(branch).then((response) => {
-            setYearResult(response.data)
-            setTotal(response.data.length)
-            setNum(num)
-        })
     }
 
-    const onChangeDateType = (e) => {
-        const datetype = e.target.value;
-        setDateType(datetype);
-    };
+    // const onChangeDateType = (e) => {
+    //     const datetype = e.target.value;
+    //     setDateType(datetype);
+    // };
 
     const onChangeFromDate = (e) => {
         const fromdate = e.target.value;
@@ -198,7 +209,7 @@ export default function AdminDemandDetailReport() {
             setNum(num)
         })
     }
-    
+
     const columns = [
         {
             id: 'employee_field',
@@ -322,6 +333,7 @@ export default function AdminDemandDetailReport() {
 
     useEffect(() => {
         getGoAt()
+        FetchTotal()
     }, [])
 
     useEffect(() => {
@@ -380,19 +392,18 @@ export default function AdminDemandDetailReport() {
                             <div className="d-flex row">
                                 <div className="d-inline-flex p-2 mr-auto">
                                     BÁO CÁO CHI TIẾT ({total} nhu cầu từ {fromdate} đến {todate})
-                        </div>
-                                <div className="d-inline-flex p-2">
+                            </div>
+                                {/* <div className="d-inline-flex p-2">
                                     <select className="form-control" onChange={onChangeDateType}>
-                                        <option defaultValue="">Loại ngày</option>
+                                        <option defaultValue="Tất cả các ngày">Tất cả các ngày</option>
                                         <option defaultValue="Ngày tạo form">Ngày tạo form</option>
                                         <option defaultValue="Ngày cập nhật">Ngày cập nhật</option>
                                         <option defaultValue="Ngày đi thực tế">Ngày đi thực tế</option>
-                                        <option defaultValue="Tất cả các ngày">Tất cả các ngày</option>
                                     </select>
-                                </div>
+                                </div> */}
                                 <div className="d-inline-flex p-2">
                                     <select className="form-control col-sm" name="branch" id="branch" onChange={onChangeBranch}>
-                                        <option value="">Chi nhánh</option>
+                                        <option value="">Tất cả</option>
                                         <option value="NVL">NVL</option>
                                         <option value="PDA">PDA</option>
                                         <option value="DONGNAI">DONGNAI</option>
@@ -420,6 +431,44 @@ export default function AdminDemandDetailReport() {
                                 </div>
                             </div>
                         </div>
+                        <TableContainer className="table-container">
+                            <Table className={classes.table} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Tổng cộng</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Tiếp cận chào hàng</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Chốt đơn hàng</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Chạy thử</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Đàm phán</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Đã cọc</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Đã thanh toán tạm ứng</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Hoàn tất giao dịch</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Đã cọc</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Bàn giao chưa thanh toán</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Lên hợp đồng</b></TableCell>
+                                        <TableCell align="right" style={{ background: "white" }}><b>Giao dịch thất bại</b></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {yearResult2.map((row) => (
+                                        <TableRow key={row.name}>
+                                            <TableCell align="right">{row.tongcong}</TableCell>
+                                            <TableCell align="right">{row.tiepcanchaohang}</TableCell>
+                                            <TableCell align="right">{row.chotdonhang}</TableCell>
+                                            <TableCell align="right">{row.chaythu}</TableCell>
+                                            <TableCell align="right">{row.damphan}</TableCell>
+                                            <TableCell align="right">{row.dacoc}</TableCell>
+                                            <TableCell align="right">{row.dathanhtoantamung}</TableCell>
+                                            <TableCell align="right">{row.hoantatgiaodich}</TableCell>
+                                            <TableCell align="right">{row.dacoc}</TableCell>
+                                            <TableCell align="right">{row.bangiaochuathanhtoan}</TableCell>
+                                            <TableCell align="right">{row.lenhopdong}</TableCell>
+                                            <TableCell align="right">{row.giaodichthatbai}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                         <TableContainer className="table-container">
                             <Table id="emp" stickyHeader aria-label="sticky table">
                                 <TableHead>
