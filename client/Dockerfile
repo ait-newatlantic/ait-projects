@@ -7,6 +7,11 @@ ARG REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
 
 WORKDIR /usr/src/app
 
+# install git
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
 # install serve
 RUN npm install -g serve
 
