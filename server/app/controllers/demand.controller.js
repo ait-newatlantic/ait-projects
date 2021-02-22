@@ -3,12 +3,12 @@ const Demand = db.demand;
 const Op = db.Sequelize.Op;
 
 //ADMIN
-exports.create =  (req, res) => {
+exports.create = (req, res) => {
   // Validate request check if any thing missing!!!
-  if (!req.body.customer || 
+  if (!req.body.customer ||
     !req.body.customer_type ||
     !req.body.status ||
-    !req.body.customer_communication||
+    !req.body.customer_communication ||
     !req.body.quantity ||
     !req.body.color ||
     !req.body.employee_field ||
@@ -16,7 +16,7 @@ exports.create =  (req, res) => {
     !req.body.date ||
     !req.body.model ||
     !req.body.type ||
-    req.body.arr && !req.body.arr.length ) {
+    req.body.arr && !req.body.arr.length) {
     res.status(400).send({
       message: { heading: "Oh snap! You got an error!", message: " Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!" }
     });
@@ -129,7 +129,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as binhphuoc_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as cantho_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as danang_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as quanqtri_6540,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as quangtri_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as hungyen_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as tayninh_6540,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as pda_6540,
@@ -143,7 +143,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as binhphuoc_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as cantho_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as danang_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as quanqtri_6460,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as quangtri_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as hungyen_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as tayninh_6460,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as pda_6460,
@@ -157,7 +157,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as binhphuoc_43253,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as cantho_43253,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as danang_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as quanqtri_43253,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as quangtri_43253,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as hungyen_43253,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as tayninh_43253,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as pda_43253,
@@ -171,7 +171,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as binhphuoc_43265,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as cantho_43265,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as danang_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as quanqtri_43265,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as quangtri_43265,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as hungyen_43265,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as tayninh_43265,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as pda_43265,
@@ -185,7 +185,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as binhphuoc_43266,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as cantho_43266,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as danang_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as quanqtri_43266,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as quangtri_43266,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as hungyen_43266,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as tayninh_43266,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as pda_43266,
@@ -199,7 +199,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as binhphuoc_53228,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as cantho_53228,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as danang_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as quanqtri_53228,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as quangtri_53228,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as hungyen_53228,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as tayninh_53228,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as pda_53228,
@@ -213,7 +213,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as binhphuoc_53229,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as cantho_53229,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as danang_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as quanqtri_53229,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as quangtri_53229,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as hungyen_53229,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as tayninh_53229,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as pda_53229,
@@ -227,7 +227,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as binhphuoc_65115,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as cantho_65115,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as danang_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as quanqtri_65115,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as quangtri_65115,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as hungyen_65115,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as tayninh_65115,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as pda_65115,
@@ -241,7 +241,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as binhphuoc_65116,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as cantho_65116,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as danang_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as quanqtri_65116,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as quangtri_65116,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as hungyen_65116,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as tayninh_65116,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as pda_65116,
@@ -255,7 +255,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as binhphuoc_65117,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as cantho_65117,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as danang_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as quanqtri_65117,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as quangtri_65117,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as hungyen_65117,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as tayninh_65117,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as pda_65117,
@@ -269,7 +269,7 @@ exports.findAllModels = (req, res) => {
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhphuoc_c57,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as cantho_c57,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as danang_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as quanqtri_c57,
+         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as quangtri_c57,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as hungyen_c57,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as tayninh_c57,
          SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as pda_c57
@@ -462,25 +462,39 @@ exports.findAllUpdatedAt = (req, res) => {
     });
 };
 
+// exports.findAllGoAt = (req, res) => {
+//   fromdate = req.query.fromdate;
+//   todate = req.query.todate;
+
+//   Demand.findAll({
+//     where: {
+//       date: {
+//         [Op.between]: [fromdate, todate]
+//       }
+//     }
+//   })
+//     .then(data => {
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message:
+//           err.message || "Some error occurred while retrieving demands."
+//       });
+//     });
+// };
+
 exports.findAllGoAt = (req, res) => {
   fromdate = req.query.fromdate;
   todate = req.query.todate;
+  employee = req.query.employee
+  return db.sequelize.query(
+    `SELECT 
+   * FROM demands WHERE UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%"
+         `,
+    { type: db.sequelize.QueryTypes.SELECT })
+    .then(queues => res.json(queues))
+    .catch(err => res.status(400).json(err));
 
-  Demand.findAll({
-    where: {
-      date: {
-        [Op.between]: [fromdate, todate]
-      }
-    }
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
 };
 
