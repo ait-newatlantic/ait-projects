@@ -4,497 +4,372 @@ const Op = db.Sequelize.Op;
 
 //ADMIN
 exports.create = (req, res) => {
-  // Validate request check if any thing missing!!!
-  if (!req.body.customer ||
-    !req.body.customer_type ||
-    !req.body.status ||
-    !req.body.customer_communication ||
-    !req.body.quantity ||
-    !req.body.color ||
-    !req.body.employee_field ||
-    !req.body.employee ||
-    !req.body.date ||
-    !req.body.model ||
-    !req.body.type ||
-    req.body.arr && !req.body.arr.length) {
-    res.status(400).send({
-      message: { heading: "Oh snap! You got an error!", message: " Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!" }
-    });
-    return;
-  }
+    // Validate request check if any thing missing!!!
+    if (req.body.arr && !req.body.arr.length) {
+        res.status(400).send({
+            message: { heading: "Oh snap! You got an error!", message: " Xin vui lòng nhập thông tin khách hàng và thông tin xe đầy đủ!" }
+        });
+        return;
+    }
 
-  const initial = {
-    arr: req.body.arr,
-  }
+    const initial = {
+        arr: req.body.arr,
+    }
 
-  // Save Demand in the database
-  const requestArr = initial.arr.map(item => {
-    return Demand.create({
-      date: req.body.date,
-      employee: req.body.employee,
-      employee_field: req.body.employee_field,
-      model: item.model,
-      type: item.type,
-      quantity: parseInt(item.quantity),
-      color: item.color,
-      status: req.body.status,
-      customer: req.body.customer,
-      customer_number: req.body.customer_number,
-      customer_type: req.body.customer_type,
-      customer_area: req.body.customer_area,
-      customer_opinion: req.body.customer_opinion,
-      customer_meeting: req.body.customer_meeting,
-      customer_communication: req.body.customer_communication,
-      note: req.body.note,
+    // Save Demand in the database
+    const requestArr = initial.arr.map(item => {
+        return Demand.create({
+            demand_date: item.demand_date,
+            userId: item.userId,
+            demand_employee: item.demand_employee,
+            car_modelId: item.car_modelId,
+            car_typeId: item.car_typeId,
+            demand_quantity: parseInt(item.demand_quantity),
+            colorId: item.colorId,
+            demand_statusId: item.demand_statusId,
+            customerId: item.customerId,
+            customer_typeId: item.customer_typeId,
+            demand_opinion: item.demand_opinion,
+            demand_meeting: item.demand_meeting,
+            contact_typeId: item.contact_typeId,
+            demand_note: item.demand_note,
+        })
     })
-  })
-  return Promise.all(requestArr)
-    .then(data => {
-      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Demand."
-      });
-    });
-};
-
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-  Demand.findByPk(id)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving Demand with id=" + id
-      });
-    });
+    return Promise.all(requestArr)
+        .then(data => {
+            res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data });
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating the Demand."
+            });
+            console.log(err)
+        });
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+    const id = req.params.id;
+    const demand = {
+        demand_date: req.body.demand_date,
+        demand_statusId: req.body.demand_status_id,
+        colorId: req.body.color_id,
+        demand_note: req.body.demand_note,
+    };
 
-  if (!req.body.date) {
-    res.status(400).send({
-      message: "Xin vui lòng nhập thông tin đầy đủ!"
-    });
-    return;
-  }
-
-  const demand = {
-    date: req.body.date,
-    status: req.body.status,
-    ait: req.body.ait,
-    kmt: req.body.kmt,
-    color: req.body.color,
-    note: req.body.note,
-  };
-
-  Demand.update(demand, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
-        });
-      } else {
-        res.status(400).send({
-          message: { heading: "Oh snap! You got an error!", message: `Cannot update Demand with id=${id}. Maybe Demand was not found or req.body is empty!` }
-        });
-      }
+    Demand.update(demand, {
+        where: { id: id }
     })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Demand with id=" + id
-      });
-    });
-};
-
-exports.findAllModels = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-  employee = req.query.employee
-
-  return db.sequelize.query(
-    `SELECT
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as nvl_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as vungtau_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as daklak_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as lamdong_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as dongnai_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as gialai_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as binhphuoc_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as cantho_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as danang_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as quangtri_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as hungyen_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as tayninh_6540,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6540" THEN quantity END) as pda_6540,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as nvl_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as vungtau_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as daklak_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as lamdong_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as dongnai_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as gialai_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as binhphuoc_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as cantho_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as danang_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as quangtri_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as hungyen_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as tayninh_6460,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="6460" THEN quantity END) as pda_6460,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as nvl_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as vungtau_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as daklak_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as lamdong_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as dongnai_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as gialai_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as binhphuoc_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as cantho_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as danang_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as quangtri_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as hungyen_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as tayninh_43253,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43253" THEN quantity END) as pda_43253,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as nvl_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as vungtau_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as daklak_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as lamdong_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as dongnai_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as gialai_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as binhphuoc_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as cantho_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as danang_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as quangtri_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as hungyen_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as tayninh_43265,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43265" THEN quantity END) as pda_43265,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as nvl_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as vungtau_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as daklak_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as lamdong_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as dongnai_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as gialai_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as binhphuoc_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as cantho_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as danang_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as quangtri_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as hungyen_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as tayninh_43266,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="43266" THEN quantity END) as pda_43266,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as nvl_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as vungtau_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as daklak_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as lamdong_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as dongnai_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as gialai_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as binhphuoc_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as cantho_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as danang_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as quangtri_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as hungyen_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as tayninh_53228,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53228" THEN quantity END) as pda_53228,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as nvl_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as vungtau_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as daklak_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as lamdong_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as dongnai_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as gialai_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as binhphuoc_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as cantho_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as danang_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as quangtri_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as hungyen_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as tayninh_53229,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="53229" THEN quantity END) as pda_53229,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as nvl_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as vungtau_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as daklak_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as lamdong_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as dongnai_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as gialai_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as binhphuoc_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as cantho_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as danang_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as quangtri_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as hungyen_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as tayninh_65115,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65115" THEN quantity END) as pda_65115,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as nvl_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as vungtau_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as daklak_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as lamdong_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as dongnai_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as gialai_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as binhphuoc_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as cantho_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as danang_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as quangtri_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as hungyen_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as tayninh_65116,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65116" THEN quantity END) as pda_65116,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as nvl_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as vungtau_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as daklak_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as lamdong_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as dongnai_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as gialai_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as binhphuoc_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as cantho_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as danang_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as quangtri_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as hungyen_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as tayninh_65117,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="65117" THEN quantity END) as pda_65117,
-
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%NVL%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as nvl_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%VUNGTAU%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as vungtau_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DAKLAK%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as daklak_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%LAMDONG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as lamdong_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DONGNAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as dongnai_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%GIALAI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as gialai_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%BINHPHUOC%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as binhphuoc_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%CANTHO%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as cantho_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%DANANG%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as danang_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%QUANGTRI%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as quangtri_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%HUNGYEN%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as hungyen_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%TAYNINH%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as tayninh_c57,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%PDA%" AND status ="HOÀN TẤT GIAO DỊCH" AND model ="Cẩu 5-7 tấn" THEN quantity END) as pda_c57
-        
-         FROM demands`,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
+                });
+            } else {
+                res.status(400).send({
+                    message: { heading: "Oh snap! You got an error!", message: `Cannot update Demand with id=${id}. Maybe Demand was not found or req.body is empty!` }
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Demand with id=" + id + err
+            });
+            console.log(err)
+        });
 };
 
 exports.findAll = (req, res) => {
-  const employee = req.query.employee;
-  return db.sequelize.query(` SELECT * FROM demands WHERE employee LIKE "%${employee}%" `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
+    return db.sequelize.query(
+        ` SELECT demands.id, demands.demand_quantity, demands.demand_date, demands.demand_note, demands.demand_employee, demands.demand_opinion, 
+        demands.demand_meeting, demands.createdAt, demands.updatedAt, users.name, customers.customer_name, customers.customer_number,
+        customer_types.customer_type_name, provinces.province_name, branches.branch_name, demand_statuses.demand_status_name,
+        car_models.car_model_name, car_types.car_type_name, colors.color_name, contact_types.contact_type_name 
+      FROM demands 
+      LEFT JOIN users
+      ON demands.userId = users.id
+      LEFT JOIN customers
+      ON demands.customerId = customers.id
+      LEFT JOIN car_models
+      ON demands.car_modelId = car_models.car_model_id
+      LEFT JOIN car_types
+      ON demands.car_typeId = car_types.car_type_id
+      LEFT JOIN colors
+      ON demands.colorId = colors.color_id
+      LEFT JOIN demand_statuses
+      ON demands.demand_statusId = demand_statuses.demand_status_id
+      LEFT JOIN contact_types
+      ON demands.contact_typeId = contact_types.contact_type_id
+      LEFT JOIN customer_types
+      ON demands.customer_typeId = customer_types.customer_type_id
+      LEFT JOIN branches
+      ON users.branchId = branches.branch_id
+      LEFT JOIN provinces
+      ON customers.provinceId = provinces.province_id
+      WHERE demands.demand_hide = 0
+      ORDER BY demands.id DESC`, { type: db.sequelize.QueryTypes.SELECT })
+        .then(queues => res.json(queues))
+        .catch(err => res.status(400).json(err));
 };
 
-exports.findAllQuantity = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-  employee = req.query.employee
-
-  return db.sequelize.query(
-    `SELECT 
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="6540" THEN quantity END) as c6540,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="6460" THEN quantity END) as c6460,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="43253" THEN quantity END) as c43253,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="43265" THEN quantity END) as c43265,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="43266" THEN quantity END) as c43266,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="53228" THEN quantity END) as c53228,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="53229" THEN quantity END) as c53229,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="65115" THEN quantity END) as c65115,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="65116" THEN quantity END) as c65116,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="65117" THEN quantity END) as c65117,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" AND model="Cẩu 5-7 tấn" THEN quantity END) as c57
-    FROM demands
-         `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
+exports.findOne = (req, res) => {
+    const id = req.query.id;
+    return db.sequelize.query(
+        `SELECT demands.id, demands.demand_quantity, demands.demand_date, demands.demand_note, demands.demand_employee, demands.demand_opinion, 
+        demands.demand_meeting, demands.createdAt, demands.updatedAt, users.name, users.username, users.id AS user_id ,  customers.customer_name, customers.customer_number, customers.id AS customer_id,
+        customer_types.customer_type_name, customer_types.customer_type_id, provinces.province_name, branches.branch_name, demand_statuses.demand_status_name, demand_statuses.demand_status_id,
+        car_models.car_model_name, car_models.car_model_id, 
+        car_types.car_type_name, car_types.car_type_id,
+        colors.color_name, colors.color_id, 
+        contact_types.contact_type_name , contact_types.contact_type_id
+      FROM demands 
+      LEFT JOIN users
+      ON demands.userId = users.id
+      LEFT JOIN customers
+      ON demands.customerId = customers.id
+      LEFT JOIN car_models
+      ON demands.car_modelId = car_models.car_model_id
+      LEFT JOIN car_types
+      ON demands.car_typeId = car_types.car_type_id
+      LEFT JOIN colors
+      ON demands.colorId = colors.color_id
+      LEFT JOIN demand_statuses
+      ON demands.demand_statusId = demand_statuses.demand_status_id
+      LEFT JOIN contact_types
+      ON demands.contact_typeId = contact_types.contact_type_id
+      LEFT JOIN customer_types
+      ON demands.customer_typeId = customer_types.customer_type_id
+      LEFT JOIN branches
+      ON users.branchId = branches.branch_id
+      LEFT JOIN provinces
+      ON customers.provinceId = provinces.province_id
+        WHERE demands.id = "${id}"`, { type: db.sequelize.QueryTypes.SELECT })
+        .then(queues => res.json(queues))
+        .catch(err => res.status(400).json(err));
 };
 
-exports.findAllTotal = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-  employee = req.query.employee
-  return db.sequelize.query(
-    `SELECT 
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" THEN quantity END) as tongcong,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="TIẾP CẬN CHÀO HÀNG" THEN quantity END) as tiepcanchaohang,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="CHẠY THỬ" THEN quantity END) as chaythu,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="ĐÀM PHÁN" THEN quantity END) as damphan,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="CHỐT ĐƠN HÀNG" THEN quantity END) as chotdonhang,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="ĐÃ CỌC" THEN quantity END) as dacoc,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="ĐÃ THANH TOÁN TẠM ỨNG" THEN quantity END) as dathanhtoantamung,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="HOÀN TẤT GIAO DỊCH" THEN quantity END) as hoantatgiaodich,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="LÊN HỢP ĐỒNG" THEN quantity END) as lenhopdong,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="BÀN GIAO CHƯA THANH TOÁN" THEN quantity END) as bangiaochuathanhtoan,
-    SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND status="GIAO DỊCH THẤT BẠI" THEN quantity END) as giaodichthatbai
-    FROM demands
-         `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-
+exports.findDemandWithConditions = (req, res) => {
+    const branch_name = req.query.branch_name;
+    const demand_employee_name = req.query.demand_employee_name;
+    const province_name = req.query.province_name;
+    const customer_type_name = req.query.customer_type_name;
+    const contact_type_name = req.query.contact_type_name;
+    const demand_status_name = req.query.demand_status_name;
+    const car_model_name = req.query.car_model_name;
+    const car_type_name = req.query.car_type_name;
+    const from_date = req.query.from_date;
+    const to_date = req.query.to_date;
+    const username = req.query.username;
+    return db.sequelize.query(
+        ` SELECT demands.id, demands.demand_quantity, demands.demand_date, demands.demand_note, 
+        demands.demand_employee, demands.demand_opinion, demands.demand_hide,
+        demands.demand_meeting, demands.createdAt, demands.updatedAt, 
+        users.name, 
+        users.username,
+        customers.customer_name, customers.customer_number,
+        customer_types.customer_type_name, provinces.province_name, branches.branch_name, demand_statuses.demand_status_name,
+        car_models.car_model_name, car_types.car_type_name, colors.color_name, contact_types.contact_type_name   
+        FROM demands 
+    LEFT JOIN users
+    ON demands.userId = users.id
+    LEFT JOIN customers
+    ON demands.customerId = customers.id
+    LEFT JOIN car_models
+    ON demands.car_modelId = car_models.car_model_id
+    LEFT JOIN car_types
+    ON demands.car_typeId = car_types.car_type_id
+    LEFT JOIN colors
+    ON demands.colorId = colors.color_id
+    LEFT JOIN demand_statuses
+    ON demands.demand_statusId = demand_statuses.demand_status_id
+    LEFT JOIN contact_types
+    ON demands.contact_typeId = contact_types.contact_type_id
+    LEFT JOIN customer_types
+    ON demands.customer_typeId = customer_types.customer_type_id
+    LEFT JOIN branches
+    ON users.branchId = branches.branch_id
+    LEFT JOIN provinces
+    ON customers.provinceId = provinces.province_id
+    WHERE branches.branch_name LIKE "%${branch_name}%"
+    AND users.name LIKE "%${demand_employee_name}%"
+    AND provinces.province_name LIKE "%${province_name}%"
+    AND customer_types.customer_type_name LIKE "%${customer_type_name}%"
+    AND contact_types.contact_type_name LIKE "%${contact_type_name}%"
+    AND demand_statuses.demand_status_name LIKE "%${demand_status_name}%"
+    AND car_models.car_model_name LIKE "%${car_model_name}%"
+    AND car_types.car_type_name LIKE "%${car_type_name}%"
+    AND users.username LIKE "%${username}%"
+    AND UNIX_TIMESTAMP(demands.demand_date) BETWEEN UNIX_TIMESTAMP('${from_date}') AND UNIX_TIMESTAMP('${to_date}')
+    AND demands.demand_hide = 0
+      ORDER BY demands.id DESC`, { type: db.sequelize.QueryTypes.SELECT })
+        .then(queues => res.json(queues))
+        .catch(err => res.status(400).json(err));
 };
 
-exports.findAllOverall = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  return db.sequelize.query(
-    `SELECT 
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "1" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte1,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "1" THEN quantity END) as dukien1,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "2" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte2,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "2" THEN quantity END) as dukien2,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "3" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte3,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "3" THEN quantity END) as dukien3,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "4" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte4,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "4" THEN quantity END) as dukien4,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "5" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte5,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "5" THEN quantity END) as dukien5,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "6" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte6,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "6" THEN quantity END) as dukien6,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "7" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte7,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "7" THEN quantity END) as dukien7,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "8" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte8,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "8" THEN quantity END) as dukien8,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "9" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte9,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "9" THEN quantity END) as dukien9,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "10" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte10,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "10" THEN quantity END) as dukien10,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "11" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte11,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "11" THEN quantity END) as dukien11,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "12" AND status ="HOÀN TẤT GIAO DỊCH" THEN quantity END) as thucte12,
-         SUM(CASE WHEN UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%" AND MONTH(date) = "12" THEN quantity END) as dukien12
-         FROM demands`,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-
+exports.findDemandWithConditionsHide = (req, res) => {
+    const branch_name = req.query.branch_name;
+    const demand_employee_name = req.query.demand_employee_name;
+    const province_name = req.query.province_name;
+    const customer_type_name = req.query.customer_type_name;
+    const contact_type_name = req.query.contact_type_name;
+    const demand_status_name = req.query.demand_status_name;
+    const car_model_name = req.query.car_model_name;
+    const car_type_name = req.query.car_type_name;
+    const from_date = req.query.from_date;
+    const to_date = req.query.to_date;
+    const username = req.query.username;
+    return db.sequelize.query(
+        ` SELECT demands.id, demands.demand_quantity, demands.demand_date, demands.demand_note, 
+        demands.demand_employee, demands.demand_opinion, demands.demand_hide,
+        demands.demand_meeting, demands.createdAt, demands.updatedAt, 
+        users.name,
+        users.username,  
+        customers.customer_name, customers.customer_number,
+        customer_types.customer_type_name, provinces.province_name, branches.branch_name, demand_statuses.demand_status_name,
+        car_models.car_model_name, car_types.car_type_name, colors.color_name, contact_types.contact_type_name  
+        FROM demands 
+    LEFT JOIN users
+    ON demands.userId = users.id
+    LEFT JOIN customers
+    ON demands.customerId = customers.id
+    LEFT JOIN car_models
+    ON demands.car_modelId = car_models.car_model_id
+    LEFT JOIN car_types
+    ON demands.car_typeId = car_types.car_type_id
+    LEFT JOIN colors
+    ON demands.colorId = colors.color_id
+    LEFT JOIN demand_statuses
+    ON demands.demand_statusId = demand_statuses.demand_status_id
+    LEFT JOIN contact_types
+    ON demands.contact_typeId = contact_types.contact_type_id
+    LEFT JOIN customer_types
+    ON demands.customer_typeId = customer_types.customer_type_id
+    LEFT JOIN branches
+    ON users.branchId = branches.branch_id
+    LEFT JOIN provinces
+    ON customers.provinceId = provinces.province_id
+    WHERE branches.branch_name LIKE "%${branch_name}%"
+    AND users.name LIKE "%${demand_employee_name}%"
+    AND provinces.province_name LIKE "%${province_name}%"
+    AND customer_types.customer_type_name LIKE "%${customer_type_name}%"
+    AND contact_types.contact_type_name LIKE "%${contact_type_name}%"
+    AND demand_statuses.demand_status_name LIKE "%${demand_status_name}%"
+    AND car_models.car_model_name LIKE "%${car_model_name}%"
+    AND car_types.car_type_name LIKE "%${car_type_name}%"
+    AND users.username LIKE "%${username}%"
+    AND UNIX_TIMESTAMP(demands.demand_date) BETWEEN UNIX_TIMESTAMP('${from_date}') AND UNIX_TIMESTAMP('${to_date}')
+    AND demands.demand_hide = 1
+      ORDER BY demands.id DESC`, { type: db.sequelize.QueryTypes.SELECT })
+        .then(queues => res.json(queues))
+        .catch(err => res.status(400).json(err));
 };
 
-exports.findAllDate = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-  employee = req.query.employee;
-  Demand.findAll({
-    where: {
-      employee: {
-        [Op.substring]: [employee]
-      },
-      [Op.or]: [
-        {
-          createdAt: {
-            [Op.between]: [fromdate, todate]
-          }
-        },
-        {
-          updatedAt: {
-            [Op.between]: [fromdate, todate]
-          }
-        },
-        {
-          date: {
-            [Op.between]: [fromdate, todate]
-          }
-        }
-      ]
-    }
-  })
-    .then(data => {
-      res.send(data);
+exports.hide = (req, res) => {
+    const id = req.params.id;
+    const demand = {
+        demand_hide: 1
+    };
+
+    Demand.update(demand, {
+        where: { id: id }
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
+                });
+            } else {
+                res.status(400).send({
+                    message: { heading: "Oh snap! You got an error!", message: `Cannot update Demand with id=${id}. Maybe Demand was not found or req.body is empty!` }
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Demand with id=" + id + err
+            });
+            console.log(err)
+        });
 };
 
-exports.findAllCreatedAt = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-  employee = req.query.employee;
+exports.unhide = (req, res) => {
+    const id = req.params.id;
+    const demand = {
+        demand_hide: 0
+    };
 
-  Demand.findAll({
-    where: {
-      employee: {
-        [Op.substring]: [employee]
-      },
-      createdAt: {
-        [Op.between]: [fromdate, todate]
-      }
-    }
-  })
-    .then(data => {
-      res.send(data);
+    Demand.update(demand, {
+        where: { id: id }
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
+                });
+            } else {
+                res.status(400).send({
+                    message: { heading: "Oh snap! You got an error!", message: `Cannot update Demand with id=${id}. Maybe Demand was not found or req.body is empty!` }
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Demand with id=" + id + err
+            });
+            console.log(err)
+        });
 };
 
-exports.findAllUpdatedAt = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-
-  Demand.findAll({
-    where: {
-      updatedAt: {
-        [Op.between]: [fromdate, todate]
-      }
-    }
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving demands."
-      });
-    });
+exports.findDemandStatusReport = (req, res) => {
+    const branch_name = req.query.branch_name;
+    const username = req.query.username;
+    const from_date = req.query.from_date;
+    const to_date = req.query.to_date;
+    const to_date_month = to_date.slice(5, 7);
+    console.log(to_date_month)
+    return db.sequelize.query(
+        `  SELECT  
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 1 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong1,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 1 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai1,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 1 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich1,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 2 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong2,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 2 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai2,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 2 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich2,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 3 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong3,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 3 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai3,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 3 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich3,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 4 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong4,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 4 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai4,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 4 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich4,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 5 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong5,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 5 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai5,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 5 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich5,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 6 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong6,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 6 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai6,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 6 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich6,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 7 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong7,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 7 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai7,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 7 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich7,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 8 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong8,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 8 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai8,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 8 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich8,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 9 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong9,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 9 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai9,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 9 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich9,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 10 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong10,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 10 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai10,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 10 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich10,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 11 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong11,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 11 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai11,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 11 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich11,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 12 AND demands.demand_statusId = 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thanhcong12,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 12 AND demands.demand_statusId = 10 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS thatbai12,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.demand_date) = 12 AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS danggiaodich12,
+        SUM(CASE WHEN branches.branch_name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.demand_statusId < 9 AND demands.demand_hide = 0 THEN demands.demand_quantity END) AS tongcongdanggiaodich${to_date_month}
+        FROM demands
+        LEFT JOIN users ON demands.userId = users.id
+        LEFT JOIN branches ON users.branchId = branches.branch_id
+        WHERE UNIX_TIMESTAMP(demands.demand_date) BETWEEN UNIX_TIMESTAMP('${from_date}') AND UNIX_TIMESTAMP('${to_date}')`,
+        { type: db.sequelize.QueryTypes.SELECT })
+        .then(queues => res.json(queues))
+        .catch(err => res.status(400).json(err));
 };
-
-// exports.findAllGoAt = (req, res) => {
-//   fromdate = req.query.fromdate;
-//   todate = req.query.todate;
-
-//   Demand.findAll({
-//     where: {
-//       date: {
-//         [Op.between]: [fromdate, todate]
-//       }
-//     }
-//   })
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving demands."
-//       });
-//     });
-// };
-
-exports.findAllGoAt = (req, res) => {
-  fromdate = req.query.fromdate;
-  todate = req.query.todate;
-  employee = req.query.employee
-  return db.sequelize.query(
-    `SELECT 
-   * FROM demands WHERE UNIX_TIMESTAMP(date) BETWEEN UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}') AND employee LIKE "%${employee}%"
-         `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-
-};
-

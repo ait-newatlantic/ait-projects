@@ -9,7 +9,18 @@ const get_provinces = () => {
     return axios.get(API_URL + "provinces",);
 };
 
-
-export default {
-    get_provinces,
+const get_province_id = (province_name) => {
+    return axios.get(API_URL + `provinces/info`, {
+        params:{
+            province_name
+        }
+    });
 };
+
+
+const ProvinceService = {
+    get_provinces,
+    get_province_id
+}
+
+export default ProvinceService;

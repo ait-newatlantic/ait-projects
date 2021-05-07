@@ -40,19 +40,49 @@ const delete_user = (id) => {
 }
 
 const get_specific_user = (id) => {
-    return axios.get(USER_URL + `users/${id}`);
+    return axios.get(USER_URL + `users/update`, {
+        params: { id }
+    });
 };
 
-const update_specific_user = (
+const update_user = (
     id,
+    name,
+    email,
     password,
-    ) => {
+) => {
     return axios.put(USER_URL + `users/${id}`, {
+        name,
+        email,
         password,
     });
 };
 
-export default {
+const get_user_by_branch = (branch_name) => {
+    return axios.get(USER_URL + `users/branch`, {
+        params: { branch_name }
+    });
+};
+
+const get_user_by_branch_hide = (branch_name) => {
+    return axios.get(USER_URL + `users/branch/hide`, {
+        params: { branch_name }
+    });
+};
+
+const hide_user = (
+    id,
+) => {
+    return axios.put(USER_URL + `users/hide/${id}`);
+};
+
+const unhide_user = (
+    id,
+) => {
+    return axios.put(USER_URL + `users/unhide/${id}`);
+};
+
+const UserService = {
     getPublicContent,
     getUserBoard,
     getModeratorBoard,
@@ -60,7 +90,13 @@ export default {
     getEmployeeBoard,
     get_users,
     get_users_specific,
+    get_user_by_branch,
     delete_user,
     get_specific_user,
-    update_specific_user,
-};
+    update_user,
+    hide_user,
+    unhide_user,
+    get_user_by_branch_hide,
+}
+
+export default UserService;

@@ -1,100 +1,109 @@
-import React, { useState, useContext, useRef, useEffect } from 'react'
-import { Alert, Button } from "react-bootstrap";
-import { ProvinceContext } from '../../context/province/ProvinceContext'
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CustomerService from "../../services/customer.service";
-import CheckButton from "react-validation/build/button";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import AuthService from "../../services/auth.service";
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import SendIcon from '@material-ui/icons/Send';
-import UserService from "../../services/user.service";
+import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { Alert } from "react-bootstrap"
+import TextField from '@material-ui/core/TextField'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import CustomerService from "../../services/customer.service"
+import CheckButton from "react-validation/build/button"
+import Form from "react-validation/build/form"
+import Input from "react-validation/build/input"
+import AuthService from "../../services/auth.service"
+import ProvinceService from "../../services/province.service"
+import BusinessTypeService from "../../services/business_type.service"
 
 export default function CustomerInput() {
-    const [employee, setEmployee] = useState("");
-    const [customer, setCustomer] = useState("");
-    const [customer_number, setCustomer_Number] = useState("");
-    const [customer_representative, setCustomer_Representative] = useState(null);
-    const [customer_representative_number, setCustomer_Representative_Number] = useState(null);
-    const [customer_representative_email, setCustomer_Representative_Email] = useState(null);
-    const [customer_taxcode, setCustomer_Taxcode] = useState(null);
-    const [customer_type, setCustomer_Type] = useState("");
-    const [customer_area, setCustomer_Area] = useState("");
-    const [customer_address, setCustomer_Address] = useState(null);
-    const [message, setMessage] = useState("");
-    const [successful, setSuccessful] = useState(false);
-    const currentUser = AuthService.getCurrentUser();
-    const form = useRef();
-    const checkBtn = useRef();
+    const [customer_name, setCustomerName] = useState("")
+    const [customer_number, setCustomer_Number] = useState("")
+    const [customer_address, setCustomer_Address] = useState("")
+    const [customer_manager, setCustomer_manager] = useState("")
+    const [customer_manager_number, setCustomer_manager_Number] = useState("")
+    const [customer_manager_email, setCustomer_manager_Email] = useState("")
+    const [customer_taxcode, setCustomer_Taxcode] = useState("")
+    const [business_typeId, setBusinessTypeId] = useState("")
 
-    const [provinces, setProvinces] = useContext(ProvinceContext);
-    const [content, setContent] = useState("");
+    const [province_name, setProvinceName] = useState("")
+    const [provinces, setProvinces] = useState([])
+    const [provinceId, setProvinceId] = useState("")
+
+    const [message, setMessage] = useState("")
+    const [successful, setSuccessful] = useState(false)
+    const currentUser = AuthService.getCurrentUser()
+    const form = useRef()
+    const checkBtn = useRef()
+
+    const [business_types, setBusinessTypes] = useState("")
 
     const onChangeCustomer = (e) => {
-        const customer = e.target.value;
-        setCustomer(customer);
-    };
+        const customer_name = e.target.value
+        setCustomerName(customer_name)
+    }
 
     const onChangeCustomer_Number = (e) => {
-        const customer_number = e.target.value;
-        setCustomer_Number(customer_number);
-    };
+        const customer_number = e.target.value
+        setCustomer_Number(customer_number)
+    }
 
-    const onChangeCustomer_Type = (e) => {
-        const customer_type = e.target.value;
-        setCustomer_Type(customer_type);
-        //console.log(customer_type)
-    };
+    const onChangeBusinessType = (e) => {
+        const business_typeId = e.target.value
+        setBusinessTypeId(parseInt(business_typeId))
+    }
 
     const onChangeCustomer_Address = (e) => {
-        const customer_address = e.target.value;
-        setCustomer_Address(customer_address);
-    };
+        const customer_address = e.target.value
+        setCustomer_Address(customer_address)
+    }
 
     const onChangeCustomer_Taxcode = (e) => {
-        const customer_taxcode = e.target.value;
-        setCustomer_Taxcode(customer_taxcode);
-    };
+        const customer_taxcode = e.target.value
+        setCustomer_Taxcode(customer_taxcode)
+    }
 
-    const onChangeCustomer_Representative = (e) => {
-        const customer_representative = e.target.value;
-        setCustomer_Representative(customer_representative);
-    };
+    const onChangeCustomer_manager = (e) => {
+        const customer_manager = e.target.value
+        setCustomer_manager(customer_manager)
+    }
 
-    const onChangeCustomer_Representative_Number = (e) => {
-        const customer_representative_number = e.target.value;
-        setCustomer_Representative_Number(customer_representative_number);
-    };
+    const onChangeCustomer_manager_Number = (e) => {
+        const customer_manager_number = e.target.value
+        setCustomer_manager_Number(customer_manager_number)
+    }
 
-    const onChangeCustomer_Representative_Email = (e) => {
-        const customer_representative_email = e.target.value;
-        setCustomer_Representative_Email(customer_representative_email);
-    };
+    const onChangeCustomer_manager_Email = (e) => {
+        const customer_manager_email = e.target.value
+        setCustomer_manager_Email(customer_manager_email)
+    }
+
+    const Autofill = useCallback(() => {
+        ProvinceService.get_province_id(
+            province_name
+        ).then((response) => {
+            response.data.forEach(value => {
+                setProvinceId(parseInt(value.province_id))
+            })
+        })
+    }, [province_name])
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        setMessage("");
-        setSuccessful(false);
-        form.current.validateAll();
-        const employee = currentUser.username
+        e.preventDefault()
+        setMessage("")
+        setSuccessful(false)
+        form.current.validateAll()
+        const userId = parseInt(currentUser.id)
         if (checkBtn.current.context._errors.length === 0) {
             CustomerService.create_customer(
-                employee,
-                customer,
+                customer_name,
                 customer_number,
-                customer_representative,
-                customer_representative_number,
-                customer_representative_email,
-                customer_area,
+                customer_address,
+                customer_manager,
+                customer_manager_number,
+                customer_manager_email,
                 customer_taxcode,
-                customer_type,
-                customer_address
+                provinceId,
+                userId,
+                business_typeId,
             ).then(
                 (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
+                    setMessage(response.data.message)
+                    setSuccessful(true)
                 },
                 (error) => {
                     const resMessage =
@@ -102,215 +111,181 @@ export default function CustomerInput() {
                             error.response.data &&
                             error.response.data.message) ||
                         error.message ||
-                        error.toString();
+                        error.toString()
 
-                    setMessage(resMessage);
-                    setSuccessful(false);
+                    setMessage(resMessage)
+                    setSuccessful(false)
                 }
-            );
+            )
         }
-    };
+    }
+
+    const FetchProvince = () => {
+        ProvinceService.get_provinces().then((response) => {
+            setProvinces(response.data)
+        })
+    }
+
+    const FetchBusinessType = () => {
+        BusinessTypeService.get_business_types().then((response) => {
+            setBusinessTypes(response.data)
+            setBusinessTypeId(parseInt(response.data[0].business_type_id))
+        })
+    }
 
     useEffect(() => {
-        UserService.getUserBoard().then(
-            (response) => {
-                setContent(response.data);
-            },
-            (error) => {
-                const _content =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+        FetchProvince()
+        FetchBusinessType()
+    }, [])
 
-                setContent(_content);
-            }
-        );
-    }, []);
+    useEffect(() => {
+        Autofill()
+    }, [province_name, Autofill])
 
     return (
-        <>
-            <div className="custom">
-                {content === "User" ?
-                    <div>
-                         <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>TẠO KHÁCH HÀNG MỚI</div>
-                        <Form onSubmit={handleSubmit} ref={form}>
-                            {!successful && (
-                                <div>
-                                    <div className="card-deck">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                <h6><strong>Thông tin khách hàng</strong></h6>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >Tên KH (1) (*): </label>
-                                                    <div className="col-sm">
-                                                        <Input
-                                                            type="customer"
-                                                            className="form-control"
-                                                            name="customer"
-                                                            value={customer}
-                                                            onChange={onChangeCustomer}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >SĐT KH (*): </label>
-                                                    <div className="col-sm">
-                                                        <Input
-                                                            type="customer_number"
-                                                            className="form-control"
-                                                            name="customer_number"
-                                                            value={customer_number}
-                                                            onChange={onChangeCustomer_Number} />
-                                                    </div>
-                                                </div>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4">Khu vực KH (*): </label>
-                                                    <div className="col-sm">
-                                                        <Autocomplete
-                                                            style={{ background: "white" }}
-                                                            size="small"
-                                                            value={customer_area}
-                                                            onChange={(event, newValue) => {
-                                                                setCustomer_Area(newValue);
-                                                            }}
-                                                            options={provinces.map((option) => option.province_name)}
-                                                            renderInput={(params) => <TextField {...params} variant="outlined" />}
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >Hình thức KH (*): </label>
-                                                    <div className="col-sm">
-                                                        <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeCustomer_Type}>
-                                                            <option value="" selected disabled hidden >Click để chọn </option>
-                                                            <option value="DOANH NGHIỆP">DOANH NGHIỆP</option>
-                                                            <option value="TƯ NHÂN">TƯ NHÂN</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                {customer_type === "DOANH NGHIỆP" ?
-                                                    <div className="row p-2">
-                                                        <label className="col-lg-4" >Mã số thuế: </label>
-                                                        <div className="col-sm">
-                                                            <Input
-                                                                type="customer_taxcode"
-                                                                className="form-control"
-                                                                name="customer_taxcode"
-                                                                value={customer_taxcode}
-                                                                onChange={onChangeCustomer_Taxcode} /></div>
-                                                    </div>
-                                                    : <div></div>
-                                                }
-
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4">Địa chỉ KH (*): </label>
-                                                    <div className="col-sm">
-                                                        <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="card">
-                                            <div className="card-body">
-                                                <h6><strong>Thông tin người đại diện</strong></h6>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >Tên người đại diện: </label>
-                                                    <div className="col-sm">
-                                                        <Input
-                                                            type="customer_representative"
-                                                            className="form-control"
-                                                            name="customer_number"
-                                                            value={customer_representative}
-                                                            onChange={onChangeCustomer_Representative} />
-                                                    </div>
-                                                </div>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >SĐT người đại diện: </label>
-                                                    <div className="col-sm">
-                                                        <Input
-                                                            type="customer_representative_number"
-                                                            className="form-control"
-                                                            name="customer_representative_number"
-                                                            value={customer_representative_number}
-                                                            onChange={onChangeCustomer_Representative_Number} />
-                                                    </div>
-                                                </div>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >Email người đại diện: </label>
-                                                    <div className="col-sm">
-                                                        <Input
-                                                            type="customer_representative_email"
-                                                            className="form-control"
-                                                            name="customer_representative_email"
-                                                            value={customer_representative_email}
-                                                            onChange={onChangeCustomer_Representative_Email} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="card">
-                                            <div className="card-body">
-                                                <h6><strong>Thông tin người nhập</strong></h6>
-                                                <div className="row p-2">
-                                                    <label className="col-lg-4" >Người nhập</label>
-                                                    <div className="col-sm">
-                                                        <p className="form-control">{currentUser.username}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className="text-right">
-                                        <Button variant="success" type="submit" onClick={handleSubmit}>
-                                            GỬI FORM  <SendIcon />
-                                        </Button>
-                                    </div>
-                                    {/* <div className="card">
-                                        <div className="text-center">
-                                            <Button variant="success" type="submit" onClick={handleSubmit}>
-                                                Gửi form <SendIcon />
-                                            </Button>
-                                        </div>
-                                        <div>
-                                            <strong>Chú thích:</strong>
-                                            <p><ArrowRightAltIcon /><strong> (1)</strong> Vui lòng điền đầy đủ họ tên khách hàng.</p>
-                                            <p><ArrowRightAltIcon /><strong> (*)</strong> Vui lòng điền (chọn) đầy đủ thông tin.</p>
-                                        </div>
-                                    </div> */}
-                                </div>
-                            )}
-                            {message && (
-                                <div className="form-group">
-                                    <div className="card card-body">
-                                        <div
-                                            className={successful ? "alert alert-success" : "alert alert-danger"}
-                                            role="alert"
-                                        >
-                                            {/* <div className="card card-container-fluid" >
-                                        <h1>{message}</h1>
-                                    </div> */}
-                                            <Alert key={message.message}>
-                                                <Alert.Heading>{message.heading}</Alert.Heading>
-                                                <p>
-                                                    {message.message}
-                                                </p>
-                                            </Alert>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                        </Form>
-                    </div>
-                    :
-                    <div>{content}</div>
-                }
+        <div>
+            <div className="text-left">
+                <h4 className="font-weight-bold text-secondary">TẠO KHÁCH HÀNG MỚI</h4>
             </div>
-        </>
+            <Form onSubmit={handleSubmit} ref={form}>
+                {!successful && (
+                    <div className="text-left">
+                        <div>
+                            <h6><strong>Thông tin khách hàng</strong></h6>
+                            <div className="row">
+                                <div className="col-sm">
+                                    Tên khách hàng:
+                                    <Input
+                                        type="customer_name"
+                                        className="form-control"
+                                        name="customer_name"
+                                        value={customer_name}
+                                        onChange={onChangeCustomer}
+                                    />
+                                </div>
+                                <div className="col-sm">
+                                    SĐT khách hàng:
+                                    <Input
+                                        type="customer_number"
+                                        className="form-control"
+                                        name="customer_number"
+                                        value={customer_number}
+                                        onChange={onChangeCustomer_Number} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-sm">
+                                    Khu vực khách hàng:
+                                    <Autocomplete
+                                        style={{ background: "white" }}
+                                        size="small"
+                                        onChange={(event, newValue) => {
+                                            setProvinceName(newValue)
+                                        }}
+                                        options={!!provinces && provinces.map((option) => option.province_name)}
+                                        renderInput={(params) => <TextField {...params} variant="outlined" />}
+                                    />
+                                </div>
+                                <div className="col-sm">
+                                    Hình thức khách hàng:
+                                    <select className="form-control" id="exampleFormControlSelect1" onChange={onChangeBusinessType}>
+                                        {!!business_types && business_types.map(business_type => (
+                                            <option key={business_type.business_type_id} value={business_type.business_type_id}>{business_type.business_type_name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {business_typeId === 2 ?
+                                    <div className="col-sm">
+                                        Mã số thuế:
+                                        <Input
+                                            type="customer_taxcode"
+                                            className="form-control"
+                                            name="customer_taxcode"
+                                            value={customer_taxcode}
+                                            onChange={onChangeCustomer_Taxcode} /></div>
+                                    : <div></div>
+                                }
+                            </div>
+                            <div className="row ">
+                                <div className="col-sm">
+                                    Địa chỉ khách hàng:
+                                    <textarea type="customer_address" className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={onChangeCustomer_Address}></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        {business_typeId === 2 ?
+                            <div>
+                                <br />
+                                <h6><strong>Thông tin người đại diện</strong></h6>
+                                <div className="row ">
+                                    <div className="col-sm">
+                                        Tên người đại diện:
+                                        <Input
+                                            type="customer_manager"
+                                            className="form-control"
+                                            name="customer_number"
+                                            value={customer_manager}
+                                            onChange={onChangeCustomer_manager} />
+                                    </div>
+                                    <div className="col-sm">
+                                        SĐT người đại diện:
+                                        <Input
+                                            type="customer_manager_number"
+                                            className="form-control"
+                                            name="customer_manager_number"
+                                            value={customer_manager_number}
+                                            onChange={onChangeCustomer_manager_Number} />
+                                    </div>
+                                    <div className="col-sm">
+                                        Email người đại diện:
+                                        <Input
+                                            type="customer_manager_email"
+                                            className="form-control"
+                                            name="customer_manager_email"
+                                            value={customer_manager_email}
+                                            onChange={onChangeCustomer_manager_Email} />
+                                    </div>
+                                </div>
+                            </div>
+                            : <div></div>
+                        }
+                        <br />
+                        <div>
+                            <div>
+                                <h6><strong>Thông tin người nhập</strong></h6>
+                                <div className="row ">
+                                    <div className="col-sm">
+                                        Người nhập:
+                                        <p className="form-control" style={{background:"#e7e7e7"}}>{currentUser.username} - {currentUser.name}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div>
+                            <button className="btn btn-warning btn-sm" role="button" onClick={handleSubmit}>
+                                GỬI FORM
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {message && (
+                    <div className="form-group">
+                        <div
+                            className={successful ? "alert alert-success" : "alert alert-danger"}
+                            role="alert"
+                        >
+                            <Alert key={message.message}>
+                                <Alert.Heading>{message.heading}</Alert.Heading>
+                                <p>
+                                    {message.message}
+                                </p>
+                            </Alert>
+                        </div>
+                    </div>
+                )}
+                <CheckButton style={{ display: "none" }} ref={checkBtn} />
+            </Form>
+        </div>
     )
 }

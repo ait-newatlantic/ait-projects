@@ -1,24 +1,34 @@
 module.exports = app => {
-  const customers = require("../controllers/customer.controller.js");
+    const customers = require("../controllers/customer.controller.js");
 
-  var router = require("express").Router();
+    var router = require("express").Router();
+    app.use(function(req, res, next) {
+        res.header(
+            "Access-Control-Allow-Headers",
+            "x-access-token, Origin, Content-Type, Accept"
+        );
+        next();
+    });
 
-  // Create a new Tutorial
-  router.post("/", customers.create);
+    router.post("/", customers.create);
 
-  // Retrieve all Tutorials
-  router.get("/", customers.findAll);
-  
-  router.get("/quantity", customers.findQuantity);
+    router.get("/", customers.findAll);
 
-  // Retrieve a single Tutorial with id
-  router.get("/info", customers.findOneCustomer);
+    router.get("/branch", customers.findCustomerWithConditions);
 
-  // Retrieve a single Tutorial with id
-  router.get("/:id", customers.findOne);
+    router.get("/branch/hide", customers.findCustomerWithConditionsHide);
 
-  // Update a Tutorial with id
-  router.put("/:id", customers.update);
+    router.get("/quantity", customers.findQuantity);
 
-  app.use('/api/customers', router);
+    router.get("/name", customers.findCustomerByName);
+
+    router.get("/update", customers.findOne);
+
+    router.put("/hide/:id", customers.hide);
+
+    router.put("/unhide/:id", customers.unhide);
+
+    router.put("/:id", customers.update);
+
+    app.use('/api/customers', router);
 };

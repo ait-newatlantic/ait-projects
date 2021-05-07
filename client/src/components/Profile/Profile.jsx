@@ -1,33 +1,35 @@
-import React from "react";
-import AuthService from "../../services/auth.service";
+import React from "react"
+import AuthService from "../../services/auth.service"
 
 const Profile = () => {
-    const currentUser = AuthService.getCurrentUser();
+    const currentUser = AuthService.getCurrentUser()
 
     return (
-        <div className="container">
-            <header className="jumbotron">
-                <h3>
-                    Hồ sơ <strong>{currentUser.username}</strong>
-        </h3>
-            </header>
-            {/* <p>
-                <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-                {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-            </p> */}
-            <p>
-                <strong>Id:</strong> {currentUser.id}
-            </p>
-            <p>
-                <strong>Email:</strong> {currentUser.email}
-            </p>
-            <strong>Chức vụ:</strong>
-            <ul>
-                {currentUser.roles &&
-                    currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-            </ul>
+        <div className="text-left">
+            <div>
+                <h4 className="font-weight-bold text-secondary">HỒ SƠ USER</h4>
+            </div>
+            <div>
+                <p>
+                    <strong>Username:</strong> {currentUser.username}
+                </p>
+                <p>
+                    <strong>Tên:</strong> {currentUser.name}
+                </p>
+                <p>
+                    <strong>Email:</strong> {currentUser.email}
+                </p>
+                <p>
+                    <strong>Branch:</strong> {currentUser.branchId}
+                </p>
+                <strong>Authorities:</strong>
+                <ul>
+                    {currentUser.roles &&
+                        currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+                </ul>
+            </div>
         </div>
-    );
-};
+    )
+}
 
-export default Profile;
+export default Profile

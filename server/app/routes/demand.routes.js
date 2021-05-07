@@ -7,23 +7,17 @@ module.exports = app => {
 
     router.get("/", demands.findAll);
 
-    router.get("/date", demands.findAllDate);
+    router.get("/branch", demands.findDemandWithConditions);
 
-    router.get("/updateat", demands.findAllUpdatedAt);
+    router.get("/branch/hide", demands.findDemandWithConditionsHide);
 
-    router.get("/createat", demands.findAllCreatedAt);
+    router.get("/demandstatuses", demands.findDemandStatusReport);
 
-    router.get("/goat", demands.findAllGoAt);
+    router.get("/update", demands.findOne);
 
-    router.get("/total", demands.findAllTotal);
-    
-    router.get("/overall", demands.findAllOverall);
+    router.put("/hide/:id", demands.hide);
 
-    router.get("/allmodels", demands.findAllModels);
-    
-    router.get("/allquantity", demands.findAllQuantity);
-
-    router.get("/:id", demands.findOne);
+    router.put("/unhide/:id", demands.unhide);
 
     router.put("/:id", demands.update);
   

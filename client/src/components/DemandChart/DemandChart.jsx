@@ -1,41 +1,57 @@
-import React from 'react'
-import { Bar } from '@reactchartjs/react-chart.js'
+import React from "react"
+import { Bar } from 'react-chartjs-2'
 
-export default function GroupedBar(props) {
 
-  const data = {
-    labels: ['1', '2', '3', '4', '5', '6','7', '8', '9', '10', '11', '12'],
-    datasets: [
-      {
-        label: 'Dự kiến',
-        data: [props.dukien1, props.dukien2, props.dukien3, props.dukien4, 
-          props.dukien5, props.dukien6, props.dukien7, props.dukien8, 
-          props.dukien9, props.dukien10, props.dukien11, props.dukien12],
-        backgroundColor: 'rgb(255, 99, 132)',
-      },
-      {
-        label: 'Thực tế',
-        data: [props.thucte1, props.thucte2, props.thucte3, props.thucte4, 
-          props.thucte5, props.thucte6, props.thucte7, props.thucte8, 
-          props.thucte9, props.thucte10, props.thucte11, props.thucte12],
-        backgroundColor: 'rgb(54, 162, 235)',
-      },
-    ],
-  }
-  
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
+export default function DemandChart(props) {
+    const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+            {
+                label: 'Tổng số xe đang giao dịch hiện tại',
+                data: [props.tongcongdanggiaodich1, props.tongcongdanggiaodich2, props.tongcongdanggiaodich3, props.tongcongdanggiaodich4,
+                props.tongcongdanggiaodich5, props.tongcongdanggiaodich6, props.tongcongdanggiaodich7, props.tongcongdanggiaodich8,
+                props.tongcongdanggiaodich9, props.tongcongdanggiaodich10, props.tongcongdanggiaodich11, props.tongcongdanggiaodich12],
+                backgroundColor: 'rgb(19,132,150)',
+            },
+            {
+                label: 'Đang giao dịch trong tháng',
+                data: [props.danggiaodich1, props.danggiaodich2, props.danggiaodich3, props.danggiaodich4,
+                props.danggiaodich5, props.danggiaodich6, props.danggiaodich7, props.danggiaodich8,
+                props.danggiaodich9, props.danggiaodich10, props.danggiaodich11, props.danggiaodich12],
+                backgroundColor: 'rgb(108,117,125)',
+            },
+            {
+                label: 'Giao dịch thành công',
+                data: [props.thanhcong1, props.thanhcong2, props.thanhcong3, props.thanhcong4,
+                props.thanhcong5, props.thanhcong6, props.thanhcong7, props.thanhcong8,
+                props.thanhcong9, props.thanhcong10, props.thanhcong11, props.thanhcong12],
+                backgroundColor: 'rgb(0, 123, 255)',
+            },
+            {
+                label: 'Giao dịch thất bại',
+                data: [props.thatbai1, props.thatbai2, props.thatbai3, props.thatbai4,
+                props.thatbai5, props.thatbai6, props.thatbai7, props.thatbai8,
+                props.thatbai9, props.thatbai10, props.thatbai11, props.thatbai12],
+                backgroundColor: 'rgb(220, 53, 69)',
+            },
+        ],
+    }
+
+    const options = {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                },
+            ],
         },
-      ],
-    },
-  }
+    }
 
-  return(
-  <Bar data={data} options={options}/>
-  )
+    return (
+        <>
+            <Bar data={data} options={options} />
+        </>
+    )
 }

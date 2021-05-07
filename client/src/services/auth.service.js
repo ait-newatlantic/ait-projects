@@ -5,9 +5,11 @@ const API_URL = `${BASE_URL}/api/auth/`
 
 console.log(API_URL)
 
-const register = (username, email, password) => {
+const register = (username, name, branchId, email, password) => {
     return axios.post(API_URL + "signup", { 
         username,
+        name,
+        branchId,
         email,
         password,
     });
@@ -36,9 +38,11 @@ const getCurrentUser = () => {
     return JSON.parse(localStorage.getItem("user"));
 };
 
-export default {
+const AuthService = {
     register,
     login,
     logout,
     getCurrentUser,
-};
+}
+
+export default AuthService;
