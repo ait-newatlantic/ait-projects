@@ -12,8 +12,6 @@ module.exports = app => {
 
     router.post("/", customers.create);
 
-    router.get("/", customers.findAll);
-
     router.get("/branch", customers.findCustomerWithConditions);
 
     router.get("/branch/hide", customers.findCustomerWithConditionsHide);

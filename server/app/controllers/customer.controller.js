@@ -38,24 +38,7 @@ exports.create = (req, res) => {
             console.log(err)
         });
 };
-// Retrieve all Customers from the database.
-exports.findAll = (req, res) => {
-    return db.sequelize.query(
-        ` SELECT * 
-        FROM customers 
-        LEFT JOIN provinces 
-        ON customers.provinceId = provinces.province_id
-        LEFT JOIN users 
-        ON customers.userId = users.id
-        LEFT JOIN business_types
-        ON customers.business_typeId = business_types.business_type_id
-        LEFT JOIN branches
-        ON users.branchId = branches.branch_id
-        WHERE customers.customer_hide = 0
-        ORDER BY customers.id DESC`, { type: db.sequelize.QueryTypes.SELECT })
-        .then(queues => res.json(queues))
-        .catch(err => res.status(400).json(err));
-};
+
 // Find a single Customer with an id
 exports.findOne = (req, res) => {
     const id = req.query.id;
