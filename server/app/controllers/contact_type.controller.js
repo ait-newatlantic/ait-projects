@@ -3,13 +3,13 @@ const ContactType = db.contact_type;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    var condition = {
-        contact_type_hide: {
-            [Op.eq]: 0
-        }
-    };
-
-    ContactType.findAll({ where: condition })
+    ContactType.findAll({
+            where: {
+                hide: {
+                    [Op.eq]: 0
+                }
+            }
+        })
         .then(data => {
             res.send(data);
         })

@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Branch = sequelize.define("branches", {
-        branch_id: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
-        branch_name: {
+        name: {
             type: Sequelize.STRING
         },
-        branch_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         }

@@ -5,7 +5,5 @@ module.exports = app => {
 
     router.get("/", business_type.findAll);
 
-    router.get("/name", business_type.findBusinessTypeByName);
-
     app.use('/api/business-types', router);
 };

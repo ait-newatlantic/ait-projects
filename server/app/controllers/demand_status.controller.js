@@ -3,13 +3,13 @@ const DemandStatus = db.demand_status;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    var condition = {
-        demand_status_hide: {
-            [Op.eq]: 0
-        }
-    };
-
-    DemandStatus.findAll({ where: condition })
+    DemandStatus.findAll({
+            where: {
+                hide: {
+                    [Op.eq]: 0
+                }
+            }
+        })
         .then(data => {
             res.send(data);
         })

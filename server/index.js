@@ -32,12 +32,12 @@ const DemandStatus = db.demand_status;
 const Color = db.color;
 const ContactType = db.contact_type;
 
-//db.sequelize.sync();
-//force: true //will drop the table if it already exists
-//db.sequelize.sync({ force: true }).then(() => {
-//    console.log('Drop and Resync Database with { force: true }');
-//    initial();
-//});
+// db.sequelize.sync();
+// force: true //will drop the table if it already exists
+// db.sequelize.sync({ force: true }).then(() => {
+//     console.log('Drop and Resync Database with { force: true }');
+//     initial();
+// });
 
 // simple route
 app.get("/", (req, res) => {
@@ -91,519 +91,519 @@ function initial() {
         name: "employee"
     });
     CustomerType.create({
-        customer_type_id: 1,
-        customer_type_name: "DỰ KIẾN"
+        id: 1,
+        name: "DỰ KIẾN"
     });
     CustomerType.create({
-        customer_type_id: 2,
-        customer_type_name: "TIỀM NĂNG"
+        id: 2,
+        name: "TIỀM NĂNG"
     });
     CustomerType.create({
-        customer_type_id: 3,
-        customer_type_name: "ĐÃ SỬ DỤNG KAMAZ"
+        id: 3,
+        name: "ĐÃ SỬ DỤNG KAMAZ"
     });
     DemandStatus.create({
-        demand_status_id: 1,
-        demand_status_name: "TIẾP CẬN CHÀO HÀNG"
+        id: 1,
+        name: "TIẾP CẬN CHÀO HÀNG"
     });
     DemandStatus.create({
-        demand_status_id: 2,
-        demand_status_name: "CHẠY THỬ"
+        id: 2,
+        name: "CHẠY THỬ"
     });
     DemandStatus.create({
-        demand_status_id: 3,
-        demand_status_name: "ĐÀM PHÁN"
+        id: 3,
+        name: "ĐÀM PHÁN"
     });
     DemandStatus.create({
-        demand_status_id: 4,
-        demand_status_name: "CHỐT ĐƠN HÀNG"
+        id: 4,
+        name: "CHỐT ĐƠN HÀNG"
     });
     DemandStatus.create({
-        demand_status_id: 5,
-        demand_status_name: "ĐÃ CỌC"
+        id: 5,
+        name: "ĐÃ CỌC"
     });
     DemandStatus.create({
-        demand_status_id: 6,
-        demand_status_name: "LÊN HỢP ĐỒNG"
+        id: 6,
+        name: "LÊN HỢP ĐỒNG"
     });
     DemandStatus.create({
-        demand_status_id: 7,
-        demand_status_name: "ĐÃ THANH TOÁN TẠM ỨNG"
+        id: 7,
+        name: "ĐÃ THANH TOÁN TẠM ỨNG"
     });
     DemandStatus.create({
-        demand_status_id: 8,
-        demand_status_name: "BÀN GIAO CHƯA THANH TOÁN"
+        id: 8,
+        name: "BÀN GIAO CHƯA THANH TOÁN"
     });
     DemandStatus.create({
-        demand_status_id: 9,
-        demand_status_name: "HOÀN TẤT GIAO DỊCH"
+        id: 9,
+        name: "HOÀN TẤT GIAO DỊCH"
     });
     DemandStatus.create({
-        demand_status_id: 10,
-        demand_status_name: "GIAO DỊCH THẤT BẠI"
+        id: 10,
+        name: "GIAO DỊCH THẤT BẠI"
     });
     ContactType.create({
-        contact_type_id: 1,
-        contact_type_name: "QUA ĐIỆN THOẠI"
+        id: 1,
+        name: "QUA ĐIỆN THOẠI"
     })
     ContactType.create({
-        contact_type_id: 2,
-        contact_type_name: "QUA EMAIL, ZALO,.."
+        id: 2,
+        name: "QUA EMAIL, ZALO,.."
     })
     ContactType.create({
-        contact_type_id: 3,
-        contact_type_name: "GẶP TRỰC TIẾP"
+        id: 3,
+        name: "GẶP TRỰC TIẾP"
     })
     Color.create({
-        color_id: 1,
-        color_name: "Chưa quyết định"
+        id: 1,
+        name: "Chưa quyết định"
     });
     Color.create({
-        color_id: 2,
-        color_name: "Cam"
+        id: 2,
+        name: "Cam"
     });
     Color.create({
-        color_id: 3,
-        color_name: "Trắng"
+        id: 3,
+        name: "Trắng"
     });
     Color.create({
-        color_id: 4,
-        color_name: "Vàng"
+        id: 4,
+        name: "Vàng"
     });
     Color.create({
-        color_id: 5,
-        color_name: "Xanh"
+        id: 5,
+        name: "Xanh"
     });
     Color.create({
-        color_id: 6,
-        color_name: "Xanh quân đội"
+        id: 6,
+        name: "Xanh quân đội"
     });
     Color.create({
-        color_id: 7,
-        color_name: "Đỏ"
+        id: 7,
+        name: "Đỏ"
     });
     Branch.create({
-        branch_id: 1,
-        branch_name: "AIT"
+        id: 1,
+        name: "AIT"
     });
     Branch.create({
-        branch_id: 2,
-        branch_name: "Đăk Lăk"
+        id: 2,
+        name: "Đăk Lăk"
     });
     Branch.create({
-        branch_id: 3,
-        branch_name: "Phòng dự án"
+        id: 3,
+        name: "Phòng dự án"
     });
     Branch.create({
-        branch_id: 4,
-        branch_name: "Đồng Nai"
+        id: 4,
+        name: "Đồng Nai"
     });
     Branch.create({
-        branch_id: 5,
-        branch_name: "Quảng Trị"
+        id: 5,
+        name: "Quảng Trị"
     });
     Branch.create({
-        branch_id: 6,
-        branch_name: "Đà Nẵng"
+        id: 6,
+        name: "Đà Nẵng"
     });
     Branch.create({
-        branch_id: 7,
-        branch_name: "Vũng Tàu"
+        id: 7,
+        name: "Vũng Tàu"
     });
     Branch.create({
-        branch_id: 8,
-        branch_name: "Gia Lai"
+        id: 8,
+        name: "Gia Lai"
     });
     Branch.create({
-        branch_id: 9,
-        branch_name: "Tây Ninh"
+        id: 9,
+        name: "Tây Ninh"
     });
     Branch.create({
-        branch_id: 10,
-        branch_name: "Lâm Đồng"
+        id: 10,
+        name: "Lâm Đồng"
     });
     Branch.create({
-        branch_id: 12,
-        branch_name: "Cần Thơ"
+        id: 12,
+        name: "Cần Thơ"
     });
     Branch.create({
-        branch_id: 13,
-        branch_name: "Bình Phước"
+        id: 13,
+        name: "Bình Phước"
     });
     Branch.create({
-        branch_id: 14,
-        branch_name: "Hưng Yên"
+        id: 14,
+        name: "Hưng Yên"
     });
     Branch.create({
-        branch_id: 15,
-        branch_name: "Bình Định"
+        id: 15,
+        name: "Bình Định"
     });
     Branch.create({
-        branch_id: 16,
-        branch_name: "Nguyễn Văn Linh"
+        id: 16,
+        name: "Nguyễn Văn Linh"
     });
     Branch.create({
-        branch_id: 17,
-        branch_name: "Bình Dương"
+        id: 17,
+        name: "Bình Dương"
     });
     Model.create({
-        car_model_id: 1,
-        car_model_name: "6460"
+        id: 1,
+        name: "6460"
     });
     Model.create({
-        car_model_id: 2,
-        car_model_name: "6540"
+        id: 2,
+        name: "6540"
     });
     Model.create({
-        car_model_id: 3,
-        car_model_name: "43253"
+        id: 3,
+        name: "43253"
     });
     Model.create({
-        car_model_id: 4,
-        car_model_name: "43265"
+        id: 4,
+        name: "43265"
     });
     Model.create({
-        car_model_id: 5,
-        car_model_name: "43266"
+        id: 5,
+        name: "43266"
     });
     Model.create({
-        car_model_id: 6,
-        car_model_name: "53288"
+        id: 6,
+        name: "53288"
     });
     Model.create({
-        car_model_id: 7,
-        car_model_name: "53229"
+        id: 7,
+        name: "53229"
     });
     Model.create({
-        car_model_id: 8,
-        car_model_name: "65115"
+        id: 8,
+        name: "65115"
     });
     Model.create({
-        car_model_id: 9,
-        car_model_name: "65116"
+        id: 9,
+        name: "65116"
     });
     Model.create({
-        car_model_id: 10,
-        car_model_name: "65117"
+        id: 10,
+        name: "65117"
     });
     Model.create({
-        car_model_id: 11,
-        car_model_name: "Cẩu 5-7 tấn"
+        id: 11,
+        name: "Cẩu 5-7 tấn"
     });
     Type.create({
-        car_type_id: 1,
-        car_type_name: "Xe Ben - OVAL"
+        id: 1,
+        name: "Xe Ben - OVAL"
     });
     Type.create({
-        car_type_id: 2,
-        car_type_name: "Xe Ben - VÁT"
+        id: 2,
+        name: "Xe Ben - VÁT"
     });
     Type.create({
-        car_type_id: 3,
-        car_type_name: "Xe tải thùng VN"
+        id: 3,
+        name: "Xe tải thùng VN"
     });
     Type.create({
-        car_type_id: 4,
-        car_type_name: "Xe tải thùng nhập"
+        id: 4,
+        name: "Xe tải thùng nhập"
     });
     Type.create({
-        car_type_id: 5,
-        car_type_name: "Xe ben thùng Việt Nam"
+        id: 5,
+        name: "Xe ben thùng Việt Nam"
     });
     Type.create({
-        car_type_id: 6,
-        car_type_name: "Xe tải gắn cẩu 5 tấn"
+        id: 6,
+        name: "Xe tải gắn cẩu 5 tấn"
     });
     Type.create({
-        car_type_id: 7,
-        car_type_name: "Xe tải gắn cẩu 7 tấn"
+        id: 7,
+        name: "Xe tải gắn cẩu 7 tấn"
     });
     Type.create({
-        car_type_id: 8,
-        car_type_name: "Xe tải gắn cẩu 8 tấn"
+        id: 8,
+        name: "Xe tải gắn cẩu 8 tấn"
     });
     Type.create({
-        car_type_id: 9,
-        car_type_name: "Xe tải gắn cẩu 10 tấn"
+        id: 9,
+        name: "Xe tải gắn cẩu 10 tấn"
     });
     Type.create({
-        car_type_id: 10,
-        car_type_name: "Xe cứu hỏa"
+        id: 10,
+        name: "Xe cứu hỏa"
     });
     Type.create({
-        car_type_id: 11,
-        car_type_name: "Xe bồn chở xăng dầu"
+        id: 11,
+        name: "Xe bồn chở xăng dầu"
     });
     Type.create({
-        car_type_id: 12,
-        car_type_name: "Xe bồn nước"
+        id: 12,
+        name: "Xe bồn nước"
     });
     Type.create({
-        car_type_id: 13,
-        car_type_name: "Xe bồn nhựa đường"
+        id: 13,
+        name: "Xe bồn nhựa đường"
     });
     Type.create({
-        car_type_id: 14,
-        car_type_name: "Xe đầu kéo"
+        id: 14,
+        name: "Xe đầu kéo"
     });
     Province.create({
-        province_id: 1,
-        province_name: "An Giang"
+        id: 1,
+        name: "An Giang"
     });
     Province.create({
-        province_id: 2,
-        province_name: "Bà Rịa - Vũng Tàu"
+        id: 2,
+        name: "Bà Rịa - Vũng Tàu"
     });
     Province.create({
-        province_id: 3,
-        province_name: "Bạc Liêu"
+        id: 3,
+        name: "Bạc Liêu"
     });
     Province.create({
-        province_id: 4,
-        province_name: "Bắc Giang"
+        id: 4,
+        name: "Bắc Giang"
     });
     Province.create({
-        province_id: 5,
-        province_name: "Bắc Kạn"
+        id: 5,
+        name: "Bắc Kạn"
     });
     Province.create({
-        province_id: 6,
-        province_name: "Bắc Ninh"
+        id: 6,
+        name: "Bắc Ninh"
     });
     Province.create({
-        province_id: 7,
-        province_name: "Bến Tre"
+        id: 7,
+        name: "Bến Tre"
     });
     Province.create({
-        province_id: 8,
-        province_name: "Bình Dương"
+        id: 8,
+        name: "Bình Dương"
     });
     Province.create({
-        province_id: 9,
-        province_name: "Bình Định"
+        id: 9,
+        name: "Bình Định"
     });
     Province.create({
-        province_id: 10,
-        province_name: "Bình Phước"
+        id: 10,
+        name: "Bình Phước"
     });
     Province.create({
-        province_id: 11,
-        province_name: "Bình Thuận"
+        id: 11,
+        name: "Bình Thuận"
     });
     Province.create({
-        province_id: 12,
-        province_name: "Cà Mau"
+        id: 12,
+        name: "Cà Mau"
     });
     Province.create({
-        province_id: 13,
-        province_name: "Cao Bằng"
+        id: 13,
+        name: "Cao Bằng"
     });
     Province.create({
-        province_id: 14,
-        province_name: "Cần Thơ"
+        id: 14,
+        name: "Cần Thơ"
     });
     Province.create({
-        province_id: 15,
-        province_name: "Đà Nẵng"
+        id: 15,
+        name: "Đà Nẵng"
     });
     Province.create({
-        province_id: 16,
-        province_name: "Đăk Lăk"
+        id: 16,
+        name: "Đăk Lăk"
     });
     Province.create({
-        province_id: 17,
-        province_name: "Đăk Nông"
+        id: 17,
+        name: "Đăk Nông"
     });
     Province.create({
-        province_id: 18,
-        province_name: "Điện Biên"
+        id: 18,
+        name: "Điện Biên"
     });
     Province.create({
-        province_id: 19,
-        province_name: "Đồng Nai"
+        id: 19,
+        name: "Đồng Nai"
     });
     Province.create({
-        province_id: 20,
-        province_name: "Đồng Tháp"
+        id: 20,
+        name: "Đồng Tháp"
     });
     Province.create({
-        province_id: 21,
-        province_name: "Gia Lai"
+        id: 21,
+        name: "Gia Lai"
     });
     Province.create({
-        province_id: 22,
-        province_name: "Hà Giang"
+        id: 22,
+        name: "Hà Giang"
     });
     Province.create({
-        province_id: 23,
-        province_name: "Hà Nam"
+        id: 23,
+        name: "Hà Nam"
     });
     Province.create({
-        province_id: 24,
-        province_name: "Hà Nội"
+        id: 24,
+        name: "Hà Nội"
     });
     Province.create({
-        province_id: 25,
-        province_name: "Hà Tĩnh"
+        id: 25,
+        name: "Hà Tĩnh"
     });
     Province.create({
-        province_id: 26,
-        province_name: "Hải Dương"
+        id: 26,
+        name: "Hải Dương"
     });
     Province.create({
-        province_id: 27,
-        province_name: "Hải Phòng"
+        id: 27,
+        name: "Hải Phòng"
     });
     Province.create({
-        province_id: 28,
-        province_name: "Hậu Giang"
+        id: 28,
+        name: "Hậu Giang"
     });
     Province.create({
-        province_id: 29,
-        province_name: "Hòa Bình"
+        id: 29,
+        name: "Hòa Bình"
     });
     Province.create({
-        province_id: 30,
-        province_name: "Thành phố Hồ Chí Minh"
+        id: 30,
+        name: "Thành phố Hồ Chí Minh"
     });
     Province.create({
-        province_id: 31,
-        province_name: "Hưng Yên"
+        id: 31,
+        name: "Hưng Yên"
     });
     Province.create({
-        province_id: 32,
-        province_name: "Khánh Hòa"
+        id: 32,
+        name: "Khánh Hòa"
     });
     Province.create({
-        province_id: 33,
-        province_name: "Kiên Giang"
+        id: 33,
+        name: "Kiên Giang"
     });
     Province.create({
-        province_id: 34,
-        province_name: "Kon Tum"
+        id: 34,
+        name: "Kon Tum"
     });
     Province.create({
-        province_id: 35,
-        province_name: "Lai Châu"
+        id: 35,
+        name: "Lai Châu"
     });
     Province.create({
-        province_id: 36,
-        province_name: "Lạng Sơn"
+        id: 36,
+        name: "Lạng Sơn"
     });
     Province.create({
-        province_id: 37,
-        province_name: "Lào Cai"
+        id: 37,
+        name: "Lào Cai"
     });
     Province.create({
-        province_id: 38,
-        province_name: "Lâm Đồng"
+        id: 38,
+        name: "Lâm Đồng"
     });
     Province.create({
-        province_id: 39,
-        province_name: "Long An"
+        id: 39,
+        name: "Long An"
     });
     Province.create({
-        province_id: 40,
-        province_name: "Nam Định"
+        id: 40,
+        name: "Nam Định"
     });
     Province.create({
-        province_id: 41,
-        province_name: "Nghệ An"
+        id: 41,
+        name: "Nghệ An"
     });
     Province.create({
-        province_id: 42,
-        province_name: "Ninh Bình"
+        id: 42,
+        name: "Ninh Bình"
     });
     Province.create({
-        province_id: 43,
-        province_name: "Ninh Thuận"
+        id: 43,
+        name: "Ninh Thuận"
     });
     Province.create({
-        province_id: 44,
-        province_name: "Phú Thọ"
+        id: 44,
+        name: "Phú Thọ"
     });
     Province.create({
-        province_id: 45,
-        province_name: "Phú Yên"
+        id: 45,
+        name: "Phú Yên"
     });
     Province.create({
-        province_id: 46,
-        province_name: "Quảng Bình"
+        id: 46,
+        name: "Quảng Bình"
     });
     Province.create({
-        province_id: 47,
-        province_name: "Quảng Nam"
+        id: 47,
+        name: "Quảng Nam"
     });
     Province.create({
-        province_id: 48,
-        province_name: "Quảng Ngãi"
+        id: 48,
+        name: "Quảng Ngãi"
     });
     Province.create({
-        province_id: 49,
-        province_name: "Quảng Ninh"
+        id: 49,
+        name: "Quảng Ninh"
     });
     Province.create({
-        province_id: 50,
-        province_name: "Quảng Trị"
+        id: 50,
+        name: "Quảng Trị"
     });
     Province.create({
-        province_id: 51,
-        province_name: "Sóc Trăng"
+        id: 51,
+        name: "Sóc Trăng"
     });
     Province.create({
-        province_id: 52,
-        province_name: "Sơn La"
+        id: 52,
+        name: "Sơn La"
     });
     Province.create({
-        province_id: 53,
-        province_name: "Tây Ninh"
+        id: 53,
+        name: "Tây Ninh"
     });
     Province.create({
-        province_id: 54,
-        province_name: "Thái Bình"
+        id: 54,
+        name: "Thái Bình"
     });
     Province.create({
-        province_id: 55,
-        province_name: "Thái Nguyên"
+        id: 55,
+        name: "Thái Nguyên"
     });
     Province.create({
-        province_id: 56,
-        province_name: "Thanh Hóa"
+        id: 56,
+        name: "Thanh Hóa"
     });
     Province.create({
-        province_id: 57,
-        province_name: "Thừa Thiên - Huế"
+        id: 57,
+        name: "Thừa Thiên - Huế"
     });
     Province.create({
-        province_id: 58,
-        province_name: "Tiền Giang"
+        id: 58,
+        name: "Tiền Giang"
     });
     Province.create({
-        province_id: 59,
-        province_name: "Trà Vinh"
+        id: 59,
+        name: "Trà Vinh"
     });
     Province.create({
-        province_id: 60,
-        province_name: "Tuyên Quang"
+        id: 60,
+        name: "Tuyên Quang"
     });
     Province.create({
-        province_id: 61,
-        province_name: "Vĩnh Long"
+        id: 61,
+        name: "Vĩnh Long"
     });
     Province.create({
-        province_id: 62,
-        province_name: "Vĩnh Phúc"
+        id: 62,
+        name: "Vĩnh Phúc"
     });
     Province.create({
-        province_id: 63,
-        province_name: "Yên Bái"
+        id: 63,
+        name: "Yên Bái"
     });
     BusinessType.create({
-        business_type_id: 1,
-        business_type_name: "TƯ NHÂN"
+        id: 1,
+        name: "TƯ NHÂN"
     });
     BusinessType.create({
-        business_type_id: 2,
-        business_type_name: "DOANH NGHIỆP"
+        id: 2,
+        name: "DOANH NGHIỆP"
     });
 }

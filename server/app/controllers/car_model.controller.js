@@ -3,13 +3,13 @@ const CarModel = db.car_model;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    var condition = {
-        car_model_hide: {
-            [Op.eq]: 0
-        }
-    };
-
-    CarModel.findAll({ where: condition })
+    CarModel.findAll({
+            where: {
+                hide: {
+                    [Op.eq]: 0
+                }
+            }
+        })
         .then(data => {
             res.send(data);
         })

@@ -5,7 +5,5 @@ module.exports = app => {
 
     router.get("/", branches.findAll);
 
-    router.get("/name", branches.findBranchByName);
-
     app.use('/api/branches', router);
 };

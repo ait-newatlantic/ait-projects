@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Customer_Type = sequelize.define("customer_types", {
-        customer_type_id: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
-        customer_type_name: {
+        name: {
             type: Sequelize.STRING
         },
-        customer_type_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         }

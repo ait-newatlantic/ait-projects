@@ -12,21 +12,17 @@ module.exports = app => {
 
     router.post("/", customers.create);
 
+    router.put("/hide/:id", customers.hide);
+
+    router.put("/:id", customers.update);
+
     router.get("/branch", customers.findCustomerWithConditions);
-
-    router.get("/branch/hide", customers.findCustomerWithConditionsHide);
-
-    router.get("/quantity", customers.findQuantity);
 
     router.get("/name", customers.findCustomerByName);
 
-    router.get("/update", customers.findOne);
+    router.get("/:id", customers.findOne);
 
-    router.put("/hide/:id", customers.hide);
-
-    router.put("/unhide/:id", customers.unhide);
-
-    router.put("/:id", customers.update);
+    router.get("/", customers.findAll);
 
     app.use('/api/customers', router);
 };

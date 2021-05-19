@@ -53,97 +53,199 @@ db.user.belongsToMany(db.role, {
 //user
 db.user.belongsTo(db.branch, {
     foreignKey: "branchId",
-    as: "branches",
+    targetKey: 'id',
 });
+db.branch.hasMany(db.user, {
+    foreignKey: 'branchId',
+    targetKey: 'id',
+});
+
 
 //customer
 db.customer.belongsTo(db.user, {
     foreignKey: "userId",
-    as: "users",
+    targetKey: 'id',
+});
+db.user.hasMany(db.customer, {
+    foreignKey: "userId",
+    targetKey: 'id',
 });
 
 db.customer.belongsTo(db.province, {
     foreignKey: "provinceId",
-    as: "provinces",
+    targetKey: 'id',
+});
+db.province.hasMany(db.customer, {
+    foreignKey: "provinceId",
+    targetKey: 'id',
 });
 
 db.customer.belongsTo(db.business_type, {
     foreignKey: "business_typeId",
-    as: "business_types",
+    targetKey: "id",
+});
+db.business_type.hasMany(db.customer, {
+    foreignKey: "business_typeId",
+    targetKey: "id",
 });
 
 //demand
 db.demand.belongsTo(db.user, {
     foreignKey: "userId",
-    as: "users",
+    targetKey: "id",
 });
-db.demand.belongsTo(db.customer, {
-    foreignKey: "customerId",
-    as: "customers",
-});
-db.demand.belongsTo(db.customer_type, {
-    foreignKey: "customer_typeId",
-    as: "customer_types",
-});
-db.demand.belongsTo(db.car_model, {
-    foreignKey: "car_modelId",
-    as: "car_models",
-});
-db.demand.belongsTo(db.car_type, {
-    foreignKey: "car_typeId",
-    as: "car_types",
-});
-db.demand.belongsTo(db.color, {
-    foreignKey: "colorId",
-    as: "colors",
-});
-db.demand.belongsTo(db.demand_status, {
-    foreignKey: "demand_statusId",
-    as: "demand_statuses",
-});
-db.demand.belongsTo(db.contact_type, {
-    foreignKey: "contact_typeId",
-    as: "contact_types",
+db.user.hasMany(db.demand, {
+    foreignKey: "userId",
+    targetKey: "id",
 });
 
+db.demand.belongsTo(db.customer, {
+    foreignKey: "customerId",
+    targetKey: "id",
+});
+db.customer.hasMany(db.demand, {
+    foreignKey: "customerId",
+    targetKey: "id",
+});
+
+db.demand.belongsTo(db.customer_type, {
+    foreignKey: "customer_typeId",
+    targetKey: "id",
+});
+db.customer_type.hasMany(db.demand, {
+    foreignKey: "customer_typeId",
+    targetKey: "id",
+});
+
+db.demand.belongsTo(db.car_model, {
+    foreignKey: "car_modelId",
+    targetKey: "id",
+});
+db.car_model.hasMany(db.demand, {
+    foreignKey: "car_modelId",
+    targetKey: "id",
+});
+
+db.demand.belongsTo(db.car_type, {
+    foreignKey: "car_typeId",
+    targetKey: "id",
+});
+db.car_type.hasMany(db.demand, {
+    foreignKey: "car_typeId",
+    targetKey: "id",
+});
+
+db.demand.belongsTo(db.color, {
+    foreignKey: "colorId",
+    targetKey: "id",
+});
+db.color.hasMany(db.demand, {
+    foreignKey: "colorId",
+    targetKey: "id",
+});
+
+db.demand.belongsTo(db.demand_status, {
+    foreignKey: "demand_statusId",
+    targetKey: "id",
+});
+db.demand_status.hasMany(db.demand, {
+    foreignKey: "demand_statusId",
+    targetKey: "id",
+});
+
+db.demand.belongsTo(db.contact_type, {
+    foreignKey: "contact_typeId",
+    targetKey: "id",
+});
+db.contact_type.hasMany(db.demand, {
+    foreignKey: "contact_typeId",
+    targetKey: "id",
+});
 
 //demand_history
 db.demand_history.belongsTo(db.demand, {
     foreignKey: "demandId",
-    as: "demands",
+    targetKey: "id",
 });
+db.demand.hasMany(db.demand_history, {
+    foreignKey: "demandId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.user, {
     foreignKey: "userId",
-    as: "users",
+    targetKey: "id",
 });
+db.user.hasMany(db.demand_history, {
+    foreignKey: "userId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.customer, {
     foreignKey: "customerId",
-    as: "customers",
+    targetKey: "id",
 });
+db.customer.hasMany(db.demand_history, {
+    foreignKey: "customerId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.customer_type, {
     foreignKey: "customer_typeId",
-    as: "customer_types",
+    targetKey: "id",
 });
+db.customer_type.hasMany(db.demand_history, {
+    foreignKey: "customer_typeId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.car_model, {
     foreignKey: "car_modelId",
-    as: "car_models",
+    targetKey: "id",
 });
+db.car_model.hasMany(db.demand_history, {
+    foreignKey: "car_modelId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.car_type, {
     foreignKey: "car_typeId",
-    as: "car_types",
+    targetKey: "id",
 });
+db.car_type.hasMany(db.demand_history, {
+    foreignKey: "car_typeId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.color, {
     foreignKey: "colorId",
-    as: "colors",
+    targetKey: "id",
 });
+db.color.hasMany(db.demand_history, {
+    foreignKey: "colorId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.demand_status, {
     foreignKey: "demand_statusId",
-    as: "demand_statuses",
+    targetKey: "id",
 });
+db.demand_status.hasMany(db.demand_history, {
+    foreignKey: "demand_statusId",
+    targetKey: "id",
+});
+
 db.demand_history.belongsTo(db.contact_type, {
     foreignKey: "contact_typeId",
-    as: "contact_types",
+    targetKey: "id",
 });
+db.contact_type.hasMany(db.demand_history, {
+    foreignKey: "contact_typeId",
+    targetKey: "id",
+});
+
+
+
 
 db.ROLES = ["user", "admin", "moderator", "employee"];
 

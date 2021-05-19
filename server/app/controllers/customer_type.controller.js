@@ -3,13 +3,13 @@ const CustomerType = db.customer_type;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    var condition = {
-        customer_type_hide: {
-            [Op.eq]: 0
-        }
-    };
-
-    CustomerType.findAll({ where: condition })
+    CustomerType.findAll({
+            where: {
+                hide: {
+                    [Op.eq]: 0
+                }
+            }
+        })
         .then(data => {
             res.send(data);
         })

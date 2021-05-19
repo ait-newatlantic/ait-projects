@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Car_Type = sequelize.define("car_types", {
-        car_type_id: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
-        car_type_name: {
+        name: {
             type: Sequelize.STRING
         },
-        car_type_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         }

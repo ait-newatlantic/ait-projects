@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
         password: {
             type: Sequelize.STRING
         },
-        user_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         },

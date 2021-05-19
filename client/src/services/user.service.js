@@ -29,20 +29,12 @@ const get_users = () => {
     return axios.get(USER_URL + `users`);
 };
 
-const get_users_specific = (employee) => {
-    return axios.get(USER_URL + `users/specific`, {
-        employee,
-    });
-};
-
 const delete_user = (id) => {
     return axios.delete(USER_URL + `/users/${id}`);
 }
 
-const get_specific_user = (id) => {
-    return axios.get(USER_URL + `users/update`, {
-        params: { id }
-    });
+const get_user = (id) => {
+    return axios.get(USER_URL + `users/${id}`);
 };
 
 const update_user = (
@@ -58,29 +50,20 @@ const update_user = (
     });
 };
 
-const get_user_by_branch = (branch_name) => {
-    return axios.get(USER_URL + `users/branch`, {
-        params: { branch_name }
-    });
-};
-
-const get_user_by_branch_hide = (branch_name) => {
-    return axios.get(USER_URL + `users/branch/hide`, {
-        params: { branch_name }
+const get_user_by_branch = (hide, branch_name) => {
+    return axios.get(USER_URL + `users/hide=${hide}`, {
+        params: {
+            branch_name
+        }
     });
 };
 
 const hide_user = (
-    id,
+    hide, id,
 ) => {
-    return axios.put(USER_URL + `users/hide/${id}`);
+    return axios.put(USER_URL + `users/hide=:'${hide}'/userId='${id}'`);
 };
 
-const unhide_user = (
-    id,
-) => {
-    return axios.put(USER_URL + `users/unhide/${id}`);
-};
 
 const UserService = {
     getPublicContent,
@@ -89,14 +72,11 @@ const UserService = {
     getAdminBoard,
     getEmployeeBoard,
     get_users,
-    get_users_specific,
     get_user_by_branch,
     delete_user,
-    get_specific_user,
+    get_user,
     update_user,
     hide_user,
-    unhide_user,
-    get_user_by_branch_hide,
 }
 
 export default UserService;

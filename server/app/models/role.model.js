@@ -6,7 +6,11 @@ module.exports = (sequelize, Sequelize) => {
         },
         name: {
             type: Sequelize.STRING
-        }
+        },
+        hide: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0,
+        },
     });
 
     return Role;

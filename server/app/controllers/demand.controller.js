@@ -78,39 +78,6 @@ exports.update = (req, res) => {
         });
 };
 
-exports.findAll = (req, res) => {
-    return db.sequelize.query(
-        ` SELECT demands.id, demands.demand_quantity, demands.demand_date, demands.demand_note, demands.demand_employee, demands.demand_opinion, 
-        demands.demand_meeting, demands.createdAt, demands.updatedAt, users.name, customers.customer_name, customers.customer_number,
-        customer_types.customer_type_name, provinces.province_name, branches.branch_name, demand_statuses.demand_status_name,
-        car_models.car_model_name, car_types.car_type_name, colors.color_name, contact_types.contact_type_name 
-      FROM demands 
-      LEFT JOIN users
-      ON demands.userId = users.id
-      LEFT JOIN customers
-      ON demands.customerId = customers.id
-      LEFT JOIN car_models
-      ON demands.car_modelId = car_models.car_model_id
-      LEFT JOIN car_types
-      ON demands.car_typeId = car_types.car_type_id
-      LEFT JOIN colors
-      ON demands.colorId = colors.color_id
-      LEFT JOIN demand_statuses
-      ON demands.demand_statusId = demand_statuses.demand_status_id
-      LEFT JOIN contact_types
-      ON demands.contact_typeId = contact_types.contact_type_id
-      LEFT JOIN customer_types
-      ON demands.customer_typeId = customer_types.customer_type_id
-      LEFT JOIN branches
-      ON users.branchId = branches.branch_id
-      LEFT JOIN provinces
-      ON customers.provinceId = provinces.province_id
-      WHERE demands.demand_hide = 0
-      ORDER BY demands.id DESC`, { type: db.sequelize.QueryTypes.SELECT })
-        .then(queues => res.json(queues))
-        .catch(err => res.status(400).json(err));
-};
-
 exports.findOne = (req, res) => {
     const id = req.query.id;
     return db.sequelize.query(

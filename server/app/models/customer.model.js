@@ -1,28 +1,28 @@
 module.exports = (sequelize, Sequelize) => {
     const Customers = sequelize.define("customers",
         {
-            customer_name: {
+            name: {
                 type: Sequelize.STRING
             },
-            customer_number: {
+            number: {
                 type: Sequelize.STRING
             },
-            customer_address: {
+            address: {
                 type: Sequelize.STRING
             },
-            customer_manager: {
+            manager: {
                 type: Sequelize.STRING
             },
-            customer_manager_number: {
+            number: {
                 type: Sequelize.STRING
             },
-            customer_manager_email: {
+            email: {
                 type: Sequelize.STRING
             },
-            customer_taxcode: {
+            taxcode: {
                 type: Sequelize.STRING
             },
-            customer_hide: {
+            hide: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: 0,
             }

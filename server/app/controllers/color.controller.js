@@ -3,13 +3,13 @@ const Color = db.color;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    var condition = {
-        color_hide: {
-            [Op.eq]: 0
-        }
-    };
-
-    Color.findAll({ where: condition })
+    Color.findAll({
+            where: {
+                color_hide: {
+                    [Op.eq]: 0
+                }
+            }
+        })
         .then(data => {
             res.send(data);
         })

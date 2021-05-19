@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Demand_status = sequelize.define("demand_statuses", {
-        demand_status_id: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
-        demand_status_name: {
+        name: {
             type: Sequelize.STRING
         },
-        demand_status_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         }

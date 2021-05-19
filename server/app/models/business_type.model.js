@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Business_Type = sequelize.define("business_types", {
-        business_type_id: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
-        business_type_name: {
+        name: {
             type: Sequelize.STRING
         },
-        business_type_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         }

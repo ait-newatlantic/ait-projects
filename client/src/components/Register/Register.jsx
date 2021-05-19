@@ -158,7 +158,7 @@ const Register = (props) => {
                                 Chi nhánh:
                                 <Select className="form-control" id="exampleFormControlSelect1" onChange={onChangeBranch}>
                                     {!!branches && branches.map(branch => (
-                                        <option key={branch.branch_id} value={branch.branch_id}>{branch.branch_name}</option>
+                                        <option key={branch.id} value={branch.id}>{branch.name}</option>
                                     ))}
                                 </Select>
                             </div>

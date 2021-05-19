@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Province = sequelize.define("provinces", {
-        province_id: {
+        id: {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
-        province_name: {
+        name: {
             type: Sequelize.STRING
         },
-        province_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         }

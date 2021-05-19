@@ -1,24 +1,24 @@
 module.exports = (sequelize, Sequelize) => {
     const DemandHistory = sequelize.define("demand_histories", {
-        demand_quantity: {
+        quantity: {
             type: Sequelize.INTEGER
         },
-        demand_date: {
+        date: {
             type: Sequelize.DATEONLY
         },
-        demand_note: {
+        note: {
             type: Sequelize.STRING
         },
-        demand_employee: {
+        employee: {
             type: Sequelize.STRING
         },
-        demand_opinion: {
+        opinion: {
             type: Sequelize.STRING
         },
-        demand_meeting: {
+        meeting: {
             type: Sequelize.STRING
         },
-        demand_hide: {
+        hide: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0,
         },
