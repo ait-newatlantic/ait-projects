@@ -1,7 +1,7 @@
 import React from "react";
-import './App.css';
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./components/Login/Login";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -22,5 +22,3 @@ export default function App() {
     </div>
   );
 }
-
-

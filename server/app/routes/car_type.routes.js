@@ -1,9 +1,9 @@
-module.exports = app => {
-    const car_type = require("../controllers/car_type.controller.js");
+module.exports = (app) => {
+  const car_type = require("../controllers/car_type.controller.js");
 
-    var router = require("express").Router();
+  var router = require("express").Router();
 
-    router.get("/", car_type.findAll);
+  router.get("/", car_type.findAll);
 
-    app.use('/api/car-types', router);
+  app.use("/api/car-types", router);
 };

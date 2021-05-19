@@ -1,9 +1,9 @@
-module.exports = app => {
-    const colors = require("../controllers/color.controller.js");
+module.exports = (app) => {
+  const colors = require("../controllers/color.controller.js");
 
-    var router = require("express").Router();
+  var router = require("express").Router();
 
-    router.get("/", colors.findAll);
+  router.get("/", colors.findAll);
 
-    app.use('/api/colors', router);
+  app.use("/api/colors", router);
 };

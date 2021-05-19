@@ -1,9 +1,9 @@
-module.exports = app => {
-    const contact_types = require("../controllers/contact_type.controller.js");
+module.exports = (app) => {
+  const contact_types = require("../controllers/contact_type.controller.js");
 
-    var router = require("express").Router();
+  var router = require("express").Router();
 
-    router.get("/", contact_types.findAll);
+  router.get("/", contact_types.findAll);
 
-    app.use('/api/contact-types', router);
+  app.use("/api/contact-types", router);
 };
