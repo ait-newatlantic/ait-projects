@@ -50,10 +50,10 @@ const update_user = (
     });
 };
 
-const get_user_by_branch = (hide, branch_name) => {
+const get_user_by_branch = (hide, branch_name, username, email, name, role) => {
     return axios.get(USER_URL + `users/hide=${hide}`, {
         params: {
-            branch_name
+            branch_name, username, email, name, role
         }
     });
 };
@@ -61,7 +61,7 @@ const get_user_by_branch = (hide, branch_name) => {
 const hide_user = (
     hide, id,
 ) => {
-    return axios.put(USER_URL + `users/hide=:'${hide}'/userId='${id}'`);
+    return axios.put(USER_URL + `users/hide=${hide}/userId=${id}`);
 };
 
 

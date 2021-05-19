@@ -50,7 +50,6 @@ const vpassword = (value) => {
 const UserUpdate = (props) => {
     const form = useRef()
     const checkBtn = useRef()
-    const [username, setUsername] = useState("")
     const [name, setName] = useState("")
     const [branch_name, setBranchName] = useState("")
     const [email, setEmail] = useState("")
@@ -76,15 +75,14 @@ const UserUpdate = (props) => {
     }
 
     const fetchUser = () => {
-        const id = currentUser.id
-        UserService.get_specific_user(
+        const id = atob(props.match.params.id)
+        UserService.get_user(
             id,
         ).then((response) => {
-            setUsername(response.data[0].username)
-            setName(response.data[0].name)
-            setEmail(response.data[0].email)
-            setBranchName(response.data[0].branch_name)
-            setPassword(response.data[0].password)
+            setName(response.data.name)
+            setEmail(response.data.email)
+            setBranchName(response.data.branch.name)
+            setPassword(response.data.password)
         })
     }
 
@@ -98,7 +96,7 @@ const UserUpdate = (props) => {
             UserService.update_user(
                 id,
                 name,
-                username,
+                email,
                 password
             ).then(
                 (response) => {

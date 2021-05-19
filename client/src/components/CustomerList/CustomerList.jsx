@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react'
+import React from 'react'
+import { useEffect, useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -7,36 +8,42 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
-import { useState } from 'react'
-import { useEffect } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import FirstPageIcon from '@material-ui/icons/FirstPage'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPageIcon from '@material-ui/icons/LastPage'
 import PropTypes from 'prop-types'
-import * as MaterialUIIcons from '@material-ui/icons/'
-import { FormHelperText, InputLabel, TextField } from '@material-ui/core'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import Autocomplete from '@material-ui/lab/Autocomplete'
+import { TextField } from '@material-ui/core'
+import * as MaterialUIIcons from '@material-ui/icons/'
 import { Link } from 'react-router-dom'
 
-import ReactHTMLTableToExcel from 'react-html-table-to-excel'
-import UserService from '../../../services/user.service'
-import BranchService from "../../../services/branch.service"
+import BranchService from "../../services/branch.service"
+import CustomerService from "../../services/customer.service"
+import BusinessTypeService from "../../services/business_type.service"
+import ProvinceService from "../../services/province.service"
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
     },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
 }))
 
 const useStyles = makeStyles({
-    root: {
-        minWidth: '100%',
-    },
     container: {
-        maxHeight: 700,
+        maxHeight: 500,
     },
 })
 
@@ -98,14 +105,22 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 }
 
-export default function AdminUserListHistory() {
+export default function CustomerList() {
     const classes = useStyles()
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(50)
-    const [userResult, setUserResult] = useState([])
+
+    const [customers, setCustomers] = useState([])
+    const [customer_name, setCustomerName] = useState("")
 
     const [branches, setBranches] = useState([])
     const [branch_name, setBranchName] = useState("")
+
+    const [business_types, setBusinessTypes] = useState([])
+    const [business_type_name, setBusinessTypeName] = useState("")
+
+    const [provinces, setProvinces] = useState([])
+    const [province_name, setProvinceName] = useState("")
 
     const [flag, setFlag] = useState(0)
 
@@ -118,33 +133,63 @@ export default function AdminUserListHistory() {
         },
         {
             id: 'name',
-            label: 'Tên người dùng',
+            label: 'Người nhập',
             align: 'left',
             minWidth: 'auto'
         },
         {
-            id: 'username',
-            label: 'Username',
+            id: 'customer_name',
+            label: 'Tên khách hàng',
             align: 'left',
             minWidth: 'auto'
         },
         {
-            id: 'email',
-            label: 'Email',
+            id: 'customer_number',
+            label: 'SĐT khách hàng',
             align: 'left',
             minWidth: 'auto'
         },
         {
-            id: 'password',
-            label: 'Password (bcrypt - 8 rounds)',
+            id: 'business_type_name',
+            label: 'Loại khách hàng',
+            minWidth: 'auto',
             align: 'left',
-            minWidth: 'auto'
         },
         {
-            id: 'rolename',
-            label: 'Quyền hạn',
+            id: 'customer_manager',
+            label: 'Người đại diện',
+            minWidth: 'auto',
             align: 'left',
-            minWidth: 'auto'
+        },
+        {
+            id: 'customer_manager_number',
+            label: 'SĐT người đại diện',
+            minWidth: 'auto',
+            align: 'left',
+        },
+        {
+            id: 'customer_manager_email',
+            label: 'Email người đại diện',
+            minWidth: 'auto',
+            align: 'left',
+        },
+        {
+            id: 'customer_taxcode',
+            label: 'Mã số thuế',
+            minWidth: 'auto',
+            align: 'left',
+        },
+        {
+            id: 'province_name',
+            label: 'Khu vực khách hàng',
+            minWidth: 'auto',
+            align: 'left',
+        },
+        {
+            id: 'customer_address',
+            label: 'Địa chỉ khách hàng',
+            minWidth: 'auto',
+            align: 'left',
         },
         {
             id: 'createdAt',
@@ -171,9 +216,9 @@ export default function AdminUserListHistory() {
         setPage(0)
     }
 
-    const FetchAllData = () => {
-        UserService.get_users().then((response) => {
-            setUserResult(response.data)
+    const FetchCustomers = () => {
+        CustomerService.get_customers().then((response) => {
+            setCustomers(response.data)
         })
     }
 
@@ -183,14 +228,29 @@ export default function AdminUserListHistory() {
         })
     }
 
-    const handleSubmit = () => {
-        UserService.get_user_by_branch_hide(branch_name).then((response) => {
-            setUserResult(response.data)
+    const FetchBusinessTypes = () => {
+        BusinessTypeService.get_business_types().then((response) => {
+            setBusinessTypes(response.data)
         })
     }
 
-    const onClickUnHide = (id) => {
-        UserService.unhide_user(id).then((response) => {
+    const FetchProvinces = () => {
+        ProvinceService.get_provinces().then((response) => {
+            setProvinces(response.data)
+        })
+    }
+
+    const handleSubmit = () => {
+        const username = ""
+        CustomerService.get_customer_by_branch(
+            username, branch_name, customer_name, province_name, business_type_name
+        ).then((response) => {
+            setCustomers(response.data)
+        })
+    }
+
+    const onClickHide = (id) => {
+        CustomerService.hide_customer(id).then((response) => {
             console.log(response)
             handleSubmit()
         })
@@ -204,24 +264,26 @@ export default function AdminUserListHistory() {
     }
 
     useEffect(() => {
-        FetchAllData()
         FetchBranches()
+        FetchCustomers()
+        FetchBusinessTypes()
+        FetchProvinces()
     }, [])
 
     useEffect(() => {
         handleSubmit()
-    }, [branch_name])
+    }, [branch_name, customer_name, province_name, business_type_name])
 
     return (
         <div>
             <div className="row">
                 <div className="col d-flex justify-content-start">
-                    <h4 className="font-weight-bold text-secondary text-left">LỊCH SỬ USERS</h4>
+                    <h4 className="font-weight-bold text-secondary">DANH SÁCH KHÁCH HÀNG</h4>
                 </div>
                 <div className="col d-flex justify-content-end">
                     <div>
-                        <Link to="/dashboard/admin/users/list" className="btn btn-sm btn-hover" role="button">
-                            <MaterialUIIcons.AssignmentInd />DANH SÁCH
+                        <Link to="/dashboard/admin/customers/list/history" className="btn btn-sm btn-hover" role="button">
+                            <MaterialUIIcons.RestorePage />LỊCH SỬ
                         </Link>
                     </div>
                     <div>
@@ -230,7 +292,7 @@ export default function AdminUserListHistory() {
                     </button>
                     </div>
                     <div>
-                        <Link to="/dashboard/register" className="btn btn-sm btn-hover" role="button">
+                        <Link to="/dashboard/customers/input" className="btn btn-sm btn-hover" role="button">
                             <MaterialUIIcons.Add />TẠO MỚI
                             </Link>
                     </div>
@@ -238,7 +300,7 @@ export default function AdminUserListHistory() {
                         <ReactHTMLTableToExcel
                             className="btn btn-sm btn-hover"
                             table="emp"
-                            filename="Danh sách users"
+                            filename="Danh sách khách hàng"
                             sheet="Sheet"
                             buttonText={<div><MaterialUIIcons.GetApp />EXPORT</div>}
                         />
@@ -246,8 +308,8 @@ export default function AdminUserListHistory() {
                 </div>
             </div>
             {flag == 1 ?
-                <div className="d-flex row">
-                    <div className="col-md-3">
+                <div className="row">
+                    <div className="col-md-3 col-sm-6">
                         <InputLabel shrink>
                             Chi nhánh
                                 </InputLabel>
@@ -266,6 +328,64 @@ export default function AdminUserListHistory() {
                         />
                         <FormHelperText>Nhập tên chi nhánh</FormHelperText>
                     </div>
+                    <div className="col-md-3 col-sm-6">
+                        <InputLabel shrink>
+                            Tên khách hàng
+                                </InputLabel>
+                        <Autocomplete
+                            name="customerId"
+                            id="customerId"
+                            value={customer_name}
+                            onChange={(event, newValue) => {
+                                if (newValue === null) {
+                                    setCustomerName("")
+                                }
+                                else setCustomerName(newValue)
+                            }}
+                            options={customers.map((option) => option.customer_name)}
+                            renderInput={(params) => <TextField {...params} variant="standard" />}
+                        />
+                        <FormHelperText>Nhập tên khách hàng</FormHelperText>
+                    </div>
+                    <div className="col-md-3 col-sm-6">
+                        <InputLabel shrink>
+                            Loại khách hàng
+                                </InputLabel>
+                        <Autocomplete
+                            name="business_typeId"
+                            id="business_typeId"
+                            value={business_type_name}
+                            onChange={(event, newValue) => {
+                                if (newValue === null) {
+                                    setBusinessTypeName("")
+                                }
+                                else
+                                    setBusinessTypeName(newValue)
+                            }}
+                            options={business_types.map((option) => option.business_type_name)}
+                            renderInput={(params) => <TextField {...params} variant="standard" />}
+                        />
+                        <FormHelperText>Nhập loại khách hàng</FormHelperText>
+                    </div>
+                    <div className="col-md-3 col-sm-6">
+                        <InputLabel shrink>
+                            Khu vực khách hàng
+                                </InputLabel>
+                        <Autocomplete
+                            name="provinceId"
+                            id="provinceId"
+                            value={province_name}
+                            onChange={(event, newValue) => {
+                                if (newValue === null) {
+                                    setProvinceName("")
+                                }
+                                else setProvinceName(newValue)
+                            }}
+                            options={provinces.map((option) => option.province_name)}
+                            renderInput={(params) => <TextField {...params} variant="standard" />}
+                        />
+                        <FormHelperText>Nhập khu vực khách hàng</FormHelperText>
+                    </div>
                 </div>
                 : <div></div>
             }
@@ -279,8 +399,8 @@ export default function AdminUserListHistory() {
                                 style={{ minWidth: "'auto'" }}
                             >
                                 <strong className="text-danger">
-                                    Khôi phục
-                            </strong>
+                                    Xóa
+                             </strong>
                             </TableCell>
                             <TableCell
 
@@ -312,7 +432,7 @@ export default function AdminUserListHistory() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {userResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                        {customers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                             return (
                                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                     <TableCell
@@ -320,8 +440,8 @@ export default function AdminUserListHistory() {
                                         align="center"
                                         style={{ minWidth: "'auto'" }}
                                     >
-                                        <IconButton color="secondary" aria-label="restore" onClick={() => onClickUnHide(row.id)}>
-                                            <MaterialUIIcons.Restore />
+                                        <IconButton color="secondary" aria-label="delete" onClick={() => onClickHide(row.id)}>
+                                            <MaterialUIIcons.DeleteOutline />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell
@@ -329,9 +449,9 @@ export default function AdminUserListHistory() {
                                         align="center"
                                         style={{ minWidth: "'auto'" }}
                                     >
-                                        <a className="text-primary" href={`/dashboard/customers/update/${row.id}`}>
+                                        <Link className="text-primary" to={`/dashboard/customers/update/` + btoa(`${row.id}`)}>
                                             <MaterialUIIcons.Update />
-                                        </a>
+                                        </Link>
                                     </TableCell>
                                     <TableCell
 
@@ -355,9 +475,9 @@ export default function AdminUserListHistory() {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[50, 100, 200, 500, 1000, { label: 'All', value: -1 }]}
+                rowsPerPageOptions={[50, 100, 200, { label: 'All', value: -1 }]}
                 component="div"
-                count={userResult.length}
+                count={customers.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

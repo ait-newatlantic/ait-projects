@@ -26,38 +26,18 @@ import {
     useWindowWidth,
     useWindowHeight,
 } from '@react-hook/window-size'
-import UserService from '../../services/user.service'
 import Home from "../Home/Home"
 import CustomerInput from '../CustomerInput/CustomerInput'
 import CustomerUpdate from "../CustomerUpdate/CustomerUpdate"
 import DemandUpdate from "../DemandUpdate/DemandUpdate"
-
-import AdminCustomerList from '../Admin/CustomerList/CustomerList'
-import AdminDemandInput from '../Admin/DemandInput/DemandInput'
-import AdminDemandList from '../Admin/DemandList/DemandList'
-import AdminUserList from '../Admin/UserList/UserList'
-import AdminCustomerListHistory from '../Admin/CustomerListHistory/CustomerListHistory'
-import AdminDemandListHistory from '../Admin/DemandListHistory/DemandListHistory'
-import AdminUserListHistory from '../Admin/UserListHistory/UserListHistory'
-
-import ModeratorCustomerList from '../Moderator/CustomerList/CustomerList'
-import ModeratorDemandInput from '../Moderator/DemandInput/DemandInput'
-import ModeratorDemandList from '../Moderator/DemandList/DemandList'
-import ModeratorUserList from '../Moderator/UserList/UserList'
-import ModeratorCustomerListHistory from '../Moderator/CustomerListHistory/CustomerListHistory'
-import ModeratorDemandListHistory from '../Moderator/DemandListHistory/DemandListHistory'
-import ModeratorUserListHistory from '../Moderator/UserListHistory/UserListHistory'
-
-import EmployeeCustomerList from '../Employee/CustomerList/CustomerList'
-import EmployeeDemandInput from '../Employee/DemandInput/DemandInput'
-import EmployeeDemandList from '../Employee/DemandList/DemandList'
-import EmployeeCustomerListHistory from '../Employee/CustomerListHistory/CustomerListHistory'
-import EmployeeDemandListHistory from '../Employee/DemandListHistory/DemandListHistory'
-import { Typography } from '@material-ui/core'
-import AdminDashBoard from '../Admin/DashBoard/DashBoard'
-import ModeratorDashBoard from '../Moderator/DashBoard/DashBoard'
-import EmployeeDashBoard from '../Employee/DashBoard/DashBoard'
-import AdminDiary from '../Admin/Diary/Diary'
+import CustomerList from '../CustomerList/CustomerList'
+import DemandInput from '../DemandInput/DemandInput'
+import DemandList from '../DemandList/DemandList'
+import UserList from '../UserList/UserList'
+import CustomerListHistory from '../CustomerListHistory/CustomerListHistory'
+import DemandListHistory from '../DemandListHistory/DemandListHistory'
+import UserListHistory from '../UserListHistory/UserListHistory'
+import DashBoard from '../DashBoard/DashBoard'
 import DiaryInput from '../DiaryInput/DiaryInput'
 import ErrorPage from '../ErrorPage/ErrorPage'
 import UserUpdate from '../UserUpdate/UserUpdate'
@@ -68,7 +48,7 @@ export default function Sidebar() {
 
     const [showModeratorBoard, setShowModeratorBoard] = useState(false)
     const [showEmployeeBoard, setShowEmployeeBoard] = useState(false)
-    const [showAdminBoard, setShowAdminBoard] = useState(false)
+    const [showBoard, setShowBoard] = useState(false)
     const [currentUser, setCurrentUser] = useState(undefined)
 
     const logOut = () => {
@@ -154,7 +134,7 @@ export default function Sidebar() {
         if (user) {
             setCurrentUser(user)
             setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"))
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"))
+            setShowBoard(user.roles.includes("ROLE_ADMIN"))
             setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"))
         }
     }, [])
@@ -245,7 +225,7 @@ export default function Sidebar() {
                     </IconButton>
                 </div>
                 <Divider />
-                {showAdminBoard && (
+                {showBoard && (
                     <div className="text-light">
                         <List>
                             <ListItem button component={Link} to="/dashboard/admin">
@@ -275,62 +255,6 @@ export default function Sidebar() {
                         </List>
                     </div>
                 )}
-                {showModeratorBoard && (
-                    <div className="text-light">
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/moderator">
-                                <ListItemIcon> <MaterialUIIcons.Dashboard style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Dashboard" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/moderator/demands/list">
-                                <ListItemIcon> <MaterialUIIcons.BusinessCenter style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Kinh doanh" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/moderator/customers/list">
-                                <ListItemIcon> <MaterialUIIcons.SupervisedUserCircle style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Khách hàng" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/moderator/kpi">
-                                <ListItemIcon> <MaterialUIIcons.Ballot style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="KPI" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/moderator/diary">
-                                <ListItemIcon> <MaterialUIIcons.Assignment style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Nhật ký" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/moderator/users/list">
-                                <ListItemIcon> <MaterialUIIcons.AssignmentInd style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Users" />
-                            </ListItem>
-                        </List>
-                    </div>
-                )}
-                {showEmployeeBoard && (
-                    <div className="text-light">
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/employee">
-                                <ListItemIcon> <MaterialUIIcons.Dashboard style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Dashboard" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/employee/demands/list">
-                                <ListItemIcon> <MaterialUIIcons.BusinessCenter style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Kinh doanh" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/employee/customers/list">
-                                <ListItemIcon> <MaterialUIIcons.SupervisedUserCircle style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Khách hàng" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/employee/kpi">
-                                <ListItemIcon> <MaterialUIIcons.Ballot style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="KPI" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/employee/diary">
-                                <ListItemIcon> <MaterialUIIcons.Assignment style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Nhật ký" />
-                            </ListItem>
-                        </List>
-                    </div>
-                )}
             </Drawer>
             <main
                 className={clsx(classes.content, {
@@ -338,64 +262,26 @@ export default function Sidebar() {
                 })}
             >
                 <div className={classes.drawerHeader} />
-                {showAdminBoard && (
+                {showBoard && (
                     <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
                         <Route exact path="/home" component={Home} />
-                        <Route exact path="/dashboard/users/update" component={UserUpdate} />
+                        <Route exact path="/dashboard/users/update/:id" component={UserUpdate} />
                         <Route exact path="/dashboard/admin/diary" component={ErrorPage} />
                         <Route exact path="/dashboard/admin/kpi" component={ErrorPage} />
-                        <Route exact path="/dashboard/admin" component={AdminDashBoard} />
+                        <Route exact path="/dashboard/admin" component={DashBoard} />
                         <Route exact path="/dashboard/register" component={Register} />
                         <Route exact path="/dashboard/profile" component={Profile} />
                         <Route exact path="/dashboard/customers/input" component={CustomerInput} />
                         <Route exact path="/dashboard/diary/input" component={DiaryInput} />
                         <Route exact path="/dashboard/customers/update/:id" component={CustomerUpdate} />
                         <Route exact path="/dashboard/demands/update/:id" component={DemandUpdate} />
-                        <Route exact path="/dashboard/admin/demands/input" component={AdminDemandInput} />
-                        <Route exact path="/dashboard/admin/demands/list" component={AdminDemandList} />
-                        <Route exact path="/dashboard/admin/demands/list/history" component={AdminDemandListHistory} />
-                        <Route exact path="/dashboard/admin/customers/list" component={AdminCustomerList} />
-                        <Route exact path="/dashboard/admin/customers/list/history" component={AdminCustomerListHistory} />
-                        <Route exact path="/dashboard/admin/users/list" component={AdminUserList} />
-                        <Route exact path="/dashboard/admin/users/list/history" component={AdminUserListHistory} />
-                    </div>
-                )}
-                {showModeratorBoard && (
-                    <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
-                        <Route exact path="/home" component={Home} />
-                        <Route exact path="/dashboard/moderator/diary" component={ErrorPage} />
-                        <Route exact path="/dashboard/moderator/kpi" component={ErrorPage} />
-                        <Route exact path="/dashboard/moderator" component={ModeratorDashBoard} />
-                        <Route exact path="/dashboard/register" component={Register} />
-                        <Route exact path="/dashboard/profile" component={Profile} />
-                        <Route exact path="/dashboard/customers/input" component={CustomerInput} />
-                        <Route exact path="/dashboard/customers/update/:id" component={CustomerUpdate} />
-                        <Route exact path="/dashboard/demands/update/:id" component={DemandUpdate} />
-                        <Route exact path="/dashboard/moderator/demands/input" component={ModeratorDemandInput} />
-                        <Route exact path="/dashboard/moderator/demands/list" component={ModeratorDemandList} />
-                        <Route exact path="/dashboard/moderator/demands/list/history" component={ModeratorDemandListHistory} />
-                        <Route exact path="/dashboard/moderator/customers/list" component={ModeratorCustomerList} />
-                        <Route exact path="/dashboard/moderator/customers/list/history" component={ModeratorCustomerListHistory} />
-                        <Route exact path="/dashboard/moderator/users/list" component={ModeratorUserList} />
-                        <Route exact path="/dashboard/moderator/users/list/history" component={ModeratorUserListHistory} />
-                    </div>
-                )}
-                {showEmployeeBoard && (
-                    <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
-                        <Route exact path="/home" component={Home} />
-                        <Route exact path="/dashboard/employee/diary" component={ErrorPage} />
-                        <Route exact path="/dashboard/employee/kpi" component={ErrorPage} />
-                        <Route exact path="/dashboard/employee" component={EmployeeDashBoard} />
-                        <Route exact path="/dashboard/register" component={Register} />
-                        <Route exact path="/dashboard/profile" component={Profile} />
-                        <Route exact path="/dashboard/customers/input" component={CustomerInput} />
-                        <Route exact path="/dashboard/customers/update/:id" component={CustomerUpdate} />
-                        <Route exact path="/dashboard/demands/update/:id" component={DemandUpdate} />
-                        <Route exact path="/dashboard/employee/demands/input" component={EmployeeDemandInput} />
-                        <Route exact path="/dashboard/employee/demands/list" component={EmployeeDemandList} />
-                        <Route exact path="/dashboard/employee/demands/list/history" component={EmployeeDemandListHistory} />
-                        <Route exact path="/dashboard/employee/customers/list" component={EmployeeCustomerList} />
-                        <Route exact path="/dashboard/employee/customers/list/history" component={EmployeeCustomerListHistory} />
+                        <Route exact path="/dashboard/admin/demands/input" component={DemandInput} />
+                        <Route exact path="/dashboard/admin/demands/list" component={DemandList} />
+                        <Route exact path="/dashboard/admin/demands/list/history" component={DemandListHistory} />
+                        <Route exact path="/dashboard/admin/customers/list" component={CustomerList} />
+                        <Route exact path="/dashboard/admin/customers/list/history" component={CustomerListHistory} />
+                        <Route exact path="/dashboard/admin/users/list" component={UserList} />
+                        <Route exact path="/dashboard/admin/users/list/history" component={UserListHistory} />
                     </div>
                 )}
             </main>

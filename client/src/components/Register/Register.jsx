@@ -99,7 +99,7 @@ const Register = (props) => {
     const FetchBranches = () => {
         BranchService.get_branchs().then((response) => {
             setBranches(response.data)
-            setBranchId(parseInt(response.data[0].branch_id))
+            setBranchId(parseInt(response.data[0].id))
         })
     }
 

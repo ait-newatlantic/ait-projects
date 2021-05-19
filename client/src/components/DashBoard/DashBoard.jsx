@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import * as MaterialUIIcons from '@material-ui/icons/'
 import { InputLabel } from '@material-ui/core'
-import DemandService from '../../../services/demand.service'
-import DemandChart from "../../DemandChart/DemandChart"
+import DemandService from '../../services/demand.service'
+import DemandChart from "../DemandChart/DemandChart"
 
-export default function AdminDashBoard() {
+export default function DashBoard() {
     const [flag, setFlag] = useState(0)
     const newDate = new Date()
     const year = newDate.getFullYear()

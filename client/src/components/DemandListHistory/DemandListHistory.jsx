@@ -21,16 +21,15 @@ import { FormHelperText, InputLabel, TextField } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { Link } from 'react-router-dom'
 
-import AuthService from "../../../services/auth.service"
-import DemandService from "../../../services/demand.service"
-import BranchService from "../../../services/branch.service"
-import UserService from "../../../services/user.service"
-import ProvinceService from "../../../services/province.service"
-import CustomerTypeService from "../../../services/customer_type.service"
-import ContactTypeService from "../../../services/contact_type.service"
-import DemandStatusService from "../../../services/demand_status.service"
-import CarModelService from "../../../services/car_model.service"
-import CarTypeService from "../../../services/car_type.service"
+import DemandService from "../../services/demand.service"
+import BranchService from "../../services/branch.service"
+import UserService from "../../services/user.service"
+import ProvinceService from "../../services/province.service"
+import CustomerTypeService from "../../services/customer_type.service"
+import ContactTypeService from "../../services/contact_type.service"
+import DemandStatusService from "../../services/demand_status.service"
+import CarModelService from "../../services/car_model.service"
+import CarTypeService from "../../services/car_type.service"
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -106,7 +105,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 }
 
-export default function ModeratorDemandList() {
+export default function DemandListHistory() {
     const classes = useStyles()
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(50)
@@ -144,8 +143,6 @@ export default function ModeratorDemandList() {
     const [car_type_name, setCarTypeName] = useState("")
 
     const [flag, setFlag] = useState(0)
-
-    const currentUser = AuthService.getCurrentUser()
 
     const columns = [
         {
@@ -281,11 +278,8 @@ export default function ModeratorDemandList() {
     }
 
     const FetchBranches = () => {
-        const userId = currentUser.id
-        UserService.get_specific_user(
-            userId
-        ).then((response) => {
-            setBranchName(response.data[0].branch_name)
+        BranchService.get_branchs().then((response) => {
+            setBranches(response.data)
         })
     }
 
@@ -343,7 +337,7 @@ export default function ModeratorDemandList() {
 
     const handleSubmit = () => {
         const username = ""
-        DemandService.get_demands_by_branch(
+        DemandService.get_demands_by_branch_hide(
             username,
             branch_name,
             demand_employee_name,
@@ -360,8 +354,8 @@ export default function ModeratorDemandList() {
         })
     }
 
-    const onClickHide = (id) => {
-        DemandService.hide_demand(id).then((response) => {
+    const onClickUnHide = (id) => {
+        DemandService.unhide_demand(id).then((response) => {
             console.log(response)
             handleSubmit()
         })
@@ -375,6 +369,7 @@ export default function ModeratorDemandList() {
     }
 
     useEffect(() => {
+        handleSubmit()
         FetchBranches()
         FetchEmployees()
         FetchDemandStatuses()
@@ -393,13 +388,13 @@ export default function ModeratorDemandList() {
         <div>
             <div className="row">
                 <div className="col d-flex justify-content-start text-left">
-                    <h4 className="font-weight-bold text-secondary">DANH SÁCH NHU CẦU</h4>
+                    <h4 className="font-weight-bold text-secondary">LỊCH SỬ NHU CẦU</h4>
                     <p className="font-weight-bold text-secondary">({from_date} đến {to_date})</p>
                 </div>
                 <div className="col d-flex justify-content-end">
                     <div>
-                        <Link to="/dashboard/moderator/demands/list/history" className="btn btn-sm btn-hover" role="button">
-                            <MaterialUIIcons.RestorePage />LỊCH SỬ
+                        <Link to="/dashboard/admin/demands/list" className="btn btn-sm btn-hover" role="button">
+                            <MaterialUIIcons.BusinessCenter />DANH SÁCH
                         </Link>
                     </div>
                     <div>
@@ -408,7 +403,7 @@ export default function ModeratorDemandList() {
                     </button>
                     </div>
                     <div>
-                        <Link to="/dashboard/moderator/demands/input" className="btn btn-sm btn-hover" role="button">
+                        <Link to="/dashboard/admin/demands/input" className="btn btn-sm btn-hover" role="button">
                             <MaterialUIIcons.Add />TẠO MỚI
                             </Link>
                     </div>
@@ -452,6 +447,25 @@ export default function ModeratorDemandList() {
                         </div>
                     </div>
                     <div className="row">
+                        <div className="col-sm-6 col-md-3  ">
+                            <InputLabel shrink>
+                                Chi nhánh
+                                </InputLabel>
+                            <Autocomplete
+                                name="branch_name"
+                                id="branch_name"
+                                value={branch_name}
+                                onChange={(event, newValue) => {
+                                    if (newValue === null) {
+                                        setBranchName("")
+                                    }
+                                    else setBranchName(newValue)
+                                }}
+                                options={branches.map((option) => option.branch_name)}
+                                renderInput={(params) => <TextField {...params} variant="standard" />}
+                            />
+                            <FormHelperText>Nhập tên chi nhánh</FormHelperText>
+                        </div>
                         <div className="col-sm-6 col-md-3  ">
                             <InputLabel shrink>
                                 Người gặp khách hàng
@@ -602,7 +616,7 @@ export default function ModeratorDemandList() {
                                 style={{ minWidth: "'auto'" }}
                             >
                                 <strong className="text-danger">
-                                    Xóa
+                                    Khôi phục
                             </strong>
                             </TableCell>
                             <TableCell
@@ -642,8 +656,8 @@ export default function ModeratorDemandList() {
                                         align="center"
                                         style={{ minWidth: "'auto'" }}
                                     >
-                                        <IconButton color="secondary" aria-label="delete" onClick={() => onClickHide(row.id)}>
-                                            <MaterialUIIcons.DeleteOutline />
+                                        <IconButton color="secondary" aria-label="delete" onClick={() => onClickUnHide(row.id)}>
+                                            <MaterialUIIcons.Restore />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell

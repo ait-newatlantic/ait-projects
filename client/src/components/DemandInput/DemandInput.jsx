@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import DemandService from "../../../services/demand.service"
-import CustomerService from "../../../services/customer.service"
-import CustomerTypeService from "../../../services/customer_type.service"
-import ContactTypeService from "../../../services/contact_type.service"
-import AuthService from "../../../services/auth.service"
-import CarModelService from "../../../services/car_model.service"
-import CarTypeService from "../../../services/car_type.service"
-import ColorService from "../../../services/color.services"
-import DemandStatusService from "../../../services/demand_status.service"
+import DemandService from "../../services/demand.service"
+import CustomerService from "../../services/customer.service"
+import CustomerTypeService from "../../services/customer_type.service"
+import ContactTypeService from "../../services/contact_type.service"
+import AuthService from "../../services/auth.service"
+import CarModelService from "../../services/car_model.service"
+import CarTypeService from "../../services/car_type.service"
+import ColorService from "../../services/color.services"
+import DemandStatusService from "../../services/demand_status.service"
 import * as MaterialUIIcons from '@material-ui/icons/'
 
 import CheckButton from "react-validation/build/button"
@@ -19,9 +19,8 @@ import Input from "react-validation/build/input"
 import Select from "react-validation/build/select"
 import { FormHelperText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 
-import UserService from "../../../services/user.service"
 
-export default function ModeratorDemandInput(props) {
+export default function DemandInput(props) {
     const [demand_date, setDemandDate] = useState("")
 
     const [demand_employee, setDemandEmployee] = useState("")
@@ -55,21 +54,13 @@ export default function ModeratorDemandInput(props) {
     const [car_typeId, setCarTypeId] = useState(0)
 
     const [color_name, setColorName] = useState("")
-    const [colorId, setColorId] = useState(0)
     const [colors, setColors] = useState("")
+    const [colorId, setColorId] = useState(0)
 
     const [customer_name, setCustomerName] = useState("")
     const [customers, setCustomers] = useState([])
     const [customerId, setCustomerId] = useState(0)
     const [customerResult, setCustomerResult] = useState()
-
-    const [branch_name, setBranchName] = useState("")
-
-    const [business_types, setBusinessTypes] = useState([])
-    const [business_type_name, setBusinessTypeName] = useState("")
-
-    const [provinces, setProvinces] = useState([])
-    const [province_name, setProvinceName] = useState("")
 
     const [arr, setArr] = useState([])
     const [arr2, setArr2] = useState([])
@@ -191,6 +182,23 @@ export default function ModeratorDemandInput(props) {
         }
     }
 
+    const Autofill = useCallback(() => {
+        CustomerService.get_customer_by_name(
+            customer_name
+        ).then((response) => {
+            setCustomerResult(response.data)
+            response.data.forEach(value => {
+                setCustomerId(value.id)
+            })
+        })
+    }, [customer_name])
+
+    const FetchCustomers = () => {
+        CustomerService.get_customers().then((response) => {
+            setCustomers(response.data)
+        })
+    }
+
     const FetchCustomerTypes = () => {
         CustomerTypeService.get_customer_types().then((response) => {
             setCustomerTypes(response.data)
@@ -239,49 +247,16 @@ export default function ModeratorDemandInput(props) {
         })
     }
 
-    const FetchBranches = () => {
-        const userid = currentUser.id
-        UserService.get_specific_user(
-            userid
-        ).then((response) => {
-            setBranchName(response.data[0].branch_name)
-        })
-    }
-
-    const FetchCustomers = () => {
-        const username = ""
-        CustomerService.get_customer_by_branch(
-            username, branch_name, customer_name, province_name, business_type_name
-        ).then((response) => {
-            setCustomers(response.data)
-        })
-    }
-
-    const Autofill = useCallback(() => {
-        CustomerService.get_customer_by_name(
-            customer_name
-        ).then((response) => {
-            setCustomerResult(response.data)
-            response.data.forEach(value => {
-                setCustomerId(value.id)
-            })
-        })
-    }, [customer_name])
-
     useEffect(() => {
-        FetchBranches()
+        FetchCustomers()
         FetchCarModels()
         FetchCarTypes()
         FetchColors()
         FetchDemandStatuses()
         FetchCustomerTypes()
         FetchContactTypes()
-    }, [])
-
-    useEffect(() => {
-        FetchCustomers()
         Autofill()
-    }, [branch_name, customer_name, province_name, business_type_name, Autofill])
+    }, [customer_name, Autofill])
 
 
     return (
@@ -313,7 +288,7 @@ export default function ModeratorDemandInput(props) {
                                     </div>
                                     <div className="col-sm">
                                         Giai đoạn :
-                                        <Select className="form-control" id="exampleFormControlSelect4" onChange={onChangeDemandStatusId}>
+                                        <Select className="form-control" id="exampleFormControlSelect5" onChange={onChangeDemandStatusId}>
                                             {!!demand_statuses && demand_statuses.map(demand_status => (
                                                 <option key={demand_status.demand_status_id} value={demand_status.demand_status_id} >{demand_status.demand_status_name}</option>
                                             ))}
@@ -403,7 +378,7 @@ export default function ModeratorDemandInput(props) {
                                 <div className="row ">
                                     <div className="col-sm">
                                         Model xe:
-                                        <Select className="form-control" id="exampleFormControlSelect5" onChange={onChangeCarModel}>
+                                        <Select className="form-control" id="exampleFormControlSelect4" onChange={onChangeCarModel}>
                                             {!!car_models && car_models.map(car_model => (
                                                 <option key={car_model.car_model_id} value={car_model.car_model_id} >{car_model.car_model_name}</option>
                                             ))}
@@ -430,7 +405,7 @@ export default function ModeratorDemandInput(props) {
                                     </div>
                                     <div className="col-sm">
                                         Màu xe:
-                                        <Select className="form-control" id="exampleFormControlSelect1" onChange={onChangeColor}>
+                                        <Select className="form-control" id="exampleFormControlSelect7" onChange={onChangeColor}>
                                             {!!colors && colors.map(color => (
                                                 <option key={color.color_id} value={color.color_id} >{color.color_name}</option>
                                             ))}

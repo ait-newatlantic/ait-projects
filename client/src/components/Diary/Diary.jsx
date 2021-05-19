@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react'
-import { useEffect, useState } from 'react'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -8,44 +7,36 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
+import { useState } from 'react'
+import { useEffect } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import FirstPageIcon from '@material-ui/icons/FirstPage'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import LastPageIcon from '@material-ui/icons/LastPage'
 import PropTypes from 'prop-types'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import { TextField } from '@material-ui/core'
 import * as MaterialUIIcons from '@material-ui/icons/'
+import { FormHelperText, InputLabel, TextField } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import { Link } from 'react-router-dom'
 
-import AuthService from "../../../services/auth.service"
-import UserService from "../../../services/user.service"
-import BranchService from "../../../services/branch.service"
-import CustomerService from "../../../services/customer.service"
-import BusinessTypeService from "../../../services/business_type.service"
-import ProvinceService from "../../../services/province.service"
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+import UserService from '../../services/user.service'
+import BranchService from "../../services/branch.service"
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
 }))
 
 const useStyles = makeStyles({
+    root: {
+        minWidth: '100%',
+    },
     container: {
-        maxHeight: 500,
+        maxHeight: 700,
     },
 })
 
@@ -107,26 +98,16 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 }
 
-export default function ModeratorCustomerListHistory() {
+export default function Diary() {
     const classes = useStyles()
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(50)
-
-    const [customers, setCustomers] = useState([])
-    const [customer_name, setCustomerName] = useState("")
+    const [userResult, setUserResult] = useState([])
 
     const [branches, setBranches] = useState([])
     const [branch_name, setBranchName] = useState("")
 
-    const [business_types, setBusinessTypes] = useState([])
-    const [business_type_name, setBusinessTypeName] = useState("")
-
-    const [provinces, setProvinces] = useState([])
-    const [province_name, setProvinceName] = useState("")
-
     const [flag, setFlag] = useState(0)
-
-    const currentUser = AuthService.getCurrentUser()
 
     const columns = [
         {
@@ -137,63 +118,21 @@ export default function ModeratorCustomerListHistory() {
         },
         {
             id: 'name',
-            label: 'Người nhập',
+            label: 'Tên người dùng',
             align: 'left',
             minWidth: 'auto'
         },
         {
-            id: 'customer_name',
-            label: 'Tên khách hàng',
+            id: 'username',
+            label: 'Username',
             align: 'left',
             minWidth: 'auto'
         },
         {
-            id: 'customer_number',
-            label: 'SĐT khách hàng',
+            id: 'content',
+            label: 'Nội dung',
             align: 'left',
             minWidth: 'auto'
-        },
-        {
-            id: 'business_type_name',
-            label: 'Loại khách hàng',
-            minWidth: 'auto',
-            align: 'left',
-        },
-        {
-            id: 'customer_manager',
-            label: 'Người đại diện',
-            minWidth: 'auto',
-            align: 'left',
-        },
-        {
-            id: 'customer_manager_number',
-            label: 'SĐT người đại diện',
-            minWidth: 'auto',
-            align: 'left',
-        },
-        {
-            id: 'customer_manager_email',
-            label: 'Email người đại diện',
-            minWidth: 'auto',
-            align: 'left',
-        },
-        {
-            id: 'customer_taxcode',
-            label: 'Mã số thuế',
-            minWidth: 'auto',
-            align: 'left',
-        },
-        {
-            id: 'province_name',
-            label: 'Khu vực khách hàng',
-            minWidth: 'auto',
-            align: 'left',
-        },
-        {
-            id: 'customer_address',
-            label: 'Địa chỉ khách hàng',
-            minWidth: 'auto',
-            align: 'left',
         },
         {
             id: 'createdAt',
@@ -220,46 +159,21 @@ export default function ModeratorCustomerListHistory() {
         setPage(0)
     }
 
-    const FetchCustomers = () => {
-        CustomerService.get_customers().then((response) => {
-            setCustomers(response.data)
+    const FetchAllData = () => {
+        UserService.get_users().then((response) => {
+            setUserResult(response.data)
         })
     }
 
     const FetchBranches = () => {
-        const userId = currentUser.id
-        UserService.get_specific_user(
-            userId
-        ).then((response) => {
-            setBranchName(response.data[0].branch_name)
-        })
-    }
-
-    const FetchBusinessTypes = () => {
-        BusinessTypeService.get_business_types().then((response) => {
-            setBusinessTypes(response.data)
-        })
-    }
-
-    const FetchProvinces = () => {
-        ProvinceService.get_provinces().then((response) => {
-            setProvinces(response.data)
+        BranchService.get_branchs().then((response) => {
+            setBranches(response.data)
         })
     }
 
     const handleSubmit = () => {
-        const username = ""
-        CustomerService.get_customer_by_branch_hide(
-            username, branch_name, customer_name, province_name, business_type_name
-        ).then((response) => {
-            setCustomers(response.data)
-        })
-    }
-
-    const onClickUnHide = (id) => {
-        CustomerService.unhide_customer(id).then((response) => {
-            console.log(response)
-            handleSubmit()
+        UserService.get_user_by_branch(branch_name).then((response) => {
+            setUserResult(response.data)
         })
     }
 
@@ -270,27 +184,32 @@ export default function ModeratorCustomerListHistory() {
         else setFlag(0)
     }
 
+    const onClickHide = (id) => {
+        UserService.hide_user(id).then((response) => {
+            console.log(response)
+            handleSubmit()
+        })
+    }
+
     useEffect(() => {
+        FetchAllData()
         FetchBranches()
-        FetchCustomers()
-        FetchBusinessTypes()
-        FetchProvinces()
     }, [])
 
     useEffect(() => {
         handleSubmit()
-    }, [branch_name, customer_name, province_name, business_type_name])
+    }, [branch_name])
 
     return (
         <div>
             <div className="row">
                 <div className="col d-flex justify-content-start">
-                    <h4 className="font-weight-bold text-secondary">LỊCH SỬ KHÁCH HÀNG</h4>
+                    <h4 className="font-weight-bold text-secondary text-left">NHẬT KÝ CÔNG VIỆC</h4>
                 </div>
                 <div className="col d-flex justify-content-end">
                     <div>
-                        <Link to="/dashboard/moderator/customers/list/" className="btn btn-sm btn-hover" role="button">
-                            <MaterialUIIcons.SupervisedUserCircle />DANH SÁCH
+                        <Link to="/dashboard/admin/users/list/history" className="btn btn-sm btn-hover" role="button">
+                            <MaterialUIIcons.RestorePage />LỊCH SỬ
                         </Link>
                     </div>
                     <div>
@@ -299,7 +218,7 @@ export default function ModeratorCustomerListHistory() {
                     </button>
                     </div>
                     <div>
-                        <Link to="/dashboard/customers/input" className="btn btn-sm btn-hover" role="button">
+                        <Link to="/dashboard/diary/input" className="btn btn-sm btn-hover" role="button">
                             <MaterialUIIcons.Add />TẠO MỚI
                             </Link>
                     </div>
@@ -307,7 +226,7 @@ export default function ModeratorCustomerListHistory() {
                         <ReactHTMLTableToExcel
                             className="btn btn-sm btn-hover"
                             table="emp"
-                            filename="Danh sách khách hàng"
+                            filename="Danh sách users"
                             sheet="Sheet"
                             buttonText={<div><MaterialUIIcons.GetApp />EXPORT</div>}
                         />
@@ -315,64 +234,25 @@ export default function ModeratorCustomerListHistory() {
                 </div>
             </div>
             {flag == 1 ?
-                <div className="row">
-                    <div className="col-md-3 col-sm-6">
+                <div className="d-flex row">
+                    <div className="col-md-3">
                         <InputLabel shrink>
-                            Tên khách hàng
+                            Chi nhánh
                                 </InputLabel>
                         <Autocomplete
-                            name="customerId"
-                            id="customerId"
-                            value={customer_name}
+                            name="branchId"
+                            id="branchId"
+                            value={branch_name}
                             onChange={(event, newValue) => {
                                 if (newValue === null) {
-                                    setCustomerName("")
+                                    setBranchName("")
                                 }
-                                else setCustomerName(newValue)
+                                else setBranchName(newValue)
                             }}
-                            options={customers.map((option) => option.customer_name)}
+                            options={branches.map((option) => option.branch_name)}
                             renderInput={(params) => <TextField {...params} variant="standard" />}
                         />
-                        <FormHelperText>Nhập tên khách hàng</FormHelperText>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <InputLabel shrink>
-                            Loại khách hàng
-                                </InputLabel>
-                        <Autocomplete
-                            name="business_typeId"
-                            id="business_typeId"
-                            value={business_type_name}
-                            onChange={(event, newValue) => {
-                                if (newValue === null) {
-                                    setBusinessTypeName("")
-                                }
-                                else
-                                    setBusinessTypeName(newValue)
-                            }}
-                            options={business_types.map((option) => option.business_type_name)}
-                            renderInput={(params) => <TextField {...params} variant="standard" />}
-                        />
-                        <FormHelperText>Nhập loại khách hàng</FormHelperText>
-                    </div>
-                    <div className="col-md-3 col-sm-6">
-                        <InputLabel shrink>
-                            Khu vực khách hàng
-                                </InputLabel>
-                        <Autocomplete
-                            name="provinceId"
-                            id="provinceId"
-                            value={province_name}
-                            onChange={(event, newValue) => {
-                                if (newValue === null) {
-                                    setProvinceName("")
-                                }
-                                else setProvinceName(newValue)
-                            }}
-                            options={provinces.map((option) => option.province_name)}
-                            renderInput={(params) => <TextField {...params} variant="standard" />}
-                        />
-                        <FormHelperText>Nhập khu vực khách hàng</FormHelperText>
+                        <FormHelperText>Nhập tên chi nhánh</FormHelperText>
                     </div>
                 </div>
                 : <div></div>
@@ -387,8 +267,8 @@ export default function ModeratorCustomerListHistory() {
                                 style={{ minWidth: "'auto'" }}
                             >
                                 <strong className="text-danger">
-                                    Khôi phục
-                             </strong>
+                                    Xóa
+                            </strong>
                             </TableCell>
                             <TableCell
 
@@ -420,7 +300,7 @@ export default function ModeratorCustomerListHistory() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {customers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                        {userResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
                             return (
                                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                     <TableCell
@@ -428,8 +308,8 @@ export default function ModeratorCustomerListHistory() {
                                         align="center"
                                         style={{ minWidth: "'auto'" }}
                                     >
-                                        <IconButton color="secondary" aria-label="restore" onClick={() => onClickUnHide(row.id)}>
-                                            <MaterialUIIcons.Restore />
+                                        <IconButton color="secondary" aria-label="delete" onClick={() => onClickHide(row.id)}>
+                                            <MaterialUIIcons.DeleteOutline />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell
@@ -437,9 +317,9 @@ export default function ModeratorCustomerListHistory() {
                                         align="center"
                                         style={{ minWidth: "'auto'" }}
                                     >
-                                        <Link className="text-primary" to={`/dashboard/customers/update/` + btoa(`${row.id}`)}>
-                                            <MaterialUIIcons.Update />
-                                        </Link>
+                                        <a className="text-primary" href={`/dashboard/customers/update/${row.id}`}>
+                                            <MaterialUIIcons.Update /> 
+                                        </a>
                                     </TableCell>
                                     <TableCell
 
@@ -463,9 +343,9 @@ export default function ModeratorCustomerListHistory() {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[50, 100, 200, { label: 'All', value: -1 }]}
+                rowsPerPageOptions={[50, 100, 200, 500, 1000, { label: 'All', value: -1 }]}
                 component="div"
-                count={customers.length}
+                count={userResult.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

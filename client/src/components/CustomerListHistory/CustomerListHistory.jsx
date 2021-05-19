@@ -22,12 +22,10 @@ import { TextField } from '@material-ui/core'
 import * as MaterialUIIcons from '@material-ui/icons/'
 import { Link } from 'react-router-dom'
 
-import AuthService from "../../../services/auth.service"
-import UserService from "../../../services/user.service"
-import BranchService from "../../../services/branch.service"
-import CustomerService from "../../../services/customer.service"
-import BusinessTypeService from "../../../services/business_type.service"
-import ProvinceService from "../../../services/province.service"
+import BranchService from "../../services/branch.service"
+import CustomerService from "../../services/customer.service"
+import BusinessTypeService from "../../services/business_type.service"
+import ProvinceService from "../../services/province.service"
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -107,7 +105,7 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 }
 
-export default function EmployeeCustomerListHistory() {
+export default function CustomerListHistory() {
     const classes = useStyles()
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(50)
@@ -125,8 +123,6 @@ export default function EmployeeCustomerListHistory() {
     const [province_name, setProvinceName] = useState("")
 
     const [flag, setFlag] = useState(0)
-
-    const currentUser = AuthService.getCurrentUser()
 
     const columns = [
         {
@@ -227,11 +223,8 @@ export default function EmployeeCustomerListHistory() {
     }
 
     const FetchBranches = () => {
-        const userId = currentUser.id
-        UserService.get_specific_user(
-            userId
-        ).then((response) => {
-            setBranchName(response.data[0].branch_name)
+        BranchService.get_branchs().then((response) => {
+            setBranches(response.data)
         })
     }
 
@@ -248,7 +241,7 @@ export default function EmployeeCustomerListHistory() {
     }
 
     const handleSubmit = () => {
-        const username = currentUser.username
+        const username = ""
         CustomerService.get_customer_by_branch_hide(
             username, branch_name, customer_name, province_name, business_type_name
         ).then((response) => {
@@ -289,7 +282,7 @@ export default function EmployeeCustomerListHistory() {
                 </div>
                 <div className="col d-flex justify-content-end">
                     <div>
-                        <Link to="/dashboard/Employee/customers/list/" className="btn btn-sm btn-hover" role="button">
+                        <Link to="/dashboard/admin/customers/list/" className="btn btn-sm btn-hover" role="button">
                             <MaterialUIIcons.SupervisedUserCircle />DANH SÁCH
                         </Link>
                     </div>
@@ -316,6 +309,25 @@ export default function EmployeeCustomerListHistory() {
             </div>
             {flag == 1 ?
                 <div className="row">
+                    <div className="col-md-3 col-sm-6">
+                        <InputLabel shrink>
+                            Chi nhánh
+                                </InputLabel>
+                        <Autocomplete
+                            name="branchId"
+                            id="branchId"
+                            value={branch_name}
+                            onChange={(event, newValue) => {
+                                if (newValue === null) {
+                                    setBranchName("")
+                                }
+                                else setBranchName(newValue)
+                            }}
+                            options={branches.map((option) => option.branch_name)}
+                            renderInput={(params) => <TextField {...params} variant="standard" />}
+                        />
+                        <FormHelperText>Nhập tên chi nhánh</FormHelperText>
+                    </div>
                     <div className="col-md-3 col-sm-6">
                         <InputLabel shrink>
                             Tên khách hàng
