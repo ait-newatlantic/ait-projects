@@ -30,24 +30,17 @@ const get_users = () => {
 };
 
 const delete_user = (id) => {
-    return axios.delete(USER_URL + `/users/${id}`);
+    return axios.delete(USER_URL + `/users/user/${id}`);
 };
 
 const get_user = (id) => {
-    return axios.get(USER_URL + `users/${id}`);
+    return axios.get(USER_URL + `users/user/${id}`);
 };
 
-const update_user = (id, name, email, password) => {
-    return axios.put(USER_URL + `users/${id}`, {
-        name,
-        email,
-        password,
-    });
-};
-
-const get_user_by_branch = (hide, branch_name, username, email, name, role) => {
-    return axios.get(USER_URL + `users/hide=${hide}`, {
+const get_users_filtered = (hide, branch_name, username, email, name, role) => {
+    return axios.get(USER_URL + `users/filters`, {
         params: {
+            hide,
             branch_name,
             username,
             email,
@@ -57,8 +50,16 @@ const get_user_by_branch = (hide, branch_name, username, email, name, role) => {
     });
 };
 
+const update_user = (id, name, email, password) => {
+    return axios.put(USER_URL + `users/user/${id}`, {
+        name,
+        email,
+        password,
+    });
+};
+
 const hide_user = (hide, id) => {
-    return axios.put(USER_URL + `users/hide=${hide}/userId=${id}`);
+    return axios.put(USER_URL + `users/user?hide=${hide}&id=${id}`);
 };
 
 const UserService = {
@@ -68,7 +69,7 @@ const UserService = {
     getAdminBoard,
     getEmployeeBoard,
     get_users,
-    get_user_by_branch,
+    get_users_filtered,
     delete_user,
     get_user,
     update_user,

@@ -29,7 +29,7 @@ export default function UserListHistory() {
 
   const handleSubmit = () => {
     const hide = 1;
-    UserService.get_user_by_branch(
+    UserService.get_users_filtered(
       hide,
       branch_name,
       username,

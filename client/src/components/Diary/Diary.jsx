@@ -184,7 +184,7 @@ export default function Diary() {
   };
 
   const handleSubmit = () => {
-    UserService.get_user_by_branch(branch_name).then((response) => {
+    UserService.get_users_filtered(branch_name).then((response) => {
       setUserResult(response.data);
     });
   };

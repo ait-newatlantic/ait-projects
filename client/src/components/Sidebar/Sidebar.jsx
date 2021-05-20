@@ -44,7 +44,7 @@ require("dotenv").config();
 export default function Sidebar() {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
-  const [showBoard, setShowBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
   const logOut = () => {
@@ -130,7 +130,7 @@ export default function Sidebar() {
     if (user) {
       setCurrentUser(user);
       setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      setShowBoard(user.roles.includes("ROLE_ADMIN"));
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
       setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"));
     }
   }, []);
@@ -219,10 +219,10 @@ export default function Sidebar() {
           </IconButton>
         </div>
         <Divider />
-        {showBoard && (
+        {showAdminBoard && (
           <div className="text-light">
             <List>
-              <ListItem button component={Link} to="/dashboard/admin">
+              <ListItem button component={Link} to="/dashboard">
                 <ListItemIcon>
                   {" "}
                   <MaterialUIIcons.Dashboard style={{ fill: "white" }} />{" "}
@@ -232,7 +232,7 @@ export default function Sidebar() {
               <ListItem
                 button
                 component={Link}
-                to="/dashboard/admin/demands/list"
+                to="/dashboard/demands/list"
               >
                 <ListItemIcon>
                   {" "}
@@ -245,7 +245,7 @@ export default function Sidebar() {
               <ListItem
                 button
                 component={Link}
-                to="/dashboard/admin/customers/list"
+                to="/dashboard/customers/list"
               >
                 <ListItemIcon>
                   {" "}
@@ -255,14 +255,14 @@ export default function Sidebar() {
                 </ListItemIcon>
                 <ListItemText primary="Khách hàng" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/admin/kpi">
+              <ListItem button component={Link} to="/dashboard/kpi">
                 <ListItemIcon>
                   {" "}
                   <MaterialUIIcons.Ballot style={{ fill: "white" }} />{" "}
                 </ListItemIcon>
                 <ListItemText primary="KPI" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/admin/diary">
+              <ListItem button component={Link} to="/dashboard/diary">
                 <ListItemIcon>
                   {" "}
                   <MaterialUIIcons.Assignment style={{ fill: "white" }} />{" "}
@@ -272,7 +272,7 @@ export default function Sidebar() {
               <ListItem
                 button
                 component={Link}
-                to="/dashboard/admin/users/list"
+                to="/dashboard/users/list"
               >
                 <ListItemIcon>
                   {" "}
@@ -292,7 +292,7 @@ export default function Sidebar() {
         })}
       >
         <div className={classes.drawerHeader} />
-        {showBoard && (
+        {showAdminBoard && (
           <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
             <Route exact path="/home" component={Home} />
             <Route
@@ -300,9 +300,9 @@ export default function Sidebar() {
               path="/dashboard/users/update/:id"
               component={UserUpdate}
             />
-            <Route exact path="/dashboard/admin/diary" component={ErrorPage} />
-            <Route exact path="/dashboard/admin/kpi" component={ErrorPage} />
-            <Route exact path="/dashboard/admin" component={DashBoard} />
+            <Route exact path="/dashboard/diary" component={ErrorPage} />
+            <Route exact path="/dashboard/kpi" component={ErrorPage} />
+            <Route exact path="/dashboard" component={DashBoard} />
             <Route exact path="/dashboard/register" component={Register} />
             <Route exact path="/dashboard/profile" component={Profile} />
             <Route
@@ -323,37 +323,37 @@ export default function Sidebar() {
             />
             <Route
               exact
-              path="/dashboard/admin/demands/input"
+              path="/dashboard/demands/input"
               component={DemandInput}
             />
             <Route
               exact
-              path="/dashboard/admin/demands/list"
+              path="/dashboard/demands/list"
               component={DemandList}
             />
             <Route
               exact
-              path="/dashboard/admin/demands/list/history"
+              path="/dashboard/demands/list/history"
               component={DemandListHistory}
             />
             <Route
               exact
-              path="/dashboard/admin/customers/list"
+              path="/dashboard/customers/list"
               component={CustomerList}
             />
             <Route
               exact
-              path="/dashboard/admin/customers/list/history"
+              path="/dashboard/customers/list/history"
               component={CustomerListHistory}
             />
             <Route
               exact
-              path="/dashboard/admin/users/list"
+              path="/dashboard/users/list"
               component={UserList}
             />
             <Route
               exact
-              path="/dashboard/admin/users/list/history"
+              path="/dashboard/users/list/history"
               component={UserListHistory}
             />
           </div>

@@ -30,13 +30,13 @@ module.exports = function(app) {
         controller.employeeBoard
     );
 
-    router.put("/hide=:hide/userId=:id", controller.hide);
+    router.put("/user", controller.hide);
 
-    router.put("/:id", controller.update);
+    router.put("/user/:id", controller.update);
 
-    router.get("/hide=:hide", controller.findByBr);
+    router.get("/user/:id", controller.findOne);
 
-    router.get("/:id", controller.findOne);
+    router.get("/filters", controller.findWithFilters);
 
     router.get("/", controller.findAll);
 
