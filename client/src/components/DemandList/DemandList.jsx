@@ -418,7 +418,7 @@ export default function DemandList() {
         <div className="col d-flex justify-content-end">
           <div>
             <Link
-              to="/dashboard/admin/demands/list/history"
+              to="/dashboard/demands/list/history"
               className="btn btn-sm btn-hover"
               role="button"
             >
@@ -434,7 +434,7 @@ export default function DemandList() {
           </div>
           <div>
             <Link
-              to="/dashboard/admin/demands/input"
+              to="/dashboard/demands/input"
               className="btn btn-sm btn-hover"
               role="button"
             >

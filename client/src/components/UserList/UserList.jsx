@@ -75,7 +75,7 @@ export default function UserList() {
         <div className="col d-flex justify-content-end">
           <div>
             <Link
-              to="/dashboard/admin/users/list/history"
+              to="/dashboard/users/list/history"
               className="btn btn-sm btn-hover"
               role="button"
             >
@@ -113,8 +113,8 @@ export default function UserList() {
       >
         <thead>
           <tr>
-            <th>#</th>
-            <th>
+            <th className="align-middle">#</th>
+            <th className="align-middle">
               Chi nhánh
               <Autocomplete
                 value={branch_name}
@@ -131,7 +131,7 @@ export default function UserList() {
                 )}
               />
             </th>
-            <th>
+            <th className="align-middle">
               Tên nhân viên
               <Autocomplete
                 value={name}
@@ -146,7 +146,7 @@ export default function UserList() {
                 )}
               />
             </th>
-            <th>
+            <th className="align-middle">
               Tài khoản
               <Autocomplete
                 value={username}
@@ -163,7 +163,7 @@ export default function UserList() {
                 )}
               />
             </th>
-            <th>
+            <th className="align-middle">
               Email
               <Autocomplete
                 value={email}
@@ -178,7 +178,7 @@ export default function UserList() {
                 )}
               />
             </th>
-            <th>
+            <th className="align-middle">
               Quyền hạn
               <Autocomplete
                 value={role}
@@ -195,8 +195,8 @@ export default function UserList() {
                 )}
               />
             </th>
-            <th>Ngày tạo user</th>
-            <th>Ngày cập nhật</th>
+            <th className="align-middle">Ngày tạo user</th>
+            <th className="align-middle">Ngày cập nhật</th>
             <th></th>
             <th></th>
           </tr>
@@ -205,15 +205,15 @@ export default function UserList() {
           {!!userResult &&
             userResult.map((user, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{user.branch.name}</td>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.roles[0].name}</td>
-                <td>{user.createdAt.substring(0, 10)}</td>
-                <td>{user.updatedAt.substring(0, 10)}</td>
-                <td>
+                <td className="align-middle">{index + 1}</td>
+                <td className="align-middle">{user.branch.name}</td>
+                <td className="align-middle">{user.name}</td>
+                <td className="align-middle">{user.username}</td>
+                <td className="align-middle">{user.email}</td>
+                <td className="align-middle">{user.roles[0].name}</td>
+                <td className="align-middle">{user.createdAt.substring(0, 10)}</td>
+                <td className="align-middle">{user.updatedAt.substring(0, 10)}</td>
+                <td className="align-middle">
                   <Link
                     className="btn btn-primary btn-sm"
                     to={"/dashboard/users/update/" + btoa(`${user.id}`)}
@@ -221,9 +221,9 @@ export default function UserList() {
                     Update
                   </Link>
                 </td>
-                <td>
+                <td className="align-middle">
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="btn btn-secondary btn-sm"
                     onClick={() => onClickHide(user.id)}
                   >
                     Hide

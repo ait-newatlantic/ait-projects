@@ -21,9 +21,7 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import * as MaterialUIIcons from "@material-ui/icons/";
 import {
-  useWindowSize,
   useWindowWidth,
-  useWindowHeight,
 } from "@react-hook/window-size";
 import Home from "../Home/Home";
 import CustomerInput from "../CustomerInput/CustomerInput";
@@ -139,7 +137,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     if (open == false) {
-      if (onlyWidth >= "1500") {
+      if (onlyWidth >= "900") {
         setWidth("100vw");
       } else setWidth("80vw");
     } else {
@@ -171,15 +169,6 @@ export default function Sidebar() {
               <MaterialUIIcons.Apps />
             </Link>
           </IconButton>
-          <div className="input-group rounded" style={{ width: "30vw" }}>
-            <input
-              type="search"
-              className="form-control rounded"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="search-addon"
-            />
-          </div>
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <div className="row">

@@ -6,25 +6,37 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import UserService from "../../services/user.service";
-import BranchService from "../../services/branch.service";
 import { CSVLink } from "react-csv";
 
-export default function UserList() {
+export default function UserListHistory() {
   const [userResult, setUserResult] = useState([]);
   const [excelData, setExcelData] = useState([]);
-
-  const [branches, setBranches] = useState([]);
   const [branch_name, setBranchName] = useState("");
+  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
 
-  const FetchBranches = () => {
-    BranchService.get_branchs().then((response) => {
-      setBranches(response.data);
-    });
-  };
+  const headers = [
+    { label: "Chi nhánh", key: "branchname" },
+    { label: "Tên nhân viên", key: "name" },
+    { label: "Tài khoản", key: "username" },
+    { label: "Email", key: "email" },
+    { label: "Quyền hạn", key: "role" },
+    { label: "Ngày tạo", key: "createdAt" },
+    { label: "Ngày cập nhật", key: "updatedAt" },
+  ];
 
   const handleSubmit = () => {
     const hide = 1;
-    UserService.get_user_by_branch(hide, branch_name).then((response) => {
+    UserService.get_user_by_branch(
+      hide,
+      branch_name,
+      username,
+      email,
+      name,
+      role
+    ).then((response) => {
       setUserResult(response.data);
       setExcelData(
         response.data.map((i) => ({
@@ -48,23 +60,9 @@ export default function UserList() {
     });
   };
 
-  const headers = [
-    { label: "Chi nhánh", key: "branchname" },
-    { label: "Tên nhân viên", key: "name" },
-    { label: "Tài khoản", key: "username" },
-    { label: "Email", key: "email" },
-    { label: "Quyền hạn", key: "role" },
-    { label: "Ngày tạo", key: "createdAt" },
-    { label: "Ngày cập nhật", key: "updatedAt" },
-  ];
-
-  useEffect(() => {
-    FetchBranches();
-  }, []);
-
   useEffect(() => {
     handleSubmit();
-  }, [branch_name]);
+  }, [branch_name, username, email, name, role]);
 
   return (
     <div>
@@ -77,7 +75,7 @@ export default function UserList() {
         <div className="col d-flex justify-content-end">
           <div>
             <Link
-              to="/dashboard/admin/users/list"
+              to="/dashboard/users/list/"
               className="btn btn-sm btn-hover"
               role="button"
             >
@@ -106,7 +104,7 @@ export default function UserList() {
       </div>
       <Table
         id="emp"
-        className="table-container"
+        className="table-container text-left"
         striped
         bordered
         responsive
@@ -115,30 +113,90 @@ export default function UserList() {
       >
         <thead>
           <tr>
-            <th>#</th>
-            <th>
+            <th className="align-middle">#</th>
+            <th className="align-middle">
               Chi nhánh
               <Autocomplete
-                name="branchId"
-                id="branchId"
                 value={branch_name}
                 onChange={(event, newValue) => {
                   if (newValue === null) {
                     setBranchName("");
                   } else setBranchName(newValue);
                 }}
-                options={branches.map((option) => option.name)}
+                options={[
+                  ...new Set(userResult.map((option) => option.branch.name)),
+                ]}
                 renderInput={(params) => (
                   <TextField {...params} variant="standard" />
                 )}
               />
             </th>
-            <th>Tên nhân viên</th>
-            <th>Tài khoản</th>
-            <th>Email</th>
-            <th>Quyền hạn</th>
-            <th>Ngày tạo</th>
-            <th>Ngày cập nhật</th>
+            <th className="align-middle">
+              Tên nhân viên
+              <Autocomplete
+                value={name}
+                onChange={(event, newValue) => {
+                  if (newValue === null) {
+                    setName("");
+                  } else setName(newValue);
+                }}
+                options={[...new Set(userResult.map((option) => option.name))]}
+                renderInput={(params) => (
+                  <TextField {...params} variant="standard" />
+                )}
+              />
+            </th>
+            <th className="align-middle">
+              Tài khoản
+              <Autocomplete
+                value={username}
+                onChange={(event, newValue) => {
+                  if (newValue === null) {
+                    setUserName("");
+                  } else setUserName(newValue);
+                }}
+                options={[
+                  ...new Set(userResult.map((option) => option.username)),
+                ]}
+                renderInput={(params) => (
+                  <TextField {...params} variant="standard" />
+                )}
+              />
+            </th>
+            <th className="align-middle">
+              Email
+              <Autocomplete
+                value={email}
+                onChange={(event, newValue) => {
+                  if (newValue === null) {
+                    setEmail("");
+                  } else setEmail(newValue);
+                }}
+                options={[...new Set(userResult.map((option) => option.email))]}
+                renderInput={(params) => (
+                  <TextField {...params} variant="standard" />
+                )}
+              />
+            </th>
+            <th className="align-middle">
+              Quyền hạn
+              <Autocomplete
+                value={role}
+                onChange={(event, newValue) => {
+                  if (newValue === null) {
+                    setRole("");
+                  } else setRole(newValue);
+                }}
+                options={[
+                  ...new Set(userResult.map((option) => option.roles[0].name)),
+                ]}
+                renderInput={(params) => (
+                  <TextField {...params} variant="standard" />
+                )}
+              />
+            </th>
+            <th className="align-middle">Ngày tạo user</th>
+            <th className="align-middle">Ngày cập nhật</th>
             <th></th>
             <th></th>
           </tr>
@@ -147,15 +205,15 @@ export default function UserList() {
           {!!userResult &&
             userResult.map((user, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{user.branch.name}</td>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.roles[0].name}</td>
-                <td>{user.createdAt.substring(0, 10)}</td>
-                <td>{user.updatedAt.substring(0, 10)}</td>
-                <td>
+                <td className="align-middle">{index + 1}</td>
+                <td className="align-middle">{user.branch.name}</td>
+                <td className="align-middle">{user.name}</td>
+                <td className="align-middle">{user.username}</td>
+                <td className="align-middle">{user.email}</td>
+                <td className="align-middle">{user.roles[0].name}</td>
+                <td className="align-middle">{user.createdAt.substring(0, 10)}</td>
+                <td className="align-middle">{user.updatedAt.substring(0, 10)}</td>
+                <td className="align-middle">
                   <Link
                     className="btn btn-primary btn-sm"
                     to={"/dashboard/users/update/" + btoa(`${user.id}`)}
@@ -163,9 +221,9 @@ export default function UserList() {
                     Update
                   </Link>
                 </td>
-                <td>
+                <td className="align-middle">
                   <button
-                    className="btn btn-success btn-sm"
+                    className="btn btn-info btn-sm"
                     onClick={() => onClickHide(user.id)}
                   >
                     UnHide

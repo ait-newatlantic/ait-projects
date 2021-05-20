@@ -222,7 +222,7 @@ export default function Diary() {
         <div className="col d-flex justify-content-end">
           <div>
             <Link
-              to="/dashboard/admin/users/list/history"
+              to="/dashboard/users/list/history"
               className="btn btn-sm btn-hover"
               role="button"
             >

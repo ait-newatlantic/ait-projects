@@ -300,7 +300,7 @@ export default function CustomerList() {
         <div className="col d-flex justify-content-end">
           <div>
             <Link
-              to="/dashboard/admin/customers/list/history"
+              to="/dashboard/customers/list/history"
               className="btn btn-sm btn-hover"
               role="button"
             >
