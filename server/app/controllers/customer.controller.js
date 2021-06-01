@@ -4,9 +4,9 @@ const Customer = db.customer;
 
 exports.create = (req, res) => {
   if (
-    !req.body.name ||
-    !req.body.number ||
-    !req.body.address ||
+    !req.body.customer_name ||
+    !req.body.customer_number ||
+    !req.body.customer_address ||
     !req.body.provinceId ||
     !req.body.business_typeId ||
     !req.body.userId
@@ -21,9 +21,9 @@ exports.create = (req, res) => {
     return;
   }
   Customer.create({
-    name: req.body.name,
-    number: req.body.number,
-    address: req.body.address,
+    name: req.body.customer_name,
+    number: req.body.customer_number,
+    address: req.body.customer_address,
     customer_manager: req.body.customer_manager,
     customer_manager_number: req.body.customer_manager_number,
     customer_manager_email: req.body.customer_manager_email,
@@ -51,21 +51,30 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+  const hide = req.query.hide;
+  const order = req.query.order;
+  const limit = parseInt(req.query.limit) || null;
   Customer.findAll({
+    order: [["id", order]],
+    limit: limit,
+    where: [
+      {
+        hide: {
+          [Op.eq]: hide,
+        },
+      },
+    ],
     include: [
       {
         model: db.user,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+        },
         include: [
           {
             model: db.branch,
-            where: {
-              hide: {
-                [Op.eq]: 0,
-              },
-            },
-          },
-          {
-            model: db.role,
             where: {
               hide: {
                 [Op.eq]: 0,
@@ -114,17 +123,19 @@ exports.findOne = (req, res) => {
             [Op.eq]: 0,
           },
         },
+        include: [
+          {
+            model: db.branch,
+            where: {
+              hide: {
+                [Op.eq]: 0,
+              },
+            },
+          },
+        ],
       },
       {
         model: db.province,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
-      },
-      {
-        model: db.branch,
         where: {
           hide: {
             [Op.eq]: 0,
@@ -151,45 +162,94 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.findCustomerWithConditions = (req, res) => {
-  const branch_name = req.body.branch_name;
-  const province_name = req.body.province_name;
-  const business_type_name = req.body.business_type_name;
-  const username = req.body.username;
-  const name = req.body.name;
-  const hide = req.params.hide;
+exports.findWithFilters = (req, res) => {
+  const name = req.query.name;
+  const number = req.query.number;
+  const address = req.query.address;
+  const manager = req.query.manager;
+  const manager_number = req.query.manager_number;
+  const manager_email = req.query.manager_email;
+  const taxcode = req.query.taxcode;
+  const hide = req.query.hide;
+  const user_name = req.query.user_name;
+  const username = req.query.username;
+  const province = req.query.province;
+  const business_type = req.query.business_type;
+  const datetype = req.query.datetype;
+  const from_date = req.query.from_date;
+  const to_date = req.query.to_date;
+  const branch_name = req.query.branch_name;
+  const order = req.query.order;
+  const limit = parseInt(req.query.limit) || null;
   Customer.findAll({
+    order: [["id", order]],
+    limit: limit,
     where: [
       {
         name: {
-          [Op.eq]: name,
+          [Op.like]: `%${name}%`,
+        },
+        number: {
+          [Op.like]: `%${number}%`,
+        },
+        address: {
+          [Op.like]: `%${address}%`,
+        },
+        manager: {
+          [Op.or]: {
+            [Op.like]: `%${manager}%`,
+            [Op.eq]: null,
+          },
+        },
+        manager_number: {
+          [Op.or]: {
+            [Op.like]: `%${manager_number}%`,
+            [Op.eq]: null,
+          },
+        },
+        manager_email: {
+          [Op.or]: {
+            [Op.like]: `%${manager_email}%`,
+            [Op.eq]: null,
+          },
+        },
+        taxcode: {
+          [Op.or]: {
+            [Op.like]: `%${taxcode}%`,
+            [Op.eq]: null,
+          },
         },
         hide: {
           [Op.eq]: hide,
         },
+        [datetype]: {
+          [Op.between]: [from_date, to_date],
+        },
       },
     ],
-    order: [["id", "DESC"]],
     include: [
       {
         model: db.user,
         where: {
-          username: {
-            [Op.like]: username,
-          },
           hide: {
             [Op.eq]: 0,
+          },
+          name: {
+            [Op.like]: `%${user_name}%`,
+          },
+          username: {
+            [Op.like]: `%${username}%`,
           },
         },
         include: [
           {
             model: db.branch,
             where: {
-              name: {
-                [Op.like]: branch_name,
-              },
               hide: {
                 [Op.eq]: 0,
+              },
+              name: {
+                [Op.like]: `%${branch_name}%`,
               },
             },
           },
@@ -198,22 +258,22 @@ exports.findCustomerWithConditions = (req, res) => {
       {
         model: db.province,
         where: {
-          name: {
-            [Op.like]: province_name,
-          },
           hide: {
             [Op.eq]: 0,
+          },
+          name: {
+            [Op.like]: `%${province}%`,
           },
         },
       },
       {
         model: db.business_type,
         where: {
-          name: {
-            [Op.like]: business_type_name,
-          },
           hide: {
             [Op.eq]: 0,
+          },
+          name: {
+            [Op.like]: `%${business_type}%`,
           },
         },
       },
@@ -229,34 +289,13 @@ exports.findCustomerWithConditions = (req, res) => {
     });
 };
 
-exports.findCustomerByName = (req, res) => {
-  const name = req.body.name;
-  Customer.findAll({
-    where: [
-      {
-        name: {
-          [Op.eq]: name,
-        },
-      },
-    ],
-  })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error retrieving Customer" + err,
-      });
-    });
-};
-
 exports.update = (req, res) => {
   const id = req.params.id;
   Customer.update(
     {
-      customer_manager: req.body.customer_manager,
-      customer_manager_number: req.body.customer_manager_number,
-      customer_manager_email: req.body.customer_manager_email,
+      manager: req.body.manager,
+      manager_number: req.body.manager_number,
+      manager_email: req.body.manager_email,
     },
     {
       where: { id: id },
@@ -288,12 +327,11 @@ exports.update = (req, res) => {
 };
 
 exports.hide = (req, res) => {
-  const id = req.params.id;
-  const hide = req.params.hide;
-
+  const id = req.query.id;
+  const hide = req.query.hide;
   Customer.update(
     {
-      customer_hide: hide,
+      hide: hide,
     },
     {
       where: { id: id },
@@ -302,11 +340,11 @@ exports.hide = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Customer was updated successfully!",
+          message: "Customer was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot update Customer with id=${id}. Maybe Customer was not found!`,
+          message: `Cannot delete Customer with id=${id}. Maybe Customer was not found!`,
         });
       }
     })

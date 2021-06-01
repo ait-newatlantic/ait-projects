@@ -12,10 +12,13 @@ module.exports = (sequelize, Sequelize) => {
     manager: {
       type: Sequelize.STRING,
     },
-    number: {
+    manager_number: {
       type: Sequelize.STRING,
     },
-    email: {
+    manager_email: {
+      type: Sequelize.STRING,
+    },
+    number: {
       type: Sequelize.STRING,
     },
     taxcode: {

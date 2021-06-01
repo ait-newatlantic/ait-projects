@@ -45,6 +45,7 @@ export default function CustomerInput() {
   const onChangeBusinessType = (e) => {
     const business_typeId = e.target.value;
     setBusinessTypeId(parseInt(business_typeId));
+    console.log(business_typeId);
   };
 
   const onChangeCustomer_Address = (e) => {
@@ -75,7 +76,7 @@ export default function CustomerInput() {
   const Autofill = useCallback(() => {
     ProvinceService.get_province_id(province_name).then((response) => {
       response.data.forEach((value) => {
-        setProvinceId(parseInt(value.province_id));
+        setProvinceId(parseInt(value.id));
       });
     });
   }, [province_name]);
@@ -127,7 +128,7 @@ export default function CustomerInput() {
   const FetchBusinessType = () => {
     BusinessTypeService.get_business_types().then((response) => {
       setBusinessTypes(response.data);
-      setBusinessTypeId(parseInt(response.data[0].business_type_id));
+      setBusinessTypeId(parseInt(response.data[0].id));
     });
   };
 
@@ -184,8 +185,7 @@ export default function CustomerInput() {
                       setProvinceName(newValue);
                     }}
                     options={
-                      !!provinces &&
-                      provinces.map((option) => option.province_name)
+                      !!provinces && provinces.map((option) => option.name)
                     }
                     renderInput={(params) => (
                       <TextField {...params} variant="outlined" />
@@ -201,11 +201,8 @@ export default function CustomerInput() {
                   >
                     {!!business_types &&
                       business_types.map((business_type) => (
-                        <option
-                          key={business_type.business_type_id}
-                          value={business_type.business_type_id}
-                        >
-                          {business_type.business_type_name}
+                        <option key={business_type.id} value={business_type.id}>
+                          {business_type.name}
                         </option>
                       ))}
                   </select>

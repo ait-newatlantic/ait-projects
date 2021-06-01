@@ -97,8 +97,14 @@ exports.findWithFilters = (req, res) => {
   const email = req.query.email;
   const role = req.query.role;
   const hide = req.query.hide;
+  const order = req.query.order;
+  const datetype = req.query.datetype;
+  const from_date = req.query.from_date;
+  const to_date = req.query.to_date;
+  const limit = parseInt(req.query.limit) || null;
   User.findAll({
-    order: [["id", "DESC"]],
+    order: [["id", order]],
+    limit: limit,
     where: [
       {
         hide: {
@@ -112,6 +118,9 @@ exports.findWithFilters = (req, res) => {
         },
         username: {
           [Op.like]: `%${username}%`,
+        },
+        [datetype]: {
+          [Op.between]: [from_date, to_date],
         },
       },
     ],

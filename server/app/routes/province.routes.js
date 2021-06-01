@@ -5,5 +5,7 @@ module.exports = (app) => {
 
   router.get("/", provinces.findAll);
 
+  router.get("/info", provinces.findAll);
+
   app.use("/api/provinces", router);
 };

@@ -410,7 +410,7 @@ export default function DemandListHistory() {
     <div>
       <div className="row">
         <div className="col d-flex justify-content-start text-left">
-          <h4 className="font-weight-bold text-secondary">LỊCH SỬ NHU CẦU</h4>
+          <h4 className="font-weight-bold text-secondary">THÙNG RÁC NHU CẦU</h4>
           <p className="font-weight-bold text-secondary">
             ({from_date} đến {to_date})
           </p>

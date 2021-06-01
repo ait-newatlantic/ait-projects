@@ -20,9 +20,7 @@ import AuthService from "../../services/auth.service";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import * as MaterialUIIcons from "@material-ui/icons/";
-import {
-  useWindowWidth,
-} from "@react-hook/window-size";
+import { useWindowWidth } from "@react-hook/window-size";
 import Home from "../Home/Home";
 import CustomerInput from "../CustomerInput/CustomerInput";
 import CustomerUpdate from "../CustomerUpdate/CustomerUpdate";
@@ -50,7 +48,8 @@ export default function Sidebar() {
   const logOut = () => {
     AuthService.logout();
   };
-  const drawerWidth = 240;
+
+  const drawerWidth = 200;
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -82,7 +81,7 @@ export default function Sidebar() {
     },
     drawerPaper: {
       width: drawerWidth,
-      background: "#212529",
+      background: "#1C4E80",
     },
     drawerHeader: {
       display: "flex",
@@ -137,11 +136,13 @@ export default function Sidebar() {
 
   useEffect(() => {
     if (open == false) {
-      if (onlyWidth >= "900") {
-        setWidth("100vw");
-      } else setWidth("80vw");
+      if (onlyWidth <= "900") {
+        setWidth("80vw");
+      } else setWidth("100%");
     } else {
-      setWidth("80vw");
+      if (onlyWidth <= "900") {
+        setWidth("80vw");
+      } else setWidth("100%");
     }
   }, [onlyWidth, open]);
 
@@ -164,36 +165,27 @@ export default function Sidebar() {
           >
             <MenuIcon />
           </IconButton>
-          <IconButton>
-            <Link to="/home" className="text-dark">
-              <MaterialUIIcons.Apps />
-            </Link>
-          </IconButton>
+          <Link to="/home" className="text-dark">
+            <MaterialUIIcons.Apps />
+          </Link>
           {currentUser ? (
             <div className="navbar-nav ml-auto">
-              <div className="row">
-                <li className="col">
-                  <Link to="/dashboard/profile" className="text-dark">
-                    <MaterialUIIcons.AccountBox />
-                  </Link>
-                </li>
-                <li className="col">
-                  <Link to="/dashboard/users/update" className="text-dark">
-                    <MaterialUIIcons.VpnKey />
-                  </Link>
-                </li>
-                <li className="col">
-                  <a href="/login" className="text-dark" onClick={logOut}>
-                    <MaterialUIIcons.ExitToApp />
-                  </a>
-                </li>
-              </div>
+              <li className="nav-item">
+                <a
+                  href="/login"
+                  className="text-dark"
+                  style={{ textDecoration: "none" }}
+                  onClick={logOut}
+                >
+                  LOGOUT
+                </a>
+              </li>
             </div>
           ) : (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
-                  LogIn
+                  LOGIN
                 </Link>
               </li>
             </div>
@@ -212,7 +204,7 @@ export default function Sidebar() {
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon style={{ fill: "white" }} />
+              <MaterialUIIcons.MenuOpen style={{ fill: "white" }} />
             ) : (
               <ChevronRightIcon />
             )}
@@ -224,63 +216,41 @@ export default function Sidebar() {
             <List>
               <ListItem button component={Link} to="/dashboard">
                 <ListItemIcon>
-                  {" "}
-                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />{" "}
+                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
-              <ListItem
-                button
-                component={Link}
-                to="/dashboard/demands/list"
-              >
+              <ListItem button component={Link} to="/dashboard/demands/list">
                 <ListItemIcon>
-                  {" "}
-                  <MaterialUIIcons.BusinessCenter
-                    style={{ fill: "white" }}
-                  />{" "}
+                  <MaterialUIIcons.Assignment style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Kinh doanh" />
               </ListItem>
-              <ListItem
-                button
-                component={Link}
-                to="/dashboard/customers/list"
-              >
+              <ListItem button component={Link} to="/dashboard/customers/list">
                 <ListItemIcon>
-                  {" "}
                   <MaterialUIIcons.SupervisedUserCircle
                     style={{ fill: "white" }}
-                  />{" "}
+                  />
                 </ListItemIcon>
                 <ListItemText primary="Khách hàng" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/kpi">
+              {/* <ListItem button component={Link} to="/dashboard/kpi">
                 <ListItemIcon>
-                  {" "}
-                  <MaterialUIIcons.Ballot style={{ fill: "white" }} />{" "}
+                  <MaterialUIIcons.Ballot style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="KPI" />
               </ListItem>
               <ListItem button component={Link} to="/dashboard/diary">
                 <ListItemIcon>
-                  {" "}
-                  <MaterialUIIcons.Assignment style={{ fill: "white" }} />{" "}
+                  <MaterialUIIcons.Assignment style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Nhật ký" />
-              </ListItem>
-              <ListItem
-                button
-                component={Link}
-                to="/dashboard/users/list"
-              >
+              </ListItem> */}
+              <ListItem button component={Link} to="/dashboard/users/list">
                 <ListItemIcon>
-                  {" "}
-                  <MaterialUIIcons.AssignmentInd
-                    style={{ fill: "white" }}
-                  />{" "}
+                  <MaterialUIIcons.AssignmentInd style={{ fill: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Users" />
+                <ListItemText primary="Tài khoản" />
               </ListItem>
             </List>
           </div>
@@ -346,11 +316,7 @@ export default function Sidebar() {
               path="/dashboard/customers/list/history"
               component={CustomerListHistory}
             />
-            <Route
-              exact
-              path="/dashboard/users/list"
-              component={UserList}
-            />
+            <Route exact path="/dashboard/users/list" component={UserList} />
             <Route
               exact
               path="/dashboard/users/list/history"
@@ -358,6 +324,11 @@ export default function Sidebar() {
             />
           </div>
         )}
+        {/* <div className="flex d-flex justify-content-end">
+          <small className="text-secondary font-italic">
+            Developed by<a href="tel:+84918628660"> Tran Hoang Nam</a>
+          </small>
+        </div> */}
       </main>
     </div>
   );

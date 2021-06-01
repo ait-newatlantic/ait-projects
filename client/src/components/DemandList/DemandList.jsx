@@ -423,7 +423,7 @@ export default function DemandList() {
               role="button"
             >
               <MaterialUIIcons.RestorePage />
-              LỊCH SỬ
+              THÙNG RÁC
             </Link>
           </div>
           <div>

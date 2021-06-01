@@ -31,94 +31,83 @@ const create_customer = (
   });
 };
 
-const get_customers = () => {
-  return axios.get(API_URL + `customers`);
-};
-
-const get_specific_customer = (id) => {
-  return axios.get(API_URL + `customers/update`, {
-    params: { id },
-  });
-};
-
-const get_customer_by_name = (customer_name) => {
-  return axios.get(API_URL + `customers/name`, {
-    params: { customer_name },
-  });
-};
-
-const get_customer_by_branch = (
-  username,
-  branch_name,
-  customer_name,
-  province_name,
-  business_type_name
-) => {
-  return axios.get(API_URL + `customers/branch`, {
+const get_customers = (hide, order, limit) => {
+  return axios.get(API_URL + `customers`, {
     params: {
-      username,
-      branch_name,
-      customer_name,
-      province_name,
-      business_type_name,
+      hide,
+      order,
+      limit,
     },
   });
 };
 
-const get_customer_by_branch_hide = (
+const get_customer = (id) => {
+  return axios.get(API_URL + `customers/customer/${id}`);
+};
+
+const get_customers_filtered = (
+  name,
+  number,
+  address,
+  manager,
+  manager_number,
+  manager_email,
+  taxcode,
+  hide,
   username,
+  user_name,
+  province,
+  business_type,
+  datetype,
+  from_date,
+  to_date,
   branch_name,
-  customer_name,
-  province_name,
-  business_type_name
+  order,
+  limit
 ) => {
-  return axios.get(API_URL + `customers/branch/hide`, {
+  return axios.get(API_URL + `customers/filters`, {
     params: {
+      name,
+      number,
+      address,
+      manager,
+      manager_number,
+      manager_email,
+      taxcode,
+      hide,
       username,
+      user_name,
+      province,
+      business_type,
+      datetype,
+      from_date,
+      to_date,
       branch_name,
-      customer_name,
-      province_name,
-      business_type_name,
+      order,
+      limit,
     },
   });
 };
 
-const update_customer = (
-  id,
-  customer_manager,
-  customer_manager_email,
-  customer_manager_number
-) => {
-  return axios.put(API_URL + `customers/${id}`, {
-    customer_manager,
-    customer_manager_email,
-    customer_manager_number,
+const update_customer = (id, manager, manager_email, manager_number) => {
+  return axios.put(API_URL + `customers/customer/${id}`, {
+    manager,
+    manager_email,
+    manager_number,
   });
 };
 
-const hide_customer = (id) => {
-  return axios.put(API_URL + `customers/hide/${id}`);
-};
-
-const unhide_customer = (id) => {
-  return axios.put(API_URL + `customers/unhide/${id}`);
-};
-
-const get_quantity = () => {
-  return axios.get(API_URL + `customers/quantity`);
+const hide_customer = (hide, id) => {
+  return axios.put(API_URL + `customers/customer?hide=${hide}&id=${id}`);
 };
 
 const CustomerService = {
   create_customer,
-  get_specific_customer,
   update_customer,
-  get_customer_by_name,
-  get_customer_by_branch,
-  get_customer_by_branch_hide,
+  get_customers_filtered,
   get_customers,
-  unhide_customer,
   hide_customer,
-  get_quantity,
+  get_customer,
 };
 
 export default CustomerService;

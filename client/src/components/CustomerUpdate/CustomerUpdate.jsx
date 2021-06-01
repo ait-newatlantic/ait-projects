@@ -6,11 +6,12 @@ import Form from "react-validation/build/form";
 import AuthService from "../../services/auth.service";
 
 export default function CustomerUpdate(props) {
-  const [customer_manager, setCustomer_manager] = useState("");
-  const [customer_manager_number, setCustomer_manager_Number] = useState("");
-  const [customer_manager_email, setCustomer_manager_Email] = useState("");
+  const [manager, setmanager] = useState("");
+  const [manager_number, setmanager_Number] = useState("");
+  const [manager_email, setmanager_Email] = useState("");
   const [business_type_name, setBusinessTypeName] = useState("");
-  const [customers, setCustomers] = useState([]);
+  const [province_name, setProvinceName] = useState("");
+  const [customer, setCustomer] = useState("");
 
   const [message, setMessage] = useState("");
   const [successful, setSuccessful] = useState(false);
@@ -18,19 +19,19 @@ export default function CustomerUpdate(props) {
   const form = useRef();
   const checkBtn = useRef();
 
-  const onChangeCustomer_manager = (e) => {
-    const customer_manager = e.target.value;
-    setCustomer_manager(customer_manager);
+  const onChangemanager = (e) => {
+    const manager = e.target.value;
+    setmanager(manager);
   };
 
-  const onChangeCustomer_manager_Number = (e) => {
-    const customer_manager_number = e.target.value;
-    setCustomer_manager_Number(customer_manager_number);
+  const onChangemanager_Number = (e) => {
+    const manager_number = e.target.value;
+    setmanager_Number(manager_number);
   };
 
-  const onChangeCustomer_manager_Email = (e) => {
-    const customer_manager_email = e.target.value;
-    setCustomer_manager_Email(customer_manager_email);
+  const onChangemanager_Email = (e) => {
+    const manager_email = e.target.value;
+    setmanager_Email(manager_email);
   };
 
   const handleSubmit = (e) => {
@@ -42,9 +43,9 @@ export default function CustomerUpdate(props) {
     if (checkBtn.current.context._errors.length === 0) {
       CustomerService.update_customer(
         id,
-        customer_manager,
-        customer_manager_number,
-        customer_manager_email
+        manager,
+        manager_number,
+        manager_email
       ).then(
         (response) => {
           setMessage(response.data.message);
@@ -67,13 +68,14 @@ export default function CustomerUpdate(props) {
 
   const FetchData = () => {
     const id = atob(props.match.params.id);
-    CustomerService.get_specific_customer(id)
+    CustomerService.get_customer(id)
       .then((response) => {
-        setCustomers(response.data);
-        setCustomer_manager(response.data[0].customer_manager);
-        setCustomer_manager_Email(response.data[0].customer_manager_email);
-        setCustomer_manager_Number(response.data[0].customer_manager_number);
-        setBusinessTypeName(response.data[0].business_type_name);
+        setCustomer(response.data);
+        setmanager(response.data.manager);
+        setmanager_Email(response.data.manager_email);
+        setmanager_Number(response.data.manager_number);
+        setBusinessTypeName(response.data.business_type.name);
+        setProvinceName(response.data.province.name);
       })
       .catch((e) => {
         console.log(e);
@@ -103,10 +105,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ overflow: "auto", background: "#e7e7e7" }}
                   >
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <div key={customer.id}>{customer.customer_name}</div>
-                      ))}
+                    {customer.name}
                   </div>
                 </div>
                 <div className="col-sm">
@@ -115,10 +114,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <div key={customer.id}>{customer.customer_number}</div>
-                      ))}
+                    {customer.number}
                   </div>
                 </div>
               </div>
@@ -129,10 +125,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <div key={customer.id}>{customer.province_name}</div>
-                      ))}
+                    {province_name}
                   </div>
                 </div>
                 <div className="col-sm">
@@ -141,12 +134,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <div key={customer.id}>
-                          {customer.business_type_name}
-                        </div>
-                      ))}
+                    {business_type_name}
                   </div>
                 </div>
               </div>
@@ -157,10 +145,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <div key={customer.id}>{customer.customer_address}</div>
-                      ))}
+                    {customer.address}
                   </div>
                 </div>
               </div>
@@ -174,45 +159,33 @@ export default function CustomerUpdate(props) {
                 <div className="row ">
                   <div className="col-sm">
                     Tên người đại diện:
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <input
-                          key={customer.id}
-                          type="customer_manager"
-                          className="form-control"
-                          name="customer_manager"
-                          defaultValue={customer.customer_manager}
-                          onChange={onChangeCustomer_manager}
-                        />
-                      ))}
+                    <input
+                      type="manager"
+                      className="form-control"
+                      name="manager"
+                      defaultValue={customer.manager}
+                      onChange={onChangemanager}
+                    />
                   </div>
                   <div className="col-sm">
                     SĐT người đại diện:
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <input
-                          key={customer.id}
-                          type="customer_manager_number"
-                          className="form-control"
-                          name="customer_manager_number"
-                          defaultValue={customer.customer_manager_number}
-                          onChange={onChangeCustomer_manager_Number}
-                        />
-                      ))}
+                    <input
+                      type="manager_number"
+                      className="form-control"
+                      name="manager_number"
+                      defaultValue={customer.manager_number}
+                      onChange={onChangemanager_Number}
+                    />
                   </div>
                   <div className="col-sm">
                     Email người đại diện:
-                    {!!customers &&
-                      customers.map((customer) => (
-                        <input
-                          key={customer.id}
-                          type="customer_manager_email"
-                          className="form-control"
-                          name="customer_manager_email"
-                          defaultValue={customer.customer_manager_email}
-                          onChange={onChangeCustomer_manager_Email}
-                        />
-                      ))}
+                    <input
+                      type="manager_email"
+                      className="form-control"
+                      name="manager_email"
+                      defaultValue={customer.manager_email}
+                      onChange={onChangemanager_Email}
+                    />
                   </div>
                 </div>
                 <br />
