@@ -390,7 +390,7 @@ export default function CustomerListHistory() {
           </div>
         ) : null}
       </div>
-      <div style={{ overflow: "scroll", height: "80vh" }}>
+      <div style={{ overflow: "scroll", height: "75vh" }}>
         <Table id="emp" className="text-left" striped bordered hover size="sm">
           <thead>
             <tr>

@@ -2,8 +2,8 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import * as MaterialUIIcons from "@material-ui/icons/";
 import AuthService from "../../services/auth.service";
+import software from "../../assets/img/software.jpg";
 
 const required = (value) => {
   if (!value) {
@@ -66,13 +66,16 @@ const Login = (props) => {
   };
 
   return (
-    <div className="flex d-flex justify-content-center">
-      <div className="card p-4 bg-light">
-        <Form onSubmit={handleLogin} ref={form}>
-          <h3 className="lead font-weight-bold text-dark">
-            Công ty cổ phần TMQT Tân Đại Tây Dương
-          </h3>
-          <p className="font-weight-bold text-dark">AIT SOFTWARE</p>
+    <div
+      className="container-fluid"
+      style={{ background: "#1C4E80", height: "100vh" }}
+    >
+      <div className="row align-items-center h-100">
+        <div className="col-6">
+          <img href={software} alt="logo" width="500" height="600"/>
+        </div>
+        <Form className="col-6" onSubmit={handleLogin} ref={form}>
+          <p className="font-weight-bold text-left text-light">AIT SOFTWARE</p>
           <div className="form-group">
             <Input
               type="text"
@@ -84,7 +87,6 @@ const Login = (props) => {
               validations={[required]}
             />
           </div>
-
           <div className="form-group">
             <Input
               type="password"
@@ -96,30 +98,14 @@ const Login = (props) => {
               validations={[required]}
             />
           </div>
-
           <div className="form-group">
-            <button className="btn btn-warning btn-block" disabled={loading}>
+            <button className="btn btn-primary btn-block" disabled={loading}>
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
               <span>Login</span>
             </button>
           </div>
-
-          <div className="form-group">
-            <div className="flex d-flex justify-content-around">
-              <div>
-                <MaterialUIIcons.Facebook />
-              </div>
-              <div>
-                <MaterialUIIcons.YouTube />
-              </div>
-              <div>
-                <MaterialUIIcons.GitHub />
-              </div>
-            </div>
-          </div>
-
           {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">

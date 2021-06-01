@@ -137,6 +137,19 @@ export default function CustomerUpdate(props) {
                     {business_type_name}
                   </div>
                 </div>
+                {business_type_name == "DOANH NGHIỆP" ? (
+                  <div className="col-sm">
+                    Mã số thuế:
+                    <div
+                      className="form-control"
+                      style={{ background: "#e7e7e7" }}
+                    >
+                      {customer.taxcode}
+                    </div>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
               <div className="row ">
                 <div className="col-sm">
