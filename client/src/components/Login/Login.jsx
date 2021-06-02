@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
-import software from "../../assets/img/software.jpg";
+import software from "../../assets/img/software.png";
 
 const required = (value) => {
   if (!value) {
@@ -71,50 +71,58 @@ const Login = (props) => {
       style={{ background: "#1C4E80", height: "100vh" }}
     >
       <div className="row align-items-center h-100">
-        <div className="col-6">
-          <img href={software} alt="logo" width="500" height="600"/>
-        </div>
-        <Form className="col-6" onSubmit={handleLogin} ref={form}>
-          <p className="font-weight-bold text-left text-light">AIT SOFTWARE</p>
-          <div className="form-group">
-            <Input
-              type="text"
-              className="form-control"
-              name="username"
-              placeholder="Username"
-              value={username}
-              onChange={onChangeUsername}
-              validations={[required]}
-            />
-          </div>
-          <div className="form-group">
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="Password"
-              value={password}
-              onChange={onChangePassword}
-              validations={[required]}
-            />
-          </div>
-          <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              <span>Login</span>
-            </button>
-          </div>
-          {message && (
+        <div className="col-6 mx-auto">
+          <Form onSubmit={handleLogin} ref={form}>
+            <p className="lead font-weight-bold text-left text-light">New Atlantic Software</p>
+            <p className="lead font-weight-bold text-left text-light">Login</p>
             <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
+              <Input
+                type="username"
+                className="form-control"
+                name="username"
+                placeholder="Username"
+                value={username}
+                onChange={onChangeUsername}
+                validations={[required]}
+              />
             </div>
-          )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        </Form>
+            <div className="form-group">
+              <Input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={onChangePassword}
+                validations={[required]}
+              />
+            </div>
+            <div className="form-group">
+              <button className="btn btn-primary btn-block" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Login</span>
+              </button>
+            </div>
+            <div className="flex d-flex wrap justify-content-start">
+              <a href="tel: +84918628660" className="font-weight-bold text-light">Quên mật khẩu?</a>
+            </div>
+            <div className="flex d-flex justify-content-end">
+              <small className="text-secondary font-italic">
+                Developed by Tran Hoang Nam
+              </small>
+            </div>
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          </Form>
+        </div>
       </div>
     </div>
   );

@@ -13,9 +13,9 @@ export default function DashBoard() {
         </div>
       </div>
       <div className="text-left">
-        <h6>AIT Software</h6>
+        <h6>New Atlantic Software</h6>
         <p>
-          AIT Software là phần mềm kinh doanh được công ty cổ phần TMQT Tân Đại
+          New Atlantic Software là phần mềm kinh doanh được công ty cổ phần TMQT Tân Đại
           Tây Dương xây dựng và phát triển nhằm phục vụ cho các chi nhánh về
           việc nhập dữ liệu kinh doanh, tạo báo cáo, đồ thị, thống kê số liệu,
           xuất ra file excel. Phần mềm được xây dựng sử dụng các công nghệ hiện
