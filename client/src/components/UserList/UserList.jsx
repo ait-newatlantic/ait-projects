@@ -248,7 +248,7 @@ export default function UserList() {
               role="button"
             >
               <MaterialUIIcons.ExitToApp />
-              THÙNG RÁC
+              LỊCH SỬ
             </Link>
           </div>
         </div>

@@ -239,7 +239,7 @@ export default function CustomerListHistory() {
   return (
     <div>
       <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
+        <h4 className="font-weight-bold text-dark text-left">LỊCH SỬ</h4>
         <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
           Danh sách khách hàng ngưng chăm sóc
         </h6>

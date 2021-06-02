@@ -300,7 +300,7 @@ export default function CustomerList() {
               role="button"
             >
               <MaterialUIIcons.ExitToApp />
-              THÙNG RÁC
+              LỊCH SỬ
             </Link>
           </div>
         </div>

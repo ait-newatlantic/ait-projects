@@ -227,7 +227,7 @@ export default function Diary() {
               role="button"
             >
               <MaterialUIIcons.RestorePage />
-              THÙNG RÁC
+              LỊCH SỬ
             </Link>
           </div>
           <div>

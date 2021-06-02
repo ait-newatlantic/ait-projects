@@ -187,7 +187,7 @@ export default function UserListHistory() {
   return (
     <div>
       <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
+        <h4 className="font-weight-bold text-dark text-left">LỊCH SỬ</h4>
         <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
           Danh sách tài khoản không sử dụng
         </h6>

@@ -3,7 +3,6 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
-import software from "../../assets/img/software.png";
 
 const required = (value) => {
   if (!value) {
@@ -66,62 +65,72 @@ const Login = (props) => {
   };
 
   return (
-    <div
-      className="container-fluid"
-      style={{ background: "#1C4E80", height: "100vh" }}
-    >
+    <div className="container" style={{ height: "100vh" }}>
       <div className="row align-items-center h-100">
-        <div className="col-6 mx-auto">
-          <Form onSubmit={handleLogin} ref={form}>
-            <p className="lead font-weight-bold text-left text-light">New Atlantic Software</p>
-            <p className="lead font-weight-bold text-left text-light">Login</p>
-            <div className="form-group">
-              <Input
-                type="username"
-                className="form-control"
-                name="username"
-                placeholder="Username"
-                value={username}
-                onChange={onChangeUsername}
-                validations={[required]}
-              />
+        <div className="shadow-lg card col-xl-8 col-lg-8 col-md-6 col-sm-12 col mx-auto rounded">
+          <div
+            className="row align-items-center p-4 rounded"
+            style={{ background: "#1C4E80" }}
+          >
+            <div className="col-md-4 col-sm">
+              <span className="lead text-left font-italic text-light align-middle">
+                New Atlantic International Trading JSC
+              </span>
             </div>
-            <div className="form-group">
-              <Input
-                type="password"
-                className="form-control"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={onChangePassword}
-                validations={[required]}
-              />
-            </div>
-            <div className="form-group">
-              <button className="btn btn-primary btn-block" disabled={loading}>
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
-            <div className="flex d-flex wrap justify-content-start">
-              <a href="tel: +84918628660" className="font-weight-bold text-light">Quên mật khẩu?</a>
-            </div>
-            <div className="flex d-flex justify-content-end">
-              <small className="text-secondary font-italic">
-                Developed by Tran Hoang Nam
-              </small>
-            </div>
-            {message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
+            <div className="col-md-8 col-sm bg-white rounded p-4">
+              <Form onSubmit={handleLogin} ref={form}>
+                <p className="lead text-left text-dark">Login</p>
+                <div className="form-group">
+                  <Input
+                    type="username"
+                    className="form-control"
+                    name="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={onChangeUsername}
+                    validations={[required]}
+                  />
                 </div>
-              </div>
-            )}
-            <CheckButton style={{ display: "none" }} ref={checkBtn} />
-          </Form>
+                <div className="form-group">
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={onChangePassword}
+                    validations={[required]}
+                  />
+                </div>
+                <div className="form-group">
+                  <button
+                    className="btn btn-secondary btn-block"
+                    disabled={loading}
+                  >
+                    {loading && (
+                      <span className="spinner-border spinner-border-sm"></span>
+                    )}
+                    <span>Login</span>
+                  </button>
+                </div>
+                <div className="flex d-flex justify-content-end">
+                  <small className="text-secondary font-italic">
+                    <a className="text-secondary" href="tel: +84918628660">
+                      Forgot your password?
+                    </a>
+                  </small>
+                </div>
+                {message && (
+                  <div className="form-group">
+                    <div className="alert alert-danger" role="alert">
+                      {message}
+                    </div>
+                  </div>
+                )}
+                <CheckButton style={{ display: "none" }} ref={checkBtn} />
+              </Form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
