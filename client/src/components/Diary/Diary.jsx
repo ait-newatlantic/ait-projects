@@ -227,7 +227,7 @@ export default function Diary() {
               role="button"
             >
               <MaterialUIIcons.RestorePage />
-              LỊCH SỬ
+              THÙNG RÁC
             </Link>
           </div>
           <div>
@@ -291,7 +291,7 @@ export default function Diary() {
           <TableHead>
             <TableRow>
               <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                <strong className="text-danger">Xóa</strong>
+                <strong className="text-danger">Delete</strong>
               </TableCell>
               <TableCell align="center" style={{ minWidth: "'auto'" }}>
                 <strong className="text-primary">Cập nhật</strong>

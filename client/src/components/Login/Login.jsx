@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
+import imgsrc from "../../assets/img/ait_logo.jpg";
 
 const required = (value) => {
   if (!value) {
@@ -67,15 +68,29 @@ const Login = (props) => {
   return (
     <div className="container" style={{ height: "100vh" }}>
       <div className="row align-items-center h-100">
-        <div className="shadow-lg card col-xl-8 col-lg-8 col-md-6 col-sm-12 col mx-auto rounded">
-          <div
-            className="row align-items-center p-4 rounded"
-            style={{ background: "#1C4E80" }}
-          >
-            <div className="col-md-4 col-sm">
-              <span className="lead text-left font-italic text-light align-middle">
-                New Atlantic International Trading JSC
-              </span>
+        <div className="shadow card col col-xl-8 col-lg-8 col-md-6 col-sm-12 mx-auto rounded" style={{ background: "#1C4E80" }}>
+          <div className="row p-4">
+            <div className="col-md-4 col-sm font-italic text-light">
+              <div className="row">
+                <div className="col-3">
+                  <img className="rounded" src={imgsrc} alt="logo" height="50vh"/>
+                </div>
+                <div className="col-9">
+                  <p className="text-left">New Atlantic IT JSC</p>
+                </div>
+              </div>
+              <br/>
+              <ul className="text-left">
+                <li>
+                  <a className="text-light" href="https://www.facebook.com/newait.kamaz/" target="blank">Facebook</a>
+                </li>
+                <li>
+                  <a className="text-light" href="https://www.youtube.com/channel/UCyDJ_4eE0k7R66dns8WZZWg" target="blank">Youtube</a>
+                </li>
+                <li>
+                  <a className="text-light" href="https://github.com/namtrhg" target="blank">Github</a>
+                </li>
+              </ul>
             </div>
             <div className="col-md-8 col-sm bg-white rounded p-4">
               <Form onSubmit={handleLogin} ref={form}>

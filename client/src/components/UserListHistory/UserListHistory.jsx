@@ -187,9 +187,9 @@ export default function UserListHistory() {
   return (
     <div>
       <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">LỊCH SỬ</h4>
+        <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
         <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
-          Danh sách tài khoản không sử dụng
+          Danh sách tài khoản ngưng sử dụng
         </h6>
       </div>
       <div
@@ -201,26 +201,6 @@ export default function UserListHistory() {
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
               <MaterialUIIcons.FilterList />
             </button>
-          </div>
-          <div>
-            <Link
-              to="/dashboard/register"
-              className="btn btn-sm btn-hover"
-              role="button"
-            >
-              <MaterialUIIcons.Add />
-            </Link>
-          </div>
-          <div>
-            <CSVLink
-              headers={headers}
-              data={excelData}
-              className="btn btn-sm btn-hover"
-              filename={"Danh sách users.csv"}
-              target="_blank"
-            >
-              <MaterialUIIcons.GetApp />
-            </CSVLink>
           </div>
           <div>
             <FormControl variant="outlined" size="small">
@@ -243,13 +223,23 @@ export default function UserListHistory() {
         <div className="flex d-flex wrap align-items-center justify-content-end">
           <div>
             <Link
-              to="/dashboard/users/list"
+              to="/dashboard/register"
               className="btn btn-sm btn-hover"
               role="button"
             >
-              <MaterialUIIcons.ExitToApp />
-              DANH SÁCH
+              <MaterialUIIcons.Add />
             </Link>
+          </div>
+          <div>
+            <CSVLink
+              headers={headers}
+              data={excelData}
+              className="btn btn-sm btn-hover"
+              filename={"Danh sách users.csv"}
+              target="_blank"
+            >
+              <MaterialUIIcons.GetApp />
+            </CSVLink>
           </div>
         </div>
       </div>
@@ -540,7 +530,7 @@ export default function UserListHistory() {
                       className="btn btn-info btn-sm"
                       onClick={() => onClickHide(user.id)}
                     >
-                      UnHide
+                      Restore
                     </button>
                   </td>
                 </tr>

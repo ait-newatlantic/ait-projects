@@ -203,26 +203,6 @@ export default function UserList() {
             </button>
           </div>
           <div>
-            <Link
-              to="/dashboard/register"
-              className="btn btn-sm btn-hover"
-              role="button"
-            >
-              <MaterialUIIcons.Add />
-            </Link>
-          </div>
-          <div>
-            <CSVLink
-              headers={headers}
-              data={excelData}
-              className="btn btn-sm btn-hover"
-              filename={"Danh sách users.csv"}
-              target="_blank"
-            >
-              <MaterialUIIcons.GetApp />
-            </CSVLink>
-          </div>
-          <div>
             <FormControl variant="outlined" size="small">
               <Select
                 labelId="demo-simple-select-label"
@@ -243,13 +223,23 @@ export default function UserList() {
         <div className="flex d-flex wrap align-items-center justify-content-end">
           <div>
             <Link
-              to="/dashboard/users/list/history"
+              to="/dashboard/register"
               className="btn btn-sm btn-hover"
               role="button"
             >
-              <MaterialUIIcons.ExitToApp />
-              LỊCH SỬ
+              <MaterialUIIcons.Add />
             </Link>
+          </div>
+          <div>
+            <CSVLink
+              headers={headers}
+              data={excelData}
+              className="btn btn-sm btn-hover"
+              filename={"Danh sách users.csv"}
+              target="_blank"
+            >
+              <MaterialUIIcons.GetApp />
+            </CSVLink>
           </div>
         </div>
       </div>
@@ -540,7 +530,7 @@ export default function UserList() {
                       className="btn btn-secondary btn-sm"
                       onClick={() => onClickHide(user.id)}
                     >
-                      Hide
+                      Delete
                     </button>
                   </td>
                 </tr>

@@ -60,7 +60,7 @@ export default function CustomerListHistory() {
   const [flag6, setFlag6] = useState(false);
   const [flag7, setFlag7] = useState(false);
   const [flag8, setFlag8] = useState(false);
-  const [flag9, setFlag9] = useState(true);
+  const [flag9, setFlag9] = useState(false);
   const [flag10, setFlag10] = useState(true);
   const [flag11, setFlag11] = useState(false);
   const newDate = new Date();
@@ -239,7 +239,7 @@ export default function CustomerListHistory() {
   return (
     <div>
       <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">LỊCH SỬ</h4>
+        <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
         <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
           Danh sách khách hàng ngưng chăm sóc
         </h6>
@@ -253,26 +253,6 @@ export default function CustomerListHistory() {
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
               <MaterialUIIcons.FilterList />
             </button>
-          </div>
-          <div>
-            <Link
-              to="/dashboard/customers/input"
-              className="btn btn-sm btn-hover"
-              role="button"
-            >
-              <MaterialUIIcons.Add />
-            </Link>
-          </div>
-          <div>
-            <CSVLink
-              headers={headers}
-              data={excelData}
-              className="btn btn-sm btn-hover"
-              filename={"Danh sách khách hàng.csv"}
-              target="_blank"
-            >
-              <MaterialUIIcons.GetApp />
-            </CSVLink>
           </div>
           <div>
             <FormControl variant="outlined" size="small">
@@ -295,13 +275,23 @@ export default function CustomerListHistory() {
         <div className="flex d-flex wrap align-items-center justify-content-end">
           <div>
             <Link
-              to="/dashboard/customers/list"
+              to="/dashboard/customers/input"
               className="btn btn-sm btn-hover"
               role="button"
             >
-              <MaterialUIIcons.ExitToApp />
-              DANH SÁCH
+              <MaterialUIIcons.Add />
             </Link>
+          </div>
+          <div>
+            <CSVLink
+              headers={headers}
+              data={excelData}
+              className="btn btn-sm btn-hover"
+              filename={"Danh sách khách hàng.csv"}
+              target="_blank"
+            >
+              <MaterialUIIcons.GetApp />
+            </CSVLink>
           </div>
         </div>
       </div>
@@ -798,7 +788,7 @@ export default function CustomerListHistory() {
                       className="btn btn-info btn-sm"
                       onClick={() => onClickHide(i.id)}
                     >
-                      UnHide
+                      Restore
                     </button>
                   </td>
                 </tr>

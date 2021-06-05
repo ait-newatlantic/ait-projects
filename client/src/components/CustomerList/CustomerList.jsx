@@ -60,7 +60,7 @@ export default function CustomerList() {
   const [flag6, setFlag6] = useState(false);
   const [flag7, setFlag7] = useState(false);
   const [flag8, setFlag8] = useState(false);
-  const [flag9, setFlag9] = useState(true);
+  const [flag9, setFlag9] = useState(false);
   const [flag10, setFlag10] = useState(true);
   const [flag11, setFlag11] = useState(false);
   const newDate = new Date();
@@ -255,26 +255,6 @@ export default function CustomerList() {
             </button>
           </div>
           <div>
-            <Link
-              to="/dashboard/customers/input"
-              className="btn btn-sm btn-hover"
-              role="button"
-            >
-              <MaterialUIIcons.Add />
-            </Link>
-          </div>
-          <div>
-            <CSVLink
-              headers={headers}
-              data={excelData}
-              className="btn btn-sm btn-hover"
-              filename={"Danh sách khách hàng.csv"}
-              target="_blank"
-            >
-              <MaterialUIIcons.GetApp />
-            </CSVLink>
-          </div>
-          <div>
             <FormControl variant="outlined" size="small">
               <Select
                 labelId="demo-simple-select-label"
@@ -295,13 +275,23 @@ export default function CustomerList() {
         <div className="flex d-flex wrap align-items-center justify-content-end">
           <div>
             <Link
-              to="/dashboard/customers/list/history"
+              to="/dashboard/customers/input"
               className="btn btn-sm btn-hover"
               role="button"
             >
-              <MaterialUIIcons.ExitToApp />
-              LỊCH SỬ
+              <MaterialUIIcons.Add />
             </Link>
+          </div>
+          <div>
+            <CSVLink
+              headers={headers}
+              data={excelData}
+              className="btn btn-sm btn-hover"
+              filename={"Danh sách khách hàng.csv"}
+              target="_blank"
+            >
+              <MaterialUIIcons.GetApp />
+            </CSVLink>
           </div>
         </div>
       </div>
@@ -798,7 +788,7 @@ export default function CustomerList() {
                       className="btn btn-secondary btn-sm"
                       onClick={() => onClickHide(i.id)}
                     >
-                      Hide
+                      Delete
                     </button>
                   </td>
                 </tr>

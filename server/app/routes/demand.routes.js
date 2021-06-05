@@ -1,23 +1,19 @@
 module.exports = (app) => {
-  const demands = require("../controllers/demand.controller.js");
+    const demands = require("../controllers/demand.controller.js");
 
-  var router = require("express").Router();
+    var router = require("express").Router();
 
-  router.post("/", demands.create);
+    router.post("/", demands.create);
 
-  router.put("/hide/:id", demands.hide);
+    router.put("/demand", demands.hide);
 
-  router.put("/unhide/:id", demands.unhide);
+    router.put("/demand/:id", demands.update);
 
-  router.put("/:id", demands.update);
+    router.get("/demand/:id", demands.findOne);
 
-  router.get("/branch/hide", demands.findDemandWithConditionsHide);
+    router.get("/filters", demands.findWithFilters);
 
-  router.get("/branch", demands.findDemandWithConditions);
+    router.get("/", demands.findAll);
 
-  router.get("/demandstatuses", demands.findDemandStatusReport);
-
-  router.get("/update", demands.findOne);
-
-  app.use("/api/demands", router);
+    app.use("/api/demands", router);
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Route, Link } from "react-router-dom";
-
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -11,8 +10,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -36,6 +33,7 @@ import DashBoard from "../DashBoard/DashBoard";
 import DiaryInput from "../DiaryInput/DiaryInput";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import UserUpdate from "../UserUpdate/UserUpdate";
+import { Collapse } from "@material-ui/core";
 
 require("dotenv").config();
 
@@ -44,6 +42,21 @@ export default function Sidebar() {
   const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+
+  const handleClick1 = () => {
+    setOpen1(!open1);
+  };
+
+  const handleClick2 = () => {
+    setOpen2(!open2);
+  };
+
+  const handleClick3 = () => {
+    setOpen3(!open3);
+  };
 
   const logOut = () => {
     AuthService.logout();
@@ -53,10 +66,10 @@ export default function Sidebar() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      display: "flex",
+      display: 'flex',
     },
     appBar: {
-      transition: theme.transitions.create(["margin", "width"], {
+      transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
@@ -64,7 +77,7 @@ export default function Sidebar() {
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-      transition: theme.transitions.create(["margin", "width"], {
+      transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
@@ -73,7 +86,7 @@ export default function Sidebar() {
       marginRight: theme.spacing(2),
     },
     hide: {
-      display: "none",
+      display: 'none',
     },
     drawer: {
       width: drawerWidth,
@@ -81,31 +94,34 @@ export default function Sidebar() {
     },
     drawerPaper: {
       width: drawerWidth,
-      background: "#1C4E80",
+      background: "#1C4E80"
     },
     drawerHeader: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
-      justifyContent: "flex-end",
+      justifyContent: 'flex-end',
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      transition: theme.transitions.create("margin", {
+      transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
       marginLeft: -drawerWidth,
     },
     contentShift: {
-      transition: theme.transitions.create("margin", {
+      transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
       marginLeft: 0,
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
     },
   }));
 
@@ -155,7 +171,7 @@ export default function Sidebar() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar className="bg-light text-dark">
+        <Toolbar style={{ background: "#17416b" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -165,30 +181,30 @@ export default function Sidebar() {
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/home" className="text-dark">
-            <MaterialUIIcons.Apps />
+          <Link to="/home" className="text-dark mr-auto">
+            <MaterialUIIcons.Apps style={{ fill: "white" }} />
           </Link>
           {currentUser ? (
-            <div className="navbar-nav ml-auto">
+            <ul className="navbar-nav">
               <li className="nav-item">
                 <a
                   href="/login"
-                  className="text-dark"
+                  className="text-light"
                   style={{ textDecoration: "none" }}
                   onClick={logOut}
                 >
                   LOGOUT
                 </a>
               </li>
-            </div>
+            </ul>
           ) : (
-            <div className="navbar-nav ml-auto">
+            <ul className="navbar-nav">
               <li className="nav-item">
                 <Link to={"/login"} className="nav-link">
                   LOGIN
                 </Link>
               </li>
-            </div>
+            </ul>
           )}
         </Toolbar>
       </AppBar>
@@ -201,14 +217,13 @@ export default function Sidebar() {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <MaterialUIIcons.MenuOpen style={{ fill: "white" }} />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
+        <div className={classes.drawerHeader} style={{ background: "#17416b" }}>
+          <div>
+            <IconButton onClick={handleDrawerClose}>
+              <MaterialUIIcons.Close style={{ fill: "white" }} />
+            </IconButton>
+          </div>
+          <div className="mx-auto font-weight-bold text-white">New Atlantic IT JSC</div>
         </div>
         <Divider />
         {showAdminBoard && (
@@ -220,38 +235,78 @@ export default function Sidebar() {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/demands/list">
+
+              <ListItem button onClick={handleClick1}>
                 <ListItemIcon>
-                  <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                  <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Kinh doanh" />
+                {open1 ? <MaterialUIIcons.ExpandLess /> : <MaterialUIIcons.ExpandMore />}
               </ListItem>
-              <ListItem button component={Link} to="/dashboard/customers/list">
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/demands/list">
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Danh sách" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/demands/list/history">
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick2}>
                 <ListItemIcon>
-                  <MaterialUIIcons.SupervisedUserCircle
-                    style={{ fill: "white" }}
-                  />
+                  <MaterialUIIcons.SupervisedUserCircle style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Khách hàng" />
+                {open2 ? <MaterialUIIcons.ExpandLess /> : <MaterialUIIcons.ExpandMore />}
               </ListItem>
-              {/* <ListItem button component={Link} to="/dashboard/kpi">
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/customers/list">
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Danh sách" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/customers/list/history">
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick3}>
                 <ListItemIcon>
-                  <MaterialUIIcons.Ballot style={{ fill: "white" }} />
-                </ListItemIcon>
-                <ListItemText primary="KPI" />
-              </ListItem>
-              <ListItem button component={Link} to="/dashboard/diary">
-                <ListItemIcon>
-                  <MaterialUIIcons.Assignment style={{ fill: "white" }} />
-                </ListItemIcon>
-                <ListItemText primary="Nhật ký" />
-              </ListItem> */}
-              <ListItem button component={Link} to="/dashboard/users/list">
-                <ListItemIcon>
-                  <MaterialUIIcons.AssignmentInd style={{ fill: "white" }} />
+                  <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Tài khoản" />
+                {open3 ? <MaterialUIIcons.ExpandLess /> : <MaterialUIIcons.ExpandMore />}
               </ListItem>
+              <Collapse in={open3} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/users/list">
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Danh sách" />
+                  </ListItem>
+                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/users/list/history">
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
             </List>
           </div>
         )}
