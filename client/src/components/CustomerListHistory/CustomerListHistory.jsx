@@ -380,7 +380,7 @@ export default function CustomerListHistory() {
           </div>
         ) : null}
       </div>
-      <div style={{ overflow: "scroll", height: "75vh" }}>
+      <div style={{ overflow: "scroll", height: "80vh" }}>
         <Table id="emp" className="text-left" striped bordered hover size="sm">
           <thead>
             <tr>
@@ -770,10 +770,10 @@ export default function CustomerListHistory() {
                   {flag9 ? <td>{i.taxcode}</td> : null}
                   {flag10 ? <td>{i.province.name}</td> : null}
                   {flag11 ? (
-                    <td>Created at {i.createdAt.substring(0, 10)}</td>
+                    <td>Tạo ngày {i.createdAt.substring(0, 10)}</td>
                   ) : null}
                   {flag11 ? (
-                    <td>Updated at {i.updatedAt.substring(0, 10)}</td>
+                    <td>Cập nhật ngày {i.updatedAt.substring(0, 10)}</td>
                   ) : null}
                   <td>
                     <Link

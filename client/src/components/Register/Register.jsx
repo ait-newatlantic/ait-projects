@@ -136,11 +136,15 @@ const Register = (props) => {
   return (
     <div className="text-left">
       <div>
-        <h4 className="font-weight-bold text-secondary">TẠO USER MỚI</h4>
+        <h4 className="font-weight-bold text-dark">TẠO USER MỚI</h4>
+        <h6 className="flex d-flex wrap font-weight-bold text-secondary">
+          Form tạo tài khoản mới
+        </h6>
       </div>
       <Form onSubmit={handleRegister} ref={form}>
         {!successful && (
           <div>
+            <h6>Thông tin users</h6>
             <div className="row">
               <div className="col-sm">
                 Họ và tên:

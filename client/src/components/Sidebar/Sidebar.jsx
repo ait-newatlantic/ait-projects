@@ -33,7 +33,9 @@ import DashBoard from "../DashBoard/DashBoard";
 import DiaryInput from "../DiaryInput/DiaryInput";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import UserUpdate from "../UserUpdate/UserUpdate";
-import { Collapse } from "@material-ui/core";
+import { Avatar, Collapse } from "@material-ui/core";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import Test from "../Test/Test";
 
 require("dotenv").config();
 
@@ -45,6 +47,9 @@ export default function Sidebar() {
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [open4, setOpen4] = useState(false);
+
+  const user = AuthService.getCurrentUser();
 
   const handleClick1 = () => {
     setOpen1(!open1);
@@ -58,6 +63,10 @@ export default function Sidebar() {
     setOpen3(!open3);
   };
 
+  const handleClick4 = () => {
+    setOpen4(!open4);
+  };
+
   const logOut = () => {
     AuthService.logout();
   };
@@ -66,10 +75,10 @@ export default function Sidebar() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
+      display: "flex",
     },
     appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
@@ -77,7 +86,7 @@ export default function Sidebar() {
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
@@ -86,7 +95,7 @@ export default function Sidebar() {
       marginRight: theme.spacing(2),
     },
     hide: {
-      display: 'none',
+      display: "none",
     },
     drawer: {
       width: drawerWidth,
@@ -94,27 +103,30 @@ export default function Sidebar() {
     },
     drawerPaper: {
       width: drawerWidth,
-      background: "#1C4E80"
+      background: "#17416b",
+    },
+    drawerSubMenu: {
+      background: "#1C4E80",
     },
     drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
+      // display: "flex",
+      alignItems: "center",
+      // padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
+      justifyContent: "flex-end",
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
+      padding: theme.spacing(1, 2),
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
       marginLeft: -drawerWidth,
     },
     contentShift: {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
@@ -122,6 +134,10 @@ export default function Sidebar() {
     },
     nested: {
       paddingLeft: theme.spacing(4),
+    },
+    small: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
     },
   }));
 
@@ -171,7 +187,7 @@ export default function Sidebar() {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar style={{ background: "#17416b" }}>
+        <Toolbar className="bg-light text-dark" variant="dense">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -181,22 +197,44 @@ export default function Sidebar() {
           >
             <MenuIcon />
           </IconButton>
-          <Link to="/home" className="text-dark mr-auto">
-            <MaterialUIIcons.Apps style={{ fill: "white" }} />
-          </Link>
           {currentUser ? (
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a
-                  href="/login"
-                  className="text-light"
-                  style={{ textDecoration: "none" }}
-                  onClick={logOut}
-                >
-                  LOGOUT
-                </a>
-              </li>
-            </ul>
+            <Dropdown className="mr-auto d-flex wrap">
+              <DropdownButton
+                id="dropdown-basic-button"
+                variant="light"
+                size="sm"
+                title="Tệp"
+              >
+                <Dropdown.Item href="https://minio.pqe.com.vn/minio/newatlantic/">
+                  Lưu trữ
+                </Dropdown.Item>
+                <Dropdown.Item href="/settings">Cài đặt</Dropdown.Item>
+              </DropdownButton>
+              <DropdownButton
+                id="dropdown-basic-button"
+                variant="light"
+                size="sm"
+                title="Đi"
+              >
+                <Dropdown.Item href="/home">Đi tới trang chủ</Dropdown.Item>
+                <Dropdown.Item href="https://www.newatlantic.vn/">
+                  Đi tới newatlantic
+                </Dropdown.Item>
+                <Dropdown.Item href="http://kamazvietnam.com.vn/">
+                  Đi tới kamazvn
+                </Dropdown.Item>
+              </DropdownButton>
+              <DropdownButton
+                id="dropdown-basic-button"
+                variant="light"
+                size="sm"
+                title="Trợ giúp"
+              >
+                <Dropdown.Item href="#/action-1">Chào mừng</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Bắt đầu</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Tài liệu</Dropdown.Item>
+              </DropdownButton>
+            </Dropdown>
           ) : (
             <ul className="navbar-nav">
               <li className="nav-item">
@@ -206,6 +244,18 @@ export default function Sidebar() {
               </li>
             </ul>
           )}
+          <Avatar
+            alt="logo"
+            className={classes.small}
+            src="https://tiendientu.org/wp-content/uploads/2019/04/tiendientu.org-huobi-niem-yet-dogecoin-doge1-1200x872.png"
+          />
+          <DropdownButton id="dropdown-basic-button" variant="light" size="sm">
+            <Dropdown.Item href="/dashboard/profile">Hồ sơ</Dropdown.Item>
+            <Dropdown.Item href="/settings">Cài đặt</Dropdown.Item>
+            <Dropdown.Item href="/login" onClick={logOut}>
+              Thoát
+            </Dropdown.Item>
+          </DropdownButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -217,18 +267,25 @@ export default function Sidebar() {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader} style={{ background: "#17416b" }}>
-          <div>
-            <IconButton onClick={handleDrawerClose}>
-              <MaterialUIIcons.Close style={{ fill: "white" }} />
-            </IconButton>
+        <div
+          className={classes.drawerHeader}
+          style={{ background: "#17416b", minHeight: "48px" }}
+        >
+          <div className="flex d-flex wrap align-items-center px-1">
+            <div>
+              <IconButton onClick={handleDrawerClose}>
+                <MaterialUIIcons.Menu style={{ fill: "white" }} />
+              </IconButton>
+            </div>
+            <div className="font-weight-bold text-white">
+              New Atlantic IT JSC
+            </div>
           </div>
-          <div className="mx-auto font-weight-bold text-white">New Atlantic IT JSC</div>
         </div>
         <Divider />
         {showAdminBoard && (
           <div className="text-light">
-            <List>
+            <List component="nav">
               <ListItem button component={Link} to="/dashboard">
                 <ListItemIcon>
                   <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
@@ -241,17 +298,37 @@ export default function Sidebar() {
                   <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Kinh doanh" />
-                {open1 ? <MaterialUIIcons.ExpandLess /> : <MaterialUIIcons.ExpandMore />}
+                {open1 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
               </ListItem>
               <Collapse in={open1} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/demands/list">
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    button
+                    component={Link}
+                    to="/dashboard/demands/list"
+                  >
                     <ListItemIcon>
                       <MaterialUIIcons.Assignment style={{ fill: "white" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Danh sách" />
+                    <ListItemText primary="Báo cáo" />
                   </ListItem>
-                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/demands/list/history">
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    button
+                    component={Link}
+                    to="/dashboard/demands/list/history"
+                  >
                     <ListItemIcon>
                       <MaterialUIIcons.Delete style={{ fill: "white" }} />
                     </ListItemIcon>
@@ -262,20 +339,42 @@ export default function Sidebar() {
 
               <ListItem button onClick={handleClick2}>
                 <ListItemIcon>
-                  <MaterialUIIcons.SupervisedUserCircle style={{ fill: "white" }} />
+                  <MaterialUIIcons.SupervisedUserCircle
+                    style={{ fill: "white" }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary="Khách hàng" />
-                {open2 ? <MaterialUIIcons.ExpandLess /> : <MaterialUIIcons.ExpandMore />}
+                {open2 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
               </ListItem>
               <Collapse in={open2} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/customers/list">
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    button
+                    component={Link}
+                    to="/dashboard/customers/list"
+                  >
                     <ListItemIcon>
                       <MaterialUIIcons.Assignment style={{ fill: "white" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Danh sách" />
+                    <ListItemText primary="Báo cáo" />
                   </ListItem>
-                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/customers/list/history">
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    button
+                    component={Link}
+                    to="/dashboard/customers/list/history"
+                  >
                     <ListItemIcon>
                       <MaterialUIIcons.Delete style={{ fill: "white" }} />
                     </ListItemIcon>
@@ -283,23 +382,42 @@ export default function Sidebar() {
                   </ListItem>
                 </List>
               </Collapse>
-
               <ListItem button onClick={handleClick3}>
                 <ListItemIcon>
                   <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Tài khoản" />
-                {open3 ? <MaterialUIIcons.ExpandLess /> : <MaterialUIIcons.ExpandMore />}
+                {open3 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
               </ListItem>
               <Collapse in={open3} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/users/list">
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    button
+                    component={Link}
+                    to="/dashboard/users/list"
+                  >
                     <ListItemIcon>
                       <MaterialUIIcons.Assignment style={{ fill: "white" }} />
                     </ListItemIcon>
-                    <ListItemText primary="Danh sách" />
+                    <ListItemText primary="Báo cáo" />
                   </ListItem>
-                  <ListItem button className={classes.nested} button component={Link} to="/dashboard/users/list/history">
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    button
+                    component={Link}
+                    to="/dashboard/users/list/history"
+                  >
                     <ListItemIcon>
                       <MaterialUIIcons.Delete style={{ fill: "white" }} />
                     </ListItemIcon>
@@ -377,13 +495,9 @@ export default function Sidebar() {
               path="/dashboard/users/list/history"
               component={UserListHistory}
             />
+            <Route exact path="/dashboard/test" component={Test} />
           </div>
         )}
-        {/* <div className="flex d-flex justify-content-end">
-          <small className="text-secondary font-italic">
-            Developed by<a href="tel:+84918628660"> Tran Hoang Nam</a>
-          </small>
-        </div> */}
       </main>
     </div>
   );

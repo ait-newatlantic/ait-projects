@@ -3,7 +3,9 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
-import imgsrc from "../../assets/img/ait_logo.jpg";
+import { Checkbox } from "@material-ui/core";
+import NavigationBar from "../NavigationBar/NavigationBar";
+import Footer from "../Footer/Footer";
 
 const required = (value) => {
   if (!value) {
@@ -15,7 +17,7 @@ const required = (value) => {
   }
 };
 
-const Login = (props) => {
+export default function Login(props) {
   const form = useRef();
   const checkBtn = useRef();
 
@@ -23,6 +25,11 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -66,90 +73,82 @@ const Login = (props) => {
   };
 
   return (
-    <div className="container" style={{ height: "100vh" }}>
-      <div className="row align-items-center h-100">
-        <div className="shadow card col col-xl-8 col-lg-8 col-md-6 col-sm-12 mx-auto rounded" style={{ background: "#1C4E80" }}>
-          <div className="row p-4">
-            <div className="col-md-4 col-sm font-italic text-light">
-              <div className="row">
-                <div className="col-3">
-                  <img className="rounded" src={imgsrc} alt="logo" height="50vh"/>
-                </div>
-                <div className="col-9">
-                  <p className="text-left">New Atlantic IT JSC</p>
+    <div>
+      <div className="border-bottom">
+        <NavigationBar />
+      </div>
+      <div className="container" style={{ height: "80vh" }}>
+        <div className="row align-items-center h-100">
+          <div className="shadow card col col-xl-6 col-lg-6 col-md-6 col-sm-12 p-4 mx-auto rounded">
+            <Form onSubmit={handleLogin} ref={form}>
+              <p className="lead text-left text-dark">Login</p>
+              <div className="form-group">
+                <Input
+                  type="username"
+                  className="form-control"
+                  name="username"
+                  placeholder="Username"
+                  value={username}
+                  onChange={onChangeUsername}
+                  validations={[required]}
+                />
+              </div>
+              <div className="form-group">
+                <Input
+                  type={passwordShown ? "text" : "password"}
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={onChangePassword}
+                  validations={[required]}
+                />
+              </div>
+              <div className="text-left text-dark">
+                <Checkbox
+                  defaultChecked={passwordShown}
+                  size="medium"
+                  color="primary"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                  onClick={togglePasswordVisiblity}
+                />
+                Hiện mật khẩu
+              </div>
+              <div className="form-group">
+                <div className="row">
+                  <div className="col text-secondary text-left">
+                    <a className="text-secondary" href="tel: +84918628660">
+                      Bạn quên mật khẩu?
+                    </a>
+                  </div>
+                  <div className="col">
+                    <button
+                      className="btn btn-primary btn-block"
+                      disabled={loading}
+                    >
+                      {loading && (
+                        <span className="spinner-border spinner-border-sm"></span>
+                      )}
+                      <span>Login</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <br/>
-              <ul className="text-left">
-                <li>
-                  <a className="text-light" href="https://www.facebook.com/newait.kamaz/" target="blank">Facebook</a>
-                </li>
-                <li>
-                  <a className="text-light" href="https://www.youtube.com/channel/UCyDJ_4eE0k7R66dns8WZZWg" target="blank">Youtube</a>
-                </li>
-                <li>
-                  <a className="text-light" href="https://github.com/namtrhg" target="blank">Github</a>
-                </li>
-              </ul>
-            </div>
-            <div className="col-md-8 col-sm bg-white rounded p-4">
-              <Form onSubmit={handleLogin} ref={form}>
-                <p className="lead text-left text-dark">Login</p>
+              {message && (
                 <div className="form-group">
-                  <Input
-                    type="username"
-                    className="form-control"
-                    name="username"
-                    placeholder="Username"
-                    value={username}
-                    onChange={onChangeUsername}
-                    validations={[required]}
-                  />
-                </div>
-                <div className="form-group">
-                  <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={onChangePassword}
-                    validations={[required]}
-                  />
-                </div>
-                <div className="form-group">
-                  <button
-                    className="btn btn-secondary btn-block"
-                    disabled={loading}
-                  >
-                    {loading && (
-                      <span className="spinner-border spinner-border-sm"></span>
-                    )}
-                    <span>Login</span>
-                  </button>
-                </div>
-                <div className="flex d-flex justify-content-end">
-                  <small className="text-secondary font-italic">
-                    <a className="text-secondary" href="tel: +84918628660">
-                      Forgot your password?
-                    </a>
-                  </small>
-                </div>
-                {message && (
-                  <div className="form-group">
-                    <div className="alert alert-danger" role="alert">
-                      {message}
-                    </div>
+                  <div className="alert alert-danger" role="alert">
+                    {message}
                   </div>
-                )}
-                <CheckButton style={{ display: "none" }} ref={checkBtn} />
-              </Form>
-            </div>
+                </div>
+              )}
+              <CheckButton style={{ display: "none" }} ref={checkBtn} />
+            </Form>
           </div>
         </div>
       </div>
+      <div className="border-top p-4" style={{position:"absolute", bottom:"0", width:"100%"}}>
+        <Footer />
+      </div>
     </div>
   );
-};
-
-export default Login;
+}

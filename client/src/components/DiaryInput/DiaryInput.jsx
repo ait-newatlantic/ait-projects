@@ -152,9 +152,7 @@ export default function DiaryInput() {
           <div className="text-left">
             <div>
               <div>
-                <h6>
-                  <strong>Thông tin người nhập</strong>
-                </h6>
+                <h6>Thông tin người nhập</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Người nhập:
@@ -168,9 +166,7 @@ export default function DiaryInput() {
                 </div>
               </div>
               <div>
-                <h6>
-                  <strong>Nội dung báo cáo</strong>
-                </h6>
+                <h6>Nội dung báo cáo</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Nội dung:

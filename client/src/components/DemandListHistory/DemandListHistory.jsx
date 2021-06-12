@@ -1,437 +1,292 @@
 import React from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
 import { useState } from "react";
 import { useEffect } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import PropTypes from "prop-types";
-import ReactHTMLTableToExcel from "react-html-table-to-excel";
-import * as MaterialUIIcons from "@material-ui/icons/";
-import { FormHelperText, InputLabel, TextField } from "@material-ui/core";
+import {
+  FormControl,
+  FormHelperText,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
-
+import { Form, Table } from "react-bootstrap";
 import DemandService from "../../services/demand.service";
-import BranchService from "../../services/branch.service";
-import UserService from "../../services/user.service";
-import ProvinceService from "../../services/province.service";
-import CustomerTypeService from "../../services/customer_type.service";
-import ContactTypeService from "../../services/contact_type.service";
-import DemandStatusService from "../../services/demand_status.service";
-import CarModelService from "../../services/car_model.service";
-import CarTypeService from "../../services/car_type.service";
+import { CSVLink } from "react-csv";
+import * as MaterialUIIcons from "@material-ui/icons/";
 
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
-
-const useStyles = makeStyles({
-  root: {
-    minWidth: "100%",
-  },
-  container: {
-    maxHeight: 700,
-  },
-});
-
-function TablePaginationActions(props) {
-  const classes = useStyles1();
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onChangePage } = props;
-
-  const handleFirstPageButtonClick = (event) => {
-    onChangePage(event, 0);
-  };
-
-  const handleBackButtonClick = (event) => {
-    onChangePage(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event) => {
-    onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event) => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <div className={classes.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </div>
-  );
-}
-
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
+const headers = [
+  { label: "Ngày tạo form", key: "createdAt" },
+  { label: "Ngày cập nhật", key: "updatedAt" },
+];
 
 export default function DemandListHistory() {
-  const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(50);
-
+  const [DemandResult, setDemandResult] = useState([]);
+  const [excelData, setExcelData] = useState([]);
+  const [branch_name, setBranchName] = useState("");
+  const [customer_type, setCustomerType] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [note, setNote] = useState("");
+  const [opinion, setOpinion] = useState("");
+  const [username, setUserName] = useState("");
+  const [user_name, setUser_Name] = useState("");
+  const [employee, setEmployee] = useState("");
+  const [province, setProvice] = useState("");
+  const [customer_number, setCustomerNumber] = useState("");
+  const [customer, setCustomer] = useState("");
+  const [demand_status, setDemandStatus] = useState("");
+  const [car_model, setCarModel] = useState("");
+  const [car_type, setCarType] = useState("");
+  const [color, setColor] = useState("");
+  const [contact_type, setContactType] = useState("");
+  const [datetype, setDateType] = useState("");
+  const [order, setOrderType] = useState("DESC");
+  const [limit, setLimit] = useState(200);
+  const [flag, setFlag] = useState(false);
+  const [flag1, setFlag1] = useState(true);
+  const [flag2, setFlag2] = useState(false);
+  const [flag3, setFlag3] = useState(true);
+  const [flag4, setFlag4] = useState(true);
+  const [flag5, setFlag5] = useState(false);
+  const [flag6, setFlag6] = useState(true);
+  const [flag7, setFlag7] = useState(true);
+  const [flag8, setFlag8] = useState(false);
+  const [flag9, setFlag9] = useState(false);
+  const [flag10, setFlag10] = useState(true);
+  const [flag11, setFlag11] = useState(true);
+  const [flag12, setFlag12] = useState(true);
+  const [flag13, setFlag13] = useState(true);
+  const [flag14, setFlag14] = useState(true);
+  const [flag15, setFlag15] = useState(true);
+  const [flag16, setFlag16] = useState(false);
   const newDate = new Date();
   const year = newDate.getFullYear();
-
-  const [from_date, setFromDate] = useState(`${year}-01-01`);
-  const [to_date, setToDate] = useState(`${year}-12-31`);
-
-  const [demandResult, setDemandResult] = useState([]);
-
-  const [branches, setBranches] = useState([]);
-  const [branch_name, setBranchName] = useState("");
-
-  const [demand_employees, setDemandEmployees] = useState([]);
-  const [demand_employee_name, setDemandEmployeeName] = useState("");
-
-  const [provinces, setProvinces] = useState([]);
-  const [province_name, setProvinceName] = useState("");
-
-  const [customer_types, setCustomerTypes] = useState([]);
-  const [customer_type_name, setCustomerTypeName] = useState("");
-
-  const [contact_types, setContactTypes] = useState([]);
-  const [contact_type_name, setContactTypeName] = useState("");
-
-  const [demand_statuses, setDemandStatuses] = useState([]);
-  const [demand_status_name, setDemandStatusName] = useState("");
-
-  const [car_models, setCarModels] = useState([]);
-  const [car_model_name, setCarModelName] = useState("");
-
-  const [car_types, setCarTypes] = useState([]);
-  const [car_type_name, setCarTypeName] = useState("");
-
-  const [flag, setFlag] = useState(0);
-
-  const columns = [
-    {
-      id: "branch_name",
-      label: "Chi nhánh",
-      align: "left",
-      minWidth: "auto",
-    },
-    {
-      id: "name",
-      label: "Người nhập",
-      align: "left",
-      minWidth: "auto",
-    },
-    {
-      id: "demand_employee",
-      label: "Người gặp khách hàng",
-      align: "left",
-      minWidth: "auto",
-    },
-    {
-      id: "customer_name",
-      label: "Tên khách hàng",
-      align: "left",
-      minWidth: "auto",
-    },
-    {
-      id: "customer_number",
-      label: "SĐT khách hàng",
-      align: "left",
-      minWidth: "auto",
-    },
-    {
-      id: "customer_type_name",
-      label: "Loại khách hàng",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "province_name",
-      label: "Khu vực khách hàng",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "demand_opinion",
-      label: "Ý kiến khách hàng",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "contact_type_name",
-      label: "Phương thức liên lạc",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "demand_status_name",
-      label: "Giai đoạn",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "car_model_name",
-      label: "Model xe",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "car_type_name",
-      label: "Loại xe",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "demand_quantity",
-      label: "Số lượng xe",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "color_name",
-      label: "Màu xe",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "demand_note",
-      label: "Ghi chú",
-      minWidth: "auto",
-      align: "left",
-    },
-    {
-      id: "demand_date",
-      label: "Ngày giai đoạn",
-      minWidth: "auto",
-      align: "left",
-      format: (value) => value.substring(0, 10),
-    },
-    {
-      id: "createdAt",
-      label: "Ngày tạo form",
-      minWidth: "auto",
-      align: "left",
-      format: (value) => value.substring(0, 10),
-    },
-    {
-      id: "updatedAt",
-      label: "Ngày cập nhật",
-      minWidth: "auto",
-      align: "left",
-      format: (value) => value.substring(0, 10),
-    },
+  const month = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
   ];
+  const n = month[newDate.getMonth()];
+  const date = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+  ];
+  const d = date[newDate.getDate() - 1];
+  const [from_date, setFromDate] = useState(`${year}-01-01`);
+  const [to_date, setToDate] = useState(`${year}-${n}-${d}`);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const onClickFlag = () => {
+    setFlag(!flag);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const onClickFlag1 = () => {
+    setFlag1(!flag1);
   };
 
-  const required = (value) => {
-    if (!value) {
-      return (
-        <div className="alert alert-danger" role="alert">
-          This field is required!
-        </div>
-      );
-    }
+  const onClickFlag2 = () => {
+    setFlag2(!flag2);
   };
 
-  const FetchBranches = () => {
-    BranchService.get_branchs().then((response) => {
-      setBranches(response.data);
-    });
+  const onClickFlag3 = () => {
+    setFlag3(!flag3);
   };
 
-  const FetchEmployees = () => {
-    UserService.get_users().then((response) => {
-      setDemandEmployees(response.data);
-    });
+  const onClickFlag4 = () => {
+    setFlag4(!flag4);
   };
 
-  const FetchProvinces = () => {
-    ProvinceService.get_provinces().then((response) => {
-      setProvinces(response.data);
-    });
+  const onClickFlag5 = () => {
+    setFlag5(!flag5);
   };
 
-  const FetchDemandStatuses = () => {
-    DemandStatusService.get_demand_statuses().then((response) => {
-      setDemandStatuses(response.data);
-    });
+  const onClickFlag6 = () => {
+    setFlag6(!flag6);
   };
 
-  const FetchCarModels = () => {
-    CarModelService.get_car_models().then((response) => {
-      setCarModels(response.data);
-    });
+  const onClickFlag7 = () => {
+    setFlag7(!flag7);
   };
 
-  const FetchCarTypes = () => {
-    CarTypeService.get_car_types().then((response) => {
-      setCarTypes(response.data);
-    });
+  const onClickFlag8 = () => {
+    setFlag8(!flag8);
   };
 
-  const FetchCustomerTypes = () => {
-    CustomerTypeService.get_customer_types().then((response) => {
-      setCustomerTypes(response.data);
-    });
+  const onClickFlag9 = () => {
+    setFlag9(!flag9);
   };
 
-  const FetchContactTypes = () => {
-    ContactTypeService.get_contact_types().then((response) => {
-      setContactTypes(response.data);
-    });
+  const onClickFlag10 = () => {
+    setFlag10(!flag10);
   };
 
-  const onChangeFromDate = (e) => {
-    const from_date = e.target.value;
-    setFromDate(from_date);
+  const onClickFlag11 = () => {
+    setFlag11(!flag11);
   };
 
-  const onChangeToDate = (e) => {
-    const to_date = e.target.value;
-    setToDate(to_date);
+  const onClickFlag12 = () => {
+    setFlag12(!flag12);
+  };
+
+  const onClickFlag13 = () => {
+    setFlag13(!flag13);
+  };
+
+  const onClickFlag14 = () => {
+    setFlag14(!flag14);
+  };
+
+  const onClickFlag15 = () => {
+    setFlag15(!flag15);
+  };
+
+  const onClickFlag16 = () => {
+    setFlag16(!flag16);
   };
 
   const handleSubmit = () => {
-    const username = "";
-    DemandService.get_demands_by_branch_hide(
-      username,
+    const hide = 0;
+    const datetype = "date";
+    DemandService.get_demands_filtered(
       branch_name,
-      demand_employee_name,
-      province_name,
-      customer_type_name,
-      contact_type_name,
-      demand_status_name,
-      car_model_name,
-      car_type_name,
+      user_name,
+      employee,
+      province,
+      customer,
+      customer_number,
+      customer_type,
+      color,
+      opinion,
+      quantity,
+      note,
+      contact_type,
+      demand_status,
+      car_model,
+      car_type,
+      datetype,
       from_date,
-      to_date
+      to_date,
+      hide,
+      order,
+      limit
     ).then((response) => {
       setDemandResult(response.data);
+      setExcelData(
+        response.data.map((i) => ({
+          createdAt: i.createdAt.substring(0, 10),
+          updatedAt: i.updatedAt.substring(0, 10),
+        }))
+      );
     });
   };
 
-  const onClickUnHide = (id) => {
-    DemandService.unhide_demand(id).then((response) => {
-      console.log(response);
+  const onClickHide = (id) => {
+    const hide = 1;
+    DemandService.hide_demand(hide, id).then((response) => {
       handleSubmit();
     });
   };
-
-  const onClickFlag = () => {
-    if (flag == 0) {
-      setFlag(1);
-    } else setFlag(0);
-  };
-
-  useEffect(() => {
-    handleSubmit();
-    FetchBranches();
-    FetchEmployees();
-    FetchDemandStatuses();
-    FetchCarModels();
-    FetchCarTypes();
-    FetchContactTypes();
-    FetchCustomerTypes();
-    FetchProvinces();
-  }, []);
 
   useEffect(() => {
     handleSubmit();
   }, [
     branch_name,
-    demand_employee_name,
-    province_name,
-    customer_type_name,
-    contact_type_name,
-    demand_status_name,
-    car_model_name,
-    car_type_name,
+    user_name,
+    employee,
+    province,
+    customer,
+    customer_number,
+    customer_type,
+    color,
+    opinion,
+    quantity,
+    note,
+    contact_type,
+    demand_status,
+    car_model,
+    car_type,
+    datetype,
     from_date,
     to_date,
+    order,
+    limit,
   ]);
 
   return (
     <div>
-      <div className="row">
-        <div className="col d-flex justify-content-start text-left">
-          <h4 className="font-weight-bold text-secondary">THÙNG RÁC NHU CẦU</h4>
-          <p className="font-weight-bold text-secondary">
-            ({from_date} đến {to_date})
-          </p>
-        </div>
-        <div className="col d-flex justify-content-end">
-          <div>
-            <Link
-              to="/dashboard/demands/list"
-              className="btn btn-sm btn-hover"
-              role="button"
-            >
-              <MaterialUIIcons.BusinessCenter />
-              DANH SÁCH
-            </Link>
-          </div>
+      <div className="justify-content-start">
+        <h4 className="font-weight-bold text-dark text-left">BÁO CÁO</h4>
+        <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
+          Danh sách nhu cầu khách hàng mua xe
+        </h6>
+      </div>
+      <div
+        className="flex d-flex wrap align-items-center justify-content-between"
+        style={{ background: "#EEEEEE" }}
+      >
+        <div className="flex d-flex wrap align-items-center justify-content-start">
           <div>
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
               <MaterialUIIcons.FilterList />
-              FILTER
             </button>
           </div>
+          <div>
+            <FormControl variant="outlined" size="small">
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={limit}
+                onClick={(e) => setLimit(e.target.value)}
+              >
+                <MenuItem value={200}>200</MenuItem>
+                <MenuItem value={400}>400</MenuItem>
+                <MenuItem value={600}>600</MenuItem>
+                <MenuItem value={800}>800</MenuItem>
+                <MenuItem value={1000}>1000</MenuItem>
+                <MenuItem value={null}>All</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+        </div>
+        <div className="flex d-flex wrap align-items-center justify-content-end">
           <div>
             <Link
               to="/dashboard/demands/input"
@@ -439,287 +294,720 @@ export default function DemandListHistory() {
               role="button"
             >
               <MaterialUIIcons.Add />
-              TẠO MỚI
             </Link>
           </div>
           <div>
-            <ReactHTMLTableToExcel
+            <CSVLink
+              headers={headers}
+              data={excelData}
               className="btn btn-sm btn-hover"
-              table="emp"
-              filename="Danh sách nhu cầu khách hàng"
-              sheet="Sheet"
-              buttonText={
-                <div>
-                  <MaterialUIIcons.GetApp />
-                  EXPORT
-                </div>
-              }
-            />
+              filename={"Báo cáo kinh doanh.csv"}
+              target="_blank"
+            >
+              <MaterialUIIcons.GetApp />
+            </CSVLink>
           </div>
         </div>
       </div>
-      {flag == 1 ? (
-        <div>
-          <div className="row">
-            <div className="col-sm">
-              <InputLabel shrink>Từ ngày</InputLabel>
-              <input
-                type="date"
-                className="form-control"
-                name="from_date"
-                value={from_date}
-                onChange={onChangeFromDate}
+      <div>
+        {flag ? (
+          <div className="bg-light">
+            <div className="d-flex flex-wrap">
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Chi nhánh"
+                defaultChecked={flag1}
+                onClick={onClickFlag1}
               />
-            </div>
-            <div className="col-sm">
-              <InputLabel shrink>Đến ngày</InputLabel>
-              <input
-                type="date"
-                className="form-control"
-                name="to_date"
-                value={to_date}
-                onChange={onChangeToDate}
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Người nhập"
+                defaultChecked={flag2}
+                onClick={onClickFlag2}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Người gặp khách hàng"
+                defaultChecked={flag3}
+                onClick={onClickFlag3}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Tên khách hàng"
+                defaultChecked={flag4}
+                onClick={onClickFlag4}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="SĐT khách hàng"
+                defaultChecked={flag5}
+                onClick={onClickFlag5}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Loại khách hàng"
+                defaultChecked={flag6}
+                onClick={onClickFlag6}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Khu vực khách hàng"
+                defaultChecked={flag7}
+                onClick={onClickFlag7}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Ý kiến khách hàng"
+                defaultChecked={flag8}
+                onClick={onClickFlag8}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Phương thức liên lạc"
+                defaultChecked={flag9}
+                onClick={onClickFlag9}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Giai đoạn"
+                defaultChecked={flag10}
+                onClick={onClickFlag10}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Model xe"
+                defaultChecked={flag11}
+                onClick={onClickFlag11}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Loại xe"
+                defaultChecked={flag12}
+                onClick={onClickFlag12}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Số lượng"
+                defaultChecked={flag13}
+                onClick={onClickFlag13}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Màu xe"
+                defaultChecked={flag14}
+                onClick={onClickFlag14}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Tình hình hiện nay"
+                defaultChecked={flag15}
+                onClick={onClickFlag15}
+              />
+              <Form.Check
+                type="checkbox"
+                inline
+                label="Ngày"
+                defaultChecked={flag16}
+                onClick={onClickFlag16}
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Chi nhánh</InputLabel>
-              <Autocomplete
-                name="branch_name"
-                id="branch_name"
-                value={branch_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setBranchName("");
-                  } else setBranchName(newValue);
-                }}
-                options={branches.map((option) => option.branch_name)}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập tên chi nhánh</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Người gặp khách hàng</InputLabel>
-              <Autocomplete
-                name="demand_employee_name"
-                id="demand_employee_name"
-                value={demand_employee_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setDemandEmployeeName("");
-                  } else setDemandEmployeeName(newValue);
-                }}
-                inputValue={demand_employee_name}
-                onInputChange={(event, newInputValue) => {
-                  setDemandEmployeeName(newInputValue);
-                }}
-                options={demand_employees.map((option) => option.name)}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập người đi thực tế</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Khu vực</InputLabel>
-              <Autocomplete
-                name="province_name"
-                id="province_name"
-                value={province_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setProvinceName("");
-                  } else setProvinceName(newValue);
-                }}
-                options={provinces.map((option) => option.province_name)}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập khu vực</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Loại khách hàng</InputLabel>
-              <Autocomplete
-                name="customer_type_name"
-                id="customer_type_name"
-                value={customer_type_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setCustomerTypeName("");
-                  } else setCustomerTypeName(newValue);
-                }}
-                options={customer_types.map(
-                  (option) => option.customer_type_name
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập loại khách hàng</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Phương thức liên lạc</InputLabel>
-              <Autocomplete
-                name="contact_type_name"
-                id="contact_type_name"
-                value={contact_type_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setContactTypeName("");
-                  } else setContactTypeName(newValue);
-                }}
-                options={contact_types.map(
-                  (option) => option.contact_type_name
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập phương thức liên lạc</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Giai đoạn</InputLabel>
-              <Autocomplete
-                name="demand_status_name"
-                id="demand_status_name"
-                value={demand_status_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setDemandStatusName("");
-                  } else setDemandStatusName(newValue);
-                }}
-                options={demand_statuses.map(
-                  (option) => option.demand_status_name
-                )}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập giai doạn</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Model xe</InputLabel>
-              <Autocomplete
-                name="car_model_name"
-                id="car_model_name"
-                value={car_model_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setCarModelName("");
-                  } else setCarModelName(newValue);
-                }}
-                options={car_models.map((option) => option.car_model_name)}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập model xe</FormHelperText>
-            </div>
-            <div className="col-sm-6 col-md-3  ">
-              <InputLabel shrink>Loại xe</InputLabel>
-              <Autocomplete
-                name="car_type_name"
-                id="car_type_name"
-                value={car_type_name}
-                onChange={(event, newValue) => {
-                  if (newValue === null) {
-                    setCarTypeName("");
-                  } else setCarTypeName(newValue);
-                }}
-                options={car_types.map((option) => option.car_type_name)}
-                renderInput={(params) => (
-                  <TextField {...params} variant="standard" />
-                )}
-              />
-              <FormHelperText>Nhập loại xe</FormHelperText>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div></div>
-      )}
-      <TableContainer className="table-container">
-        <Table id="emp" stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                <strong className="text-danger">Khôi phục</strong>
-              </TableCell>
-              <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                <strong className="text-primary">Cập nhật</strong>
-              </TableCell>
-              <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                <strong>STT</strong>
-              </TableCell>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  <strong>{column.label}</strong>
-                </TableCell>
+        ) : null}
+      </div>
+      <div style={{ overflow: "scroll", height: "80vh" }}>
+        <Table id="emp" className="text-left" striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>
+                <FormHelperText className="text-dark">
+                  Total ({DemandResult.length})
+                </FormHelperText>
+                <FormControl>
+                  <Select
+                    labelId="order_type"
+                    id="order_type"
+                    displayEmpty
+                    value={order}
+                    onChange={(e) => setOrderType(e.target.value)}
+                  >
+                    <MenuItem value="DESC">Mới nhất</MenuItem>
+                    <MenuItem value="ASC">Cũ nhất</MenuItem>
+                  </Select>
+                </FormControl>
+              </th>
+              {flag1 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Chi nhánh (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.user.branch.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={branch_name}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setBranchName("");
+                      } else setBranchName(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.user.branch.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag2 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Người nhập (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.user.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={user_name}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setUser_Name("");
+                      } else setUser_Name(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.user.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag3 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Người gặp khách hàng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.employee)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={employee}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setEmployee("");
+                      } else setEmployee(newValue);
+                    }}
+                    options={[
+                      ...new Set(DemandResult.map((option) => option.employee)),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag4 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Tên khách hàng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.customer.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={customer}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setCustomer("");
+                      } else setCustomer(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.customer.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag5 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    SĐT khách hàng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.customer.number)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={customer_number}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setCustomerNumber("");
+                      } else setCustomerNumber(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.customer.number)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag6 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Loại khách hàng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map(
+                            (option) => option.customer_type.name
+                          )
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={customer_type}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setCustomerType("");
+                      } else setCustomerType(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.customer_type.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag7 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Khu vực khách hàng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map(
+                            (option) => option.customer.province.name
+                          )
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={province}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setProvice("");
+                      } else setProvice(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map(
+                          (option) => option.customer.province.name
+                        )
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag8 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Ý kiến khách hàng (
+                    {
+                      [...new Set(DemandResult.map((option) => option.opinion))]
+                        .length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={opinion}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setOpinion("");
+                      } else setOpinion(newValue);
+                    }}
+                    options={[
+                      ...new Set(DemandResult.map((option) => option.opinion)),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag9 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Phương thức liên lạc (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.contact_type.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={contact_type}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setContactType("");
+                      } else setContactType(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.contact_type.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag10 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Giai đoạn (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map(
+                            (option) => option.demand_status.name
+                          )
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={demand_status.name}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setDemandStatus("");
+                      } else setDemandStatus(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.demand_status.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag11 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Model xe (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.car_model.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={car_model}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setCarModel("");
+                      } else setCarModel(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.car_model.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag12 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Loại xe (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.car_type.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={car_type}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setCarType("");
+                      } else setCarType(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.car_type.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag13 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Số lượng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.quantity)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={quantity}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setQuantity("");
+                      } else setQuantity(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => `${option.quantity}`)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag14 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Màu xe (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.color.name)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={color}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setColor("");
+                      } else setColor(newValue);
+                    }}
+                    options={[
+                      ...new Set(
+                        DemandResult.map((option) => option.color.name)
+                      ),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag15 ? (
+                <th>
+                  <FormHelperText className="text-dark">
+                    Tình hình hiện nay (
+                    {
+                      [...new Set(DemandResult.map((option) => option.note))]
+                        .length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={note}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setNote("");
+                      } else setNote(newValue);
+                    }}
+                    options={[
+                      ...new Set(DemandResult.map((option) => option.note)),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" />
+                    )}
+                  />
+                </th>
+              ) : null}
+              {flag16 ? (
+                <th colSpan="3">
+                  <Grid container spacing={2}>
+                    <Grid item xs>
+                      <FormHelperText className="text-dark">
+                        Loại ngày
+                      </FormHelperText>
+                      <FormControl>
+                        <Select
+                          labelId="date_type"
+                          id="date_type"
+                          displayEmpty
+                          value={datetype}
+                          onChange={(e) => setDateType(e.target.value)}
+                        >
+                          <MenuItem value="">None</MenuItem>
+                          <MenuItem value="date">Ngày giai đoạn</MenuItem>
+                          <MenuItem value="createdAt">Ngày tạo</MenuItem>
+                          <MenuItem value="updatedAt">Ngày cập nhật</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs>
+                      <FormHelperText className="text-dark">
+                        Từ ngày
+                      </FormHelperText>
+                      <TextField
+                        id="from_date"
+                        type="date"
+                        value={from_date}
+                        onChange={(e) => setFromDate(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs>
+                      <FormHelperText className="text-dark">
+                        Đến ngày
+                      </FormHelperText>
+                      <TextField
+                        id="to_date"
+                        type="date"
+                        value={to_date}
+                        onChange={(e) => setToDate(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+                </th>
+              ) : null}
+            </tr>
+          </thead>
+          <tbody>
+            {!!DemandResult &&
+              DemandResult.map((i, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  {flag1 ? <td>{i.user.branch.name}</td> : null}
+                  {flag2 ? <td>{i.user.name}</td> : null}
+                  {flag3 ? <td>{i.employee}</td> : null}
+                  {flag4 ? <td>{i.customer.name}</td> : null}
+                  {flag5 ? <td>{i.customer.number}</td> : null}
+                  {flag6 ? <td>{i.customer_type.name}</td> : null}
+                  {flag7 ? <td>{i.customer.province.name}</td> : null}
+                  {flag8 ? <td>{i.opinion}</td> : null}
+                  {flag9 ? <td>{i.contact_type.name}</td> : null}
+                  {flag10 ? <td>{i.demand_status.name}</td> : null}
+                  {flag11 ? <td>{i.car_model.name}</td> : null}
+                  {flag12 ? <td>{i.car_type.name}</td> : null}
+                  {flag13 ? <td>{i.quantity}</td> : null}
+                  {flag14 ? <td>{i.color.name}</td> : null}
+                  {flag15 ? <td>{i.note}</td> : null}
+                  {flag16 ? <td>Gặp ngày {i.date.substring(0, 10)}</td> : null}
+                  {flag16 ? (
+                    <td>Tạo ngày {i.createdAt.substring(0, 10)}</td>
+                  ) : null}
+                  {flag16 ? (
+                    <td>Cập nhật ngày {i.updatedAt.substring(0, 10)}</td>
+                  ) : null}
+                  <td>
+                    <Link
+                      className="btn btn-primary btn-sm"
+                      to={"/dashboard/customers/update/" + btoa(`${i.id}`)}
+                    >
+                      Update
+                    </Link>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-info btn-sm"
+                      onClick={() => onClickHide(i.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {demandResult
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                      <IconButton
-                        color="secondary"
-                        aria-label="delete"
-                        onClick={() => onClickUnHide(row.id)}
-                      >
-                        <MaterialUIIcons.Restore />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                      <Link
-                        className="text-primary"
-                        to={`/dashboard/demands/update/` + btoa(`${row.id}`)}
-                      >
-                        <MaterialUIIcons.Update />
-                      </Link>
-                    </TableCell>
-                    <TableCell align="center" style={{ minWidth: "'auto'" }}>
-                      {index + 1}
-                    </TableCell>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format ? column.format(value) : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[50, 100, 200, { label: "All", value: -1 }]}
-        component="div"
-        count={demandResult.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        SelectProps={{
-          inputProps: { "aria-label": "rows per page" },
-          native: true,
-        }}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-        ActionsComponent={TablePaginationActions}
-      />
+      </div>
     </div>
   );
 }

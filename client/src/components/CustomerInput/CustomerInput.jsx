@@ -144,15 +144,16 @@ export default function CustomerInput() {
   return (
     <div>
       <div className="text-left">
-        <h4 className="font-weight-bold text-secondary">TẠO KHÁCH HÀNG MỚI</h4>
+        <h4 className="font-weight-bold text-dark">TẠO KHÁCH HÀNG MỚI</h4>
+        <h6 className="flex d-flex wrap font-weight-bold text-secondary">
+          Form tạo khách hàng mới
+        </h6>
       </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div className="text-left">
             <div>
-              <h6>
-                <strong>Thông tin khách hàng</strong>
-              </h6>
+              <h6>Thông tin khách hàng</h6>
               <div className="row">
                 <div className="col-sm">
                   Tên khách hàng:
@@ -238,9 +239,7 @@ export default function CustomerInput() {
             {business_typeId === 2 ? (
               <div>
                 <br />
-                <h6>
-                  <strong>Thông tin người đại diện</strong>
-                </h6>
+                <h6>Thông tin người đại diện</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Tên người đại diện:
@@ -280,9 +279,7 @@ export default function CustomerInput() {
             <br />
             <div>
               <div>
-                <h6>
-                  <strong>Thông tin người nhập</strong>
-                </h6>
+                <h6>Thông tin người nhập</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Người nhập:

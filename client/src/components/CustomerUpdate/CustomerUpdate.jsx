@@ -95,9 +95,7 @@ export default function CustomerUpdate(props) {
         {!successful && (
           <div className="text-left">
             <div>
-              <h6>
-                <strong>Thông tin khách hàng</strong>
-              </h6>
+              <h6>Thông tin khách hàng</h6>
               <div className="row">
                 <div className="col-sm">
                   Tên khách hàng:
@@ -166,9 +164,7 @@ export default function CustomerUpdate(props) {
             <br />
             {business_type_name == "DOANH NGHIỆP" ? (
               <div>
-                <h6>
-                  <strong>Thông tin người đại diện</strong>
-                </h6>
+                <h6>Thông tin người đại diện</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Tên người đại diện:
@@ -208,9 +204,7 @@ export default function CustomerUpdate(props) {
             )}
             <div>
               <div>
-                <h6>
-                  <strong>Thông tin người nhập</strong>
-                </h6>
+                <h6>Thông tin người nhập</h6>
                 <div className="row">
                   <div className="col-sm">
                     Người nhập:

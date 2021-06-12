@@ -291,7 +291,7 @@ export default function UserListHistory() {
           </div>
         ) : null}
       </div>
-      <div style={{ overflow: "scroll", height: "75vh" }}>
+      <div style={{ overflow: "scroll", height: "80vh" }}>
         <Table id="emp" className="text-left" striped bordered hover size="sm">
           <thead>
             <tr>
@@ -511,10 +511,10 @@ export default function UserListHistory() {
                   {flag4 ? <td>{user.email}</td> : null}
                   {flag5 ? <td>{user.roles[0].name}</td> : null}
                   {flag6 ? (
-                    <td>Created at {user.createdAt.substring(0, 10)}</td>
+                    <td>Tạo ngày {user.createdAt.substring(0, 10)}</td>
                   ) : null}
                   {flag6 ? (
-                    <td>Updated at {user.updatedAt.substring(0, 10)}</td>
+                    <td>Cập nhật ngày {user.updatedAt.substring(0, 10)}</td>
                   ) : null}
 
                   <td>

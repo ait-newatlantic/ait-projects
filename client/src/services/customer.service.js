@@ -31,12 +31,11 @@ const create_customer = (
   });
 };
 
-const get_customers = (hide, order, limit) => {
+const get_customers = (hide, order) => {
   return axios.get(API_URL + `customers`, {
     params: {
       hide,
       order,
-      limit,
     },
   });
 };

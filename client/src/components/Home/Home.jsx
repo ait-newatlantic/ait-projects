@@ -12,7 +12,7 @@ export default function DashBoard() {
           </h6>
         </div>
       </div>
-      <div className="text-left">
+      <div className="container text-left">
         <h6>New Atlantic Software</h6>
         <p>
           New Atlantic Software là phần mềm kinh doanh được công ty cổ phần TMQT
@@ -40,7 +40,7 @@ export default function DashBoard() {
         <h6>Hỗ trợ kỹ thuật</h6>
         <ul>
           <li>Di động: +84918628660 (Mr.Nam)</li>
-          <li>Email: nam.tran@New Atlantic.vn</li>
+          <li>Email: nam.tran@newtlantic.vn</li>
         </ul>
       </div>
     </div>

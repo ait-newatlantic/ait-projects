@@ -7,22 +7,14 @@ const Profile = () => {
   return (
     <div className="text-left">
       <div>
-        <h4 className="font-weight-bold text-secondary">HỒ SƠ USER</h4>
+        <h4 className="font-weight-bold text-dark">HỒ SƠ USER</h4>
       </div>
       <div>
-        <p>
-          <strong>Username:</strong> {currentUser.username}
-        </p>
-        <p>
-          <strong>Tên:</strong> {currentUser.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {currentUser.email}
-        </p>
-        <p>
-          <strong>Branch:</strong> {currentUser.branchId}
-        </p>
-        <strong>Authorities:</strong>
+        <p>Username: {currentUser.username}</p>
+        <p>Tên: {currentUser.name}</p>
+        <p>Email: {currentUser.email}</p>
+        <p>Branch: {currentUser.branchId}</p>
+        Authorities:
         <ul>
           {currentUser.roles &&
             currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}

@@ -189,9 +189,7 @@ export default function DemandUpdate(props) {
           <div>
             <div className="text-left">
               <div>
-                <h6>
-                  <strong>Thông tin khách hàng </strong>
-                </h6>
+                <h6>Thông tin khách hàng</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Tên khách hàng :
@@ -330,9 +328,7 @@ export default function DemandUpdate(props) {
               </div>
               <br />
               <div>
-                <h6>
-                  <strong>Thông tin người nhập & ngày tháng</strong>
-                </h6>
+                <h6>Thông tin người nhập & ngày tháng</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Người nhập:
@@ -374,9 +370,7 @@ export default function DemandUpdate(props) {
               </div>
               <br />
               <div>
-                <h6>
-                  <strong>Thông tin xe</strong>
-                </h6>
+                <h6>Thông tin xe</h6>
                 <div className="row ">
                   <div className="col-sm">
                     Model xe:

@@ -53,10 +53,8 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const hide = req.query.hide;
   const order = req.query.order;
-  const limit = parseInt(req.query.limit) || null;
   Customer.findAll({
     order: [["id", order]],
-    limit: limit,
     where: [
       {
         hide: {
@@ -235,10 +233,16 @@ exports.findWithFilters = (req, res) => {
             [Op.eq]: 0,
           },
           name: {
-            [Op.like]: `%${user_name}%`,
+            [Op.or]: {
+              [Op.like]: `%${user_name}%`,
+              [Op.eq]: null,
+            },
           },
           username: {
-            [Op.like]: `%${username}%`,
+            [Op.or]: {
+              [Op.like]: `%${username}%`,
+              [Op.eq]: null,
+            },
           },
         },
         include: [
@@ -249,7 +253,10 @@ exports.findWithFilters = (req, res) => {
                 [Op.eq]: 0,
               },
               name: {
-                [Op.like]: `%${branch_name}%`,
+                [Op.or]: {
+                  [Op.like]: `%${branch_name}%`,
+                  [Op.eq]: null,
+                },
               },
             },
           },
@@ -262,7 +269,10 @@ exports.findWithFilters = (req, res) => {
             [Op.eq]: 0,
           },
           name: {
-            [Op.like]: `%${province}%`,
+            [Op.or]: {
+              [Op.like]: `%${province}%`,
+              [Op.eq]: null,
+            },
           },
         },
       },
@@ -273,7 +283,10 @@ exports.findWithFilters = (req, res) => {
             [Op.eq]: 0,
           },
           name: {
-            [Op.like]: `%${business_type}%`,
+            [Op.or]: {
+              [Op.like]: `%${business_type}%`,
+              [Op.eq]: null,
+            },
           },
         },
       },

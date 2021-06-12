@@ -164,7 +164,6 @@ export default function UserList() {
   const onClickHide = (id) => {
     const hide = 1;
     UserService.hide_user(hide, id).then((response) => {
-      console.log(response);
       handleSubmit();
     });
   };
@@ -187,7 +186,7 @@ export default function UserList() {
   return (
     <div>
       <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">DANH SÁCH</h4>
+        <h4 className="font-weight-bold text-dark text-left">BÁO CÁO</h4>
         <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
           Danh sách tài khoản đang sử dụng
         </h6>
@@ -291,7 +290,7 @@ export default function UserList() {
           </div>
         ) : null}
       </div>
-      <div style={{ overflow: "scroll", height: "75vh" }}>
+      <div style={{ overflow: "scroll", height: "80vh" }}>
         <Table id="emp" className="text-left" striped bordered hover size="sm">
           <thead>
             <tr>
@@ -511,12 +510,11 @@ export default function UserList() {
                   {flag4 ? <td>{user.email}</td> : null}
                   {flag5 ? <td>{user.roles[0].name}</td> : null}
                   {flag6 ? (
-                    <td>Created at {user.createdAt.substring(0, 10)}</td>
+                    <td>Tạo ngày {user.createdAt.substring(0, 10)}</td>
                   ) : null}
                   {flag6 ? (
-                    <td>Updated at {user.updatedAt.substring(0, 10)}</td>
+                    <td>Cập nhật ngày {user.updatedAt.substring(0, 10)}</td>
                   ) : null}
-
                   <td>
                     <Link
                       className="btn btn-primary btn-sm"
