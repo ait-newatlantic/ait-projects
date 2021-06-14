@@ -302,6 +302,30 @@ exports.findWithFilters = (req, res) => {
     });
 };
 
+exports.findByName = (req, res) => {
+  const name = req.query.customer_name;
+  Customer.findAll({
+    where: {
+      hide: {
+        [Op.eq]: 0,
+      },
+      name: {
+        [Op.eq]: name,
+      },
+    },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving customer.",
+      });
+      console.log(err);
+    });
+};
+
 exports.update = (req, res) => {
   const id = req.params.id;
   Customer.update(

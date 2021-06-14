@@ -240,15 +240,15 @@ export default function CustomerListHistory() {
     <div>
       <div className="justify-content-start">
         <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
-        <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
+        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary text-left">
           Danh sách khách hàng ngưng chăm sóc
         </h6>
       </div>
       <div
-        className="flex d-flex wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between"
         style={{ background: "#EEEEEE" }}
       >
-        <div className="flex d-flex wrap align-items-center justify-content-start">
+        <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
               <MaterialUIIcons.FilterList />
@@ -272,7 +272,7 @@ export default function CustomerListHistory() {
             </FormControl>
           </div>
         </div>
-        <div className="flex d-flex wrap align-items-center justify-content-end">
+        <div className="flex d-flex flex-wrap align-items-center justify-content-end">
           <div>
             <Link
               to="/dashboard/customers/input"

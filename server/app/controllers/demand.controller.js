@@ -23,20 +23,20 @@ exports.create = (req, res) => {
   // Save Demand in the database
   const requestArr = initial.arr.map((item) => {
     return Demand.create({
-      demand_date: item.demand_date,
+      date: item.demand_date,
       userId: item.userId,
-      demand_employee: item.demand_employee,
+      employee: item.demand_employee,
       car_modelId: item.car_modelId,
       car_typeId: item.car_typeId,
-      demand_quantity: parseInt(item.demand_quantity),
+      quantity: parseInt(item.demand_quantity),
       colorId: item.colorId,
       demand_statusId: item.demand_statusId,
       customerId: item.customerId,
       customer_typeId: item.customer_typeId,
-      demand_opinion: item.demand_opinion,
-      demand_meeting: item.demand_meeting,
+      opinion: item.demand_opinion,
+      meeting: item.demand_meeting,
       contact_typeId: item.contact_typeId,
-      demand_note: item.demand_note,
+      note: item.demand_note,
     });
   });
   return Promise.all(requestArr)

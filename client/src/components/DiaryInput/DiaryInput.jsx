@@ -73,7 +73,7 @@ export default function DiaryInput() {
   };
 
   const Autofill = useCallback(() => {
-    ProvinceService.get_province_id(province_name).then((response) => {
+    ProvinceService.get_province_by_name(province_name).then((response) => {
       response.data.forEach((value) => {
         setProvinceId(parseInt(value.province_id));
       });

@@ -146,7 +146,10 @@ export default function Login(props) {
           </div>
         </div>
       </div>
-      <div className="border-top p-4" style={{position:"absolute", bottom:"0", width:"100%"}}>
+      <div
+        className="border-top p-4"
+        style={{ position: "absolute", bottom: "0", width: "100%" }}
+      >
         <Footer />
       </div>
     </div>

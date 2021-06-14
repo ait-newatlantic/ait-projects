@@ -183,8 +183,7 @@ export default function DemandListHistory() {
   };
 
   const handleSubmit = () => {
-    const hide = 0;
-    const datetype = "date";
+    const hide = 1;
     DemandService.get_demands_filtered(
       branch_name,
       user_name,
@@ -219,7 +218,7 @@ export default function DemandListHistory() {
   };
 
   const onClickHide = (id) => {
-    const hide = 1;
+    const hide = 0;
     DemandService.hide_demand(hide, id).then((response) => {
       handleSubmit();
     });
@@ -253,16 +252,16 @@ export default function DemandListHistory() {
   return (
     <div>
       <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">BÁO CÁO</h4>
-        <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
-          Danh sách nhu cầu khách hàng mua xe
+        <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
+        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary text-left">
+          Danh sách nhu cầu khách hàng mua xe tạm ngưng
         </h6>
       </div>
       <div
-        className="flex d-flex wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between"
         style={{ background: "#EEEEEE" }}
       >
-        <div className="flex d-flex wrap align-items-center justify-content-start">
+        <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
               <MaterialUIIcons.FilterList />
@@ -286,7 +285,7 @@ export default function DemandListHistory() {
             </FormControl>
           </div>
         </div>
-        <div className="flex d-flex wrap align-items-center justify-content-end">
+        <div className="flex d-flex flex-wrap align-items-center justify-content-end">
           <div>
             <Link
               to="/dashboard/demands/input"
@@ -990,7 +989,7 @@ export default function DemandListHistory() {
                   <td>
                     <Link
                       className="btn btn-primary btn-sm"
-                      to={"/dashboard/customers/update/" + btoa(`${i.id}`)}
+                      to={"/dashboard/demands/update/" + btoa(`${i.id}`)}
                     >
                       Update
                     </Link>
@@ -1000,7 +999,7 @@ export default function DemandListHistory() {
                       className="btn btn-info btn-sm"
                       onClick={() => onClickHide(i.id)}
                     >
-                      Delete
+                      Restore
                     </button>
                   </td>
                 </tr>

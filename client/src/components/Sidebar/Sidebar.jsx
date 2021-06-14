@@ -198,7 +198,7 @@ export default function Sidebar() {
             <MenuIcon />
           </IconButton>
           {currentUser ? (
-            <Dropdown className="mr-auto d-flex wrap">
+            <Dropdown className="mr-auto d-flex flex-wrap">
               <DropdownButton
                 id="dropdown-basic-button"
                 variant="light"
@@ -271,7 +271,7 @@ export default function Sidebar() {
           className={classes.drawerHeader}
           style={{ background: "#17416b", minHeight: "48px" }}
         >
-          <div className="flex d-flex wrap align-items-center px-1">
+          <div className="flex d-flex flex-wrap align-items-center px-1">
             <div>
               <IconButton onClick={handleDrawerClose}>
                 <MaterialUIIcons.Menu style={{ fill: "white" }} />

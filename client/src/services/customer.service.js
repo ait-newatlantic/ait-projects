@@ -88,6 +88,14 @@ const get_customers_filtered = (
   });
 };
 
+const get_customer_by_name = (customer_name) => {
+  return axios.get(API_URL + `customers/info`, {
+    params: {
+      customer_name,
+    },
+  });
+};
+
 const update_customer = (id, manager, manager_email, manager_number) => {
   return axios.put(API_URL + `customers/customer/${id}`, {
     manager,
@@ -107,6 +115,7 @@ const CustomerService = {
   get_customers,
   hide_customer,
   get_customer,
+  get_customer_by_name,
 };
 
 export default CustomerService;

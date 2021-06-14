@@ -22,7 +22,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findId = (req, res) => {
+exports.findByName = (req, res) => {
   const province_name = req.query.province_name;
   Province.findAll({
     where: {

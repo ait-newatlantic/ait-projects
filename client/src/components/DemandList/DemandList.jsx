@@ -184,7 +184,6 @@ export default function DemandList() {
 
   const handleSubmit = () => {
     const hide = 0;
-    const datetype = "date";
     DemandService.get_demands_filtered(
       branch_name,
       user_name,
@@ -254,15 +253,15 @@ export default function DemandList() {
     <div>
       <div className="justify-content-start">
         <h4 className="font-weight-bold text-dark text-left">BÁO CÁO</h4>
-        <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
+        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary text-left">
           Danh sách nhu cầu khách hàng mua xe
         </h6>
       </div>
       <div
-        className="flex d-flex wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between"
         style={{ background: "#EEEEEE" }}
       >
-        <div className="flex d-flex wrap align-items-center justify-content-start">
+        <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
               <MaterialUIIcons.FilterList />
@@ -286,7 +285,7 @@ export default function DemandList() {
             </FormControl>
           </div>
         </div>
-        <div className="flex d-flex wrap align-items-center justify-content-end">
+        <div className="flex d-flex flex-wrap align-items-center justify-content-end">
           <div>
             <Link
               to="/dashboard/demands/input"
@@ -990,7 +989,7 @@ export default function DemandList() {
                   <td>
                     <Link
                       className="btn btn-primary btn-sm"
-                      to={"/dashboard/customers/update/" + btoa(`${i.id}`)}
+                      to={"/dashboard/demands/update/" + btoa(`${i.id}`)}
                     >
                       Update
                     </Link>

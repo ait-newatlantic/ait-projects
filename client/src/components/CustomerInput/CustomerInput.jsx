@@ -74,7 +74,7 @@ export default function CustomerInput() {
   };
 
   const Autofill = useCallback(() => {
-    ProvinceService.get_province_id(province_name).then((response) => {
+    ProvinceService.get_province_by_name(province_name).then((response) => {
       response.data.forEach((value) => {
         setProvinceId(parseInt(value.id));
       });
@@ -145,7 +145,7 @@ export default function CustomerInput() {
     <div>
       <div className="text-left">
         <h4 className="font-weight-bold text-dark">TẠO KHÁCH HÀNG MỚI</h4>
-        <h6 className="flex d-flex wrap font-weight-bold text-secondary">
+        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary">
           Form tạo khách hàng mới
         </h6>
       </div>

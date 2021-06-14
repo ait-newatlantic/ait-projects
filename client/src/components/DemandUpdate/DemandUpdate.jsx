@@ -150,7 +150,6 @@ export default function DemandUpdate(props) {
         setDemandEmployee(response.data[0].demand_employee);
         setDemandQuantity(response.data[0].demand_quantity);
         setDemandId(response.data[0].id);
-
         setColorId_2(response.data[0].color_id);
         setDemandStatusId_2(response.data[0].demand_status_id);
         setDemandDate_2(response.data[0].demand_date);

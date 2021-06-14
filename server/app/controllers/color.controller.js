@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 exports.findAll = (req, res) => {
   Color.findAll({
     where: {
-      color_hide: {
+      hide: {
         [Op.eq]: 0,
       },
     },

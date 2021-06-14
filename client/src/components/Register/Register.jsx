@@ -137,7 +137,7 @@ const Register = (props) => {
     <div className="text-left">
       <div>
         <h4 className="font-weight-bold text-dark">TẠO USER MỚI</h4>
-        <h6 className="flex d-flex wrap font-weight-bold text-secondary">
+        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary">
           Form tạo tài khoản mới
         </h6>
       </div>

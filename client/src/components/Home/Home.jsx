@@ -7,7 +7,7 @@ export default function DashBoard() {
       <div className="row">
         <div className="col-sm justify-content-start">
           <h4 className="font-weight-bold text-dark text-left">TRANG CHỦ</h4>
-          <h6 className="flex d-flex wrap font-weight-bold text-secondary text-left">
+          <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary text-left">
             Giới thiệu, tài liệu hướng dẫn sử dụng
           </h6>
         </div>

@@ -5,7 +5,7 @@ export default function NavigationBar() {
   return (
     <nav className="container navbar navbar-expand-lg navbar-light">
       <a className="navbar-brand" href="#">
-        <img src={imgsrc} alt="logo" height="48px"/>
+        <img src={imgsrc} alt="logo" height="48px" />
       </a>
       <button
         className="navbar-toggler"

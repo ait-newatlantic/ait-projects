@@ -20,6 +20,8 @@ module.exports = (app) => {
 
   router.get("/filters", customers.findWithFilters);
 
+  router.get("/info", customers.findByName);
+
   router.get("/", customers.findAll);
 
   app.use("/api/customers", router);

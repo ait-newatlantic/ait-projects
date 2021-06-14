@@ -8,7 +8,6 @@ import CarModelService from "../../services/car_model.service";
 import CarTypeService from "../../services/car_type.service";
 import ColorService from "../../services/color.services";
 import DemandStatusService from "../../services/demand_status.service";
-import * as MaterialUIIcons from "@material-ui/icons/";
 
 import CheckButton from "react-validation/build/button";
 import { Alert, Button } from "react-bootstrap";
@@ -209,14 +208,14 @@ export default function DemandInput(props) {
     }
   };
 
-  // const Autofill = useCallback(() => {
-  //   CustomerService.get_customer_by_name(customer_name).then((response) => {
-  //     setCustomerResult(response.data);
-  //     response.data.forEach((value) => {
-  //       setCustomerId(value.id);
-  //     });
-  //   });
-  // }, [customer_name]);
+  const Autofill = useCallback(() => {
+    CustomerService.get_customer_by_name(customer_name).then((response) => {
+      setCustomerResult(response.data);
+      response.data.forEach((value) => {
+        setCustomerId(value.id);
+      });
+    });
+  }, [customer_name]);
 
   const FetchCustomers = () => {
     const hide = 0;
@@ -237,32 +236,32 @@ export default function DemandInput(props) {
   const FetchContactTypes = () => {
     ContactTypeService.get_contact_types().then((response) => {
       setContactTypes(response.data);
-      setContactTypeId(response.data[0].contact_type_id);
-      setContactTypeName(response.data[0].contact_type_name);
+      setContactTypeId(response.data[0].id);
+      setContactTypeName(response.data[0].name);
     });
   };
 
   const FetchCarModels = () => {
     CarModelService.get_car_models().then((response) => {
       setCarModels(response.data);
-      setCarModelId(response.data[0].car_model_id);
-      setCarModelName(response.data[0].car_model_name);
+      setCarModelId(response.data[0].id);
+      setCarModelName(response.data[0].name);
     });
   };
 
   const FetchCarTypes = () => {
     CarTypeService.get_car_types().then((response) => {
       setCarTypes(response.data);
-      setCarTypeId(response.data[0].car_type_id);
-      setCarTypeName(response.data[0].car_type_name);
+      setCarTypeId(response.data[0].id);
+      setCarTypeName(response.data[0].name);
     });
   };
 
   const FetchColors = () => {
     ColorService.get_colors().then((response) => {
       setColors(response.data);
-      setColorId(response.data[0].color_id);
-      setColorName(response.data[0].color_name);
+      setColorId(response.data[0].id);
+      setColorName(response.data[0].name);
     });
   };
 
@@ -282,279 +281,281 @@ export default function DemandInput(props) {
     FetchDemandStatuses();
     FetchCustomerTypes();
     FetchContactTypes();
-  }, [customer_name]);
+    Autofill();
+  }, [customer_name, Autofill]);
 
   return (
     <div>
       <div className="text-left">
-        <h4 className="font-weight-bold text-dark">TẠO NHU CẦU MỚI</h4>
-        <h6 className="flex d-flex wrap font-weight-bold text-secondary">
-          Form tạo nhu cầu mua xe của khách hàng
+        <h4 className="font-weight-bold text-dark">
+          NHU CẦU MỚI CỦA KHÁCH HÀNG
+        </h4>
+        <h6 className="font-weight-bold text-secondary">
+          Form tạo nhu cầu mua xe mới của khách hàng
         </h6>
       </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div>
-            <div className="text-left">
-              <h6>Thông tin khách hàng</h6>
-              <div className="row">
-                <div className="col-sm">
-                  Tên khách hàng :
-                  <Autocomplete
-                    style={{ background: "white" }}
-                    size="small"
-                    disableClearable
-                    value={customer_name}
-                    onChange={(event, newValue) => {
-                      setCustomerName(newValue);
-                    }}
-                    options={customers.map((option) => option.name)}
-                    renderInput={(params) => (
-                      <TextField {...params} variant="outlined" />
-                    )}
-                  />
-                </div>
-                <div className="col-sm">
-                  Loại khách hàng :
-                  <Select
-                    className="form-control"
-                    id="exampleFormControlSelect2"
-                    onChange={onChangeCustomerType}
-                  >
-                    {!!customer_types &&
-                      customer_types.map((customer_type) => (
-                        <option key={customer_type.id} value={customer_type.id}>
-                          {customer_type.name}
-                        </option>
-                      ))}
-                  </Select>
-                </div>
-                <div className="col-sm">
-                  Phương thức liên lạc :
-                  <Select
-                    className="form-control"
-                    id="exampleFormControlSelect3"
-                    onChange={onChangeContactType}
-                  >
-                    {!!contact_types &&
-                      contact_types.map((contact_type) => (
-                        <option key={contact_type.id} value={contact_type.id}>
-                          {contact_type.name}
-                        </option>
-                      ))}
-                  </Select>
-                </div>
-                <div className="col-sm">
-                  Giai đoạn :
-                  <Select
-                    className="form-control"
-                    id="exampleFormControlSelect5"
-                    onChange={onChangeDemandStatusId}
-                  >
-                    {!!demand_statuses &&
-                      demand_statuses.map((demand_status) => (
-                        <option
-                          key={demand_status.demand_status_id}
-                          value={demand_status.demand_status_id}
-                        >
-                          {demand_status.name}
-                        </option>
-                      ))}
-                  </Select>
-                </div>
-              </div>
-              <div className="row">
-                {customer_typeId == 3 ? (
-                  <div className="col-sm">
-                    Ý kiến khách hàng
-                    <textarea
-                      type="demand_opinion"
-                      className="form-control"
-                      id="exampleFormControlTextarea1"
-                      rows="3"
-                      onChange={onChangeDemand_Opinion}
-                    ></textarea>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                {contact_typeId == 3 ? (
-                  <div className="col-sm">
-                    Địa điểm giao dịch
-                    <textarea
-                      type="demand_meeting"
-                      className="form-control"
-                      id="exampleFormControlTextarea1"
-                      rows="3"
-                      onChange={(e) => setDemandMeeting(e.target.value)}
-                    ></textarea>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                <div className="col-sm">
-                  Ghi chú:
-                  <textarea
-                    type="demand_note"
-                    className="form-control"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
-                    onChange={onChangeNote}
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div className="text-left">
-              <h6>Thông tin người nhập & ngày tháng</h6>
-              <div className="row ">
-                <div className="col-sm">
-                  Người nhập:
-                  <div
-                    className="form-control"
-                    style={{ background: "#e7e7e7" }}
-                  >
-                    {currentUser.name}
-                  </div>
-                </div>
-                <div className="col-sm">
-                  Người gặp khách hàng:
-                  <Input
-                    type="demand_employee"
-                    className="form-control"
-                    name="demand_employee"
-                    value={demand_employee}
-                    onChange={onChangeDemandEmployee}
-                  />
-                </div>
-                <div className="col-sm">
-                  Ngày - {demand_status_name}:
-                  <Input
-                    type="date"
-                    className="form-control"
-                    name="demand_date"
-                    value={demand_date}
-                    onChange={onChangeDate}
-                  />
-                </div>
-              </div>
-            </div>
-            <br />
-            <div>
-              <h6 className="text-left">Danh sách xe khách hàng quan tâm</h6>
-              <Table striped bordered hover size="sm">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>
-                      Model xe
-                      <Select
-                        className="form-control"
-                        id="exampleFormControlSelect4"
-                        onChange={onChangeCarModel}
-                      >
-                        {!!car_models &&
-                          car_models.map((car_model) => (
-                            <option
-                              key={car_model.car_model_id}
-                              value={car_model.car_model_id}
-                            >
-                              {car_model.car_model_name}
-                            </option>
-                          ))}
-                      </Select>
-                    </th>
-                    <th>
-                      Loại xe
-                      <Select
-                        className="form-control"
-                        id="exampleFormControlSelect6"
-                        onChange={onChangeCarType}
-                      >
-                        {!!car_types &&
-                          car_types.map((car_type) => (
-                            <option
-                              key={car_type.car_type_id}
-                              value={car_type.car_type_id}
-                            >
-                              {car_type.car_type_name}
-                            </option>
-                          ))}
-                      </Select>
-                    </th>
-                    <th>
-                      Số lượng
-                      <Input
-                        type="number"
-                        className="form-control"
-                        name="demand_quantity"
-                        value={demand_quantity}
-                        onChange={onChangeQuantity}
+            <div className="row">
+              <div className="col-sm">
+                <div className="form-group border rounded border-secondary p-2">
+                  <h6 className="font-weight-bold text-center">
+                    THÔNG TIN KHÁCH HÀNG
+                  </h6>
+                  <div className="row text-left">
+                    <div className="col-sm">
+                      <label>Tên khách hàng *</label>
+                      <Autocomplete
+                        style={{ background: "white" }}
+                        size="small"
+                        disableClearable
+                        value={customer_name}
+                        onChange={(event, newValue) => {
+                          setCustomerName(newValue);
+                        }}
+                        options={customers.map((option) => option.name)}
+                        renderInput={(params) => (
+                          <TextField {...params} variant="outlined" />
+                        )}
                       />
-                    </th>
-                    <th>
-                      Màu xe
+                    </div>
+                    <div className="col-sm">
+                      <label>Loại khách hàng *</label>
                       <Select
                         className="form-control"
-                        id="exampleFormControlSelect7"
-                        onChange={onChangeColor}
+                        id="exampleFormControlSelect2"
+                        onChange={onChangeCustomerType}
                       >
-                        {!!colors &&
-                          colors.map((color) => (
-                            <option key={color.color_id} value={color.color_id}>
-                              {color.color_name}
+                        {!!customer_types &&
+                          customer_types.map((customer_type) => (
+                            <option
+                              key={customer_type.id}
+                              value={customer_type.id}
+                            >
+                              {customer_type.name}
                             </option>
                           ))}
                       </Select>
-                    </th>
-                    <th>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-primary"
-                        onClick={addToList}
+                    </div>
+                    <div className="col-sm">
+                      <label>Cách liên lạc *</label>
+                      <Select
+                        className="form-control"
+                        id="exampleFormControlSelect3"
+                        onChange={onChangeContactType}
                       >
-                        Thêm
-                      </button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@fat</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-secondary"
-                        onClick={removeFromList}
+                        {!!contact_types &&
+                          contact_types.map((contact_type) => (
+                            <option
+                              key={contact_type.id}
+                              value={contact_type.id}
+                            >
+                              {contact_type.name}
+                            </option>
+                          ))}
+                      </Select>
+                    </div>
+                    <div className="col-sm">
+                      <label>Giai đoạn *</label>
+                      <Select
+                        className="form-control"
+                        id="exampleFormControlSelect5"
+                        onChange={onChangeDemandStatusId}
                       >
-                        Xóa
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-secondary"
-                        onClick={removeFromList}
+                        {!!demand_statuses &&
+                          demand_statuses.map((demand_status) => (
+                            <option
+                              key={demand_status.id}
+                              value={demand_status.id}
+                            >
+                              {demand_status.name}
+                            </option>
+                          ))}
+                      </Select>
+                    </div>
+                    <div className="col-sm">
+                      <label>Ngày giai đoạn *</label>
+                      <Input
+                        type="date"
+                        className="form-control"
+                        name="demand_date"
+                        value={demand_date}
+                        onChange={onChangeDate}
+                      />
+                    </div>
+                  </div>
+                  <div className="row text-left">
+                    {customer_typeId == 3 ? (
+                      <div className="col-sm">
+                        <label>Ý kiến khách hàng</label>
+                        <textarea
+                          type="demand_opinion"
+                          className="form-control"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          onChange={onChangeDemand_Opinion}
+                        ></textarea>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                    {contact_typeId == 3 ? (
+                      <div className="col-sm">
+                        <label>Địa điểm giao dịch</label>
+                        <textarea
+                          type="demand_meeting"
+                          className="form-control"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                          onChange={(e) => setDemandMeeting(e.target.value)}
+                        ></textarea>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                    <div className="col-sm">
+                      <label>Tình hình hiện nay *</label>
+                      <textarea
+                        type="demand_note"
+                        className="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="3"
+                        onChange={onChangeNote}
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group border rounded border-secondary p-2">
+                  <h6 className="font-weight-bold text-center">
+                    THÔNG TIN VỀ NHÂN VIÊN
+                  </h6>
+                  <div className="row text-left">
+                    <div className="col-sm">
+                      <label>Người nhập</label>
+                      <div
+                        className="form-control"
+                        style={{ background: "#e7e7e7" }}
                       >
-                        Xóa
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+                        {currentUser.name}
+                      </div>
+                    </div>
+                    <div className="col-sm">
+                      <label>Người gặp khách hàng *</label>
+                      <Input
+                        type="demand_employee"
+                        className="form-control"
+                        name="demand_employee"
+                        value={demand_employee}
+                        onChange={onChangeDemandEmployee}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm">
+                <div className="form-group border rounded border-secondary p-2" style={{ overflow: "scroll", height: "50vh" }}>
+                  <h6 className="font-weight-bold text-center">
+                    DANH SÁCH XE KHÁCH HÀNG QUAN TÂM
+                  </h6>
+                  <Table striped bordered hover size="sm">
+                    <thead>
+                      <tr>
+                        <th className="align-middle">#</th>
+                        <th className="align-middle">Tên khách hàng</th>
+                        <th className="align-middle">Giai đoạn</th>
+                        <th className="align-middle">Ngày giai đoạn</th>
+                        <th>
+                          Model xe
+                          <Select
+                            className="form-control"
+                            id="exampleFormControlSelect4"
+                            onChange={onChangeCarModel}
+                          >
+                            {!!car_models &&
+                              car_models.map((car_model) => (
+                                <option key={car_model.id} value={car_model.id}>
+                                  {car_model.name}
+                                </option>
+                              ))}
+                          </Select>
+                        </th>
+                        <th>
+                          Loại xe
+                          <Select
+                            className="form-control"
+                            id="exampleFormControlSelect6"
+                            onChange={onChangeCarType}
+                          >
+                            {!!car_types &&
+                              car_types.map((car_type) => (
+                                <option key={car_type.id} value={car_type.id}>
+                                  {car_type.name}
+                                </option>
+                              ))}
+                          </Select>
+                        </th>
+                        <th>
+                          Số lượng
+                          <Input
+                            type="number"
+                            className="form-control"
+                            name="demand_quantity"
+                            value={demand_quantity}
+                            onChange={onChangeQuantity}
+                          />
+                        </th>
+                        <th>
+                          Màu xe
+                          <Select
+                            className="form-control"
+                            id="exampleFormControlSelect7"
+                            onChange={onChangeColor}
+                          >
+                            {!!colors &&
+                              colors.map((color) => (
+                                <option key={color.id} value={color.id}>
+                                  {color.name}
+                                </option>
+                              ))}
+                          </Select>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {arr2.map((result, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{result.customer_name}</td>
+                          <td>{result.demand_status_name}</td>
+                          <td>{result.demand_date}</td>
+                          <td>{result.car_model_name}</td>
+                          <td>{result.car_type_name}</td>
+                          <td>{result.demand_quantity}</td>
+                          <td>{result.color_name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                  <div className="d-flex justify-content-around" style={{background:"#e7e7e7"}}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={addToList}
+                    >
+                      Thêm xe vào danh sách
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={removeFromList}
+                    >
+                      Xóa xe cuối danh sách
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <br />
             <div className="text-left">
               <Button
                 className="btn-sm"
