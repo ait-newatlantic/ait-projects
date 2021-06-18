@@ -13,6 +13,8 @@ module.exports = (app) => {
 
   router.get("/filters", demands.findWithFilters);
 
+  router.get("/demandstatuses", demands.findDemandStatusReport);
+
   router.get("/", demands.findAll);
 
   app.use("/api/demands", router);

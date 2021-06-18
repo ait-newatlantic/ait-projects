@@ -11,18 +11,12 @@ const create_demand = (arr) => {
   });
 };
 
-const update_demand = (
-  id,
-  demand_status_id,
-  color_id,
-  demand_date,
-  demand_note
-) => {
-  return axios.put(API_URL + `demands/${id}`, {
-    demand_status_id,
-    color_id,
-    demand_date,
-    demand_note,
+const update_demand = (id, demand_status, date, note, color) => {
+  return axios.put(API_URL + `demands/demand/${id}`, {
+    demand_status,
+    date,
+    note,
+    color,
   });
 };
 
@@ -34,10 +28,8 @@ const get_demands = () => {
   return axios.get(API_URL + `demands`, {});
 };
 
-const get_specific_demand = (id) => {
-  return axios.get(API_URL + `demands/update`, {
-    params: { id },
-  });
+const get_demand = (id) => {
+  return axios.get(API_URL + `demands/demand/${id}`);
 };
 
 const get_demands_filtered = (
@@ -97,11 +89,11 @@ const get_demand_statuses = (username, branch_name, from_date, to_date) => {
 };
 
 const DemandService = {
-  get_specific_demand,
   update_demand,
   create_demand,
   hide_demand,
   get_demands,
+  get_demand,
   get_demands_filtered,
   get_demand_statuses,
 };

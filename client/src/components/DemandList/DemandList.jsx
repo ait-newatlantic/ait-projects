@@ -475,7 +475,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -506,7 +506,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -535,7 +535,7 @@ export default function DemandList() {
                       ...new Set(DemandResult.map((option) => option.employee)),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -566,7 +566,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -597,7 +597,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -630,7 +630,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -665,7 +665,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -691,7 +691,7 @@ export default function DemandList() {
                       ...new Set(DemandResult.map((option) => option.opinion)),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -722,7 +722,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -755,7 +755,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -786,7 +786,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -817,7 +817,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -848,7 +848,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -879,7 +879,7 @@ export default function DemandList() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -905,7 +905,7 @@ export default function DemandList() {
                       ...new Set(DemandResult.map((option) => option.note)),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -937,6 +937,7 @@ export default function DemandList() {
                         Từ ngày
                       </FormHelperText>
                       <TextField
+                        size="small"
                         id="from_date"
                         type="date"
                         value={from_date}
@@ -948,6 +949,7 @@ export default function DemandList() {
                         Đến ngày
                       </FormHelperText>
                       <TextField
+                        size="small"
                         id="to_date"
                         type="date"
                         value={to_date}

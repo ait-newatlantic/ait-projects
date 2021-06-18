@@ -217,6 +217,10 @@ export default function DemandListHistory() {
     });
   };
 
+  // const handleUpdate = (e) => {
+  //   DemandService.update_demand(id, demand_status_id, color_id, date, note);
+  // };
+
   const onClickHide = (id) => {
     const hide = 0;
     DemandService.hide_demand(hide, id).then((response) => {

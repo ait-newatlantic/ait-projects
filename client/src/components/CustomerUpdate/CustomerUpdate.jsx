@@ -98,7 +98,7 @@ export default function CustomerUpdate(props) {
               <h6>Thông tin khách hàng</h6>
               <div className="row">
                 <div className="col-sm">
-                  Tên khách hàng:
+                  <label>Tên khách hàng:</label>
                   <div
                     className="form-control"
                     style={{ overflow: "auto", background: "#e7e7e7" }}
