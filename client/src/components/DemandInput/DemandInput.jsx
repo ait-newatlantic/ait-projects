@@ -19,7 +19,7 @@ import Select from "react-validation/build/select";
 import { Table } from "react-bootstrap";
 
 export default function DemandInput(props) {
-  const [demand_date, setDemandDate] = useState("");
+  const [date, setDemandDate] = useState("");
 
   const [demand_employee, setDemandEmployee] = useState("");
 
@@ -74,7 +74,7 @@ export default function DemandInput(props) {
   const addToList = () => {
     arr.push({
       demand_quantity,
-      demand_date,
+      date,
       demand_note,
       demand_employee,
       userId,
@@ -90,7 +90,7 @@ export default function DemandInput(props) {
     });
     arr2.push({
       demand_quantity,
-      demand_date,
+      date,
       demand_note,
       demand_employee,
       user_name,
@@ -133,8 +133,8 @@ export default function DemandInput(props) {
   };
 
   const onChangeDate = (e) => {
-    const demand_date = e.target.value;
-    setDemandDate(demand_date);
+    const date = e.target.value;
+    setDemandDate(date);
   };
 
   const onChangeNote = (e) => {
@@ -379,8 +379,8 @@ export default function DemandInput(props) {
                       <Input
                         type="date"
                         className="form-control"
-                        name="demand_date"
-                        value={demand_date}
+                        name="date"
+                        value={date}
                         onChange={onChangeDate}
                       />
                     </div>
@@ -454,7 +454,10 @@ export default function DemandInput(props) {
                 </div>
               </div>
               <div className="col-sm">
-                <div className="form-group border rounded border-secondary p-2" style={{ overflow: "scroll", height: "50vh" }}>
+                <div
+                  className="form-group border rounded border-secondary p-2"
+                  style={{ overflow: "scroll", height: "50vh" }}
+                >
                   <h6 className="font-weight-bold text-center">
                     DANH SÁCH XE KHÁCH HÀNG QUAN TÂM
                   </h6>
@@ -528,7 +531,7 @@ export default function DemandInput(props) {
                           <td>{index + 1}</td>
                           <td>{result.customer_name}</td>
                           <td>{result.demand_status_name}</td>
-                          <td>{result.demand_date}</td>
+                          <td>{result.date}</td>
                           <td>{result.car_model_name}</td>
                           <td>{result.car_type_name}</td>
                           <td>{result.demand_quantity}</td>
@@ -537,7 +540,10 @@ export default function DemandInput(props) {
                       ))}
                     </tbody>
                   </Table>
-                  <div className="d-flex justify-content-around" style={{background:"#e7e7e7"}}>
+                  <div
+                    className="d-flex justify-content-around"
+                    style={{ background: "#e7e7e7" }}
+                  >
                     <button
                       type="button"
                       className="btn btn-primary"

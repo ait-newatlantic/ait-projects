@@ -15,6 +15,10 @@ module.exports = (app) => {
 
   router.get("/demandstatuses", demands.findDemandStatusReport);
 
+  router.get("/demandstotal", demands.findAllTotal);
+
+  router.get("/demandsquantity", demands.findAllQuantity);
+
   router.get("/", demands.findAll);
 
   app.use("/api/demands", router);

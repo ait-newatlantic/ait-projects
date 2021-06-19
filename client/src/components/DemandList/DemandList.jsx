@@ -826,13 +826,12 @@ export default function DemandList() {
                 <th>
                   <FormHelperText className="text-dark">
                     Số lượng (
-                    {
-                      [
-                        ...new Set(
-                          DemandResult.map((option) => option.quantity)
-                        ),
-                      ].length
-                    }
+                    {[
+                      DemandResult.map((option) => option.quantity).reduce(
+                        (a, b) => a + b,
+                        0
+                      ),
+                    ]}
                     )
                   </FormHelperText>
                   <Autocomplete

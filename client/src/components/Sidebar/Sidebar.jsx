@@ -36,6 +36,7 @@ import UserUpdate from "../UserUpdate/UserUpdate";
 import { Avatar, Collapse } from "@material-ui/core";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import Test from "../Test/Test";
+import logo from "../../assets/img/avatar.jpg";
 
 require("dotenv").config();
 
@@ -244,11 +245,7 @@ export default function Sidebar() {
               </li>
             </ul>
           )}
-          <Avatar
-            alt="logo"
-            className={classes.small}
-            src="https://tiendientu.org/wp-content/uploads/2019/04/tiendientu.org-huobi-niem-yet-dogecoin-doge1-1200x872.png"
-          />
+          <Avatar alt="logo" className={classes.small} src={logo} />
           <DropdownButton id="dropdown-basic-button" variant="light" size="sm">
             <Dropdown.Item href="/dashboard/profile">Hồ sơ</Dropdown.Item>
             <Dropdown.Item href="/settings">Cài đặt</Dropdown.Item>
@@ -277,9 +274,9 @@ export default function Sidebar() {
                 <MaterialUIIcons.Menu style={{ fill: "white" }} />
               </IconButton>
             </div>
-            <div className="font-weight-bold text-white">
+            <small className="font-weight-bold text-white text-uppercase">
               New Atlantic IT JSC
-            </div>
+            </small>
           </div>
         </div>
         <Divider />

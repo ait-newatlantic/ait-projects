@@ -144,9 +144,11 @@ export default function DemandUpdate(props) {
                       <input
                         type="date"
                         className="form-control"
-                        name="demand_date"
+                        name="date"
                         value={date}
-                        onChange={(e)=>{setDate(e.target.value)}}
+                        onChange={(e) => {
+                          setDate(e.target.value);
+                        }}
                       />
                     </div>
                   </div>

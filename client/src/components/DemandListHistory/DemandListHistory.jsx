@@ -217,10 +217,6 @@ export default function DemandListHistory() {
     });
   };
 
-  // const handleUpdate = (e) => {
-  //   DemandService.update_demand(id, demand_status_id, color_id, date, note);
-  // };
-
   const onClickHide = (id) => {
     const hide = 0;
     DemandService.hide_demand(hide, id).then((response) => {
@@ -258,7 +254,7 @@ export default function DemandListHistory() {
       <div className="justify-content-start">
         <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
         <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary text-left">
-          Danh sách nhu cầu khách hàng mua xe tạm ngưng
+          Danh sách nhu cầu khách hàng ngưng mua xe
         </h6>
       </div>
       <div
@@ -479,7 +475,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -510,7 +506,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -539,7 +535,7 @@ export default function DemandListHistory() {
                       ...new Set(DemandResult.map((option) => option.employee)),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -570,7 +566,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -601,7 +597,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -634,7 +630,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -669,7 +665,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -695,7 +691,7 @@ export default function DemandListHistory() {
                       ...new Set(DemandResult.map((option) => option.opinion)),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -726,7 +722,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -759,7 +755,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -790,7 +786,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -821,7 +817,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -852,7 +848,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -883,7 +879,7 @@ export default function DemandListHistory() {
                       ),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -909,7 +905,7 @@ export default function DemandListHistory() {
                       ...new Set(DemandResult.map((option) => option.note)),
                     ]}
                     renderInput={(params) => (
-                      <TextField {...params} variant="standard" />
+                      <TextField {...params} variant="standard" size="small" />
                     )}
                   />
                 </th>
@@ -941,6 +937,7 @@ export default function DemandListHistory() {
                         Từ ngày
                       </FormHelperText>
                       <TextField
+                        size="small"
                         id="from_date"
                         type="date"
                         value={from_date}
@@ -952,6 +949,7 @@ export default function DemandListHistory() {
                         Đến ngày
                       </FormHelperText>
                       <TextField
+                        size="small"
                         id="to_date"
                         type="date"
                         value={to_date}

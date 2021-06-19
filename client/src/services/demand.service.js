@@ -88,6 +88,18 @@ const get_demand_statuses = (username, branch_name, from_date, to_date) => {
   });
 };
 
+const get_demand_total = (branch_name, from_date, to_date) => {
+  return axios.get(API_URL + `demands/demandstotal`, {
+    params: { branch_name, from_date, to_date },
+  });
+};
+
+const get_demand_quantity = (branch_name, from_date, to_date) => {
+  return axios.get(API_URL + `demands/demandsquantity`, {
+    params: { branch_name, from_date, to_date },
+  });
+};
+
 const DemandService = {
   update_demand,
   create_demand,
@@ -96,6 +108,8 @@ const DemandService = {
   get_demand,
   get_demands_filtered,
   get_demand_statuses,
+  get_demand_total,
+  get_demand_quantity,
 };
 
 export default DemandService;

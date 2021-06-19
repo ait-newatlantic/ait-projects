@@ -4,7 +4,7 @@ const DemandHistory = db.demand_history;
 exports.create = (req, res) => {
   // Save Demand in the database
   return DemandHistory.create({
-    demand_date: req.body.demand_date_2,
+    date: req.body.date_2,
     userId: req.body.user_id,
     demand_employee: req.body.demand_employee,
     car_modelId: req.body.car_model_id,

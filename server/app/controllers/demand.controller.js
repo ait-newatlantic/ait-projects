@@ -28,7 +28,7 @@ exports.create = (req, res) => {
       employee: item.demand_employee,
       car_modelId: item.car_modelId,
       car_typeId: item.car_typeId,
-      quantity: parseInt(item.quantity),
+      quantity: parseInt(item.demand_quantity),
       colorId: item.colorId,
       demand_statusId: item.demand_statusId,
       customerId: item.customerId,
@@ -308,7 +308,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.findWithFilters = (req, res) => {
-  const branch = req.query.name;
+  const branch = req.query.branch_name;
   const user_name = req.query.user_name;
   const employee = req.query.employee;
   const province = req.query.province;
@@ -567,7 +567,7 @@ exports.hide = (req, res) => {
 };
 
 exports.findDemandStatusReport = (req, res) => {
-  const name = req.query.branch_name;
+  const branch_name = req.query.branch_name;
   const username = req.query.username;
   const from_date = req.query.from_date;
   const to_date = req.query.to_date;
@@ -576,47 +576,105 @@ exports.findDemandStatusReport = (req, res) => {
   return db.sequelize
     .query(
       `  SELECT  
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 1 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong1,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 1 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai1,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 1 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich1,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 2 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong2,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 2 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai2,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 2 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich2,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 3 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong3,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 3 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai3,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 3 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich3,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 4 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong4,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 4 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai4,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 4 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich4,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 5 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong5,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 5 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai5,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 5 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich5,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 6 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong6,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 6 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai6,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 6 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich6,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 7 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong7,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 7 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai7,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 7 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich7,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 8 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong8,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 8 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai8,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 8 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich8,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 9 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong9,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 9 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai9,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 9 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich9,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 10 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong10,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 10 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai10,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 10 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich10,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 11 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong11,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 11 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai11,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 11 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich11,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 12 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong12,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 12 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai12,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 12 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich12,
-        SUM(CASE WHEN branches.name LIKE "%${name}%" AND users.username LIKE "%${username}%" AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS tongcongdanggiaodich${to_date_month}
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 1 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong1,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 1 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai1,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 1 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich1,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 2 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong2,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 2 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai2,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 2 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich2,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 3 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong3,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 3 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai3,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 3 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich3,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 4 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong4,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 4 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai4,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 4 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich4,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 5 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong5,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 5 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai5,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 5 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich5,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 6 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong6,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 6 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai6,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 6 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich6,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 7 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong7,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 7 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai7,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 7 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich7,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 8 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong8,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 8 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai8,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 8 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich8,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 9 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong9,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 9 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai9,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 9 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich9,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 10 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong10,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 10 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai10,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 10 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich10,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 11 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong11,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 11 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai11,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 11 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich11,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 12 AND demands.demand_statusId = 9 AND demands.hide = 0 THEN demands.quantity END) AS thanhcong12,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 12 AND demands.demand_statusId = 10 AND demands.hide = 0 THEN demands.quantity END) AS thatbai12,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND MONTH(demands.date) = 12 AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS danggiaodich12,
+        SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.demand_statusId < 9 AND demands.hide = 0 THEN demands.quantity END) AS tongcongdanggiaodich${to_date_month}
         FROM demands
         LEFT JOIN users ON demands.userId = users.id
         LEFT JOIN branches ON users.branchId = branches.id
         WHERE UNIX_TIMESTAMP(demands.date) BETWEEN UNIX_TIMESTAMP('${from_date}') AND UNIX_TIMESTAMP('${to_date}')`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+    .then((queues) => res.json(queues))
+    .catch((err) => res.status(400).json(err));
+};
+
+exports.findAllTotal = (req, res) => {
+  const fromdate = req.query.from_date;
+  const todate = req.query.to_date;
+  const branch_name = req.query.branch_name;
+  return db.sequelize
+    .query(
+      `SELECT 
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" THEN quantity END) as tongcong,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="1" THEN quantity END) as tiepcanchaohang,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="2" THEN quantity END) as chaythu,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="3" THEN quantity END) as damphan,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="4" THEN quantity END) as chotdonhang,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="5" THEN quantity END) as dacoc,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="7" THEN quantity END) as dathanhtoantamung,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" THEN quantity END) as hoantatgiaodich,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="6" THEN quantity END) as lenhopdong,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="8" THEN quantity END) as bangiaochuathanhtoan,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="10" THEN quantity END) as giaodichthatbai
+    FROM demands
+    LEFT JOIN users ON demands.userId = users.id
+    LEFT JOIN branches ON users.branchId = branches.id
+    WHERE UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}')`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+    .then((queues) => res.json(queues))
+    .catch((err) => res.status(400).json(err));
+};
+
+exports.findAllQuantity = (req, res) => {
+  const fromdate = req.query.from_date;
+  const todate = req.query.to_date;
+  const branch_name = req.query.branch_name;
+
+  return db.sequelize
+    .query(
+      `SELECT 
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id ="1" THEN quantity END) as c6540,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="2" THEN quantity END) as c6460,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="3" THEN quantity END) as c43253,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="4" THEN quantity END) as c43265,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="5" THEN quantity END) as c43266,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="6" THEN quantity END) as c53228,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="7" THEN quantity END) as c53229,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="8" THEN quantity END) as c65115,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="9" THEN quantity END) as c65116,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="10" THEN quantity END) as c65117,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND demand_statusId="9" AND car_models.id="11" THEN quantity END) as c57
+    FROM demands
+    LEFT JOIN users ON demands.userId = users.id
+    LEFT JOIN branches ON users.branchId = branches.id
+    LEFT JOIN car_models ON demands.car_modelId = car_models.id
+    WHERE UNIX_TIMESTAMP(date) BETWEEN  UNIX_TIMESTAMP('${fromdate}') AND UNIX_TIMESTAMP('${todate}')`,
       { type: db.sequelize.QueryTypes.SELECT }
     )
     .then((queues) => res.json(queues))
