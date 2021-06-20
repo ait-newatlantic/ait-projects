@@ -134,7 +134,7 @@ export default function DashBoard() {
         </h6>
       </div>
       <div
-        className="d-flex justify-content-start"
+        className="d-flex justify-content-start rounded"
         style={{ background: "#EEEEEE" }}
       >
         <div>
@@ -187,7 +187,7 @@ export default function DashBoard() {
       ) : (
         <div></div>
       )}
-      <div className="row justify-content-center">
+      <div className="row justify-content-center text-left">
         <div className="col-md-8 col-sm d-flex flex-column">
           <div
             className="flex-fill border rounded border-secondary p-2"

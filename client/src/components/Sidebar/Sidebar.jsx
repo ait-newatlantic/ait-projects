@@ -36,7 +36,6 @@ import UserUpdate from "../UserUpdate/UserUpdate";
 import { Avatar, Collapse } from "@material-ui/core";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import Test from "../Test/Test";
-import logo from "../../assets/img/avatar.jpg";
 
 require("dotenv").config();
 
@@ -245,7 +244,7 @@ export default function Sidebar() {
               </li>
             </ul>
           )}
-          <Avatar alt="logo" className={classes.small} src={logo} />
+          <Avatar className={classes.small}>N</Avatar>
           <DropdownButton id="dropdown-basic-button" variant="light" size="sm">
             <Dropdown.Item href="/dashboard/profile">Hồ sơ</Dropdown.Item>
             <Dropdown.Item href="/settings">Cài đặt</Dropdown.Item>
