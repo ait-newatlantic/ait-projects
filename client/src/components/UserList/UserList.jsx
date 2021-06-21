@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -131,7 +131,7 @@ export default function UserList() {
     setFlag6(!flag6);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const hide = 0;
     UserService.get_users_filtered(
       hide,
@@ -159,17 +159,6 @@ export default function UserList() {
         }))
       );
     });
-  };
-
-  const onClickHide = (id) => {
-    const hide = 1;
-    UserService.hide_user(hide, id).then((response) => {
-      handleSubmit();
-    });
-  };
-
-  useEffect(() => {
-    handleSubmit();
   }, [
     branch_name,
     username,
@@ -183,6 +172,17 @@ export default function UserList() {
     limit,
   ]);
 
+  const onClickHide = (id) => {
+    const hide = 1;
+    UserService.hide_user(hide, id).then((response) => {
+      handleSubmit();
+    });
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [handleSubmit]);
+
   return (
     <div>
       <div className="justify-content-start">
@@ -192,7 +192,7 @@ export default function UserList() {
         </h6>
       </div>
       <div
-        className="flex d-flex flex-wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
         style={{ background: "#EEEEEE" }}
       >
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">

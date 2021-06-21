@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -165,7 +165,7 @@ export default function CustomerListHistory() {
     setFlag11(!flag11);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const hide = 1;
     CustomerService.get_customers_filtered(
       name,
@@ -206,17 +206,6 @@ export default function CustomerListHistory() {
         }))
       );
     });
-  };
-
-  const onClickHide = (id) => {
-    const hide = 0;
-    CustomerService.hide_customer(hide, id).then((response) => {
-      handleSubmit();
-    });
-  };
-
-  useEffect(() => {
-    handleSubmit();
   }, [
     name,
     number,
@@ -225,6 +214,7 @@ export default function CustomerListHistory() {
     manager_number,
     manager_email,
     taxcode,
+    username,
     user_name,
     province,
     business_type,
@@ -236,6 +226,17 @@ export default function CustomerListHistory() {
     limit,
   ]);
 
+  const onClickHide = (id) => {
+    const hide = 0;
+    CustomerService.hide_customer(hide, id).then((response) => {
+      handleSubmit();
+    });
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [handleSubmit]);
+
   return (
     <div>
       <div className="justify-content-start">
@@ -245,7 +246,7 @@ export default function CustomerListHistory() {
         </h6>
       </div>
       <div
-        className="flex d-flex flex-wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
         style={{ background: "#EEEEEE" }}
       >
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">

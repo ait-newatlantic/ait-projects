@@ -318,7 +318,6 @@ exports.findWithFilters = (req, res) => {
   const color = req.query.color;
   const opinion = req.query.opinion;
   const quantity = req.query.quantity;
-  const note = req.query.note;
   const contact_type = req.query.contact_type;
   const demand_status = req.query.demand_status;
   const car_model = req.query.car_model;
@@ -349,12 +348,6 @@ exports.findWithFilters = (req, res) => {
         quantity: {
           [Op.or]: {
             [Op.like]: `%${quantity}%`,
-            [Op.eq]: null,
-          },
-        },
-        note: {
-          [Op.or]: {
-            [Op.like]: `%${note}%`,
             [Op.eq]: null,
           },
         },

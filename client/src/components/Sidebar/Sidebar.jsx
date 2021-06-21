@@ -309,7 +309,6 @@ export default function Sidebar() {
                   <ListItem
                     button
                     className={classes.nested}
-                    button
                     component={Link}
                     to="/dashboard/demands/list"
                   >
@@ -321,7 +320,6 @@ export default function Sidebar() {
                   <ListItem
                     button
                     className={classes.nested}
-                    button
                     component={Link}
                     to="/dashboard/demands/list/history"
                   >
@@ -355,7 +353,6 @@ export default function Sidebar() {
                   <ListItem
                     button
                     className={classes.nested}
-                    button
                     component={Link}
                     to="/dashboard/customers/list"
                   >
@@ -367,7 +364,6 @@ export default function Sidebar() {
                   <ListItem
                     button
                     className={classes.nested}
-                    button
                     component={Link}
                     to="/dashboard/customers/list/history"
                   >
@@ -398,7 +394,6 @@ export default function Sidebar() {
                   <ListItem
                     button
                     className={classes.nested}
-                    button
                     component={Link}
                     to="/dashboard/users/list"
                   >
@@ -410,9 +405,245 @@ export default function Sidebar() {
                   <ListItem
                     button
                     className={classes.nested}
-                    button
                     component={Link}
                     to="/dashboard/users/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          </div>
+        )}
+        {showModeratorBoard && (
+          <div className="text-light">
+            <List component="nav">
+              <ListItem button component={Link} to="/dashboard">
+                <ListItemIcon>
+                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+
+              <ListItem button onClick={handleClick1}>
+                <ListItemIcon>
+                  <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Kinh doanh" />
+                {open1 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick2}>
+                <ListItemIcon>
+                  <MaterialUIIcons.SupervisedUserCircle
+                    style={{ fill: "white" }}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Khách hàng" />
+                {open2 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              <ListItem button onClick={handleClick3}>
+                <ListItemIcon>
+                  <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Tài khoản" />
+                {open3 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open3} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          </div>
+        )}
+        {showEmployeeBoard && (
+          <div className="text-light">
+            <List component="nav">
+              <ListItem button component={Link} to="/dashboard">
+                <ListItemIcon>
+                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+
+              <ListItem button onClick={handleClick1}>
+                <ListItemIcon>
+                  <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Kinh doanh" />
+                {open1 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick2}>
+                <ListItemIcon>
+                  <MaterialUIIcons.SupervisedUserCircle
+                    style={{ fill: "white" }}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Khách hàng" />
+                {open2 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list/history"
                   >
                     <ListItemIcon>
                       <MaterialUIIcons.Delete style={{ fill: "white" }} />
@@ -490,6 +721,126 @@ export default function Sidebar() {
               exact
               path="/dashboard/users/list/history"
               component={UserListHistory}
+            />
+            <Route exact path="/dashboard/test" component={Test} />
+          </div>
+        )}
+         {showModeratorBoard && (
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+            <Route exact path="/home" component={Home} />
+            <Route
+              exact
+              path="/dashboard/users/update/:id"
+              component={UserUpdate}
+            />
+            <Route exact path="/dashboard/diary" component={ErrorPage} />
+            <Route exact path="/dashboard/kpi" component={ErrorPage} />
+            <Route exact path="/dashboard" component={DashBoard} />
+            <Route exact path="/dashboard/register" component={Register} />
+            <Route exact path="/dashboard/profile" component={Profile} />
+            <Route
+              exact
+              path="/dashboard/customers/input"
+              component={CustomerInput}
+            />
+            <Route exact path="/dashboard/diary/input" component={DiaryInput} />
+            <Route
+              exact
+              path="/dashboard/customers/update/:id"
+              component={CustomerUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/update/:id"
+              component={DemandUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/input"
+              component={DemandInput}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list"
+              component={DemandList}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list/history"
+              component={DemandListHistory}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list"
+              component={CustomerList}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list/history"
+              component={CustomerListHistory}
+            />
+            <Route exact path="/dashboard/users/list" component={UserList} />
+            <Route
+              exact
+              path="/dashboard/users/list/history"
+              component={UserListHistory}
+            />
+            <Route exact path="/dashboard/test" component={Test} />
+          </div>
+        )}
+         {showEmployeeBoard && (
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+            <Route exact path="/home" component={Home} />
+            <Route
+              exact
+              path="/dashboard/users/update/:id"
+              component={UserUpdate}
+            />
+            <Route exact path="/dashboard/diary" component={ErrorPage} />
+            <Route exact path="/dashboard/kpi" component={ErrorPage} />
+            <Route exact path="/dashboard" component={DashBoard} />
+            <Route exact path="/dashboard/register" component={Register} />
+            <Route exact path="/dashboard/profile" component={Profile} />
+            <Route
+              exact
+              path="/dashboard/customers/input"
+              component={CustomerInput}
+            />
+            <Route exact path="/dashboard/diary/input" component={DiaryInput} />
+            <Route
+              exact
+              path="/dashboard/customers/update/:id"
+              component={CustomerUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/update/:id"
+              component={DemandUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/input"
+              component={DemandInput}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list"
+              component={DemandList}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list/history"
+              component={DemandListHistory}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list"
+              component={CustomerList}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list/history"
+              component={CustomerListHistory}
             />
             <Route exact path="/dashboard/test" component={Test} />
           </div>

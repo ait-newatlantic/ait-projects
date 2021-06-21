@@ -9,8 +9,6 @@ export default function CustomerUpdate(props) {
   const [manager, setmanager] = useState("");
   const [manager_number, setmanager_Number] = useState("");
   const [manager_email, setmanager_Email] = useState("");
-  const [business_type_name, setBusinessTypeName] = useState("");
-  const [province_name, setProvinceName] = useState("");
   const [customer, setCustomer] = useState("");
 
   const [message, setMessage] = useState("");
@@ -74,8 +72,6 @@ export default function CustomerUpdate(props) {
         setmanager(response.data.manager);
         setmanager_Email(response.data.manager_email);
         setmanager_Number(response.data.manager_number);
-        setBusinessTypeName(response.data.business_type.name);
-        setProvinceName(response.data.province.name);
       })
       .catch((e) => {
         console.log(e);
@@ -86,16 +82,19 @@ export default function CustomerUpdate(props) {
     FetchData();
   }, []);
 
-  return (
+  return customer ? (
     <div>
       <div className="text-left">
         <h4 className="font-weight-bold text-secondary">CẬP NHẬT KHÁCH HÀNG</h4>
+        <h6 className="font-weight-bold text-secondary">
+          Form cập nhật khách hàng
+        </h6>
       </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div className="text-left">
-            <div>
-              <h6>Thông tin khách hàng</h6>
+            <div className="form-group">
+              <h6 className="font-weight-bold">Thông tin khách hàng</h6>
               <div className="row">
                 <div className="col-sm">
                   <label>Tên khách hàng:</label>
@@ -107,7 +106,7 @@ export default function CustomerUpdate(props) {
                   </div>
                 </div>
                 <div className="col-sm">
-                  SĐT khách hàng:
+                  <label>SĐT khách hàng:</label>
                   <div
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
@@ -118,26 +117,26 @@ export default function CustomerUpdate(props) {
               </div>
               <div className="row">
                 <div className="col-sm">
-                  Khu vực khách hàng:
+                  <label>Khu vực khách hàng:</label>
                   <div
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {province_name}
+                    {customer.province.name}
                   </div>
                 </div>
                 <div className="col-sm">
-                  Hình thức khách hàng:
+                  <label>Hình thức khách hàng:</label>
                   <div
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {business_type_name}
+                    {customer.business_type.name}
                   </div>
                 </div>
-                {business_type_name == "DOANH NGHIỆP" ? (
+                {customer.business_type.id === 2 ? (
                   <div className="col-sm">
-                    Mã số thuế:
+                    <label>Mã số thuế:</label>
                     <div
                       className="form-control"
                       style={{ background: "#e7e7e7" }}
@@ -151,7 +150,7 @@ export default function CustomerUpdate(props) {
               </div>
               <div className="row ">
                 <div className="col-sm">
-                  Địa chỉ khách hàng:
+                  <label>Địa chỉ khách hàng:</label>
                   <div
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
@@ -161,13 +160,12 @@ export default function CustomerUpdate(props) {
                 </div>
               </div>
             </div>
-            <br />
-            {business_type_name == "DOANH NGHIỆP" ? (
-              <div>
-                <h6>Thông tin người đại diện</h6>
+            {customer.business_type.id === 2 ? (
+              <div className="form-group">
+                <h6 className="font-weight-bold">Thông tin người đại diện</h6>
                 <div className="row ">
                   <div className="col-sm">
-                    Tên người đại diện:
+                    <label>Tên người đại diện:</label>
                     <input
                       type="manager"
                       className="form-control"
@@ -177,7 +175,7 @@ export default function CustomerUpdate(props) {
                     />
                   </div>
                   <div className="col-sm">
-                    SĐT người đại diện:
+                    <label>SĐT người đại diện:</label>
                     <input
                       type="manager_number"
                       className="form-control"
@@ -187,7 +185,7 @@ export default function CustomerUpdate(props) {
                     />
                   </div>
                   <div className="col-sm">
-                    Email người đại diện:
+                    <label>Email người đại diện:</label>
                     <input
                       type="manager_email"
                       className="form-control"
@@ -197,17 +195,16 @@ export default function CustomerUpdate(props) {
                     />
                   </div>
                 </div>
-                <br />
               </div>
             ) : (
-              <div></div>
+              <div className="form-group"></div>
             )}
-            <div>
+            <div className="form-group">
               <div>
-                <h6>Thông tin người nhập</h6>
+                <h6 className="font-weight-bold">Thông tin người nhập</h6>
                 <div className="row">
                   <div className="col-sm">
-                    Người nhập:
+                    <label>Người nhập:</label>
                     <p
                       className="form-control"
                       style={{ background: "#e7e7e7" }}
@@ -218,13 +215,9 @@ export default function CustomerUpdate(props) {
                 </div>
               </div>
             </div>
-            <br />
+
             <div>
-              <button
-                className="btn btn-warning btn-sm"
-                role="button"
-                onClick={handleSubmit}
-              >
+              <button className="btn btn-warning btn-sm" onClick={handleSubmit}>
                 GỬI FORM
               </button>
             </div>
@@ -248,5 +241,7 @@ export default function CustomerUpdate(props) {
         <CheckButton style={{ display: "none" }} ref={checkBtn} />
       </Form>
     </div>
+  ) : (
+    <div></div>
   );
 }

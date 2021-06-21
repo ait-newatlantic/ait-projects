@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -14,6 +14,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Form, Table } from "react-bootstrap";
 import CustomerService from "../../services/customer.service";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
@@ -44,6 +46,7 @@ export default function CustomerList() {
   const [manager_number, setManagerNumber] = useState("");
   const [manager_email, setManagerEmail] = useState("");
   const [taxcode, setTaxCode] = useState("");
+  const [user, setUser] = useState("");
   const [username, setUserName] = useState("");
   const [user_name, setUser_Name] = useState("");
   const [province, setProvice] = useState("");
@@ -65,6 +68,9 @@ export default function CustomerList() {
   const [flag11, setFlag11] = useState(false);
   const newDate = new Date();
   const year = newDate.getFullYear();
+
+  const currentUser = AuthService.getCurrentUser();
+
   const month = [
     "01",
     "02",
@@ -165,7 +171,7 @@ export default function CustomerList() {
     setFlag11(!flag11);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const hide = 0;
     CustomerService.get_customers_filtered(
       name,
@@ -206,17 +212,6 @@ export default function CustomerList() {
         }))
       );
     });
-  };
-
-  const onClickHide = (id) => {
-    const hide = 1;
-    CustomerService.hide_customer(hide, id).then((response) => {
-      handleSubmit();
-    });
-  };
-
-  useEffect(() => {
-    handleSubmit();
   }, [
     name,
     number,
@@ -225,6 +220,7 @@ export default function CustomerList() {
     manager_number,
     manager_email,
     taxcode,
+    username,
     user_name,
     province,
     business_type,
@@ -236,6 +232,34 @@ export default function CustomerList() {
     limit,
   ]);
 
+  const getUser = useCallback(() => {
+    UserService.get_user(currentUser.id).then((response) => {
+      setUser(response.data)
+      if (response.data.roles[0].id === 4) {
+        setUserName(response.data.username)
+      }
+      else if (response.data.roles[0].id === 2){
+        setBranchName(response.data.branch.name)
+      }
+      else {}
+    })
+  }, [
+    currentUser.id,
+  ])
+
+  const onClickHide = (id) => {
+    const hide = 1;
+    CustomerService.hide_customer(hide, id).then((response) => {
+      handleSubmit();
+    });
+  };
+
+
+  useEffect(() => {
+    getUser()
+    handleSubmit();
+  }, [handleSubmit, getUser]);
+
   return (
     <div>
       <div className="justify-content-start">
@@ -245,7 +269,7 @@ export default function CustomerList() {
         </h6>
       </div>
       <div
-        className="flex d-flex flex-wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
         style={{ background: "#EEEEEE" }}
       >
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">

@@ -194,9 +194,9 @@ export default function DashBoard() {
             style={{ overflow: "scroll" }}
           >
             {!!demand_statuses &&
-              demand_statuses.map((month) => (
+              demand_statuses.map((month, index) => (
                 <BarChart
-                  key="chart"
+                  key={index}
                   tongcongdanggiaodich1={month.tongcongdanggiaodich01}
                   tongcongdanggiaodich2={month.tongcongdanggiaodich02}
                   tongcongdanggiaodich3={month.tongcongdanggiaodich03}
@@ -275,8 +275,8 @@ export default function DashBoard() {
                 </tr>
               </thead>
               {!!demand_statuses &&
-                demand_statuses.map((month) => (
-                  <tbody>
+                demand_statuses.map((month, index) => (
+                  <tbody key={index}>
                     <tr>
                       <td>Đang giao dịch trong tháng</td>
                       <td>{month.danggiaodich1}</td>
@@ -348,8 +348,9 @@ export default function DashBoard() {
             style={{ overflow: "scroll" }}
           >
             {!!yearResult &&
-              yearResult.map((form) => (
+              yearResult.map((form, index) => (
                 <DonutChart
+                  key={index}
                   tiepcanchaohang={form.tiepcanchaohang}
                   chotdonhang={form.chotdonhang}
                   chaythu={form.chaythu}
@@ -369,9 +370,9 @@ export default function DashBoard() {
             style={{ overflow: "scroll" }}
           >
             {!!yearResult1 &&
-              yearResult1.map((quantity) => (
+              yearResult1.map((quantity, index) => (
                 <HorizontalBarChart
-                  key="a"
+                  key={index}
                   c6540={quantity.c6540}
                   c6460={quantity.c6460}
                   c43253={quantity.c43253}
@@ -392,9 +393,9 @@ export default function DashBoard() {
             style={{ overflow: "scroll" }}
           >
             {!!demand_statuses &&
-              demand_statuses.map((month) => (
+              demand_statuses.map((month, index) => (
                 <LineChart
-                  key="a"
+                  key={index}
                   thanhcong1={month.thanhcong1}
                   thanhcong2={month.thanhcong2}
                   thanhcong3={month.thanhcong3}

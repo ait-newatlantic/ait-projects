@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -17,6 +17,22 @@ import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
 const headers = [
+  { label: "Chi nhánh", key: "branch" },
+  { label: "Người nhập", key: "user" },
+  { label: "Người gặp khách hàng", key: "employee" },
+  { label: "Tên khách hàng", key: "customer" },
+  { label: "SĐT khách hàng", key: "customer_number" },
+  { label: "Loại khách hàng", key: "customer_type" },
+  { label: "Khu vực khách hàng", key: "province" },
+  { label: "Ý kiến khách hàng", key: "opinion" },
+  { label: "Phương thức liên lạc", key: "contact_type" },
+  { label: "Giai đoạn", key: "demand_status" },
+  { label: "Model xe", key: "car_model" },
+  { label: "Loại xe", key: "car_type" },
+  { label: "Số lượng", key: "quantity" },
+  { label: "Màu xe", key: "color" },
+  { label: "Tình trạng hiện nay", key: "note" },
+  { label: "Ngày giai đoạn", key: "date" },
   { label: "Ngày tạo form", key: "createdAt" },
   { label: "Ngày cập nhật", key: "updatedAt" },
 ];
@@ -27,7 +43,6 @@ export default function DemandList() {
   const [branch_name, setBranchName] = useState("");
   const [customer_type, setCustomerType] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [note, setNote] = useState("");
   const [opinion, setOpinion] = useState("");
   const [username, setUserName] = useState("");
   const [user_name, setUser_Name] = useState("");
@@ -182,7 +197,7 @@ export default function DemandList() {
     setFlag16(!flag16);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const hide = 0;
     DemandService.get_demands_filtered(
       branch_name,
@@ -195,7 +210,6 @@ export default function DemandList() {
       color,
       opinion,
       quantity,
-      note,
       contact_type,
       demand_status,
       car_model,
@@ -210,22 +224,27 @@ export default function DemandList() {
       setDemandResult(response.data);
       setExcelData(
         response.data.map((i) => ({
+          branch: i.user.branch.name,
+          user: i.user.name,
+          employee: i.employee,
+          customer: i.customer.name,
+          customer_number: i.customer.number,
+          customer_type: i.customer_type.name,
+          province: i.customer.province.name,
+          opinion: i.opinion,
+          contact_type: i.contact_type.name,
+          demand_status: i.demand_status.name,
+          car_model: i.car_model.name,
+          car_type: i.car_type.name,
+          quantity: i.quantity,
+          color: i.color.name,
+          note: i.note,
+          date: i.date,
           createdAt: i.createdAt.substring(0, 10),
           updatedAt: i.updatedAt.substring(0, 10),
         }))
       );
     });
-  };
-
-  const onClickHide = (id) => {
-    const hide = 1;
-    DemandService.hide_demand(hide, id).then((response) => {
-      handleSubmit();
-    });
-  };
-
-  useEffect(() => {
-    handleSubmit();
   }, [
     branch_name,
     user_name,
@@ -237,7 +256,6 @@ export default function DemandList() {
     color,
     opinion,
     quantity,
-    note,
     contact_type,
     demand_status,
     car_model,
@@ -249,6 +267,17 @@ export default function DemandList() {
     limit,
   ]);
 
+  const onClickHide = (id) => {
+    const hide = 1;
+    DemandService.hide_demand(hide, id).then((response) => {
+      handleSubmit();
+    });
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [handleSubmit]);
+
   return (
     <div>
       <div className="justify-content-start">
@@ -258,7 +287,7 @@ export default function DemandList() {
         </h6>
       </div>
       <div
-        className="flex d-flex flex-wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
         style={{ background: "#EEEEEE" }}
       >
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">
@@ -886,27 +915,8 @@ export default function DemandList() {
               {flag15 ? (
                 <th>
                   <FormHelperText className="text-dark">
-                    Tình hình hiện nay (
-                    {
-                      [...new Set(DemandResult.map((option) => option.note))]
-                        .length
-                    }
-                    )
+                    Tình hình hiện nay
                   </FormHelperText>
-                  <Autocomplete
-                    value={note}
-                    onChange={(event, newValue) => {
-                      if (newValue === null) {
-                        setNote("");
-                      } else setNote(newValue);
-                    }}
-                    options={[
-                      ...new Set(DemandResult.map((option) => option.note)),
-                    ]}
-                    renderInput={(params) => (
-                      <TextField {...params} variant="standard" size="small" />
-                    )}
-                  />
                 </th>
               ) : null}
               {flag16 ? (

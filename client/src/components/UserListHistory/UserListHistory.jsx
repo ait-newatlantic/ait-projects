@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -131,7 +131,7 @@ export default function UserListHistory() {
     setFlag6(!flag6);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const hide = 1;
     UserService.get_users_filtered(
       hide,
@@ -159,18 +159,6 @@ export default function UserListHistory() {
         }))
       );
     });
-  };
-
-  const onClickHide = (id) => {
-    const hide = 0;
-    UserService.hide_user(hide, id).then((response) => {
-      console.log(response);
-      handleSubmit();
-    });
-  };
-
-  useEffect(() => {
-    handleSubmit();
   }, [
     branch_name,
     username,
@@ -184,6 +172,18 @@ export default function UserListHistory() {
     limit,
   ]);
 
+  const onClickHide = (id) => {
+    const hide = 0;
+    UserService.hide_user(hide, id).then((response) => {
+      console.log(response);
+      handleSubmit();
+    });
+  };
+
+  useEffect(() => {
+    handleSubmit();
+  }, [handleSubmit]);
+
   return (
     <div>
       <div className="justify-content-start">
@@ -193,7 +193,7 @@ export default function UserListHistory() {
         </h6>
       </div>
       <div
-        className="flex d-flex flex-wrap align-items-center justify-content-between"
+        className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
         style={{ background: "#EEEEEE" }}
       >
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">
