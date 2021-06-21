@@ -14,6 +14,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Form, Table } from "react-bootstrap";
 import CustomerService from "../../services/customer.service";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
@@ -44,6 +46,7 @@ export default function CustomerListHistory() {
   const [manager_number, setManagerNumber] = useState("");
   const [manager_email, setManagerEmail] = useState("");
   const [taxcode, setTaxCode] = useState("");
+  const [user, setUser] = useState("");
   const [username, setUserName] = useState("");
   const [user_name, setUser_Name] = useState("");
   const [province, setProvice] = useState("");
@@ -65,6 +68,9 @@ export default function CustomerListHistory() {
   const [flag11, setFlag11] = useState(false);
   const newDate = new Date();
   const year = newDate.getFullYear();
+
+  const currentUser = AuthService.getCurrentUser();
+
   const month = [
     "01",
     "02",
@@ -226,6 +232,18 @@ export default function CustomerListHistory() {
     limit,
   ]);
 
+  const getUser = useCallback(() => {
+    UserService.get_user(currentUser.id).then((response) => {
+      setUser(response.data);
+      if (response.data.roles[0].id === 4) {
+        setUserName(response.data.username);
+      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.branch.name);
+      } else {
+      }
+    });
+  }, [currentUser.id]);
+
   const onClickHide = (id) => {
     const hide = 0;
     CustomerService.hide_customer(hide, id).then((response) => {
@@ -234,8 +252,9 @@ export default function CustomerListHistory() {
   };
 
   useEffect(() => {
+    getUser();
     handleSubmit();
-  }, [handleSubmit]);
+  }, [handleSubmit, getUser]);
 
   return (
     <div>

@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Register from "./components/Register/Register";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         <Router>
           <Switch>
             <Route exact path={["/", "/login"]} component={Login} />
+            <Route exact path={["/register"]} component={Register} />
             <Sidebar />
           </Switch>
         </Router>

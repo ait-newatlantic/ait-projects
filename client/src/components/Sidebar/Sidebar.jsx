@@ -30,7 +30,6 @@ import CustomerListHistory from "../CustomerListHistory/CustomerListHistory";
 import DemandListHistory from "../DemandListHistory/DemandListHistory";
 import UserListHistory from "../UserListHistory/UserListHistory";
 import DashBoard from "../DashBoard/DashBoard";
-import DiaryInput from "../DiaryInput/DiaryInput";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import UserUpdate from "../UserUpdate/UserUpdate";
 import { Avatar, Collapse } from "@material-ui/core";
@@ -680,7 +679,6 @@ export default function Sidebar() {
               path="/dashboard/customers/input"
               component={CustomerInput}
             />
-            <Route exact path="/dashboard/diary/input" component={DiaryInput} />
             <Route
               exact
               path="/dashboard/customers/update/:id"
@@ -725,7 +723,7 @@ export default function Sidebar() {
             <Route exact path="/dashboard/test" component={Test} />
           </div>
         )}
-         {showModeratorBoard && (
+        {showModeratorBoard && (
           <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
             <Route exact path="/home" component={Home} />
             <Route
@@ -743,7 +741,6 @@ export default function Sidebar() {
               path="/dashboard/customers/input"
               component={CustomerInput}
             />
-            <Route exact path="/dashboard/diary/input" component={DiaryInput} />
             <Route
               exact
               path="/dashboard/customers/update/:id"
@@ -788,7 +785,7 @@ export default function Sidebar() {
             <Route exact path="/dashboard/test" component={Test} />
           </div>
         )}
-         {showEmployeeBoard && (
+        {showEmployeeBoard && (
           <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
             <Route exact path="/home" component={Home} />
             <Route
@@ -806,7 +803,6 @@ export default function Sidebar() {
               path="/dashboard/customers/input"
               component={CustomerInput}
             />
-            <Route exact path="/dashboard/diary/input" component={DiaryInput} />
             <Route
               exact
               path="/dashboard/customers/update/:id"

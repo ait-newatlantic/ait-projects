@@ -13,6 +13,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Form, Table } from "react-bootstrap";
 import DemandService from "../../services/demand.service";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
@@ -38,6 +40,7 @@ const headers = [
 ];
 
 export default function DemandListHistory() {
+  const [user, setUser] = useState([]);
   const [DemandResult, setDemandResult] = useState([]);
   const [excelData, setExcelData] = useState([]);
   const [branch_name, setBranchName] = useState("");
@@ -75,6 +78,9 @@ export default function DemandListHistory() {
   const [flag14, setFlag14] = useState(true);
   const [flag15, setFlag15] = useState(true);
   const [flag16, setFlag16] = useState(false);
+
+  const currentUser = AuthService.getCurrentUser();
+
   const newDate = new Date();
   const year = newDate.getFullYear();
   const month = [
@@ -267,6 +273,18 @@ export default function DemandListHistory() {
     limit,
   ]);
 
+  const getUser = useCallback(() => {
+    UserService.get_user(currentUser.id).then((response) => {
+      setUser(response.data);
+      if (response.data.roles[0].id === 4) {
+        setUserName(response.data.username);
+      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.branch.name);
+      } else {
+      }
+    });
+  }, [currentUser.id]);
+
   const onClickHide = (id) => {
     const hide = 0;
     DemandService.hide_demand(hide, id).then((response) => {
@@ -275,8 +293,9 @@ export default function DemandListHistory() {
   };
 
   useEffect(() => {
+    getUser();
     handleSubmit();
-  }, [handleSubmit]);
+  }, [handleSubmit, getUser]);
 
   return (
     <div>

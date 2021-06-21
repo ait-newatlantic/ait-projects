@@ -234,18 +234,15 @@ export default function CustomerList() {
 
   const getUser = useCallback(() => {
     UserService.get_user(currentUser.id).then((response) => {
-      setUser(response.data)
+      setUser(response.data);
       if (response.data.roles[0].id === 4) {
-        setUserName(response.data.username)
+        setUserName(response.data.username);
+      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.branch.name);
+      } else {
       }
-      else if (response.data.roles[0].id === 2){
-        setBranchName(response.data.branch.name)
-      }
-      else {}
-    })
-  }, [
-    currentUser.id,
-  ])
+    });
+  }, [currentUser.id]);
 
   const onClickHide = (id) => {
     const hide = 1;
@@ -254,9 +251,8 @@ export default function CustomerList() {
     });
   };
 
-
   useEffect(() => {
-    getUser()
+    getUser();
     handleSubmit();
   }, [handleSubmit, getUser]);
 
