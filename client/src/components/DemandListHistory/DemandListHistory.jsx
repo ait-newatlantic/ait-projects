@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 
-//Client Libraries
+//Libraries
 import {
   FormControl,
   FormHelperText,
@@ -88,7 +88,9 @@ export default function DemandListHistory() {
   const currentUser = AuthService.getCurrentUser();
 
   const [from_date, setFromDate] = useState(`${DateFunc.year}-01-01`);
-  const [to_date, setToDate] = useState(`${DateFunc.year}-${DateFunc.n}-${DateFunc.d}`);
+  const [to_date, setToDate] = useState(
+    `${DateFunc.year}-${DateFunc.n}-${DateFunc.d}`
+  );
 
   const onClickFlag = () => setFlag(!flag);
 
@@ -225,7 +227,7 @@ export default function DemandListHistory() {
       // Your useEffect code here to be run on initial render
       getUser();
     } else {
-    // Your useEffect code here to be run on update
+      // Your useEffect code here to be run on update
       handleSubmit();
     }
   }, [handleSubmit, getUser]);

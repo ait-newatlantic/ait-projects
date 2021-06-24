@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import DemandService from "../../services/demand.service";
-import CustomerService from "../../services/customer.service";
-import CustomerTypeService from "../../services/customer_type.service";
-import ContactTypeService from "../../services/contact_type.service";
-import AuthService from "../../services/auth.service";
-import CarModelService from "../../services/car_model.service";
-import CarTypeService from "../../services/car_type.service";
-import ColorService from "../../services/color.services";
-import DemandStatusService from "../../services/demand_status.service";
 
+//Libraries
 import CheckButton from "react-validation/build/button";
 import { Alert, Button } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
@@ -18,8 +10,26 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import { Table } from "react-bootstrap";
 
+//Services
+import DemandService from "../../services/demand.service";
+import CustomerService from "../../services/customer.service";
+import CustomerTypeService from "../../services/customer_type.service";
+import ContactTypeService from "../../services/contact_type.service";
+import AuthService from "../../services/auth.service";
+import CarModelService from "../../services/car_model.service";
+import CarTypeService from "../../services/car_type.service";
+import ColorService from "../../services/color.services";
+import DemandStatusService from "../../services/demand_status.service";
+import UserService from "../../services/user.service";
+
 export default function DemandInput(props) {
   const [date, setDemandDate] = useState("");
+
+  const [user, setUser] = useState("");
+
+  const [username, setUserName] = useState("");
+
+  const [branch_name, setBranchName] = useState("");
 
   const [demand_employee, setDemandEmployee] = useState("");
 
@@ -59,6 +69,8 @@ export default function DemandInput(props) {
   const [customers, setCustomers] = useState([]);
   const [customerId, setCustomerId] = useState(0);
   const [customerResult, setCustomerResult] = useState();
+
+  const isInitialMount = useRef(true);
 
   const [arr, setArr] = useState([]);
   const [arr2, setArr2] = useState([]);
@@ -217,13 +229,15 @@ export default function DemandInput(props) {
     });
   }, [customer_name]);
 
-  const FetchCustomers = () => {
+  const FetchCustomers = useCallback(() => {
     const hide = 0;
     const order = "DESC";
-    CustomerService.get_customers(hide, order).then((response) => {
-      setCustomers(response.data);
-    });
-  };
+    CustomerService.get_customers(username, branch_name, hide, order).then(
+      (response) => {
+        setCustomers(response.data);
+      }
+    );
+  }, [username, branch_name]);
 
   const FetchCustomerTypes = () => {
     CustomerTypeService.get_customer_types().then((response) => {
@@ -273,16 +287,39 @@ export default function DemandInput(props) {
     });
   };
 
+  const getUser = useCallback(() => {
+    UserService.get_user(currentUser.id).then((response) => {
+      setUser(response.data);
+      if (response.data.roles[0].id === 4) {
+        //User is an employee
+        setUserName(response.data.username);
+        setBranchName(response.data.branch.name);
+      } else if (response.data.roles[0].id === 2) {
+        //User is an moderator
+        setBranchName(response.data.branch.name);
+      } else {
+        FetchCustomers();
+      }
+    });
+  }, [currentUser.id, FetchCustomers]);
+
   useEffect(() => {
-    FetchCustomers();
-    FetchCarModels();
-    FetchCarTypes();
-    FetchColors();
-    FetchDemandStatuses();
-    FetchCustomerTypes();
-    FetchContactTypes();
-    Autofill();
-  }, [customer_name, Autofill]);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      // Your useEffect code here to be run on initial render
+      getUser();
+      Autofill();
+      FetchCarModels();
+      FetchCarTypes();
+      FetchColors();
+      FetchDemandStatuses();
+      FetchCustomerTypes();
+      FetchContactTypes();
+    } else {
+      // Your useEffect code here to be run on update
+      FetchCustomers();
+    }
+  }, [getUser, Autofill, FetchCustomers]);
 
   return (
     <div>

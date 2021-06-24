@@ -1,5 +1,5 @@
 import React from "react";
-import imgsrc from "../../assets/img/ait_logo.jpg";
+import imgsrc from "../../assets/images/ait_logo.jpg";
 
 export default function NavigationBar() {
   return (

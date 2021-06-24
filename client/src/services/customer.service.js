@@ -31,9 +31,11 @@ const create_customer = (
   });
 };
 
-const get_customers = (hide, order) => {
+const get_customers = (username, branch_name, hide, order) => {
   return axios.get(API_URL + `customers`, {
     params: {
+      username,
+      branch_name,
       hide,
       order,
     },

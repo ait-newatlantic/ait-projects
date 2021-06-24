@@ -53,6 +53,8 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const hide = req.query.hide;
   const order = req.query.order;
+  const username = req.query.username;
+  const branch_name = req.query.branch_name;
   Customer.findAll({
     order: [["id", order]],
     where: [
@@ -69,6 +71,12 @@ exports.findAll = (req, res) => {
           hide: {
             [Op.eq]: 0,
           },
+          username: {
+            [Op.or]: {
+              [Op.like]: `%${username}%`,
+              [Op.eq]: null,
+            },
+          },
         },
         include: [
           {
@@ -76,6 +84,12 @@ exports.findAll = (req, res) => {
             where: {
               hide: {
                 [Op.eq]: 0,
+              },
+              name: {
+                [Op.or]: {
+                  [Op.like]: `%${branch_name}%`,
+                  [Op.eq]: null,
+                },
               },
             },
           },
@@ -185,13 +199,22 @@ exports.findWithFilters = (req, res) => {
     where: [
       {
         name: {
-          [Op.like]: `%${name}%`,
+          [Op.or]: {
+            [Op.like]: `%${name}%`,
+            [Op.eq]: null,
+          },
         },
         number: {
-          [Op.like]: `%${number}%`,
+          [Op.or]: {
+            [Op.like]: `%${number}%`,
+            [Op.eq]: null,
+          },
         },
         address: {
-          [Op.like]: `%${address}%`,
+          [Op.or]: {
+            [Op.like]: `%${address}%`,
+            [Op.eq]: null,
+          },
         },
         manager: {
           [Op.or]: {

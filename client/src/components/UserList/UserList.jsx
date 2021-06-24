@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
+
+//Libraries
 import {
   FormControl,
   FormHelperText,
@@ -12,9 +12,15 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Form, Table } from "react-bootstrap";
-import UserService from "../../services/user.service";
 import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
+
+//Services
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
+
+//Functions
+import DateFunc from "../../functions/datetime";
 
 const headers = [
   { label: "Chi nhánh", key: "branchname" },
@@ -26,9 +32,10 @@ const headers = [
   { label: "Ngày cập nhật", key: "updatedAt" },
 ];
 
-export default function UserList() {
+export default function UserList(props) {
   const [userResult, setUserResult] = useState([]);
   const [excelData, setExcelData] = useState([]);
+  const [user, setUser] = useState("");
   const [branch_name, setBranchName] = useState("");
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
@@ -44,64 +51,14 @@ export default function UserList() {
   const [flag4, setFlag4] = useState(true);
   const [flag5, setFlag5] = useState(true);
   const [flag6, setFlag6] = useState(false);
+  const isInitialMount = useRef(true);
 
-  const newDate = new Date();
-  const year = newDate.getFullYear();
+  const currentUser = AuthService.getCurrentUser();
 
-  const month = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-  const n = month[newDate.getMonth()];
-
-  const date = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31",
-  ];
-
-  const d = date[newDate.getDate() - 1];
-
-  const [from_date, setFromDate] = useState(`${year}-01-01`);
-  const [to_date, setToDate] = useState(`${year}-${n}-${d}`);
+  const [from_date, setFromDate] = useState(`${DateFunc.year}-01-01`);
+  const [to_date, setToDate] = useState(
+    `${DateFunc.year}-${DateFunc.n}-${DateFunc.d}`
+  );
 
   const onClickFlag = () => {
     setFlag(!flag);
@@ -172,6 +129,22 @@ export default function UserList() {
     limit,
   ]);
 
+  const getUser = useCallback(() => {
+    UserService.get_user(currentUser.id).then((response) => {
+      setUser(response.data);
+      if (response.data.roles[0].id === 4) {
+        //User is an employee
+        setUserName(response.data.username);
+        setBranchName(response.data.branch.name);
+      } else if (response.data.roles[0].id === 2) {
+        //User is an moderator
+        setBranchName(response.data.branch.name);
+      } else {
+        handleSubmit();
+      }
+    });
+  }, [currentUser.id, handleSubmit]);
+
   const onClickHide = (id) => {
     const hide = 1;
     UserService.hide_user(hide, id).then((response) => {
@@ -180,8 +153,15 @@ export default function UserList() {
   };
 
   useEffect(() => {
-    handleSubmit();
-  }, [handleSubmit]);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      // Your useEffect code here to be run on initial render
+      getUser();
+    } else {
+      // Your useEffect code here to be run on update
+      handleSubmit();
+    }
+  }, [handleSubmit, getUser]);
 
   return (
     <div>

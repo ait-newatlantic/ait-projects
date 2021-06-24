@@ -128,9 +128,6 @@ exports.findWithFilters = (req, res) => {
       {
         model: db.branch,
         where: {
-          hide: {
-            [Op.eq]: 0,
-          },
           name: {
             [Op.like]: `%${branch_name}%`,
           },
@@ -139,9 +136,6 @@ exports.findWithFilters = (req, res) => {
       {
         model: db.role,
         where: {
-          hide: {
-            [Op.eq]: 0,
-          },
           name: {
             [Op.like]: `%${role}%`,
           },

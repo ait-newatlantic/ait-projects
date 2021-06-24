@@ -651,6 +651,47 @@ export default function Sidebar() {
                   </ListItem>
                 </List>
               </Collapse>
+              <ListItem button onClick={handleClick3}>
+                <ListItemIcon>
+                  <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Tài khoản" />
+                {open3 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open3} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
             </List>
           </div>
         )}
@@ -837,6 +878,12 @@ export default function Sidebar() {
               exact
               path="/dashboard/customers/list/history"
               component={CustomerListHistory}
+            />
+            <Route exact path="/dashboard/users/list" component={UserList} />
+            <Route
+              exact
+              path="/dashboard/users/list/history"
+              component={UserListHistory}
             />
             <Route exact path="/dashboard/test" component={Test} />
           </div>
