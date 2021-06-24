@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
+
+//Client Libraries
 import {
   FormControl,
   FormHelperText,
@@ -12,11 +12,16 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Link } from "react-router-dom";
 import { Form, Table } from "react-bootstrap";
+import { CSVLink } from "react-csv";
+import * as MaterialUIIcons from "@material-ui/icons/";
+
+//Service
 import DemandService from "../../services/demand.service";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
-import { CSVLink } from "react-csv";
-import * as MaterialUIIcons from "@material-ui/icons/";
+
+//Functions
+import DateFunc from "../../functions/datetime";
 
 const headers = [
   { label: "Chi nhánh", key: "branch" },
@@ -78,130 +83,46 @@ export default function DemandListHistory() {
   const [flag14, setFlag14] = useState(true);
   const [flag15, setFlag15] = useState(true);
   const [flag16, setFlag16] = useState(false);
+  const isInitialMount = useRef(true);
 
   const currentUser = AuthService.getCurrentUser();
 
-  const newDate = new Date();
-  const year = newDate.getFullYear();
-  const month = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-  const n = month[newDate.getMonth()];
-  const date = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31",
-  ];
-  const d = date[newDate.getDate() - 1];
-  const [from_date, setFromDate] = useState(`${year}-01-01`);
-  const [to_date, setToDate] = useState(`${year}-${n}-${d}`);
+  const [from_date, setFromDate] = useState(`${DateFunc.year}-01-01`);
+  const [to_date, setToDate] = useState(`${DateFunc.year}-${DateFunc.n}-${DateFunc.d}`);
 
-  const onClickFlag = () => {
-    setFlag(!flag);
-  };
+  const onClickFlag = () => setFlag(!flag);
 
-  const onClickFlag1 = () => {
-    setFlag1(!flag1);
-  };
+  const onClickFlag1 = () => setFlag1(!flag1);
 
-  const onClickFlag2 = () => {
-    setFlag2(!flag2);
-  };
+  const onClickFlag2 = () => setFlag2(!flag2);
 
-  const onClickFlag3 = () => {
-    setFlag3(!flag3);
-  };
+  const onClickFlag3 = () => setFlag3(!flag3);
 
-  const onClickFlag4 = () => {
-    setFlag4(!flag4);
-  };
+  const onClickFlag4 = () => setFlag4(!flag4);
 
-  const onClickFlag5 = () => {
-    setFlag5(!flag5);
-  };
+  const onClickFlag5 = () => setFlag5(!flag5);
 
-  const onClickFlag6 = () => {
-    setFlag6(!flag6);
-  };
+  const onClickFlag6 = () => setFlag6(!flag6);
 
-  const onClickFlag7 = () => {
-    setFlag7(!flag7);
-  };
+  const onClickFlag7 = () => setFlag7(!flag7);
 
-  const onClickFlag8 = () => {
-    setFlag8(!flag8);
-  };
+  const onClickFlag8 = () => setFlag8(!flag8);
 
-  const onClickFlag9 = () => {
-    setFlag9(!flag9);
-  };
+  const onClickFlag9 = () => setFlag9(!flag9);
 
-  const onClickFlag10 = () => {
-    setFlag10(!flag10);
-  };
+  const onClickFlag10 = () => setFlag10(!flag10);
 
-  const onClickFlag11 = () => {
-    setFlag11(!flag11);
-  };
+  const onClickFlag11 = () => setFlag11(!flag11);
 
-  const onClickFlag12 = () => {
-    setFlag12(!flag12);
-  };
+  const onClickFlag12 = () => setFlag12(!flag12);
 
-  const onClickFlag13 = () => {
-    setFlag13(!flag13);
-  };
+  const onClickFlag13 = () => setFlag13(!flag13);
 
-  const onClickFlag14 = () => {
-    setFlag14(!flag14);
-  };
+  const onClickFlag14 = () => setFlag14(!flag14);
 
-  const onClickFlag15 = () => {
-    setFlag15(!flag15);
-  };
+  const onClickFlag15 = () => setFlag15(!flag15);
 
-  const onClickFlag16 = () => {
-    setFlag16(!flag16);
-  };
+  const onClickFlag16 = () => setFlag16(!flag16);
 
   const handleSubmit = useCallback(() => {
     const hide = 1;
@@ -209,6 +130,7 @@ export default function DemandListHistory() {
       branch_name,
       user_name,
       employee,
+      username,
       province,
       customer,
       customer_number,
@@ -255,6 +177,7 @@ export default function DemandListHistory() {
     branch_name,
     user_name,
     employee,
+    username,
     province,
     customer,
     customer_number,
@@ -277,13 +200,17 @@ export default function DemandListHistory() {
     UserService.get_user(currentUser.id).then((response) => {
       setUser(response.data);
       if (response.data.roles[0].id === 4) {
+        //User is an employee
         setUserName(response.data.username);
+        setBranchName(response.data.branch.name);
       } else if (response.data.roles[0].id === 2) {
+        //User is an moderator
         setBranchName(response.data.branch.name);
       } else {
+        handleSubmit();
       }
     });
-  }, [currentUser.id]);
+  }, [currentUser.id, handleSubmit]);
 
   const onClickHide = (id) => {
     const hide = 0;
@@ -293,8 +220,14 @@ export default function DemandListHistory() {
   };
 
   useEffect(() => {
-    getUser();
-    handleSubmit();
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      // Your useEffect code here to be run on initial render
+      getUser();
+    } else {
+    // Your useEffect code here to be run on update
+      handleSubmit();
+    }
   }, [handleSubmit, getUser]);
 
   return (
