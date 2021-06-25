@@ -12,7 +12,7 @@ import Form from "react-validation/build/form";
 export default function DemandUpdate(props) {
   const [demands, setDemands] = useState(null);
 
-  const [arr, setArr] = useState([])
+  const [arr, setArr] = useState([]);
 
   const [demand_status, setDemandStatus] = useState(0);
   const [demand_status_name, setDemandStatusName] = useState("");
@@ -38,10 +38,8 @@ export default function DemandUpdate(props) {
     form.current.validateAll();
     const id = atob(props.match.params.id);
     if (checkBtn.current.context._errors.length === 0) {
-      DemandService.update_demand(id, demand_status, date, note, color)
-      DemandHistoryService.create_demand_history(
-        arr,
-      ).then(
+      DemandService.update_demand(id, demand_status, date, note, color);
+      DemandHistoryService.create_demand_history(arr).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);

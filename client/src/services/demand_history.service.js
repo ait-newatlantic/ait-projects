@@ -5,9 +5,7 @@ const API_URL = `${BASE_URL}/api/`;
 
 console.log(API_URL);
 
-const create_demand_history = (
-  arr,
-) => {
+const create_demand_history = (arr) => {
   return axios.post(API_URL + "demand_histories", {
     arr,
   });
