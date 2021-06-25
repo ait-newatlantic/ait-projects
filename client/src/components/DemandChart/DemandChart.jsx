@@ -39,7 +39,7 @@ export function BarChart(props) {
       },
       {
         label: "Đang giao dịch trong tháng",
-        // type: "line",
+        type: "line",
         data: [
           props.danggiaodich1,
           props.danggiaodich2,

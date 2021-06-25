@@ -145,9 +145,6 @@ export default function CustomerInput() {
     <div>
       <div className="text-left">
         <h4 className="font-weight-bold text-dark">TẠO KHÁCH HÀNG MỚI</h4>
-        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary">
-          Form tạo khách hàng mới
-        </h6>
       </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (

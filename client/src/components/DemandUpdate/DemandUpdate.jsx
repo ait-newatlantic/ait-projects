@@ -101,9 +101,6 @@ export default function DemandUpdate(props) {
         <h4 className="font-weight-bold text-dark">
           CẬP NHẬT NHU CẦU MUA XE CỦA KHÁCH HÀNG
         </h4>
-        <h6 className="font-weight-bold text-secondary">
-          Form cập nhật nhu cầu mua xe của khách hàng
-        </h6>
       </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (

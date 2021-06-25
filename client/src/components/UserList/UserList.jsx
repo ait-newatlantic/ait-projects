@@ -167,13 +167,9 @@ export default function UserList(props) {
     <div>
       <div className="justify-content-start">
         <h4 className="font-weight-bold text-dark text-left">BÁO CÁO</h4>
-        <h6 className="flex d-flex flex-wrap font-weight-bold text-secondary text-left">
-          Danh sách tài khoản đang sử dụng
-        </h6>
       </div>
       <div
         className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
-        style={{ background: "#EEEEEE" }}
       >
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
@@ -182,12 +178,13 @@ export default function UserList(props) {
             </button>
           </div>
           <div>
-            <FormControl variant="outlined" size="small">
+            <FormControl size="small">
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={limit}
                 onClick={(e) => setLimit(e.target.value)}
+                disableUnderline
               >
                 <MenuItem value={200}>200</MenuItem>
                 <MenuItem value={400}>400</MenuItem>

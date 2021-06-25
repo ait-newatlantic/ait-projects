@@ -26,6 +26,7 @@ import Test from "../Test/Test";
 
 //Services
 import AuthService from "../../services/auth.service";
+import OptionService from "../../services/option.service";
 
 //Components
 import Home from "../Home/Home";
@@ -54,6 +55,7 @@ export default function Sidebar() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [open4, setOpen4] = useState(false);
+  const [sidebar, setSideBar] = useState("");
 
   const user = AuthService.getCurrentUser();
 
@@ -162,6 +164,12 @@ export default function Sidebar() {
     setOpen(false);
   };
 
+  const FetchSideBar = () => {
+    OptionService.get_options.then((response) => {
+      setSideBar(response.data);
+    });
+  };
+
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
@@ -183,6 +191,10 @@ export default function Sidebar() {
       } else setWidth("100%");
     }
   }, [onlyWidth, open]);
+
+  useEffect(() => {
+    FetchSideBar()
+  }, []);
 
   return (
     <div className={classes.root}>
