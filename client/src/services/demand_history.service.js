@@ -6,38 +6,10 @@ const API_URL = `${BASE_URL}/api/`;
 console.log(API_URL);
 
 const create_demand_history = (
-  date_2,
-  user_id,
-  demand_employee,
-  car_model_id,
-  car_type_id,
-  demand_quantity,
-  color_id_2,
-  demand_status_id_2,
-  customer_id,
-  customer_type_id,
-  demand_opinion,
-  demand_meeting,
-  contact_type_id,
-  demand_note_2,
-  demand_id
+  arr,
 ) => {
   return axios.post(API_URL + "demand_histories", {
-    date_2,
-    user_id,
-    demand_employee,
-    car_model_id,
-    car_type_id,
-    demand_quantity,
-    color_id_2,
-    demand_status_id_2,
-    customer_id,
-    customer_type_id,
-    demand_opinion,
-    demand_meeting,
-    contact_type_id,
-    demand_note_2,
-    demand_id,
+    arr,
   });
 };
 

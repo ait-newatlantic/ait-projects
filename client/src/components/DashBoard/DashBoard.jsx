@@ -179,10 +179,7 @@ export default function DashBoard() {
       )}
       <div className="row justify-content-center text-left">
         <div className="col-md-8 col-sm d-flex flex-column">
-          <div
-            className="flex-fill border rounded border-secondary p-2"
-            style={{ overflow: "scroll" }}
-          >
+          <div className="flex-fill border rounded border-secondary p-2">
             {!!demand_statuses &&
               demand_statuses.map((month, index) => (
                 <BarChart
@@ -239,104 +236,100 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div
-            className="border rounded border-secondary p-2"
-            style={{ overflow: "scroll" }}
-          >
-            <label className="font-weight-bold text-uppercase">
-              Bảng thống kê số lượng giao dịch hàng năm
-            </label>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Trang thái</th>
-                  <th>Tháng 1</th>
-                  <th>Tháng 2</th>
-                  <th>Tháng 3</th>
-                  <th>Tháng 4</th>
-                  <th>Tháng 5</th>
-                  <th>Tháng 6</th>
-                  <th>Tháng 7</th>
-                  <th>Tháng 8</th>
-                  <th>Tháng 9</th>
-                  <th>Tháng 10</th>
-                  <th>Tháng 11</th>
-                  <th>Tháng 12</th>
-                </tr>
-              </thead>
-              {!!demand_statuses &&
-                demand_statuses.map((month, index) => (
-                  <tbody key={index}>
-                    <tr>
-                      <td>Đang giao dịch trong tháng</td>
-                      <td>{month.danggiaodich1}</td>
-                      <td>{month.danggiaodich2}</td>
-                      <td>{month.danggiaodich3}</td>
-                      <td>{month.danggiaodich4}</td>
-                      <td>{month.danggiaodich5}</td>
-                      <td>{month.danggiaodich6}</td>
-                      <td>{month.danggiaodich7}</td>
-                      <td>{month.danggiaodich8}</td>
-                      <td>{month.danggiaodich9}</td>
-                      <td>{month.danggiaodich10}</td>
-                      <td>{month.danggiaodich11}</td>
-                      <td>{month.danggiaodich12}</td>
-                    </tr>
-                    <tr>
-                      <td>Giao dịch thành công</td>
-                      <td>{month.thanhcong1}</td>
-                      <td>{month.thanhcong2}</td>
-                      <td>{month.thanhcong3}</td>
-                      <td>{month.thanhcong4}</td>
-                      <td>{month.thanhcong5}</td>
-                      <td>{month.thanhcong6}</td>
-                      <td>{month.thanhcong7}</td>
-                      <td>{month.thanhcong8}</td>
-                      <td>{month.thanhcong9}</td>
-                      <td>{month.thanhcong10}</td>
-                      <td>{month.thanhcong11}</td>
-                      <td>{month.thanhcong12}</td>
-                    </tr>
-                    <tr>
-                      <td>Giao dịch thất bại</td>
-                      <td>{month.thatbai1}</td>
-                      <td>{month.thatbai2}</td>
-                      <td>{month.thatbai3}</td>
-                      <td>{month.thatbai4}</td>
-                      <td>{month.thatbai5}</td>
-                      <td>{month.thatbai6}</td>
-                      <td>{month.thatbai7}</td>
-                      <td>{month.thatbai8}</td>
-                      <td>{month.thatbai9}</td>
-                      <td>{month.thatbai10}</td>
-                      <td>{month.thatbai11}</td>
-                      <td>{month.thatbai12}</td>
-                    </tr>
-                    <tr>
-                      <td>Đang giao dịch hiện tại</td>
-                      <td>{month.tongcongdanggiaodich01}</td>
-                      <td>{month.tongcongdanggiaodich02}</td>
-                      <td>{month.tongcongdanggiaodich03}</td>
-                      <td>{month.tongcongdanggiaodich04}</td>
-                      <td>{month.tongcongdanggiaodich05}</td>
-                      <td>{month.tongcongdanggiaodich06}</td>
-                      <td>{month.tongcongdanggiaodich07}</td>
-                      <td>{month.tongcongdanggiaodich08}</td>
-                      <td>{month.tongcongdanggiaodich09}</td>
-                      <td>{month.tongcongdanggiaodich10}</td>
-                      <td>{month.tongcongdanggiaodich11}</td>
-                      <td>{month.tongcongdanggiaodich12}</td>
-                    </tr>
-                  </tbody>
-                ))}
-            </Table>
+          <div className="border rounded border-secondary p-2">
+            <div style={{ overflow: "scroll" }}>
+              <label className="font-weight-bold text-uppercase">
+                Bảng thống kê số lượng giao dịch hàng năm
+              </label>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Trang thái</th>
+                    <th>Tháng 1</th>
+                    <th>Tháng 2</th>
+                    <th>Tháng 3</th>
+                    <th>Tháng 4</th>
+                    <th>Tháng 5</th>
+                    <th>Tháng 6</th>
+                    <th>Tháng 7</th>
+                    <th>Tháng 8</th>
+                    <th>Tháng 9</th>
+                    <th>Tháng 10</th>
+                    <th>Tháng 11</th>
+                    <th>Tháng 12</th>
+                  </tr>
+                </thead>
+                {!!demand_statuses &&
+                  demand_statuses.map((month, index) => (
+                    <tbody key={index}>
+                      <tr>
+                        <td>Đang giao dịch trong tháng</td>
+                        <td>{month.danggiaodich1}</td>
+                        <td>{month.danggiaodich2}</td>
+                        <td>{month.danggiaodich3}</td>
+                        <td>{month.danggiaodich4}</td>
+                        <td>{month.danggiaodich5}</td>
+                        <td>{month.danggiaodich6}</td>
+                        <td>{month.danggiaodich7}</td>
+                        <td>{month.danggiaodich8}</td>
+                        <td>{month.danggiaodich9}</td>
+                        <td>{month.danggiaodich10}</td>
+                        <td>{month.danggiaodich11}</td>
+                        <td>{month.danggiaodich12}</td>
+                      </tr>
+                      <tr>
+                        <td>Giao dịch thành công</td>
+                        <td>{month.thanhcong1}</td>
+                        <td>{month.thanhcong2}</td>
+                        <td>{month.thanhcong3}</td>
+                        <td>{month.thanhcong4}</td>
+                        <td>{month.thanhcong5}</td>
+                        <td>{month.thanhcong6}</td>
+                        <td>{month.thanhcong7}</td>
+                        <td>{month.thanhcong8}</td>
+                        <td>{month.thanhcong9}</td>
+                        <td>{month.thanhcong10}</td>
+                        <td>{month.thanhcong11}</td>
+                        <td>{month.thanhcong12}</td>
+                      </tr>
+                      <tr>
+                        <td>Giao dịch thất bại</td>
+                        <td>{month.thatbai1}</td>
+                        <td>{month.thatbai2}</td>
+                        <td>{month.thatbai3}</td>
+                        <td>{month.thatbai4}</td>
+                        <td>{month.thatbai5}</td>
+                        <td>{month.thatbai6}</td>
+                        <td>{month.thatbai7}</td>
+                        <td>{month.thatbai8}</td>
+                        <td>{month.thatbai9}</td>
+                        <td>{month.thatbai10}</td>
+                        <td>{month.thatbai11}</td>
+                        <td>{month.thatbai12}</td>
+                      </tr>
+                      <tr>
+                        <td>Đang giao dịch hiện tại</td>
+                        <td>{month.tongcongdanggiaodich01}</td>
+                        <td>{month.tongcongdanggiaodich02}</td>
+                        <td>{month.tongcongdanggiaodich03}</td>
+                        <td>{month.tongcongdanggiaodich04}</td>
+                        <td>{month.tongcongdanggiaodich05}</td>
+                        <td>{month.tongcongdanggiaodich06}</td>
+                        <td>{month.tongcongdanggiaodich07}</td>
+                        <td>{month.tongcongdanggiaodich08}</td>
+                        <td>{month.tongcongdanggiaodich09}</td>
+                        <td>{month.tongcongdanggiaodich10}</td>
+                        <td>{month.tongcongdanggiaodich11}</td>
+                        <td>{month.tongcongdanggiaodich12}</td>
+                      </tr>
+                    </tbody>
+                  ))}
+              </Table>
+            </div>
           </div>
         </div>
         <div className="col-md-4 col-sm d-flex flex-column">
-          <div
-            className="border rounded border-secondary p-2"
-            style={{ overflow: "scroll" }}
-          >
+          <div className="border rounded border-secondary p-2">
             {!!yearResult &&
               yearResult.map((form, index) => (
                 <DonutChart
@@ -355,10 +348,7 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div
-            className="border rounded border-secondary p-2"
-            style={{ overflow: "scroll" }}
-          >
+          <div className="border rounded border-secondary p-2">
             {!!yearResult1 &&
               yearResult1.map((quantity, index) => (
                 <HorizontalBarChart
@@ -378,28 +368,27 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div
-            className="border rounded border-secondary p-2"
-            style={{ overflow: "scroll" }}
-          >
-            {!!demand_statuses &&
-              demand_statuses.map((month, index) => (
-                <LineChart
-                  key={index}
-                  thanhcong1={month.thanhcong1}
-                  thanhcong2={month.thanhcong2}
-                  thanhcong3={month.thanhcong3}
-                  thanhcong4={month.thanhcong4}
-                  thanhcong5={month.thanhcong5}
-                  thanhcong6={month.thanhcong6}
-                  thanhcong7={month.thanhcong7}
-                  thanhcong8={month.thanhcong8}
-                  thanhcong9={month.thanhcong9}
-                  thanhcong10={month.thanhcong10}
-                  thanhcong11={month.thanhcong11}
-                  thanhcong12={month.thanhcong12}
-                />
-              ))}
+          <div className="border rounded border-secondary p-2">
+            <div style={{ overflow: "scroll" }}>
+              {!!demand_statuses &&
+                demand_statuses.map((month, index) => (
+                  <LineChart
+                    key={index}
+                    thanhcong1={month.thanhcong1}
+                    thanhcong2={month.thanhcong2}
+                    thanhcong3={month.thanhcong3}
+                    thanhcong4={month.thanhcong4}
+                    thanhcong5={month.thanhcong5}
+                    thanhcong6={month.thanhcong6}
+                    thanhcong7={month.thanhcong7}
+                    thanhcong8={month.thanhcong8}
+                    thanhcong9={month.thanhcong9}
+                    thanhcong10={month.thanhcong10}
+                    thanhcong11={month.thanhcong11}
+                    thanhcong12={month.thanhcong12}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       </div>

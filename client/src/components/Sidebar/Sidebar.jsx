@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route, Link } from "react-router-dom";
+
+//Libraries
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -9,15 +11,23 @@ import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import ListSubheader from "@material-ui/core/ListSubheader";
 import MenuIcon from "@material-ui/icons/Menu";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import AuthService from "../../services/auth.service";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import * as MaterialUIIcons from "@material-ui/icons/";
 import { useWindowWidth } from "@react-hook/window-size";
+import { Avatar, Collapse } from "@material-ui/core";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import Test from "../Test/Test";
+
+//Services
+import AuthService from "../../services/auth.service";
+
+//Components
 import Home from "../Home/Home";
 import CustomerInput from "../CustomerInput/CustomerInput";
 import CustomerUpdate from "../CustomerUpdate/CustomerUpdate";
@@ -32,9 +42,6 @@ import UserListHistory from "../UserListHistory/UserListHistory";
 import DashBoard from "../DashBoard/DashBoard";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import UserUpdate from "../UserUpdate/UserUpdate";
-import { Avatar, Collapse } from "@material-ui/core";
-import { Dropdown, DropdownButton } from "react-bootstrap";
-import Test from "../Test/Test";
 
 require("dotenv").config();
 
@@ -280,7 +287,19 @@ export default function Sidebar() {
         <Divider />
         {showAdminBoard && (
           <div className="text-light">
-            <List component="nav">
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader
+                  className="text-light text-left"
+                  component="div"
+                  id="nested-list-subheader"
+                >
+                  Main Menu
+                </ListSubheader>
+              }
+            >
               <ListItem button component={Link} to="/dashboard">
                 <ListItemIcon>
                   <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
@@ -419,7 +438,19 @@ export default function Sidebar() {
         )}
         {showModeratorBoard && (
           <div className="text-light">
-            <List component="nav">
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader
+                  className="text-light text-left"
+                  component="div"
+                  id="nested-list-subheader"
+                >
+                  Main Menu
+                </ListSubheader>
+              }
+            >
               <ListItem button component={Link} to="/dashboard">
                 <ListItemIcon>
                   <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
@@ -558,7 +589,19 @@ export default function Sidebar() {
         )}
         {showEmployeeBoard && (
           <div className="text-light">
-            <List component="nav">
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader
+                  className="text-light text-left"
+                  component="div"
+                  id="nested-list-subheader"
+                >
+                  Main Menu
+                </ListSubheader>
+              }
+            >
               <ListItem button component={Link} to="/dashboard">
                 <ListItemIcon>
                   <MaterialUIIcons.Dashboard style={{ fill: "white" }} />

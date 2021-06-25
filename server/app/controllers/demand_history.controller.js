@@ -2,23 +2,24 @@ const db = require("../models");
 const DemandHistory = db.demand_history;
 
 exports.create = (req, res) => {
+  const arr = req.body.arr;
   // Save Demand in the database
   return DemandHistory.create({
-    date: req.body.date_2,
-    userId: req.body.user_id,
-    demand_employee: req.body.demand_employee,
-    car_modelId: req.body.car_model_id,
-    car_typeId: req.body.car_type_id,
-    demand_quantity: req.body.demand_quantity,
-    colorId: req.body.color_id_2,
-    demand_statusId: req.body.demand_status_id_2,
-    customerId: req.body.customer_id,
-    customer_typeId: req.body.customer_type_id,
-    demand_opinion: req.body.demand_opinion,
-    demand_meeting: req.body.demand_meeting,
-    contact_typeId: req.body.contact_type_id,
-    demand_note: req.body.demand_note_2,
-    demandId: req.body.demand_id,
+    date: arr.date,
+    userId: arr.userId,
+    employee: arr.employee,
+    car_modelId: arr.car_modelId,
+    car_typeId: arr.car_typeId,
+    quantity: parseInt(arr.quantity),
+    colorId: arr.colorId,
+    demand_statusId: arr.demand_statusId,
+    customerId: arr.customerId,
+    customer_typeId: arr.customer_typeId,
+    opinion: arr.opinion,
+    meeting: arr.meeting,
+    contact_typeId: arr.contact_typeId,
+    note: arr.note,
+    demandId: arr.id,
   })
     .then((data) => {
       res.send({
