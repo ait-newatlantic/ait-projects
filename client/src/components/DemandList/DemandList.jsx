@@ -237,9 +237,7 @@ export default function DemandList() {
       <div className="justify-content-start">
         <h4 className="font-weight-bold text-dark text-left">BÁO CÁO</h4>
       </div>
-      <div
-        className="flex d-flex flex-wrap align-items-center justify-content-between rounded"
-      >
+      <div className="flex d-flex flex-wrap align-items-center justify-content-between rounded">
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
             <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
@@ -493,34 +491,32 @@ export default function DemandList() {
               ) : null}
               {flag3 ? (
                 <th>
-                <FormHelperText className="text-dark">
-                  Người gặp khách hàng (
-                  {
-                    [
-                      ...new Set(
-                        DemandResult.map((option) => option.employee)
-                      ),
-                    ].length
-                  }
-                  )
-                </FormHelperText>
-                <Autocomplete
-                  value={employee}
-                  onChange={(event, newValue) => {
-                    if (newValue === null) {
-                      setEmployee("");
-                    } else setEmployee(newValue);
-                  }}
-                  options={[
-                    ...new Set(
-                      DemandResult.map((option) => option.employee)
-                    ),
-                  ]}
-                  renderInput={(params) => (
-                    <TextField {...params} variant="standard" size="small" />
-                  )}
-                />
-              </th>
+                  <FormHelperText className="text-dark">
+                    Người gặp khách hàng (
+                    {
+                      [
+                        ...new Set(
+                          DemandResult.map((option) => option.employee)
+                        ),
+                      ].length
+                    }
+                    )
+                  </FormHelperText>
+                  <Autocomplete
+                    value={employee}
+                    onChange={(event, newValue) => {
+                      if (newValue === null) {
+                        setEmployee("");
+                      } else setEmployee(newValue);
+                    }}
+                    options={[
+                      ...new Set(DemandResult.map((option) => option.employee)),
+                    ]}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="standard" size="small" />
+                    )}
+                  />
+                </th>
               ) : null}
               {flag4 ? (
                 <th>
@@ -931,7 +927,18 @@ export default function DemandList() {
                   {flag1 ? <td>{i.user.branch.name}</td> : null}
                   {flag2 ? <td>{i.user.name}</td> : null}
                   {flag3 ? <td>{i.employee}</td> : null}
-                  {flag4 ? <td><Link to={"/dashboard/customers/update/" + btoa(`${i.customer.id}`)}>{i.customer.name}</Link></td> : null}
+                  {flag4 ? (
+                    <td>
+                      <Link
+                        to={
+                          "/dashboard/customers/update/" +
+                          btoa(`${i.customer.id}`)
+                        }
+                      >
+                        {i.customer.name}
+                      </Link>
+                    </td>
+                  ) : null}
                   {flag5 ? <td>{i.customer.number}</td> : null}
                   {flag6 ? <td>{i.customer_type.name}</td> : null}
                   {flag7 ? <td>{i.customer.province.name}</td> : null}

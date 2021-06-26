@@ -1,9 +1,9 @@
 module.exports = (app) => {
-    const options = require("../controllers/option.controller.js");
+  const options = require("../controllers/option.controller.js");
 
-    var router = require("express").Router();
+  var router = require("express").Router();
 
-    router.get("/", options.findAll);
+  router.get("/", options.findAll);
 
-    app.use("/api/options", router);
+  app.use("/api/options", router);
 };

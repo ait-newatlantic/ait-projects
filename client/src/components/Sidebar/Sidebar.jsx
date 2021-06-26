@@ -44,7 +44,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import UserUpdate from "../UserUpdate/UserUpdate";
 
 //Context
-import {OptionContext} from "../../context/option.context";
+import { OptionContext } from "../../context/option.context";
 
 require("dotenv").config();
 
@@ -57,7 +57,7 @@ export default function Sidebar() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [open4, setOpen4] = useState(false);
-  const {option1, option2} = useContext(OptionContext);
+  const { option1, option2 } = useContext(OptionContext);
 
   const user = AuthService.getCurrentUser();
 
@@ -273,10 +273,7 @@ export default function Sidebar() {
           paper: classes.drawerPaper,
         }}
       >
-        <div
-          className={classes.drawerHeader}
-          style={{ minHeight: "48px" }}
-        >
+        <div className={classes.drawerHeader} style={{ minHeight: "48px" }}>
           <div className="flex d-flex flex-wrap align-items-center px-1">
             <div>
               <IconButton onClick={handleDrawerClose}>
@@ -750,7 +747,7 @@ export default function Sidebar() {
       >
         <div className={classes.drawerHeader} />
         {showAdminBoard && (
-          <div className="mx-auto" style={{ maxWidth: `${screenwidth}`}}>
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
             <Route exact path="/home" component={Home} />
             <Route
               exact
@@ -812,7 +809,7 @@ export default function Sidebar() {
           </div>
         )}
         {showModeratorBoard && (
-          <div className="mx-auto" style={{ maxWidth: `${screenwidth}`}}>
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
             <Route exact path="/home" component={Home} />
             <Route
               exact
@@ -874,7 +871,7 @@ export default function Sidebar() {
           </div>
         )}
         {showEmployeeBoard && (
-          <div className="mx-auto" style={{ maxWidth: `${screenwidth}`}}>
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
             <Route exact path="/home" component={Home} />
             <Route
               exact

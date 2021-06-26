@@ -19,7 +19,7 @@ export const OptionProvider = (props) => {
   }, []);
 
   return (
-    <OptionContext.Provider value={{option1, option2}}>
+    <OptionContext.Provider value={{ option1, option2 }}>
       {props.children}
     </OptionContext.Provider>
   );

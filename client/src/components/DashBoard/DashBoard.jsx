@@ -120,9 +120,7 @@ export default function DashBoard() {
       <div className="text-left">
         <h4 className="font-weight-bold text-dark">DASHBOARD</h4>
       </div>
-      <div
-        className="d-flex justify-content-start rounded"
-      >
+      <div className="d-flex justify-content-start rounded">
         <div>
           <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
             <MaterialUIIcons.FilterList />
@@ -133,7 +131,7 @@ export default function DashBoard() {
         <div>
           <div className="row">
             <div className="col">
-              <InputLabel >Chi nhánh</InputLabel>
+              <InputLabel>Chi nhánh</InputLabel>
               <select
                 className="form-control"
                 id="exampleFormControlSelect1"
@@ -149,7 +147,7 @@ export default function DashBoard() {
               </select>
             </div>
             <div className="col">
-              <InputLabel >Từ ngày</InputLabel>
+              <InputLabel>Từ ngày</InputLabel>
               <input
                 type="date"
                 className="form-control"
@@ -159,7 +157,7 @@ export default function DashBoard() {
               />
             </div>
             <div className="col">
-              <InputLabel >Đến ngày</InputLabel>
+              <InputLabel>Đến ngày</InputLabel>
               <input
                 type="date"
                 className="form-control"
@@ -171,9 +169,7 @@ export default function DashBoard() {
           </div>
           <br />
         </div>
-      ) : (
-        null
-      )}
+      ) : null}
       <div className="row justify-content-center text-left">
         <div className="col-md-8 col-sm d-flex flex-column">
           <div className="flex-fill card p-2">
