@@ -8,14 +8,14 @@ verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(403).send({
-      message: "No token provided!"
+      message: "No token provided!",
     });
   }
 
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: "Lỗi truy cập, xin vui lòng đăng xuất và login lại!"
+        message: "Unauthorized!",
       });
     }
     req.userId = decoded.id;
@@ -24,8 +24,8 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+  User.findByPk(req.userId).then((user) => {
+    user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "admin") {
           next();
@@ -34,7 +34,7 @@ isAdmin = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Cần quyền Admin!"
+        message: "Require Admin Role!",
       });
       return;
     });
@@ -42,8 +42,8 @@ isAdmin = (req, res, next) => {
 };
 
 isModerator = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+  User.findByPk(req.userId).then((user) => {
+    user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "moderator") {
           next();
@@ -52,15 +52,15 @@ isModerator = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Cần quyền quản trị viên!"
+        message: "Require Moderator Role!",
       });
     });
   });
 };
 
 isEmployee = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+  User.findByPk(req.userId).then((user) => {
+    user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "employee") {
           next();
@@ -69,15 +69,15 @@ isEmployee = (req, res, next) => {
       }
 
       res.status(403).send({
-        message: "Cần quyền nhân viên!"
+        message: "Require Employee Role!",
       });
     });
   });
 };
 
-isModeratorOrAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
+isModeratorOrAdminOrEmployee = (req, res, next) => {
+  User.findByPk(req.userId).then((user) => {
+    user.getRoles().then((roles) => {
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "moderator") {
           next();
@@ -88,10 +88,15 @@ isModeratorOrAdmin = (req, res, next) => {
           next();
           return;
         }
+
+        if (roles[i].name === "employee") {
+          next();
+          return;
+        }
       }
 
       res.status(403).send({
-        message: "Cần quyền quản trị viên hoặc admin!"
+        message: "Require Moderator or Admin Or Employee Role!",
       });
     });
   });
@@ -101,6 +106,7 @@ const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
   isModerator: isModerator,
-  isModeratorOrAdmin: isModeratorOrAdmin
+  isEmployee: isEmployee,
+  isModeratorOrAdminOrEmployee: isModeratorOrAdminOrEmployee,
 };
 module.exports = authJwt;

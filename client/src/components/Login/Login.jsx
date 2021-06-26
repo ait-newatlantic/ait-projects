@@ -2,20 +2,10 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import AuthService from "../../services/auth.service";
-
-import {
-  Container,
-  FormWrap,
-  Icon,
-  FormContent,
-  FormH1,
-  FormLabel,
-  FormInput,
-  FormButton,
-  Text,
-} from "../ResetPassword/ResetElements";
+import { Checkbox } from "@material-ui/core";
+import ColorFunc from "../../functions/colors";
+import { useEffect } from "react";
 
 const required = (value) => {
   if (!value) {
@@ -27,14 +17,19 @@ const required = (value) => {
   }
 };
 
-const Login = (props) => {
+export default function Login(props) {
   const form = useRef();
   const checkBtn = useRef();
-
+  const [rand, setRand] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -57,7 +52,7 @@ const Login = (props) => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          props.history.push("/dashboard");
+          props.history.push("/home");
           window.location.reload();
         },
         (error) => {
@@ -77,60 +72,83 @@ const Login = (props) => {
     }
   };
 
-  return (
-    <div>
-       <Container>
-      <FormWrap>
-        <Icon to="/">AIT</Icon>
-        <FormContent>
-          <Form className="bg-black max-w-sm h-auto w-full z-10 grid my-0 mx-auto py-20 px-8 rounded-2xl shadow-lg sm:p-8" onSubmit={handleLogin} ref={form}>
-            <div className="form-group">
-              <FormH1>Đăng nhập vào tài khoản</FormH1>
-              <FormLabel htmlFor="for">Tên đăng nhập</FormLabel>
-              <Input
-                type="text"
-                className="form-control"
-                name="username"
-                value={username}
-                onChange={onChangeUsername}
-                validations={[required]}
-              />
-            </div>
-            <div className="form-group">
-              <FormLabel htmlFor="for">Mật khẩu</FormLabel>
-              <Input
-                type="password"
-                className="form-control"
-                name="password"
-                value={password}
-                onChange={onChangePassword}
-                validations={[required]}
-              />
-            </div>
-            <br />
-            <div className="form-group">
-              <button className="btn btn-warning btn-block" disabled={loading}>
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
+  useEffect(() => {
+    setRand(
+      ColorFunc.colors[Math.floor(Math.random() * ColorFunc.colors.length)]
+    ); //pick random color
+  }, []);
 
-            {message && (
+  return (
+    <div style={rand}>
+      <div className="container" style={{ height: "100vh" }}>
+        <div className="row align-items-center h-100">
+          <div className="shadow card-glass col col-xl-6 col-lg-6 col-md-6 col-sm-12 p-4 mx-auto rounded">
+            <Form onSubmit={handleLogin} ref={form}>
+              <p className="lead text-left text-dark">Login</p>
               <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
+                <Input
+                  type="username"
+                  className="form-control"
+                  name="username"
+                  placeholder="Username"
+                  value={username}
+                  onChange={onChangeUsername}
+                  validations={[required]}
+                />
+              </div>
+              <div className="form-group">
+                <Input
+                  type={passwordShown ? "text" : "password"}
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={onChangePassword}
+                  validations={[required]}
+                />
+              </div>
+              <div className="text-left text-dark">
+                <Checkbox
+                  defaultChecked={passwordShown}
+                  size="medium"
+                  color="primary"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                  onClick={togglePasswordVisiblity}
+                />
+                Hiện mật khẩu
+              </div>
+              <div className="form-group">
+                <div className="row">
+                  <div className="col text-secondary text-left">
+                    <a className="text-dark" href="tel: +84918628660">
+                      Bạn quên mật khẩu?
+                    </a>
+                  </div>
+                  <div className="col">
+                    <button
+                      className="btn btn-primary btn-block"
+                      disabled={loading}
+                    >
+                      {loading && (
+                        <span className="spinner-border spinner-border-sm"></span>
+                      )}
+                      <span>Login</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            )}
-            <CheckButton style={{ display: "none" }} ref={checkBtn} />
-          </Form>
-        </FormContent>
-      </FormWrap>
-    </Container>
+              {message && (
+                <div className="form-group">
+                  <div className="alert alert-danger" role="alert">
+                    {message}
+                  </div>
+                </div>
+              )}
+              <CheckButton style={{ display: "none" }} ref={checkBtn} />
+            </Form>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default Login;
+}

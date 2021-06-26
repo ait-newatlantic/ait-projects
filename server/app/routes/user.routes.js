@@ -2,10 +2,7 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 
 module.exports = function (app) {
-  const users = require("../controllers/user.controller.js");
-
   var router = require("express").Router();
-
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
@@ -16,11 +13,7 @@ module.exports = function (app) {
 
   app.get("/api/test/all", controller.allAccess);
 
-  app.get(
-    "/api/test/user",
-    [authJwt.verifyToken],
-    controller.userBoard
-  );
+  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
 
   app.get(
     "/api/test/mod",
@@ -34,15 +27,21 @@ module.exports = function (app) {
     controller.adminBoard
   );
 
-  router.get("/", users.findAll);
+  app.get(
+    "/api/test/emp",
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.employeeBoard
+  );
 
-  router.get("/specific", users.findAllSpecific);
+  router.put("/user", controller.hide);
 
-  router.get("/:id", users.findOne);
+  router.put("/user/:id", controller.update);
 
-  router.put("/:id", users.update);
+  router.get("/user/:id", controller.findOne);
 
-  router.delete("/:id", users.delete);
+  router.get("/filters", controller.findWithFilters);
 
-  app.use('/api/users', router);
+  router.get("/", controller.findAll);
+
+  app.use("/api/users", router);
 };

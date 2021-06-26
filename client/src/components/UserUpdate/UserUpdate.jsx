@@ -1,145 +1,211 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Alert, Button } from "react-bootstrap";
-import logo from "../../static/imgs/ait_logo.jpg"
-import UserService from "../../services/user.service";
-import CheckButton from "react-validation/build/button";
+import React, { useState, useRef, useEffect } from "react";
 import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import { isEmail } from "validator";
+import AuthService from "../../services/auth.service";
+import { Alert, Button } from "react-bootstrap";
+import UserService from "../../services/user.service";
 
-export default function UserUpdate(props) {
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [id, setId] = useState("");
-
-    const [users, setUsers] = useState({});
-    const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
-
-    const form = useRef();
-    const checkBtn = useRef();
-
-
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        setId(props.match.params.id)
-        setMessage("");
-        setSuccessful(false);
-        form.current.validateAll();
-
-        if (checkBtn.current.context._errors.length === 0) {
-            UserService.update_specific_user(
-                id,
-                password,
-                email,
-            ).then(
-                (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-
-                    setMessage(resMessage);
-                    setSuccessful(false);
-                }
-            );
-        }
-    };
-
-    const FetchData = id => {
-        UserService.get_specific_user(id)
-            .then(response => {
-                setUsers(response.data);
-                setId(props.match.params.id);
-                setUsername(response.data.username);
-                setPassword(response.data.password);
-                setEmail(response.data.email);
-                console.log(response.data)
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    const onChangeEmail = (e) => {
-        const email = e.target.value;
-        setEmail(email);
-    };
-
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-    };
-
-    useEffect(() => {
-        FetchData(props.match.params.id)
-        return () => {
-        }
-    }, [props.match.params.id])
-
-
+const required = (value) => {
+  if (!value) {
     return (
-        <div className="custom">
-            <Form onSubmit={handleUpdate} ref={form}>
-                {!successful && (
-                    <div>
-                        <div className="head">
-                            <img src={logo} alt="logo" width="100" height="100" />
-                            <h1>CẬP NHẬT USER</h1>
-                        </div>
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
 
-                        <div className="card card-body" >
-                            <p><strong>Thông tin user</strong></p>
-                            <div className="row">
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Username</label>
-                                    <input type="customer" defaultValue={users.username} className="form-control" id="exampleFormControlInput1" />
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlInput1" >Password</label>
-                                    <input type="customer_number" className="form-control" id="exampleFormControlInput1" onChange={onChangePassword}/>
-                                </div>
-                                <div className="col-sm">
-                                    <label htmlFor="exampleFormControlSelect1">Email</label>
-                                    <input type="customer_number" defaultValue={users.email} className="form-control" id="exampleFormControlInput1"  onChange={onChangeEmail}/>
-                                </div>
-                            </div>
-                        </div>
+const validEmail = (value) => {
+  if (!isEmail(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This is not a valid email.
+      </div>
+    );
+  }
+};
 
-                        <div className="card card-body" >
-                            <Button variant="success" block type="submit" onClick={handleUpdate}>
-                                Cập nhật
-                    </Button>
-                        </div>
-                    </div>
-                )}
-                {message && (
-                    <div className="form-group">
-                        <div className="card card-body">
-                            <div
-                                className={successful ? "alert alert-success" : "alert alert-danger"}
-                                role="alert"
-                            >
-                                {/* <div className="card card-container-fluid" >
-                                        <h1>{message}</h1>
-                                    </div> */}
-                                <Alert key={message.message}>
-                                    <Alert.Heading>{message.heading}</Alert.Heading>
-                                    <p>
-                                        {message.message}
-                                    </p>
-                                </Alert>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                <CheckButton style={{ display: "none" }} ref={checkBtn} />
-            </Form>
-        </div>
-    )
-}
+const vname = (value) => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The name must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The password must be between 6 and 40 characters.
+      </div>
+    );
+  }
+};
+
+const UserUpdate = (props) => {
+  const form = useRef();
+  const checkBtn = useRef();
+  const [name, setName] = useState("");
+  const [branch_name, setBranchName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const currentUser = AuthService.getCurrentUser();
+
+  const onChangeName = (e) => {
+    const name = e.target.value;
+    setName(name);
+  };
+
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const fetchUser = () => {
+    const id = atob(props.match.params.id);
+    UserService.get_user(id).then((response) => {
+      setName(response.data.name);
+      setEmail(response.data.email);
+      setBranchName(response.data.branch.name);
+      setPassword(response.data.password);
+    });
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    setMessage("");
+    setSuccessful(false);
+    form.current.validateAll();
+    const id = currentUser.id;
+    if (checkBtn.current.context._errors.length === 0) {
+      UserService.update_user(id, name, email, password).then(
+        (response) => {
+          setMessage(response.data.message);
+          setSuccessful(true);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setMessage(resMessage);
+          setSuccessful(false);
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  return (
+    <div className="text-left">
+      <div>
+        <h4 className="font-weight-bold text-secondary">CẬP NHẬT USER</h4>
+      </div>
+      <Form onSubmit={handleUpdate} ref={form}>
+        {!successful && (
+          <div>
+            <div className="row">
+              <div className="col-sm">
+                Họ và tên:
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={name}
+                  onChange={onChangeName}
+                  validations={[required, vname]}
+                />
+              </div>
+
+              <div className="col-sm">
+                Chi nhánh:
+                <div
+                  className="form-control"
+                  style={{ overflow: "auto", background: "#e7e7e7" }}
+                >
+                  {branch_name}
+                </div>
+              </div>
+            </div>
+            <br />
+            <div className="row">
+              <div className="col-sm">
+                Username:
+                <div
+                  className="form-control"
+                  style={{ overflow: "auto", background: "#e7e7e7" }}
+                >
+                  {currentUser.username}
+                </div>
+              </div>
+
+              <div className="col-sm">
+                Email:
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  value={email}
+                  onChange={onChangeEmail}
+                  validations={[required, validEmail]}
+                />
+              </div>
+
+              <div className="col-sm">
+                Password:
+                <Input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  onChange={onChangePassword}
+                  validations={[required, vpassword]}
+                />
+              </div>
+            </div>
+            <br />
+            <Button className="btn-sm" variant="warning" type="submit">
+              Cập nhật
+            </Button>
+          </div>
+        )}
+        {message && (
+          <div className="form-group">
+            <div
+              className={
+                successful ? "alert alert-success" : "alert alert-danger"
+              }
+              role="alert"
+            >
+              <Alert key={message.message}>
+                <Alert.Heading>{message.heading}</Alert.Heading>
+                <p>{message.message}</p>
+              </Alert>
+            </div>
+          </div>
+        )}
+        <CheckButton style={{ display: "none" }} ref={checkBtn} />
+      </Form>
+    </div>
+  );
+};
+
+export default UserUpdate;

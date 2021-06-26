@@ -1,327 +1,938 @@
+import React, { useEffect, useState, useContext } from "react";
+import { Route, Link } from "react-router-dom";
 
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+//Libraries
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import MenuIcon from "@material-ui/icons/Menu";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Register from "../Register/Register";
+import Profile from "../Profile/Profile";
+import * as MaterialUIIcons from "@material-ui/icons/";
+import { useWindowWidth } from "@react-hook/window-size";
+import { Avatar, Collapse } from "@material-ui/core";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import Test from "../Test/Test";
 
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+//Services
 import AuthService from "../../services/auth.service";
 
-import DemandInput from '../DemandInput/DemandInput'
-import BranchDemandOverallReport from '../BranchDemandOverallReport/BranchDemandOverallReport'
-import BranchDemandDetailReport from '../BranchDemandDetailReport/BranchDemandDetailReport'
-import DemandUpdate from '../DemandUpdate/DemandUpdate'
-import CustomerInput from '../CustomerInput/CustomerInput'
-import BranchCustomerList from "../BranchCustomerList/BranchCustomerList"
-import AdminCustomerList from "../AdminCustomerList/AdminCustomerList"
-import CustomerUpdate from '../CustomerUpdate/CustomerUpdate'
-import Register from "../Register/Register";
-import Test from "../Test/Test"
-import ResetPassword from "../ResetPassword/ResetPassword"
-import UserList from "../UserList/UserList"
-import UserUpdate from "../UserUpdate/UserUpdate"
-import AdminDemandDetailReport from "../AdminDemandDetailReport/AdminDemandDetailReport"
-import AdminDemandOverallReport from "../AdminDemanOverallReport/AdminDemandOverallReport"
-import Profile from "../Profile/Profile";
+//Components
+import Home from "../Home/Home";
+import CustomerInput from "../CustomerInput/CustomerInput";
+import CustomerUpdate from "../CustomerUpdate/CustomerUpdate";
+import DemandUpdate from "../DemandUpdate/DemandUpdate";
+import CustomerList from "../CustomerList/CustomerList";
+import DemandInput from "../DemandInput/DemandInput";
+import DemandList from "../DemandList/DemandList";
+import UserList from "../UserList/UserList";
+import CustomerListHistory from "../CustomerListHistory/CustomerListHistory";
+import DemandListHistory from "../DemandListHistory/DemandListHistory";
+import UserListHistory from "../UserListHistory/UserListHistory";
+import DashBoard from "../DashBoard/DashBoard";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import UserUpdate from "../UserUpdate/UserUpdate";
 
-import logo from "../../static/imgs/ait_logo.jpg"
+//Context
+import { OptionContext } from "../../context/option.context";
 
-import * as MaterialUIIcons from '@material-ui/icons/';
-
-import "./sidebar.css"
-
-import {
-    useWindowSize,
-    useWindowWidth,
-    useWindowHeight,
-} from '@react-hook/window-size'
-import Dashboard from '../Dashboard/Dashboard';
-
-require('dotenv').config()
+require("dotenv").config();
 
 export default function Sidebar() {
+  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+  const [open4, setOpen4] = useState(false);
+  const { option1, option2 } = useContext(OptionContext);
 
-    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState(undefined);
+  const user = AuthService.getCurrentUser();
 
-    const logOut = () => {
-        AuthService.logout();
-    };
-    const drawerWidth = 245;
+  const handleClick1 = () => {
+    setOpen1(!open1);
+  };
 
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            display: 'flex',
-        },
-        appBar: {
-            zIndex: theme.zIndex.drawer + 1,
-            transition: theme.transitions.create(['width', 'margin'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        appBarShift: {
-            marginLeft: drawerWidth,
-            width: `calc(100% - ${drawerWidth}px)`,
-            transition: theme.transitions.create(['width', 'margin'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        menuButton: {
-            marginRight: 36,
-        },
-        hide: {
-            display: 'none',
-        },
-        drawer: {
-            width: drawerWidth,
-            flexShrink: 0,
-            whiteSpace: 'nowrap',
-        },
-        drawerOpen: {
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            background: '#4169e1',
-            color: 'white'
-        },
-        drawerClose: {
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-            overflowX: 'hidden',
-            width: theme.spacing(7) + 1,
-            [theme.breakpoints.up('sm')]: {
-                width: theme.spacing(9) + 1,
-            },
-            background: '#4169e1',
-            color: 'white'
-        },
-        toolbar: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: theme.spacing(0, 1),
-            // necessary for content to be below app bar
-            ...theme.mixins.toolbar,
-        },
-        content: {
-            flexGrow: 1,
-            justifyContent: "center",
-            // padding: theme.spacing(3),
-        },
-    }));
+  const handleClick2 = () => {
+    setOpen2(!open2);
+  };
 
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = useState(false)
+  const handleClick3 = () => {
+    setOpen3(!open3);
+  };
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+  const handleClick4 = () => {
+    setOpen4(!open4);
+  };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  const logOut = () => {
+    AuthService.logout();
+  };
 
-    const [width, height] = useWindowSize()
-    const onlyWidth = useWindowWidth()
-    const onlyHeight = useWindowHeight()
+  const drawerWidth = 200;
 
-    useEffect(() => {
-        if (onlyWidth <= "600") {
-            handleDrawerClose()
-        }
-        else {
-            handleDrawerOpen()
-        }
-    }, [onlyWidth]);
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: "flex",
+    },
+    appBar: {
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    hide: {
+      display: "none",
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+    drawerPaper: {
+      width: drawerWidth,
+      background: `${option1}`,
+    },
+    drawerSubMenu: {
+      background: `${option2}`,
+    },
+    drawerHeader: {
+      // display: "flex",
+      alignItems: "center",
+      // padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      justifyContent: "flex-end",
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(1, 2),
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: -drawerWidth,
+    },
+    contentShift: {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
+    small: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+    },
+  }));
 
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [screenwidth, setWidth] = useState("");
 
-        if (user) {
-            setCurrentUser(user);
-            setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-            setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"))
-        }
-    }, []);
+  const onlyWidth = useWindowWidth();
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar className="bg-light text-dark">
-                    <IconButton
-                        color="primary"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <IconButton href="/dashboard"><MaterialUIIcons.Apps /></IconButton>
-                    <MaterialUIIcons.Notifications className="ml-auto" style={{ marginRight: "10px" }} />
-                    <MaterialUIIcons.Mail className="ml" style={{ marginRight: "10px" }} />
-                    <MaterialUIIcons.BugReport className="ml" style={{ marginRight: "10px" }} />
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <Typography variant="p" noWrap>
-                        ENTERPRISE SOFTWARE
-                    </Typography>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                {showAdminBoard && (
-                    <div>
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/admin/demands/overallreport">
-                                <ListItemIcon> <MaterialUIIcons.Assessment style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Dashboard" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/admin/demands/detailreport">
-                                <ListItemIcon> <MaterialUIIcons.Ballot style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Báo cáo kinh doanh" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/admin/customers/list">
-                                <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Danh sách khách hàng" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/userlist">
-                                <ListItemIcon> <MaterialUIIcons.CardMembership style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Danh sách tài khoản" />
-                            </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/demands/input">
-                                <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Nhu cầu khách hàng" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/customers/input">
-                                <ListItemIcon> <MaterialUIIcons.PersonAdd style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Tạo khách hàng mới" />
-                            </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/resetpassword">
-                                <ListItemIcon> <MaterialUIIcons.VpnKey style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Đổi mật khẩu" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/login" onClick={logOut}>
-                                <ListItemIcon>
-                                    <MaterialUIIcons.ExitToApp style={{ fill: "white" }} />
-                                </ListItemIcon>
-                                <ListItemText primary="Đăng xuất" />
-                            </ListItem>
-                        </List>
-                    </div>
-                )}
-                {showModeratorBoard && (
-                    <div>
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/demands/input">
-                                <ListItemIcon> <MaterialUIIcons.Create style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Nhu cầu khách hàng" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/branch/demands/overallreport">
-                                <ListItemIcon> <MaterialUIIcons.Ballot style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Báo cáo kinh doanh" />
-                            </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/customers/input">
-                                <ListItemIcon> <MaterialUIIcons.PersonAdd style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Tạo khách hàng mới" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/dashboard/branch/customers/list">
-                                <ListItemIcon> <MaterialUIIcons.Group style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Danh sách khách hàng" />
-                            </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
-                            <ListItem button component={Link} to="/dashboard/resetpassword">
-                                <ListItemIcon> <MaterialUIIcons.VpnKey style={{ fill: "white" }} /> </ListItemIcon>
-                                <ListItemText primary="Đổi mật khẩu" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/login" onClick={logOut}>
-                                <ListItemIcon>
-                                    <MaterialUIIcons.ExitToApp style={{ fill: "white" }} />
-                                </ListItemIcon>
-                                <ListItemText primary="Đăng xuất" />
-                            </ListItem>
-                        </List>
-                    </div>
-                )}
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/dashboard/register" component={Register} />
-                <Route exact path="/dashboard/profile" component={Profile} />
-                <Route exact path="/dashboard/admin/demands/overallreport" component={AdminDemandOverallReport} />
-                <Route exact path="/dashboard/admin/demands/detailreport" component={AdminDemandDetailReport} />
-                <Route exact path="/dashboard/admin/customers/list" component={AdminCustomerList} />
-                <Route exact path="/dashboard/demands/input" component={DemandInput} />
-                <Route exact path="/dashboard/demands/update/:id" component={DemandUpdate} />
-                <Route exact path="/dashboard/branch/demands/overallreport" component={BranchDemandOverallReport} />
-                <Route exact path="/dashboard/branch/demands/detailreport" component={BranchDemandDetailReport} />
-                <Route exact path="/dashboard/userlist" component={UserList} />
-                <Route exact path="/dashboard/userlist/update/:id" component={UserUpdate} />
-                <Route exact path="/dashboard/customers/input" component={CustomerInput} />
-                <Route exact path="/dashboard/branch/customers/list" component={BranchCustomerList} />
-                <Route exact path="/dashboard/customers/update/:id" component={CustomerUpdate} />
-                <Route exact path='/dashboard/resetpassword' component={ResetPassword} />
-                <Route exact path='/dashboard/test' component={Test} />
-            </main>
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (open == false) {
+      if (onlyWidth <= "900") {
+        setWidth("80vw");
+      } else setWidth("100%");
+    } else {
+      if (onlyWidth <= "900") {
+        setWidth("80vw");
+      } else setWidth("100%");
+    }
+  }, [onlyWidth, open]);
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar className="bg-light text-dark" variant="dense">
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          {currentUser ? (
+            <Dropdown className="mr-auto d-flex flex-wrap">
+              <DropdownButton
+                id="dropdown-basic-button"
+                variant="light"
+                size="sm"
+                title="Tệp"
+              >
+                <Dropdown.Item href="https://minio.pqe.com.vn/minio/newatlantic/">
+                  Lưu trữ
+                </Dropdown.Item>
+                <Dropdown.Item href="/settings">Cài đặt</Dropdown.Item>
+              </DropdownButton>
+              <DropdownButton
+                id="dropdown-basic-button"
+                variant="light"
+                size="sm"
+                title="Đi"
+              >
+                <Dropdown.Item href="/home">Đi tới trang chủ</Dropdown.Item>
+                <Dropdown.Item href="https://www.newatlantic.vn/">
+                  Đi tới newatlantic
+                </Dropdown.Item>
+                <Dropdown.Item href="http://kamazvietnam.com.vn/">
+                  Đi tới kamazvn
+                </Dropdown.Item>
+              </DropdownButton>
+              <DropdownButton
+                id="dropdown-basic-button"
+                variant="light"
+                size="sm"
+                title="Trợ giúp"
+              >
+                <Dropdown.Item href="#/action-1">Chào mừng</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Bắt đầu</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Tài liệu</Dropdown.Item>
+              </DropdownButton>
+            </Dropdown>
+          ) : (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  LOGIN
+                </Link>
+              </li>
+            </ul>
+          )}
+          <Avatar className={classes.small}>N</Avatar>
+          <DropdownButton id="dropdown-basic-button" variant="light" size="sm">
+            <Dropdown.Item href="/dashboard/profile">Hồ sơ</Dropdown.Item>
+            <Dropdown.Item href="/settings">Cài đặt</Dropdown.Item>
+            <Dropdown.Item href="/login" onClick={logOut}>
+              Thoát
+            </Dropdown.Item>
+          </DropdownButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader} style={{ minHeight: "48px" }}>
+          <div className="flex d-flex flex-wrap align-items-center px-1">
+            <div>
+              <IconButton onClick={handleDrawerClose}>
+                <MaterialUIIcons.Menu style={{ fill: "white" }} />
+              </IconButton>
+            </div>
+            <small className="font-weight-bold text-white text-uppercase">
+              New Atlantic IT JSC
+            </small>
+          </div>
         </div>
-    );
+        <Divider />
+        {showAdminBoard && (
+          <div className="text-light">
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader
+                  className="text-light text-left"
+                  component="div"
+                  id="nested-list-subheader"
+                >
+                  Main Menu
+                </ListSubheader>
+              }
+            >
+              <ListItem button component={Link} to="/dashboard">
+                <ListItemIcon>
+                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+
+              <ListItem button onClick={handleClick1}>
+                <ListItemIcon>
+                  <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Kinh doanh" />
+                {open1 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick2}>
+                <ListItemIcon>
+                  <MaterialUIIcons.SupervisedUserCircle
+                    style={{ fill: "white" }}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Khách hàng" />
+                {open2 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              <ListItem button onClick={handleClick3}>
+                <ListItemIcon>
+                  <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Tài khoản" />
+                {open3 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open3} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          </div>
+        )}
+        {showModeratorBoard && (
+          <div className="text-light">
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader
+                  className="text-light text-left"
+                  component="div"
+                  id="nested-list-subheader"
+                >
+                  Main Menu
+                </ListSubheader>
+              }
+            >
+              <ListItem button component={Link} to="/dashboard">
+                <ListItemIcon>
+                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+
+              <ListItem button onClick={handleClick1}>
+                <ListItemIcon>
+                  <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Kinh doanh" />
+                {open1 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick2}>
+                <ListItemIcon>
+                  <MaterialUIIcons.SupervisedUserCircle
+                    style={{ fill: "white" }}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Khách hàng" />
+                {open2 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              <ListItem button onClick={handleClick3}>
+                <ListItemIcon>
+                  <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Tài khoản" />
+                {open3 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open3} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          </div>
+        )}
+        {showEmployeeBoard && (
+          <div className="text-light">
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader
+                  className="text-light text-left"
+                  component="div"
+                  id="nested-list-subheader"
+                >
+                  Main Menu
+                </ListSubheader>
+              }
+            >
+              <ListItem button component={Link} to="/dashboard">
+                <ListItemIcon>
+                  <MaterialUIIcons.Dashboard style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+
+              <ListItem button onClick={handleClick1}>
+                <ListItemIcon>
+                  <MaterialUIIcons.TrendingUp style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Kinh doanh" />
+                {open1 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/demands/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+
+              <ListItem button onClick={handleClick2}>
+                <ListItemIcon>
+                  <MaterialUIIcons.SupervisedUserCircle
+                    style={{ fill: "white" }}
+                  />
+                </ListItemIcon>
+                <ListItemText primary="Khách hàng" />
+                {open2 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open2} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/customers/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              <ListItem button onClick={handleClick3}>
+                <ListItemIcon>
+                  <MaterialUIIcons.AccountBox style={{ fill: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Tài khoản" />
+                {open3 ? (
+                  <MaterialUIIcons.ExpandLess />
+                ) : (
+                  <MaterialUIIcons.ExpandMore />
+                )}
+              </ListItem>
+              <Collapse in={open3} timeout="auto" unmountOnExit>
+                <List
+                  className={classes.drawerSubMenu}
+                  component="div"
+                  disablePadding
+                >
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Assignment style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Báo cáo" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    component={Link}
+                    to="/dashboard/users/list/history"
+                  >
+                    <ListItemIcon>
+                      <MaterialUIIcons.Delete style={{ fill: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Thùng rác" />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          </div>
+        )}
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+        {showAdminBoard && (
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+            <Route exact path="/home" component={Home} />
+            <Route
+              exact
+              path="/dashboard/users/update/:id"
+              component={UserUpdate}
+            />
+            <Route exact path="/dashboard/diary" component={ErrorPage} />
+            <Route exact path="/dashboard/kpi" component={ErrorPage} />
+            <Route exact path="/dashboard" component={DashBoard} />
+            <Route exact path="/dashboard/register" component={Register} />
+            <Route exact path="/dashboard/profile" component={Profile} />
+            <Route
+              exact
+              path="/dashboard/customers/input"
+              component={CustomerInput}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/update/:id"
+              component={CustomerUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/update/:id"
+              component={DemandUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/input"
+              component={DemandInput}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list"
+              component={DemandList}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list/history"
+              component={DemandListHistory}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list"
+              component={CustomerList}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list/history"
+              component={CustomerListHistory}
+            />
+            <Route exact path="/dashboard/users/list" component={UserList} />
+            <Route
+              exact
+              path="/dashboard/users/list/history"
+              component={UserListHistory}
+            />
+            <Route exact path="/dashboard/test" component={Test} />
+          </div>
+        )}
+        {showModeratorBoard && (
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+            <Route exact path="/home" component={Home} />
+            <Route
+              exact
+              path="/dashboard/users/update/:id"
+              component={UserUpdate}
+            />
+            <Route exact path="/dashboard/diary" component={ErrorPage} />
+            <Route exact path="/dashboard/kpi" component={ErrorPage} />
+            <Route exact path="/dashboard" component={DashBoard} />
+            <Route exact path="/dashboard/register" component={Register} />
+            <Route exact path="/dashboard/profile" component={Profile} />
+            <Route
+              exact
+              path="/dashboard/customers/input"
+              component={CustomerInput}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/update/:id"
+              component={CustomerUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/update/:id"
+              component={DemandUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/input"
+              component={DemandInput}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list"
+              component={DemandList}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list/history"
+              component={DemandListHistory}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list"
+              component={CustomerList}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list/history"
+              component={CustomerListHistory}
+            />
+            <Route exact path="/dashboard/users/list" component={UserList} />
+            <Route
+              exact
+              path="/dashboard/users/list/history"
+              component={UserListHistory}
+            />
+            <Route exact path="/dashboard/test" component={Test} />
+          </div>
+        )}
+        {showEmployeeBoard && (
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+            <Route exact path="/home" component={Home} />
+            <Route
+              exact
+              path="/dashboard/users/update/:id"
+              component={UserUpdate}
+            />
+            <Route exact path="/dashboard/diary" component={ErrorPage} />
+            <Route exact path="/dashboard/kpi" component={ErrorPage} />
+            <Route exact path="/dashboard" component={DashBoard} />
+            <Route exact path="/dashboard/register" component={Register} />
+            <Route exact path="/dashboard/profile" component={Profile} />
+            <Route
+              exact
+              path="/dashboard/customers/input"
+              component={CustomerInput}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/update/:id"
+              component={CustomerUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/update/:id"
+              component={DemandUpdate}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/input"
+              component={DemandInput}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list"
+              component={DemandList}
+            />
+            <Route
+              exact
+              path="/dashboard/demands/list/history"
+              component={DemandListHistory}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list"
+              component={CustomerList}
+            />
+            <Route
+              exact
+              path="/dashboard/customers/list/history"
+              component={CustomerListHistory}
+            />
+            <Route exact path="/dashboard/users/list" component={UserList} />
+            <Route
+              exact
+              path="/dashboard/users/list/history"
+              component={UserListHistory}
+            />
+            <Route exact path="/dashboard/test" component={Test} />
+          </div>
+        )}
+      </main>
+    </div>
+  );
 }

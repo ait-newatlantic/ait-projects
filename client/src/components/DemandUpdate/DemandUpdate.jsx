@@ -1,359 +1,309 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Alert, Button } from "react-bootstrap";
+import React, { useState, useEffect, useRef } from "react";
 import DemandService from "../../services/demand.service";
+import DemandHistoryService from "../../services/demand_history.service";
+import AuthService from "../../services/auth.service";
+import DemandStatusService from "../../services/demand_status.service";
+import ColorService from "../../services/color.services";
+
+import { Alert } from "react-bootstrap";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import Select from "react-validation/build/select";
-import UpdateIcon from '@material-ui/icons/Update';
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import UserService from "../../services/user.service";
-import "./style.css"
 
 export default function DemandUpdate(props) {
-    const [date, setDate] = useState("");
-    const [status, setStatus] = useState("");
-    const [color, setColor] = useState("");
-    const [ait, setAit] = useState(null);
-    const [kmt, setKmt] = useState(null);
-    const [note, setNote] = useState(null);
-    const [id, setId] = useState("");
-    const [content, setContent] = useState("");
+  const [demands, setDemands] = useState(null);
 
-    const [demands, setDemands] = useState({});
-    const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
+  const [arr, setArr] = useState([]);
 
-    const form = useRef();
-    const checkBtn = useRef();
+  const [demand_status, setDemandStatus] = useState(0);
+  const [demand_status_name, setDemandStatusName] = useState("");
+  const [demand_statuses, setDemandStatuses] = useState("");
 
+  const [color, setColor] = useState(0);
+  const [color_name, setColorName] = useState("");
+  const [colors, setColors] = useState("");
 
-    const onChangeDate = (e) => {
-        const date = e.target.value;
-        setDate(date);
-    };
+  const [date, setDate] = useState("");
+  const [note, setNote] = useState("");
 
-    const onChangeColor = (e) => {
-        const color = e.target.value;
-        setColor(color);
-    };
+  const [message, setMessage] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const form = useRef();
+  const checkBtn = useRef();
+  const currentUser = AuthService.getCurrentUser();
 
-    const onChangeStatus = (e) => {
-        const status = e.target.value;
-        setStatus(status);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setMessage("");
+    setSuccessful(false);
+    form.current.validateAll();
+    const id = atob(props.match.params.id);
+    if (checkBtn.current.context._errors.length === 0) {
+      DemandService.update_demand(id, demand_status, date, note, color);
+      DemandHistoryService.create_demand_history(arr).then(
+        (response) => {
+          setMessage(response.data.message);
+          setSuccessful(true);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
 
-    const onChangeNote = (e) => {
-        const note = e.target.value;
-        setNote(note);
-    };
-
-    const required = (value) => {
-        if (!value) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    This field is required!
-                </div>
-            );
+          setMessage(resMessage);
+          setSuccessful(false);
         }
-    };
+      );
+    }
+  };
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        setId(props.match.params.id)
-        setMessage("");
-        setSuccessful(false);
-        form.current.validateAll();
+  const FetchDemandStatuses = () => {
+    DemandStatusService.get_demand_statuses().then((response) => {
+      setDemandStatuses(response.data);
+    });
+  };
 
-        if (checkBtn.current.context._errors.length === 0) {
-            DemandService.update_specific_demand(
-                id,
-                parseInt(ait),
-                parseInt(kmt),
-                date,
-                note,
-                status,
-                color,
-            ).then(
-                (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
-                },
-                (error) => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
+  const FetchColors = () => {
+    ColorService.get_colors().then((response) => {
+      setColors(response.data);
+    });
+  };
 
-                    setMessage(resMessage);
-                    setSuccessful(false);
-                }
-            );
-        }
-    };
+  const FetchDemands = () => {
+    const id = atob(props.match.params.id);
+    DemandService.get_demand(id)
+      .then((response) => {
+        setDemands(response.data);
+        setDemandStatusName(response.data.demand_status.name);
+        setDemandStatus(response.data.demand_status.id);
+        setDate(response.data.date);
+        setNote(response.data.note);
+        setColor(response.data.color.id);
+        setColorName(response.data.color.name);
+        setArr(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-    const FetchData = id => {
-        DemandService.get_specific_demand(id)
-            .then(response => {
-                setDemands(response.data);
-                setId(props.match.params.id)
-                setDate(response.data.date);
-                setAit(response.data.ait);
-                setKmt(response.data.kmt);
-                setStatus(response.data.status);
-                setNote(response.data.note);
-                setColor(response.data.color);
-                console.log(response.data)
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
+  useEffect(() => {
+    FetchDemands();
+    FetchDemandStatuses();
+    FetchColors();
+  }, []);
 
-    useEffect(() => {
-        UserService.getUserBoard().then(
-            (response) => {
-                setContent(response.data);
-            },
-            (error) => {
-                const _content =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                setContent(_content);
-            }
-        );
-    }, []);
-
-    useEffect(() => {
-        FetchData(props.match.params.id)
-        return () => {
-        }
-    }, [props.match.params.id])
-
-    return (
-        <div className="custom">
-            { content == "User" ?
-                <div>
-                    <div className="card-header text-white" style={{ backgroundColor: "#24305E" }}>
-                        CẬP NHẬT NHU CẦU THỰC TẾ
+  return demands ? (
+    <div>
+      <div className="text-left">
+        <h4 className="font-weight-bold text-dark">
+          CẬP NHẬT NHU CẦU MUA XE CỦA KHÁCH HÀNG
+        </h4>
+      </div>
+      <Form onSubmit={handleSubmit} ref={form}>
+        {!successful && (
+          <div className="text-left">
+            <div className="row">
+              <div className="col-sm">
+                <div className="form-group card p-2">
+                  <h6 className="font-weight-bold text-center">
+                    THÔNG TIN KHÁCH HÀNG
+                  </h6>
+                  <div className="row">
+                    <div className="col-sm">
+                      <label>Tên khách hàng:</label>
+                      <div
+                        className="form-control"
+                        style={{ overflow: "auto", background: "#e7e7e7" }}
+                      >
+                        {demands.customer.name}
+                      </div>
+                    </div>
+                    {demands.demand_statusId === 9 ||
+                    demands.demand_statusId === 10 ? (
+                      <div>
+                        <div className="col-sm">
+                          <label>Giai đoạn:</label>
+                          <div
+                            className="form-control"
+                            style={{ overflow: "auto", background: "#e7e7e7" }}
+                          >
+                            {demands.demand_status.name}
+                          </div>
                         </div>
-                    <Form onSubmit={handleRegister} ref={form}>
-                        {!successful && (
-                            <div>
-                                <div className="card-group">
-                                    <div className="card">
-                                        <div className="card-body" >
-                                            <h6><strong>Thông tin khách hàng</strong></h6>
-                                            <div className="row">
-                                                <label className="col-lg-4">Tên KH: </label>
-                                                <div className="col-sm">
-                                                    <p className="form-control" style={{ overflow: "auto" }}>{demands.customer}</p>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <label className="col-lg-4" >SĐT KH:</label>
-                                                <div className="col-sm">
-                                                    <p className="form-control">{demands.customer_number}</p>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <label className="col-lg-4">Khu vực KH:</label>
-                                                <div className="col-sm">
-                                                    <input type="customer_area" className="form-control" defaultValue={demands.customer_area} id="exampleFormControlInput1" />
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className="row">
-                                                <label className="col-lg-4" >Giai đoạn</label>
-                                                <div className="col-sm">
-                                                    <Select className="form-control" id="exampleFormControlSelect1" style={{ background: "#add8e6" }} onChange={onChangeStatus}>
-                                                        <option defaultValue={demands.status} >{demands.status}</option>
-                                                        <option defaultValue="TIẾP CẬN CHÀO HÀNG">TIẾP CẬN CHÀO HÀNG</option>
-                                                        <option defaultValue="CHẠY THỬ">CHẠY THỬ</option>
-                                                        <option defaultValue="ĐÀM PHÁN">ĐÀM PHÁN</option>
-                                                        <option defaultValue="CHỐT ĐƠN HÀNG">CHỐT ĐƠN HÀNG</option>
-                                                        <option defaultValue="ĐÃ CỌC">ĐÃ CỌC</option>
-                                                        <option defaultValue="LÊN HỢP ĐỒNG">LÊN HỢP ĐỒNG</option>
-                                                        <option defaultValue="ĐÃ THANH TOÁN TẠM ỨNG">ĐÃ THANH TOÁN TẠM ỨNG</option>
-                                                        <option defaultValue="HOÀN TẤT GIAO DỊCH">HOÀN TẤT GIAO DỊCH</option>
-                                                        <option defaultValue="BÀN GIAO CHƯA THANH TOÁN">BÀN GIAO CHƯA THANH TOÁN</option>
-                                                        <option defaultValue="GIAO DỊCH THẤT BẠI">GIAO DỊCH THẤT BẠI</option>
-                                                    </Select>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className="row">
-                                                <label className="col-lg-4" >Loại KH: </label>
-                                                <div className="col-sm">
-                                                    <input type="customer_type" className="form-control" defaultValue={demands.customer_type} id="exampleFormControlInput1" />
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className="row" id="ykien-customers">
-                                                <label className="col-lg-4">Ý kiến KH: </label>
-                                                <div className="col-sm">
-                                                    <textarea type="customer_opinion"
-                                                        className="form-control"
-                                                        id="exampleFormControlTextarea1"
-                                                        defaultValue={demands.customer_opinion}
-                                                        rows="3"
-                                                    ></textarea>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className="row">
-                                                <label className="col-lg-4" >Phương thức liên lạc:</label>
-                                                <div className="col-sm">
-                                                    <Select className="form-control" id="exampleFormControlSelect1">
-                                                        <option defaultValue="" >{demands.customer_communication}</option>
-                                                        {/* <option defaultValue="GẶP TRỰC TIẾP">GẶP TRỰC TIẾP</option>
-                                            <option defaultValue="QUA ĐIỆN THOẠI">QUA ĐIỆN THOẠI</option>
-                                            <option defaultValue="QUA EMAIL/CHAT(ZALO,...)">QUA EMAIL/CHAT(ZALO,...)</option> */}
-                                                    </Select>
-                                                </div>
-                                            </div>
-
-                                            <div className="row">
-                                                <label className="col-lg-4">Địa điểm giao dịch: </label>
-                                                <div className="col-sm">
-                                                    <textarea type="customer_meeting"
-                                                        className="form-control"
-                                                        id="exampleFormControlTextarea1"
-                                                        defaultValue={demands.customer_meeting}
-                                                        rows="3"
-                                                    ></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card">
-                                        <div className="card-body" >
-                                            <h6><strong>Thông tin xe</strong></h6>
-                                            <div className="row">
-                                                <label className="col-lg-4">Model xe: </label>
-                                                <div className="col-sm">
-                                                    <p className="form-control">{demands.model} </p>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <label className="col-lg-4">Loại xe: </label>
-                                                <div className="col-sm">
-                                                    <p className="form-control">{demands.type} </p>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <label className="col-lg-4" >Số lượng: </label>
-                                                <div className="col-sm">
-                                                    <input
-                                                        type="quantity"
-                                                        className="form-control"
-                                                        defaultValue={demands.quantity}
-                                                        id="exampleFormControlInput1" />
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className="row">
-                                                <label className="col-lg-4">Màu xe: </label>
-                                                <div className="col-sm">
-                                                    <Select className="form-control" id="exampleFormControlSelect1" onChange={onChangeColor} style={{ background: "#add8e6" }}>
-                                                        <option defaultValue={demands.color}>{demands.color}</option>
-                                                        <option defaultValue="Cam">Cam</option>
-                                                        <option defaultValue="Trắng">Trắng</option>
-                                                        <option defaultValue="Vàng">Vàng</option>
-                                                        <option defaultValue="Xanh">Xanh</option>
-                                                        <option defaultValue="Xanh quân đội">Xanh quân đội</option>
-                                                        <option defaultValue="Đỏ">Đỏ</option>
-                                                        <option defaultValue="Chưa quyết định">Chưa quyết định</option>
-                                                    </Select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card">
-                                        <div className="card-body" >
-                                            <h6><strong>Thông tin người nhập & ngày tháng</strong></h6>
-                                            <div className="row">
-                                                <label className="col-lg-4" >Người nhập: </label>
-                                                <div className="col-sm">
-                                                    <p className="form-control">{demands.employee}</p>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <label className="col-lg-4" >Người gặp KH: </label>
-                                                <div className="col-sm">
-                                                    <p className="form-control">{demands.employee_field}</p>
-                                                </div>
-                                            </div>
-                                            <div className="row">
-                                                <label className="col-lg-4" >Ngày gặp KH:</label>
-                                                <div className="col-sm">
-                                                    <Input
-                                                        type="date"
-                                                        style={{ background: "#add8e6" }}
-                                                        className="form-control"
-                                                        name="date"
-                                                        onChange={onChangeDate}
-                                                        validations={[required]}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div className="row">
-                                                <label className="col-lg-4">Ghi chú :</label>
-                                                <div className="col-sm">
-                                                    <textarea type="note"
-                                                        className="form-control"
-                                                        id="exampleFormControlTextarea1"
-                                                        defaultValue={demands.note}
-                                                        rows="3"
-                                                        style={{ background: "#add8e6" }}
-                                                        onChange={onChangeNote}
-                                                    ></textarea>
-                                                </div>
-                                            </div>
-                                            <br />
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="text-right">
-                                    <Button variant="success" type="submit" onClick={handleRegister}>
-                                        CẬP NHẬT <UpdateIcon />
-                                    </Button>
-                                </div>
-                            </div>
-                        )}
-                        {message && (
-                            <div className="form-group">
-                                <div className="card card-body">
-                                    <div
-                                        className={successful ? "alert alert-success" : "alert alert-danger"}
-                                        role="alert"
-                                    >
-                                        <Alert key={message.message}>
-                                            <Alert.Heading>{message.heading}</Alert.Heading>
-                                            <p>
-                                                {message.message}
-                                            </p>
-                                        </Alert>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                        <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                    </Form>
+                        <div className="col-sm">
+                          <label>Ngày giai đoạn</label>
+                          <div
+                            className="form-control"
+                            style={{ overflow: "auto", background: "#e7e7e7" }}
+                          >
+                            {demands.date}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="col-sm">
+                          <label>Giai đoạn:</label>
+                          <select
+                            className="form-control"
+                            id="exampleFormControlSelect5"
+                            onChange={(e) => {
+                              setDemandStatus(e.target.value);
+                            }}
+                          >
+                            {!!demand_statuses &&
+                              demand_statuses.map((demand_status) => (
+                                <option
+                                  key={demand_status.id}
+                                  value={demand_status.id}
+                                >
+                                  {demand_status_name} {">>"}{" "}
+                                  {demand_status.name}
+                                </option>
+                              ))}
+                          </select>
+                        </div>
+                        <div className="col-sm">
+                          <label>Ngày giai đoạn</label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            name="date"
+                            value={date}
+                            onChange={(e) => {
+                              setDate(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <label>Tình hình hiện nay</label>
+                    <textarea
+                      type="demand_note"
+                      className="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                      onChange={(e) => {
+                        setNote(e.target.value);
+                      }}
+                    >
+                      {demands.note}
+                    </textarea>
+                  </div>
                 </div>
-                :
-                <div>{content}</div>
-            }
-        </div>
-    )
+              </div>
+              <div className="col-sm">
+                <div className="form-group card p-2">
+                  <h6 className="font-weight-bold text-center">
+                    THÔNG TIN VỀ NHÂN VIÊN
+                  </h6>
+                  <div className="row text-left">
+                    <div className="col-sm">
+                      <label>Người nhập</label>
+                      <div
+                        className="form-control"
+                        style={{ background: "#e7e7e7" }}
+                      >
+                        {currentUser.name}
+                      </div>
+                    </div>
+                    <div className="col-sm">
+                      <label>Người gặp khách hàng *</label>
+                      <div
+                        className="form-control"
+                        style={{ overflow: "auto", background: "#e7e7e7" }}
+                      >
+                        {demands.employee}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group card p-2">
+                  <h6 className="font-weight-bold text-center">THÔNG TIN XE</h6>
+                  <div className="row">
+                    <div className="col-sm">
+                      <label>Model xe</label>
+                      <div
+                        className="form-control"
+                        style={{ overflow: "auto", background: "#e7e7e7" }}
+                      >
+                        {demands.car_model.name}
+                      </div>
+                    </div>
+                    <div className="col-sm">
+                      <label>Màu xe</label>
+                      <div
+                        className="form-control"
+                        style={{ overflow: "auto", background: "#e7e7e7" }}
+                      >
+                        {demands.car_type.name}
+                      </div>
+                    </div>
+                    <div className="col-sm">
+                      <label>Số lượng</label>
+                      <div
+                        className="form-control"
+                        style={{ overflow: "auto", background: "#e7e7e7" }}
+                      >
+                        {demands.quantity}
+                      </div>
+                    </div>
+                    <div className="col-sm">
+                      <label>Màu xe</label>
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect7"
+                        onChange={(e) => {
+                          setColor(e.target.value);
+                        }}
+                      >
+                        {!!colors &&
+                          colors.map((color) => (
+                            <option key={color.id} value={color.id}>
+                              {color_name} {">>"} {color.name}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                className="btn btn-warning btn-sm"
+                role="button"
+                onClick={handleSubmit}
+              >
+                GỬI FORM
+              </button>
+            </div>
+          </div>
+        )}
+        {message && (
+          <div className="form-group">
+            <div
+              className={
+                successful ? "alert alert-success" : "alert alert-danger"
+              }
+              role="alert"
+            >
+              <Alert key={message.message}>
+                <Alert.Heading>{message.heading}</Alert.Heading>
+                <p>{message.message}</p>
+              </Alert>
+            </div>
+          </div>
+        )}
+        <CheckButton style={{ display: "none" }} ref={checkBtn} />
+      </Form>
+    </div>
+  ) : (
+    <div></div>
+  );
 }
-
-

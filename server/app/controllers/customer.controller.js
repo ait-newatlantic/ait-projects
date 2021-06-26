@@ -1,139 +1,417 @@
 const db = require("../models");
-const Customer = db.customer;
 const Op = db.Sequelize.Op;
+const Customer = db.customer;
 
-//ADMIN
-// Create and Save a new Demands
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.customer ||
+  if (
+    !req.body.customer_name ||
     !req.body.customer_number ||
-    !req.body.customer_area ||
     !req.body.customer_address ||
-    !req.body.customer_type ||
-    !req.body.employee) {
+    !req.body.provinceId ||
+    !req.body.business_typeId ||
+    !req.body.userId
+  ) {
     res.status(400).send({
-      message: { heading: "Oh snap! You got an error!", message: "Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng, mã số thuế khách hàng đối với doanh nghiệp!!!" }
+      message: {
+        heading: "Oh snap! You got an error!",
+        message:
+          "Xin hãy điền đầy đủ thông tin: tên khách hàng, sđt, khu vực, loại khách hàng, mã số thuế khách hàng đối với doanh nghiệp!!!",
+      },
     });
     return;
   }
-
-  // Create a Customer
-  const customer = {
-    employee: req.body.employee,
-    customer: req.body.customer,
-    customer_number: req.body.customer_number,
+  Customer.create({
+    name: req.body.customer_name,
+    number: req.body.customer_number,
+    address: req.body.customer_address,
+    customer_manager: req.body.customer_manager,
+    customer_manager_number: req.body.customer_manager_number,
+    customer_manager_email: req.body.customer_manager_email,
     customer_taxcode: req.body.customer_taxcode,
-    customer_type: req.body.customer_type,
-    customer_address: req.body.customer_address,
-    customer_representative: req.body.customer_representative,
-    customer_representative_number: req.body.customer_representative_number,
-    customer_representative_email: req.body.customer_representative_email,
-    customer_area: req.body.customer_area,
-  };
-
-  // Save Customer in the database
-  Customer.create(customer)
-    .then(data => {
-      res.send({ message: { heading: "Success !!!", message: "Form đã được gửi thành công" }, data: data });
-      //res.send(data);
+    provinceId: req.body.provinceId,
+    userId: req.body.userId,
+    business_typeId: req.body.business_typeId,
+  })
+    .then((data) => {
+      res.send({
+        message: {
+          heading: "Success !!!",
+          message: "Form đã được gửi thành công",
+        },
+        data: data,
+      });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Customer."
+          err.message || "Some error occurred while creating the Customer.",
       });
+      console.log(err);
     });
 };
 
-// Retrieve all Customers from the database.
 exports.findAll = (req, res) => {
-  const employee = req.query.employee;
-  return db.sequelize.query(` SELECT * FROM customers WHERE employee LIKE "%${employee}%" `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
-};
-
-// Find a single Customer with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Customer.findByPk(id)
-    .then(data => {
+  const hide = req.query.hide;
+  const order = req.query.order;
+  const username = req.query.username;
+  const branch_name = req.query.branch_name;
+  Customer.findAll({
+    order: [["id", order]],
+    where: [
+      {
+        hide: {
+          [Op.eq]: hide,
+        },
+      },
+    ],
+    include: [
+      {
+        model: db.user,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+          username: {
+            [Op.or]: {
+              [Op.like]: `%${username}%`,
+              [Op.eq]: null,
+            },
+          },
+        },
+        include: [
+          {
+            model: db.branch,
+            where: {
+              hide: {
+                [Op.eq]: 0,
+              },
+              name: {
+                [Op.or]: {
+                  [Op.like]: `%${branch_name}%`,
+                  [Op.eq]: null,
+                },
+              },
+            },
+          },
+        ],
+      },
+      {
+        model: db.province,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+        },
+      },
+      {
+        model: db.business_type,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+        },
+      },
+    ],
+  })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Customer with id=" + id
+        message: "Error retrieving Customers",
+      });
+      console.log(err);
+    });
+};
+
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+  Customer.findByPk(id, {
+    include: [
+      {
+        model: db.user,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+        },
+        include: [
+          {
+            model: db.branch,
+            where: {
+              hide: {
+                [Op.eq]: 0,
+              },
+            },
+          },
+        ],
+      },
+      {
+        model: db.province,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+        },
+      },
+      {
+        model: db.business_type,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+        },
+      },
+    ],
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Customer with id=" + id + err,
       });
     });
 };
 
-exports.findOneCustomer = (req, res) => {
-  const customer = req.query.customer;
-  return db.sequelize.query(` SELECT * FROM customers WHERE customer="${customer}" `,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
+exports.findWithFilters = (req, res) => {
+  const name = req.query.name;
+  const number = req.query.number;
+  const address = req.query.address;
+  const manager = req.query.manager;
+  const manager_number = req.query.manager_number;
+  const manager_email = req.query.manager_email;
+  const taxcode = req.query.taxcode;
+  const hide = req.query.hide;
+  const user_name = req.query.user_name;
+  const username = req.query.username;
+  const province = req.query.province;
+  const business_type = req.query.business_type;
+  const datetype = req.query.datetype;
+  const from_date = req.query.from_date;
+  const to_date = req.query.to_date;
+  const branch_name = req.query.branch_name;
+  const order = req.query.order;
+  const limit = parseInt(req.query.limit) || null;
+  Customer.findAll({
+    order: [["id", order]],
+    limit: limit,
+    where: [
+      {
+        name: {
+          [Op.or]: {
+            [Op.like]: `%${name}%`,
+            [Op.eq]: null,
+          },
+        },
+        number: {
+          [Op.or]: {
+            [Op.like]: `%${number}%`,
+            [Op.eq]: null,
+          },
+        },
+        address: {
+          [Op.or]: {
+            [Op.like]: `%${address}%`,
+            [Op.eq]: null,
+          },
+        },
+        manager: {
+          [Op.or]: {
+            [Op.like]: `%${manager}%`,
+            [Op.eq]: null,
+          },
+        },
+        manager_number: {
+          [Op.or]: {
+            [Op.like]: `%${manager_number}%`,
+            [Op.eq]: null,
+          },
+        },
+        manager_email: {
+          [Op.or]: {
+            [Op.like]: `%${manager_email}%`,
+            [Op.eq]: null,
+          },
+        },
+        taxcode: {
+          [Op.or]: {
+            [Op.like]: `%${taxcode}%`,
+            [Op.eq]: null,
+          },
+        },
+        hide: {
+          [Op.eq]: hide,
+        },
+        [datetype]: {
+          [Op.between]: [from_date, to_date],
+        },
+      },
+    ],
+    include: [
+      {
+        model: db.user,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+          name: {
+            [Op.or]: {
+              [Op.like]: `%${user_name}%`,
+              [Op.eq]: null,
+            },
+          },
+          username: {
+            [Op.or]: {
+              [Op.like]: `%${username}%`,
+              [Op.eq]: null,
+            },
+          },
+        },
+        include: [
+          {
+            model: db.branch,
+            where: {
+              hide: {
+                [Op.eq]: 0,
+              },
+              name: {
+                [Op.or]: {
+                  [Op.like]: `%${branch_name}%`,
+                  [Op.eq]: null,
+                },
+              },
+            },
+          },
+        ],
+      },
+      {
+        model: db.province,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+          name: {
+            [Op.or]: {
+              [Op.like]: `%${province}%`,
+              [Op.eq]: null,
+            },
+          },
+        },
+      },
+      {
+        model: db.business_type,
+        where: {
+          hide: {
+            [Op.eq]: 0,
+          },
+          name: {
+            [Op.or]: {
+              [Op.like]: `%${business_type}%`,
+              [Op.eq]: null,
+            },
+          },
+        },
+      },
+    ],
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Customers" + err,
+      });
+    });
 };
 
-// Update a Customer by the id in the request
+exports.findByName = (req, res) => {
+  const name = req.query.customer_name;
+  Customer.findAll({
+    where: {
+      hide: {
+        [Op.eq]: 0,
+      },
+      name: {
+        [Op.eq]: name,
+      },
+    },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving customer.",
+      });
+      console.log(err);
+    });
+};
+
 exports.update = (req, res) => {
   const id = req.params.id;
-
-  const customer = {
-    customer_representative: req.body.customer_representative,
-    customer_representative_number: req.body.customer_representative_number,
-    customer_representative_email: req.body.customer_representative_email,
-  };
-
-  Customer.update(customer, {
-    where: { id: id }
-  })
-    .then(num => {
+  Customer.update(
+    {
+      manager: req.body.manager,
+      manager_number: req.body.manager_number,
+      manager_email: req.body.manager_email,
+    },
+    {
+      where: { id: id },
+    }
+  )
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: { heading: "Success !!!", message: "Form đã được cập nhật thành công" }
+          message: {
+            heading: "Success !!!",
+            message: "Customer was updated successfully!",
+          },
         });
       } else {
         res.status(400).send({
-          message: { heading: "Oh snap! You got an error!", message: `Cannot update Customer with id=${id}. Maybe Customer was not found or req.body is empty!` }
+          message: {
+            heading: "Oh snap! You got an error!",
+            message: `Cannot update Customer with id=${id}. Maybe Customer was not found or req.body is empty!`,
+          },
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating Customer with id=" + id
+        message: "Error updating Customer with id=" + id,
       });
+      console.log(err);
     });
 };
 
-exports.findQuantity = (req, res) => {
-  employee = req.query.employee
-  return db.sequelize.query(
-    `SELECT
-    SUM(employee LIKE '%NVL%') AS nvl,
-    SUM(employee LIKE '%VUNGTAU%') AS vungtau,
-    SUM(employee LIKE '%QUANGTRI%') AS quangtri,
-    SUM(employee LIKE '%PDA%') AS pda,
-    SUM(employee LIKE '%TAYNINH%') AS tayninh,
-    SUM(employee LIKE '%DAKLAK%') AS daklak,
-    SUM(employee LIKE '%DANANG%') AS danang,
-    SUM(employee LIKE '%CANTHO%') AS cantho,
-    SUM(employee LIKE '%BINHPHUOC%') AS binhphuoc,
-    SUM(employee LIKE '%HUNGYEN%') AS hungyen,
-    SUM(employee LIKE '%LAMDONG%') AS lamdong,
-    SUM(employee LIKE '%DONGNAI%') AS dongnai,
-    SUM(employee LIKE '%BINHDINH%') AS binhdinh,
-    SUM(employee LIKE '%GIALAI%') AS gialai
-    FROM customers`,
-    { type: db.sequelize.QueryTypes.SELECT })
-    .then(queues => res.json(queues))
-    .catch(err => res.status(400).json(err));
+exports.hide = (req, res) => {
+  const id = req.query.id;
+  const hide = req.query.hide;
+  Customer.update(
+    {
+      hide: hide,
+    },
+    {
+      where: { id: id },
+    }
+  )
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Customer was deleted successfully!",
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Customer with id=${id}. Maybe Customer was not found!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete Customer with id=" + id,
+      });
+      console.log(err);
+    });
 };
-
-
-
-
-

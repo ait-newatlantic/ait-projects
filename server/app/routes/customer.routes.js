@@ -1,24 +1,28 @@
-module.exports = app => {
+module.exports = (app) => {
   const customers = require("../controllers/customer.controller.js");
 
   var router = require("express").Router();
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
 
-  // Create a new Tutorial
   router.post("/", customers.create);
 
-  // Retrieve all Tutorials
+  router.put("/customer", customers.hide);
+
+  router.put("/customer/:id", customers.update);
+
+  router.get("/customer/:id", customers.findOne);
+
+  router.get("/filters", customers.findWithFilters);
+
+  router.get("/info", customers.findByName);
+
   router.get("/", customers.findAll);
-  
-  router.get("/quantity", customers.findQuantity);
 
-  // Retrieve a single Tutorial with id
-  router.get("/info", customers.findOneCustomer);
-
-  // Retrieve a single Tutorial with id
-  router.get("/:id", customers.findOne);
-
-  // Update a Tutorial with id
-  router.put("/:id", customers.update);
-
-  app.use('/api/customers', router);
+  app.use("/api/customers", router);
 };

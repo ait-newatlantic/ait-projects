@@ -1,31 +1,25 @@
-module.exports = app => {
-    const demands = require("../controllers/demand.controller.js");
-  
-    var router = require("express").Router();
+module.exports = (app) => {
+  const demands = require("../controllers/demand.controller.js");
 
-    router.post("/", demands.create);
+  var router = require("express").Router();
 
-    router.get("/", demands.findAll);
+  router.post("/", demands.create);
 
-    router.get("/date", demands.findAllDate);
+  router.put("/demand", demands.hide);
 
-    router.get("/updateat", demands.findAllUpdatedAt);
+  router.put("/demand/:id", demands.update);
 
-    router.get("/createat", demands.findAllCreatedAt);
+  router.get("/demand/:id", demands.findOne);
 
-    router.get("/goat", demands.findAllGoAt);
+  router.get("/filters", demands.findWithFilters);
 
-    router.get("/total", demands.findAllTotal);
-    
-    router.get("/overall", demands.findAllOverall);
+  router.get("/demandstatuses", demands.findDemandStatusReport);
 
-    router.get("/allmodels", demands.findAllModels);
-    
-    router.get("/allquantity", demands.findAllQuantity);
+  router.get("/demandstotal", demands.findAllTotal);
 
-    router.get("/:id", demands.findOne);
+  router.get("/demandsquantity", demands.findAllQuantity);
 
-    router.put("/:id", demands.update);
-  
-    app.use('/api/demands', router);
-  };
+  router.get("/", demands.findAll);
+
+  app.use("/api/demands", router);
+};
