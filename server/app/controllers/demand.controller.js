@@ -213,87 +213,37 @@ exports.findOne = (req, res) => {
     include: [
       {
         model: db.user,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
         include: [
           {
             model: db.branch,
-            where: {
-              hide: {
-                [Op.eq]: 0,
-              },
-            },
           },
         ],
       },
       {
         model: db.customer,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
         include: [
           {
             model: db.province,
-            where: {
-              hide: {
-                [Op.eq]: 0,
-              },
-            },
           },
         ],
       },
       {
         model: db.customer_type,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.car_model,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.car_type,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.color,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.demand_status,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.contact_type,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
     ],
   })
