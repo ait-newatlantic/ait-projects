@@ -4,8 +4,8 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
 import { Checkbox } from "@material-ui/core";
-import NavigationBar from "../NavigationBar/NavigationBar";
-import Footer from "../Footer/Footer";
+import ColorFunc from "../../functions/colors";
+import { useEffect } from "react";
 
 const required = (value) => {
   if (!value) {
@@ -20,7 +20,7 @@ const required = (value) => {
 export default function Login(props) {
   const form = useRef();
   const checkBtn = useRef();
-
+  const [rand, setRand] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,14 +72,15 @@ export default function Login(props) {
     }
   };
 
+  useEffect(() => {
+      setRand(ColorFunc.colors[Math.floor(Math.random() * ColorFunc.colors.length)]); //pick random color
+  }, [])
+
   return (
-    <div>
-      <div className="border-bottom">
-        <NavigationBar />
-      </div>
-      <div className="container" style={{ height: "80vh" }}>
+    <div style={rand}>
+      <div className="container" style={{ height: "100vh" }}>
         <div className="row align-items-center h-100">
-          <div className="shadow card col col-xl-6 col-lg-6 col-md-6 col-sm-12 p-4 mx-auto rounded">
+          <div className="shadow card-glass col col-xl-6 col-lg-6 col-md-6 col-sm-12 p-4 mx-auto rounded">
             <Form onSubmit={handleLogin} ref={form}>
               <p className="lead text-left text-dark">Login</p>
               <div className="form-group">
@@ -117,7 +118,7 @@ export default function Login(props) {
               <div className="form-group">
                 <div className="row">
                   <div className="col text-secondary text-left">
-                    <a className="text-secondary" href="tel: +84918628660">
+                    <a className="text-dark" href="tel: +84918628660">
                       Bạn quên mật khẩu?
                     </a>
                   </div>
@@ -145,12 +146,6 @@ export default function Login(props) {
             </Form>
           </div>
         </div>
-      </div>
-      <div
-        className="border-top p-4"
-        style={{ position: "absolute", bottom: "0", width: "100%" }}
-      >
-        <Footer />
       </div>
     </div>
   );

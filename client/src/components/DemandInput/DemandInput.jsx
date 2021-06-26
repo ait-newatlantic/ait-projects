@@ -83,6 +83,16 @@ export default function DemandInput(props) {
   const form = useRef();
   const checkBtn = useRef();
 
+  const required = (value) => {
+    if (!value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This field is required!
+        </div>
+      );
+    }
+  };
+
   const addToList = () => {
     arr.push({
       demand_quantity,
@@ -318,6 +328,7 @@ export default function DemandInput(props) {
     } else {
       // Your useEffect code here to be run on update
       FetchCustomers();
+      Autofill();
     }
   }, [getUser, Autofill, FetchCustomers]);
 
@@ -333,7 +344,7 @@ export default function DemandInput(props) {
           <div>
             <div className="row">
               <div className="col-sm">
-                <div className="form-group border rounded border-secondary p-2">
+                <div className="form-group card p-2">
                   <h6 className="font-weight-bold text-center">
                     THÔNG TIN KHÁCH HÀNG
                   </h6>
@@ -416,6 +427,7 @@ export default function DemandInput(props) {
                         name="date"
                         value={date}
                         onChange={onChangeDate}
+                        validations={[required]}
                       />
                     </div>
                   </div>
@@ -460,7 +472,9 @@ export default function DemandInput(props) {
                     </div>
                   </div>
                 </div>
-                <div className="form-group border rounded border-secondary p-2">
+              </div>
+              <div className="col-sm">
+                <div className="form-group card p-2">
                   <h6 className="font-weight-bold text-center">
                     THÔNG TIN VỀ NHÂN VIÊN
                   </h6>
@@ -482,118 +496,125 @@ export default function DemandInput(props) {
                         name="demand_employee"
                         value={demand_employee}
                         onChange={onChangeDemandEmployee}
+                        validations={[required]}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="col-sm">
-                <div
-                  className="form-group border rounded border-secondary p-2"
-                  style={{ overflow: "scroll", height: "50vh" }}
+            </div>
+            <div className="form-group card p-2">
+              <h6 className="font-weight-bold text-center">
+                DANH SÁCH XE KHÁCH HÀNG QUAN TÂM
+              </h6>
+              <Table striped bordered hover responsive size="sm">
+                <thead>
+                  <tr>
+                    <th className="align-middle">#</th>
+                    <th className="align-middle">Tên khách hàng</th>
+                    <th className="align-middle">Loại khách khách hàng</th>
+                    <th className="align-middle">Cách liên lạc</th>
+                    <th className="align-middle">Giai đoạn</th>
+                    <th className="align-middle">Ngày giai đoạn</th>
+                    <th className="align-middle">Tình hình hiện nay</th>
+                    <th className="align-middle">ý kiến khách hàng</th>
+                    <th className="align-middle">Địa điểm giao dịch</th>
+                    <th>
+                      Model xe
+                      <Select
+                        className="form-control"
+                        id="exampleFormControlSelect4"
+                        onChange={onChangeCarModel}
+                      >
+                        {!!car_models &&
+                          car_models.map((car_model) => (
+                            <option key={car_model.id} value={car_model.id}>
+                              {car_model.name}
+                            </option>
+                          ))}
+                      </Select>
+                    </th>
+                    <th>
+                      Loại xe
+                      <Select
+                        className="form-control"
+                        id="exampleFormControlSelect6"
+                        onChange={onChangeCarType}
+                      >
+                        {!!car_types &&
+                          car_types.map((car_type) => (
+                            <option key={car_type.id} value={car_type.id}>
+                              {car_type.name}
+                            </option>
+                          ))}
+                      </Select>
+                    </th>
+                    <th>
+                      Số lượng
+                      <Input
+                        type="number"
+                        className="form-control"
+                        name="demand_quantity"
+                        value={demand_quantity}
+                        onChange={onChangeQuantity}
+                        validations={[required]}
+                      />
+                    </th>
+                    <th>
+                      Màu xe
+                      <Select
+                        className="form-control"
+                        id="exampleFormControlSelect7"
+                        onChange={onChangeColor}
+                      >
+                        {!!colors &&
+                          colors.map((color) => (
+                            <option key={color.id} value={color.id}>
+                              {color.name}
+                            </option>
+                          ))}
+                      </Select>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {arr2.map((result, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{result.customer_name}</td>
+                      <td>{result.customer_type_name}</td>
+                      <td>{result.contact_type_name}</td>
+                      <td>{result.demand_status_name}</td>
+                      <td>{result.date}</td>
+                      <td>{result.demand_note}</td>
+                      <td>{result.demand_opinion}</td>
+                      <td>{result.demand_meeting}</td>
+                      <td>{result.car_model_name}</td>
+                      <td>{result.car_type_name}</td>
+                      <td>{result.demand_quantity}</td>
+                      <td>{result.color_name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <div
+                className="d-flex justify-content-around"
+                style={{ background: "#e7e7e7" }}
+              >
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={addToList}
                 >
-                  <h6 className="font-weight-bold text-center">
-                    DANH SÁCH XE KHÁCH HÀNG QUAN TÂM
-                  </h6>
-                  <Table striped bordered hover size="sm">
-                    <thead>
-                      <tr>
-                        <th className="align-middle">#</th>
-                        <th className="align-middle">Tên khách hàng</th>
-                        <th className="align-middle">Giai đoạn</th>
-                        <th className="align-middle">Ngày giai đoạn</th>
-                        <th>
-                          Model xe
-                          <Select
-                            className="form-control"
-                            id="exampleFormControlSelect4"
-                            onChange={onChangeCarModel}
-                          >
-                            {!!car_models &&
-                              car_models.map((car_model) => (
-                                <option key={car_model.id} value={car_model.id}>
-                                  {car_model.name}
-                                </option>
-                              ))}
-                          </Select>
-                        </th>
-                        <th>
-                          Loại xe
-                          <Select
-                            className="form-control"
-                            id="exampleFormControlSelect6"
-                            onChange={onChangeCarType}
-                          >
-                            {!!car_types &&
-                              car_types.map((car_type) => (
-                                <option key={car_type.id} value={car_type.id}>
-                                  {car_type.name}
-                                </option>
-                              ))}
-                          </Select>
-                        </th>
-                        <th>
-                          Số lượng
-                          <Input
-                            type="number"
-                            className="form-control"
-                            name="demand_quantity"
-                            value={demand_quantity}
-                            onChange={onChangeQuantity}
-                          />
-                        </th>
-                        <th>
-                          Màu xe
-                          <Select
-                            className="form-control"
-                            id="exampleFormControlSelect7"
-                            onChange={onChangeColor}
-                          >
-                            {!!colors &&
-                              colors.map((color) => (
-                                <option key={color.id} value={color.id}>
-                                  {color.name}
-                                </option>
-                              ))}
-                          </Select>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {arr2.map((result, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{result.customer_name}</td>
-                          <td>{result.demand_status_name}</td>
-                          <td>{result.date}</td>
-                          <td>{result.car_model_name}</td>
-                          <td>{result.car_type_name}</td>
-                          <td>{result.demand_quantity}</td>
-                          <td>{result.color_name}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                  <div
-                    className="d-flex justify-content-around"
-                    style={{ background: "#e7e7e7" }}
-                  >
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={addToList}
-                    >
-                      Thêm xe vào danh sách
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={removeFromList}
-                    >
-                      Xóa xe cuối danh sách
-                    </button>
-                  </div>
-                </div>
+                  Thêm xe vào danh sách
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={removeFromList}
+                >
+                  Xóa xe cuối danh sách
+                </button>
               </div>
             </div>
             <div className="text-left">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Route, Link } from "react-router-dom";
 
 //Libraries
@@ -26,7 +26,6 @@ import Test from "../Test/Test";
 
 //Services
 import AuthService from "../../services/auth.service";
-import OptionService from "../../services/option.service";
 
 //Components
 import Home from "../Home/Home";
@@ -44,6 +43,9 @@ import DashBoard from "../DashBoard/DashBoard";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import UserUpdate from "../UserUpdate/UserUpdate";
 
+//Context
+import {OptionContext} from "../../context/option.context";
+
 require("dotenv").config();
 
 export default function Sidebar() {
@@ -55,7 +57,7 @@ export default function Sidebar() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [open4, setOpen4] = useState(false);
-  const [sidebar, setSideBar] = useState("");
+  const {option1, option2} = useContext(OptionContext);
 
   const user = AuthService.getCurrentUser();
 
@@ -111,10 +113,10 @@ export default function Sidebar() {
     },
     drawerPaper: {
       width: drawerWidth,
-      background: "#17416b",
+      background: `${option1}`,
     },
     drawerSubMenu: {
-      background: "#1C4E80",
+      background: `${option2}`,
     },
     drawerHeader: {
       // display: "flex",
@@ -164,12 +166,6 @@ export default function Sidebar() {
     setOpen(false);
   };
 
-  const FetchSideBar = () => {
-    OptionService.get_options.then((response) => {
-      setSideBar(response.data);
-    });
-  };
-
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
@@ -191,10 +187,6 @@ export default function Sidebar() {
       } else setWidth("100%");
     }
   }, [onlyWidth, open]);
-
-  useEffect(() => {
-    FetchSideBar()
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -283,7 +275,7 @@ export default function Sidebar() {
       >
         <div
           className={classes.drawerHeader}
-          style={{ background: "#17416b", minHeight: "48px" }}
+          style={{ minHeight: "48px" }}
         >
           <div className="flex d-flex flex-wrap align-items-center px-1">
             <div>
@@ -758,7 +750,7 @@ export default function Sidebar() {
       >
         <div className={classes.drawerHeader} />
         {showAdminBoard && (
-          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}`}}>
             <Route exact path="/home" component={Home} />
             <Route
               exact
@@ -820,7 +812,7 @@ export default function Sidebar() {
           </div>
         )}
         {showModeratorBoard && (
-          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}`}}>
             <Route exact path="/home" component={Home} />
             <Route
               exact
@@ -882,7 +874,7 @@ export default function Sidebar() {
           </div>
         )}
         {showEmployeeBoard && (
-          <div className="mx-auto" style={{ maxWidth: `${screenwidth}` }}>
+          <div className="mx-auto" style={{ maxWidth: `${screenwidth}`}}>
             <Route exact path="/home" component={Home} />
             <Route
               exact

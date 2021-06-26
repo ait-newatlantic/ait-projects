@@ -176,7 +176,7 @@ export default function DashBoard() {
       )}
       <div className="row justify-content-center text-left">
         <div className="col-md-8 col-sm d-flex flex-column">
-          <div className="flex-fill card-glass p-2">
+          <div className="flex-fill card p-2">
             {!!demand_statuses &&
               demand_statuses.map((month, index) => (
                 <BarChart
@@ -233,7 +233,7 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div className="card-glass p-2">
+          <div className="card p-2">
             <label className="font-weight-bold text-uppercase">
               Bảng thống kê số lượng giao dịch hàng năm
             </label>
@@ -324,7 +324,7 @@ export default function DashBoard() {
           </div>
         </div>
         <div className="col-md-4 col-sm d-flex flex-column">
-          <div className="card-glass p-2">
+          <div className="card p-2">
             {!!yearResult &&
               yearResult.map((form, index) => (
                 <DonutChart
@@ -343,7 +343,7 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div className="card-glass p-2">
+          <div className="card p-2">
             {!!yearResult1 &&
               yearResult1.map((quantity, index) => (
                 <HorizontalBarChart
@@ -363,7 +363,7 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div className="card-glass p-2">
+          <div className="card p-2">
             <div>
               {!!demand_statuses &&
                 demand_statuses.map((month, index) => (

@@ -107,7 +107,7 @@ export default function DemandUpdate(props) {
           <div className="text-left">
             <div className="row">
               <div className="col-sm">
-                <div className="form-group border rounded border-secondary p-2">
+                <div className="form-group card p-2">
                   <h6 className="font-weight-bold text-center">
                     THÔNG TIN KHÁCH HÀNG
                   </h6>
@@ -121,38 +121,65 @@ export default function DemandUpdate(props) {
                         {demands.customer.name}
                       </div>
                     </div>
-                    <div className="col-sm">
-                      <label>Giai đoạn:</label>
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect5"
-                        onChange={(e) => {
-                          setDemandStatus(e.target.value);
-                        }}
-                      >
-                        {!!demand_statuses &&
-                          demand_statuses.map((demand_status) => (
-                            <option
-                              key={demand_status.id}
-                              value={demand_status.id}
-                            >
-                              {demand_status_name} {">>"} {demand_status.name}
-                            </option>
-                          ))}
-                      </select>
-                    </div>
-                    <div className="col-sm">
-                      <label>Ngày giai đoạn</label>
-                      <input
-                        type="date"
-                        className="form-control"
-                        name="date"
-                        value={date}
-                        onChange={(e) => {
-                          setDate(e.target.value);
-                        }}
-                      />
-                    </div>
+                    {demands.demand_statusId === 9 ||
+                    demands.demand_statusId === 10 ? (
+                      <div>
+                        <div className="col-sm">
+                          <label>Giai đoạn:</label>
+                          <div
+                            className="form-control"
+                            style={{ overflow: "auto", background: "#e7e7e7" }}
+                          >
+                            {demands.demand_status.name}
+                          </div>
+                        </div>
+                        <div className="col-sm">
+                          <label>Ngày giai đoạn</label>
+                          <div
+                            className="form-control"
+                            style={{ overflow: "auto", background: "#e7e7e7" }}
+                          >
+                            {demands.date}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="col-sm">
+                          <label>Giai đoạn:</label>
+                          <select
+                            className="form-control"
+                            id="exampleFormControlSelect5"
+                            onChange={(e) => {
+                              setDemandStatus(e.target.value);
+                            }}
+                          >
+                            {!!demand_statuses &&
+                              demand_statuses.map((demand_status) => (
+                                <option
+                                  key={demand_status.id}
+                                  value={demand_status.id}
+                                >
+                                  {demand_status_name} {">>"}{" "}
+                                  {demand_status.name}
+                                </option>
+                              ))}
+                          </select>
+                        </div>
+                        <div className="col-sm">
+                          <label>Ngày giai đoạn</label>
+                          <input
+                            type="date"
+                            className="form-control"
+                            name="date"
+                            value={date}
+                            onChange={(e) => {
+                              setDate(e.target.value);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label>Tình hình hiện nay</label>
@@ -169,7 +196,9 @@ export default function DemandUpdate(props) {
                     </textarea>
                   </div>
                 </div>
-                <div className="form-group border rounded border-secondary p-2">
+              </div>
+              <div className="col-sm">
+                <div className="form-group card p-2">
                   <h6 className="font-weight-bold text-center">
                     THÔNG TIN VỀ NHÂN VIÊN
                   </h6>
@@ -194,9 +223,7 @@ export default function DemandUpdate(props) {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-sm">
-                <div className="form-group border rounded border-secondary p-2">
+                <div className="form-group card p-2">
                   <h6 className="font-weight-bold text-center">THÔNG TIN XE</h6>
                   <div className="row">
                     <div className="col-sm">

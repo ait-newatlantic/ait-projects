@@ -47,7 +47,7 @@ label {
     overflow: hidden;
     text-align: center;
     padding: 2.2rem;
-    background: linear-gradient( 130deg, rgb(152, 193, 233), rgba(251, 251, 254, 0.2));
+    background: linear-gradient( 130deg, rgba(251, 251, 254, 0.6), rgba(251, 251, 254, 0.2));
     box-shadow: inset 2px 2px 1px rgba(251, 251, 254, 0.3) inset -2px -2px 1px rgba(251, 251, 254, 0.2);
     border-radius: 1.2rem;
     backdrop-filter: blur(10px);
@@ -59,4 +59,22 @@ label {
 
 .bg-gray {
     background: #e7e7e7;
+}
+
+.evening-sunshine {
+    background: #b92b27;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #1565c0, #b92b27);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #1565c0, #b92b27);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.memariani {
+    background: #aa4b6b;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient( to right, #3b8d99, #6b6b83, #aa4b6b);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient( to right, #3b8d99, #6b6b83, #aa4b6b);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
