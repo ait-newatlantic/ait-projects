@@ -12,17 +12,17 @@ import {
 import { Table } from "react-bootstrap";
 
 //Services
-import DemandService from "../../services/demand.service";
-import BranchService from "../../services/branch.service";
+import DemandService from "../../services/Demand.service";
+import BranchService from "../../services/Branch.service";
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
+import UserService from "../../services/User.service";
 
 //Functions
 import DateFunc from "../../functions/datetime";
 
 export default function DashBoard() {
   const [flag, setFlag] = useState(0);
-  const [user, setUser] = useState("");
+  const [User, setUser] = useState("");
   const [branch_name, setBranchName] = useState("");
   const [username, setUserName] = useState("");
   const [branches, setBranches] = useState("");
@@ -90,13 +90,13 @@ export default function DashBoard() {
   const getUser = useCallback(() => {
     UserService.get_user(currentUser.id).then((response) => {
       setUser(response.data);
-      if (response.data.roles[0].id === 4) {
+      if (response.data.Roles[0].id === 4) {
         //User is an employee
         setUserName(response.data.username);
-        setBranchName(response.data.branch.name);
-      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.Branch.name);
+      } else if (response.data.Roles[0].id === 2) {
         //User is an moderator
-        setBranchName(response.data.branch.name);
+        setBranchName(response.data.Branch.name);
       } else {
         FetchBranches();
         handleSubmit();
@@ -139,9 +139,9 @@ export default function DashBoard() {
               >
                 <option value="">Tất cả</option>
                 {!!branches &&
-                  branches.map((branch) => (
-                    <option key={branch.id} value={branch.name}>
-                      {branch.name}
+                  branches.map((Branch) => (
+                    <option key={Branch.id} value={Branch.name}>
+                      {Branch.name}
                     </option>
                   ))}
               </select>

@@ -59,7 +59,7 @@ export default function Sidebar() {
   const [open4, setOpen4] = useState(false);
   const { option1, option2 } = useContext(OptionContext);
 
-  const user = AuthService.getCurrentUser();
+  const User = AuthService.getCurrentUser();
 
   const handleClick1 = () => {
     setOpen1(!open1);
@@ -167,12 +167,12 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-      setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"));
+    const User = AuthService.getCurrentUser();
+    if (User) {
+      setCurrentUser(User);
+      setShowModeratorBoard(User.roles.includes("ROLE_MODERATOR"));
+      setShowAdminBoard(User.roles.includes("ROLE_ADMIN"));
+      setShowEmployeeBoard(User.roles.includes("ROLE_EMPLOYEE"));
     }
   }, []);
 

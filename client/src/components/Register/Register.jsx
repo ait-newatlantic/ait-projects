@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import BranchService from "../../services/branch.service";
+import BranchService from "../../services/Branch.service";
 import AuthService from "../../services/auth.service";
 import { Button } from "react-bootstrap";
 
@@ -163,9 +163,9 @@ const Register = (props) => {
                   onChange={onChangeBranch}
                 >
                   {!!branches &&
-                    branches.map((branch) => (
-                      <option key={branch.id} value={branch.id}>
-                        {branch.name}
+                    branches.map((Branch) => (
+                      <option key={Branch.id} value={Branch.id}>
+                        {Branch.name}
                       </option>
                     ))}
                 </Select>

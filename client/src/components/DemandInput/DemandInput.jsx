@@ -11,21 +11,21 @@ import Select from "react-validation/build/select";
 import { Table } from "react-bootstrap";
 
 //Services
-import DemandService from "../../services/demand.service";
-import CustomerService from "../../services/customer.service";
-import CustomerTypeService from "../../services/customer_type.service";
-import ContactTypeService from "../../services/contact_type.service";
+import DemandService from "../../services/Demand.service";
+import CustomerService from "../../services/Customer.service";
+import CustomerTypeService from "../../services/Customer_Type.service";
+import ContactTypeService from "../../services/Contact_Type.service";
 import AuthService from "../../services/auth.service";
-import CarModelService from "../../services/car_model.service";
-import CarTypeService from "../../services/car_type.service";
-import ColorService from "../../services/color.services";
-import DemandStatusService from "../../services/demand_status.service";
-import UserService from "../../services/user.service";
+import CarModelService from "../../services/Car_Model.service";
+import CarTypeService from "../../services/Car_Type.service";
+import ColorService from "../../services/Color.services";
+import DemandStatusService from "../../services/Demand_Status.service";
+import UserService from "../../services/User.service";
 
 export default function DemandInput(props) {
   const [date, setDemandDate] = useState("");
 
-  const [user, setUser] = useState("");
+  const [User, setUser] = useState("");
 
   const [username, setUserName] = useState("");
 
@@ -300,13 +300,13 @@ export default function DemandInput(props) {
   const getUser = useCallback(() => {
     UserService.get_user(currentUser.id).then((response) => {
       setUser(response.data);
-      if (response.data.roles[0].id === 4) {
+      if (response.data.Roles[0].id === 4) {
         //User is an employee
         setUserName(response.data.username);
-        setBranchName(response.data.branch.name);
-      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.Branch.name);
+      } else if (response.data.Roles[0].id === 2) {
         //User is an moderator
-        setBranchName(response.data.branch.name);
+        setBranchName(response.data.Branch.name);
       } else {
         FetchCustomers();
       }
@@ -373,12 +373,12 @@ export default function DemandInput(props) {
                         onChange={onChangeCustomerType}
                       >
                         {!!customer_types &&
-                          customer_types.map((customer_type) => (
+                          customer_types.map((Customer_Type) => (
                             <option
-                              key={customer_type.id}
-                              value={customer_type.id}
+                              key={Customer_Type.id}
+                              value={Customer_Type.id}
                             >
-                              {customer_type.name}
+                              {Customer_Type.name}
                             </option>
                           ))}
                       </Select>
@@ -391,12 +391,12 @@ export default function DemandInput(props) {
                         onChange={onChangeContactType}
                       >
                         {!!contact_types &&
-                          contact_types.map((contact_type) => (
+                          contact_types.map((Contact_Type) => (
                             <option
-                              key={contact_type.id}
-                              value={contact_type.id}
+                              key={Contact_Type.id}
+                              value={Contact_Type.id}
                             >
-                              {contact_type.name}
+                              {Contact_Type.name}
                             </option>
                           ))}
                       </Select>
@@ -409,12 +409,12 @@ export default function DemandInput(props) {
                         onChange={onChangeDemandStatusId}
                       >
                         {!!demand_statuses &&
-                          demand_statuses.map((demand_status) => (
+                          demand_statuses.map((Demand_Status) => (
                             <option
-                              key={demand_status.id}
-                              value={demand_status.id}
+                              key={Demand_Status.id}
+                              value={Demand_Status.id}
                             >
-                              {demand_status.name}
+                              {Demand_Status.name}
                             </option>
                           ))}
                       </Select>
@@ -527,9 +527,9 @@ export default function DemandInput(props) {
                         onChange={onChangeCarModel}
                       >
                         {!!car_models &&
-                          car_models.map((car_model) => (
-                            <option key={car_model.id} value={car_model.id}>
-                              {car_model.name}
+                          car_models.map((Car_Model) => (
+                            <option key={Car_Model.id} value={Car_Model.id}>
+                              {Car_Model.name}
                             </option>
                           ))}
                       </Select>
@@ -542,9 +542,9 @@ export default function DemandInput(props) {
                         onChange={onChangeCarType}
                       >
                         {!!car_types &&
-                          car_types.map((car_type) => (
-                            <option key={car_type.id} value={car_type.id}>
-                              {car_type.name}
+                          car_types.map((Car_Type) => (
+                            <option key={Car_Type.id} value={Car_Type.id}>
+                              {Car_Type.name}
                             </option>
                           ))}
                       </Select>
@@ -568,9 +568,9 @@ export default function DemandInput(props) {
                         onChange={onChangeColor}
                       >
                         {!!colors &&
-                          colors.map((color) => (
-                            <option key={color.id} value={color.id}>
-                              {color.name}
+                          colors.map((Color) => (
+                            <option key={Color.id} value={Color.id}>
+                              {Color.name}
                             </option>
                           ))}
                       </Select>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Alert } from "react-bootstrap";
-import CustomerService from "../../services/customer.service";
+import CustomerService from "../../services/Customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import AuthService from "../../services/auth.service";
@@ -9,7 +9,7 @@ export default function CustomerUpdate(props) {
   const [manager, setmanager] = useState("");
   const [manager_number, setmanager_Number] = useState("");
   const [manager_email, setmanager_Email] = useState("");
-  const [customer, setCustomer] = useState("");
+  const [Customer, setCustomer] = useState("");
 
   const [message, setMessage] = useState("");
   const [successful, setSuccessful] = useState(false);
@@ -82,7 +82,7 @@ export default function CustomerUpdate(props) {
     FetchData();
   }, []);
 
-  return customer ? (
+  return Customer ? (
     <div>
       <div className="text-left">
         <h4 className="font-weight-bold text-secondary">CẬP NHẬT KHÁCH HÀNG</h4>
@@ -99,7 +99,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ overflow: "auto", background: "#e7e7e7" }}
                   >
-                    {customer.name}
+                    {Customer.name}
                   </div>
                 </div>
                 <div className="col-sm">
@@ -108,7 +108,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {customer.number}
+                    {Customer.number}
                   </div>
                 </div>
               </div>
@@ -119,7 +119,7 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {customer.province.name}
+                    {Customer.Province.name}
                   </div>
                 </div>
                 <div className="col-sm">
@@ -128,17 +128,17 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {customer.business_type.name}
+                    {Customer.Business_Type.name}
                   </div>
                 </div>
-                {customer.business_type.id === 2 ? (
+                {Customer.Business_Type.id === 2 ? (
                   <div className="col-sm">
                     <label>Mã số thuế:</label>
                     <div
                       className="form-control"
                       style={{ background: "#e7e7e7" }}
                     >
-                      {customer.taxcode}
+                      {Customer.taxcode}
                     </div>
                   </div>
                 ) : (
@@ -152,12 +152,12 @@ export default function CustomerUpdate(props) {
                     className="form-control"
                     style={{ background: "#e7e7e7" }}
                   >
-                    {customer.address}
+                    {Customer.address}
                   </div>
                 </div>
               </div>
             </div>
-            {customer.business_type.id === 2 ? (
+            {Customer.Business_Type.id === 2 ? (
               <div className="form-group">
                 <h6 className="font-weight-bold">Thông tin người đại diện</h6>
                 <div className="row ">
@@ -167,7 +167,7 @@ export default function CustomerUpdate(props) {
                       type="manager"
                       className="form-control"
                       name="manager"
-                      defaultValue={customer.manager}
+                      defaultValue={Customer.manager}
                       onChange={onChangemanager}
                     />
                   </div>
@@ -177,7 +177,7 @@ export default function CustomerUpdate(props) {
                       type="manager_number"
                       className="form-control"
                       name="manager_number"
-                      defaultValue={customer.manager_number}
+                      defaultValue={Customer.manager_number}
                       onChange={onChangemanager_Number}
                     />
                   </div>
@@ -187,7 +187,7 @@ export default function CustomerUpdate(props) {
                       type="manager_email"
                       className="form-control"
                       name="manager_email"
-                      defaultValue={customer.manager_email}
+                      defaultValue={Customer.manager_email}
                       onChange={onChangemanager_Email}
                     />
                   </div>

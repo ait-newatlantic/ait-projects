@@ -16,8 +16,8 @@ const Profile = () => {
         <p>Branch: {currentUser.branchId}</p>
         Authorities:
         <ul>
-          {currentUser.roles &&
-            currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+          {currentUser.Roles &&
+            currentUser.Roles.map((role, index) => <li key={index}>{role}</li>)}
         </ul>
       </div>
     </div>

@@ -75,7 +75,7 @@ export default function Login(props) {
   useEffect(() => {
     setRand(
       ColorFunc.colors[Math.floor(Math.random() * ColorFunc.colors.length)]
-    ); //pick random color
+    ); //pick random Color
   }, []);
 
   return (

@@ -16,28 +16,28 @@ import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
 //Service
-import DemandService from "../../services/demand.service";
+import DemandService from "../../services/Demand.service";
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
+import UserService from "../../services/User.service";
 
 //Functions
 import DateFunc from "../../functions/datetime";
 
 const headers = [
-  { label: "Chi nhánh", key: "branch" },
-  { label: "Người nhập", key: "user" },
+  { label: "Chi nhánh", key: "Branch" },
+  { label: "Người nhập", key: "User" },
   { label: "Người gặp khách hàng", key: "employee" },
-  { label: "Tên khách hàng", key: "customer" },
+  { label: "Tên khách hàng", key: "Customer" },
   { label: "SĐT khách hàng", key: "customer_number" },
-  { label: "Loại khách hàng", key: "customer_type" },
-  { label: "Khu vực khách hàng", key: "province" },
+  { label: "Loại khách hàng", key: "Customer_Type" },
+  { label: "Khu vực khách hàng", key: "Province" },
   { label: "Ý kiến khách hàng", key: "opinion" },
-  { label: "Phương thức liên lạc", key: "contact_type" },
-  { label: "Giai đoạn", key: "demand_status" },
-  { label: "Model xe", key: "car_model" },
-  { label: "Loại xe", key: "car_type" },
+  { label: "Phương thức liên lạc", key: "Contact_Type" },
+  { label: "Giai đoạn", key: "Demand_Status" },
+  { label: "Model xe", key: "Car_Model" },
+  { label: "Loại xe", key: "Car_Type" },
   { label: "Số lượng", key: "quantity" },
-  { label: "Màu xe", key: "color" },
+  { label: "Màu xe", key: "Color" },
   { label: "Tình trạng hiện nay", key: "note" },
   { label: "Ngày giai đoạn", key: "date" },
   { label: "Ngày tạo form", key: "createdAt" },
@@ -45,24 +45,24 @@ const headers = [
 ];
 
 export default function DemandListHistory() {
-  const [user, setUser] = useState([]);
+  const [User, setUser] = useState([]);
   const [DemandResult, setDemandResult] = useState([]);
   const [excelData, setExcelData] = useState([]);
   const [branch_name, setBranchName] = useState("");
-  const [customer_type, setCustomerType] = useState("");
+  const [Customer_Type, setCustomerType] = useState("");
   const [quantity, setQuantity] = useState("");
   const [opinion, setOpinion] = useState("");
   const [username, setUserName] = useState("");
   const [user_name, setUser_Name] = useState("");
   const [employee, setEmployee] = useState("");
-  const [province, setProvice] = useState("");
+  const [Province, setProvice] = useState("");
   const [customer_number, setCustomerNumber] = useState("");
-  const [customer, setCustomer] = useState("");
-  const [demand_status, setDemandStatus] = useState("");
-  const [car_model, setCarModel] = useState("");
-  const [car_type, setCarType] = useState("");
-  const [color, setColor] = useState("");
-  const [contact_type, setContactType] = useState("");
+  const [Customer, setCustomer] = useState("");
+  const [Demand_Status, setDemandStatus] = useState("");
+  const [Car_Model, setCarModel] = useState("");
+  const [Car_Type, setCarType] = useState("");
+  const [Color, setColor] = useState("");
+  const [Contact_Type, setContactType] = useState("");
   const [datetype, setDateType] = useState("");
   const [order, setOrderType] = useState("DESC");
   const [limit, setLimit] = useState(200);
@@ -133,17 +133,17 @@ export default function DemandListHistory() {
       user_name,
       employee,
       username,
-      province,
-      customer,
+      Province,
+      Customer,
       customer_number,
-      customer_type,
-      color,
+      Customer_Type,
+      Color,
       opinion,
       quantity,
-      contact_type,
-      demand_status,
-      car_model,
-      car_type,
+      Contact_Type,
+      Demand_Status,
+      Car_Model,
+      Car_Type,
       datetype,
       from_date,
       to_date,
@@ -154,20 +154,20 @@ export default function DemandListHistory() {
       setDemandResult(response.data);
       setExcelData(
         response.data.map((i) => ({
-          branch: i.user.branch.name,
-          user: i.user.name,
+          Branch: i.User.Branch.name,
+          User: i.User.name,
           employee: i.employee,
-          customer: i.customer.name,
-          customer_number: i.customer.number,
-          customer_type: i.customer_type.name,
-          province: i.customer.province.name,
+          Customer: i.Customer.name,
+          customer_number: i.Customer.number,
+          Customer_Type: i.Customer_Type.name,
+          Province: i.Customer.Province.name,
           opinion: i.opinion,
-          contact_type: i.contact_type.name,
-          demand_status: i.demand_status.name,
-          car_model: i.car_model.name,
-          car_type: i.car_type.name,
+          Contact_Type: i.Contact_Type.name,
+          Demand_Status: i.Demand_Status.name,
+          Car_Model: i.Car_Model.name,
+          Car_Type: i.Car_Type.name,
           quantity: i.quantity,
-          color: i.color.name,
+          Color: i.Color.name,
           note: i.note,
           date: i.date,
           createdAt: i.createdAt.substring(0, 10),
@@ -180,17 +180,17 @@ export default function DemandListHistory() {
     user_name,
     employee,
     username,
-    province,
-    customer,
+    Province,
+    Customer,
     customer_number,
-    customer_type,
-    color,
+    Customer_Type,
+    Color,
     opinion,
     quantity,
-    contact_type,
-    demand_status,
-    car_model,
-    car_type,
+    Contact_Type,
+    Demand_Status,
+    Car_Model,
+    Car_Type,
     datetype,
     from_date,
     to_date,
@@ -201,13 +201,13 @@ export default function DemandListHistory() {
   const getUser = useCallback(() => {
     UserService.get_user(currentUser.id).then((response) => {
       setUser(response.data);
-      if (response.data.roles[0].id === 4) {
+      if (response.data.Roles[0].id === 4) {
         //User is an employee
         setUserName(response.data.username);
-        setBranchName(response.data.branch.name);
-      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.Branch.name);
+      } else if (response.data.Roles[0].id === 2) {
         //User is an moderator
-        setBranchName(response.data.branch.name);
+        setBranchName(response.data.Branch.name);
       } else {
         handleSubmit();
       }
@@ -434,7 +434,7 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.user.branch.name)
+                          DemandResult.map((option) => option.User.Branch.name)
                         ),
                       ].length
                     }
@@ -449,7 +449,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.user.branch.name)
+                        DemandResult.map((option) => option.User.Branch.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -465,7 +465,7 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.user.name)
+                          DemandResult.map((option) => option.User.name)
                         ),
                       ].length
                     }
@@ -480,7 +480,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.user.name)
+                        DemandResult.map((option) => option.User.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -525,14 +525,14 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.customer.name)
+                          DemandResult.map((option) => option.Customer.name)
                         ),
                       ].length
                     }
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={customer}
+                    value={Customer}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setCustomer("");
@@ -540,7 +540,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.customer.name)
+                        DemandResult.map((option) => option.Customer.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -556,7 +556,7 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.customer.number)
+                          DemandResult.map((option) => option.Customer.number)
                         ),
                       ].length
                     }
@@ -571,7 +571,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.customer.number)
+                        DemandResult.map((option) => option.Customer.number)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -588,7 +588,7 @@ export default function DemandListHistory() {
                       [
                         ...new Set(
                           DemandResult.map(
-                            (option) => option.customer_type.name
+                            (option) => option.Customer_Type.name
                           )
                         ),
                       ].length
@@ -596,7 +596,7 @@ export default function DemandListHistory() {
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={customer_type}
+                    value={Customer_Type}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setCustomerType("");
@@ -604,7 +604,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.customer_type.name)
+                        DemandResult.map((option) => option.Customer_Type.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -621,7 +621,7 @@ export default function DemandListHistory() {
                       [
                         ...new Set(
                           DemandResult.map(
-                            (option) => option.customer.province.name
+                            (option) => option.Customer.Province.name
                           )
                         ),
                       ].length
@@ -629,7 +629,7 @@ export default function DemandListHistory() {
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={province}
+                    value={Province}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setProvice("");
@@ -638,7 +638,7 @@ export default function DemandListHistory() {
                     options={[
                       ...new Set(
                         DemandResult.map(
-                          (option) => option.customer.province.name
+                          (option) => option.Customer.Province.name
                         )
                       ),
                     ]}
@@ -681,14 +681,14 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.contact_type.name)
+                          DemandResult.map((option) => option.Contact_Type.name)
                         ),
                       ].length
                     }
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={contact_type}
+                    value={Contact_Type}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setContactType("");
@@ -696,7 +696,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.contact_type.name)
+                        DemandResult.map((option) => option.Contact_Type.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -713,7 +713,7 @@ export default function DemandListHistory() {
                       [
                         ...new Set(
                           DemandResult.map(
-                            (option) => option.demand_status.name
+                            (option) => option.Demand_Status.name
                           )
                         ),
                       ].length
@@ -721,7 +721,7 @@ export default function DemandListHistory() {
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={demand_status.name}
+                    value={Demand_Status.name}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setDemandStatus("");
@@ -729,7 +729,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.demand_status.name)
+                        DemandResult.map((option) => option.Demand_Status.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -745,14 +745,14 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.car_model.name)
+                          DemandResult.map((option) => option.Car_Model.name)
                         ),
                       ].length
                     }
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={car_model}
+                    value={Car_Model}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setCarModel("");
@@ -760,7 +760,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.car_model.name)
+                        DemandResult.map((option) => option.Car_Model.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -776,14 +776,14 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.car_type.name)
+                          DemandResult.map((option) => option.Car_Type.name)
                         ),
                       ].length
                     }
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={car_type}
+                    value={Car_Type}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setCarType("");
@@ -791,7 +791,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.car_type.name)
+                        DemandResult.map((option) => option.Car_Type.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -837,14 +837,14 @@ export default function DemandListHistory() {
                     {
                       [
                         ...new Set(
-                          DemandResult.map((option) => option.color.name)
+                          DemandResult.map((option) => option.Color.name)
                         ),
                       ].length
                     }
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={color}
+                    value={Color}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setColor("");
@@ -852,7 +852,7 @@ export default function DemandListHistory() {
                     }}
                     options={[
                       ...new Set(
-                        DemandResult.map((option) => option.color.name)
+                        DemandResult.map((option) => option.Color.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -924,20 +924,20 @@ export default function DemandListHistory() {
               DemandResult.map((i, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  {flag1 ? <td>{i.user.branch.name}</td> : null}
-                  {flag2 ? <td>{i.user.name}</td> : null}
+                  {flag1 ? <td>{i.User.Branch.name}</td> : null}
+                  {flag2 ? <td>{i.User.name}</td> : null}
                   {flag3 ? <td>{i.employee}</td> : null}
-                  {flag4 ? <td>{i.customer.name}</td> : null}
-                  {flag5 ? <td>{i.customer.number}</td> : null}
-                  {flag6 ? <td>{i.customer_type.name}</td> : null}
-                  {flag7 ? <td>{i.customer.province.name}</td> : null}
+                  {flag4 ? <td>{i.Customer.name}</td> : null}
+                  {flag5 ? <td>{i.Customer.number}</td> : null}
+                  {flag6 ? <td>{i.Customer_Type.name}</td> : null}
+                  {flag7 ? <td>{i.Customer.Province.name}</td> : null}
                   {flag8 ? <td>{i.opinion}</td> : null}
-                  {flag9 ? <td>{i.contact_type.name}</td> : null}
-                  {flag10 ? <td>{i.demand_status.name}</td> : null}
-                  {flag11 ? <td>{i.car_model.name}</td> : null}
-                  {flag12 ? <td>{i.car_type.name}</td> : null}
+                  {flag9 ? <td>{i.Contact_Type.name}</td> : null}
+                  {flag10 ? <td>{i.Demand_Status.name}</td> : null}
+                  {flag11 ? <td>{i.Car_Model.name}</td> : null}
+                  {flag12 ? <td>{i.Car_Type.name}</td> : null}
                   {flag13 ? <td>{i.quantity}</td> : null}
-                  {flag14 ? <td>{i.color.name}</td> : null}
+                  {flag14 ? <td>{i.Color.name}</td> : null}
                   {flag15 ? <td>{i.note}</td> : null}
                   {flag16 ? <td>Gặp ngày {i.date.substring(0, 10)}</td> : null}
                   {flag16 ? (

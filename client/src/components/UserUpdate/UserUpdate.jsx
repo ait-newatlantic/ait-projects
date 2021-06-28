@@ -5,7 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import AuthService from "../../services/auth.service";
 import { Alert, Button } from "react-bootstrap";
-import UserService from "../../services/user.service";
+import UserService from "../../services/User.service";
 
 const required = (value) => {
   if (!value) {
@@ -79,7 +79,7 @@ const UserUpdate = (props) => {
     UserService.get_user(id).then((response) => {
       setName(response.data.name);
       setEmail(response.data.email);
-      setBranchName(response.data.branch.name);
+      setBranchName(response.data.Branch.name);
       setPassword(response.data.password);
     });
   };

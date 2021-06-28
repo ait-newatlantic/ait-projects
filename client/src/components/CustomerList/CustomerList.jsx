@@ -16,9 +16,9 @@ import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
 //Services
-import CustomerService from "../../services/customer.service";
+import CustomerService from "../../services/Customer.service";
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
+import UserService from "../../services/User.service";
 
 //Functions
 import DateFunc from "../../functions/datetime";
@@ -34,7 +34,7 @@ const headers = [
   { label: "SĐT người đại diện", key: "manager_number" },
   { label: "Email người đại diện", key: "manager_email" },
   { label: "Mã số thuế", key: "taxcode" },
-  { label: "Khu vực khách hàng", key: "province" },
+  { label: "Khu vực khách hàng", key: "Province" },
   { label: "Ngày tạo form", key: "createdAt" },
   { label: "Ngày cập nhật", key: "updatedAt" },
 ];
@@ -50,11 +50,11 @@ export default function CustomerList(props) {
   const [manager_number, setManagerNumber] = useState("");
   const [manager_email, setManagerEmail] = useState("");
   const [taxcode, setTaxCode] = useState("");
-  const [user, setUser] = useState("");
+  const [User, setUser] = useState("");
   const [username, setUserName] = useState("");
   const [user_name, setUser_Name] = useState("");
-  const [province, setProvice] = useState("");
-  const [business_type, setBusinessType] = useState("");
+  const [Province, setProvice] = useState("");
+  const [Business_Type, setBusinessType] = useState("");
   const [datetype, setDateType] = useState("");
   const [order, setOrderType] = useState("DESC");
   const [limit, setLimit] = useState(200);
@@ -140,8 +140,8 @@ export default function CustomerList(props) {
       hide,
       username,
       user_name,
-      province,
-      business_type,
+      Province,
+      Business_Type,
       datetype,
       from_date,
       to_date,
@@ -152,17 +152,17 @@ export default function CustomerList(props) {
       setcustomerResult(response.data);
       setExcelData(
         response.data.map((i) => ({
-          branchname: i.user.branch.name,
-          user_name: i.user.name,
+          branchname: i.User.Branch.name,
+          user_name: i.User.name,
           customername: i.name,
           address: i.address,
           number: i.number,
-          business_type: i.business_type.name,
+          business_type: i.Business_Type.name,
           manager: i.manager,
           manager_number: i.manager_number,
           manager_email: i.manager_email,
           taxcode: i.taxcode,
-          province: i.province.name,
+          Province: i.Province.name,
           createdAt: i.createdAt.substring(0, 10),
           updatedAt: i.updatedAt.substring(0, 10),
         }))
@@ -178,8 +178,8 @@ export default function CustomerList(props) {
     taxcode,
     username,
     user_name,
-    province,
-    business_type,
+    Province,
+    Business_Type,
     datetype,
     from_date,
     to_date,
@@ -191,13 +191,13 @@ export default function CustomerList(props) {
   const getUser = useCallback(() => {
     UserService.get_user(currentUser.id).then((response) => {
       setUser(response.data);
-      if (response.data.roles[0].id === 4) {
+      if (response.data.Roles[0].id === 4) {
         //User is an employee
         setUserName(response.data.username);
-        setBranchName(response.data.branch.name);
-      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.Branch.name);
+      } else if (response.data.Roles[0].id === 2) {
         //User is an moderator
-        setBranchName(response.data.branch.name);
+        setBranchName(response.data.Branch.name);
       } else {
         handleSubmit();
       }
@@ -390,7 +390,7 @@ export default function CustomerList(props) {
                       [
                         ...new Set(
                           customerResult.map(
-                            (option) => option.user.branch.name
+                            (option) => option.User.Branch.name
                           )
                         ),
                       ].length
@@ -406,7 +406,7 @@ export default function CustomerList(props) {
                     }}
                     options={[
                       ...new Set(
-                        customerResult.map((option) => option.user.branch.name)
+                        customerResult.map((option) => option.User.Branch.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -422,7 +422,7 @@ export default function CustomerList(props) {
                     {
                       [
                         ...new Set(
-                          customerResult.map((option) => option.user.name)
+                          customerResult.map((option) => option.User.name)
                         ),
                       ].length
                     }
@@ -437,7 +437,7 @@ export default function CustomerList(props) {
                     }}
                     options={[
                       ...new Set(
-                        customerResult.map((option) => option.user.name)
+                        customerResult.map((option) => option.User.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -663,14 +663,14 @@ export default function CustomerList(props) {
                     {
                       [
                         ...new Set(
-                          customerResult.map((option) => option.province.name)
+                          customerResult.map((option) => option.Province.name)
                         ),
                       ].length
                     }
                     )
                   </FormHelperText>
                   <Autocomplete
-                    value={province}
+                    value={Province}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
                         setProvice("");
@@ -678,7 +678,7 @@ export default function CustomerList(props) {
                     }}
                     options={[
                       ...new Set(
-                        customerResult.map((option) => option.province.name)
+                        customerResult.map((option) => option.Province.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -740,8 +740,8 @@ export default function CustomerList(props) {
               customerResult.map((i, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  {flag1 ? <td>{i.user.branch.name}</td> : null}
-                  {flag2 ? <td>{i.user.name}</td> : null}
+                  {flag1 ? <td>{i.User.Branch.name}</td> : null}
+                  {flag2 ? <td>{i.User.name}</td> : null}
                   {flag3 ? <td>{i.name}</td> : null}
                   {flag4 ? <td>{i.number}</td> : null}
                   {flag5 ? <td>{i.address}</td> : null}
@@ -749,7 +749,7 @@ export default function CustomerList(props) {
                   {flag7 ? <td>{i.manager_email}</td> : null}
                   {flag8 ? <td>{i.manager_number}</td> : null}
                   {flag9 ? <td>{i.taxcode}</td> : null}
-                  {flag10 ? <td>{i.province.name}</td> : null}
+                  {flag10 ? <td>{i.Province.name}</td> : null}
                   {flag11 ? (
                     <td>Tạo ngày {i.createdAt.substring(0, 10)}</td>
                   ) : null}

@@ -17,7 +17,7 @@ import * as MaterialUIIcons from "@material-ui/icons/";
 
 //Services
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
+import UserService from "../../services/User.service";
 
 //Functions
 import DateFunc from "../../functions/datetime";
@@ -35,7 +35,7 @@ const headers = [
 export default function UserList(props) {
   const [userResult, setUserResult] = useState([]);
   const [excelData, setExcelData] = useState([]);
-  const [user, setUser] = useState("");
+  const [User, setUser] = useState("");
   const [branch_name, setBranchName] = useState("");
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
@@ -106,11 +106,11 @@ export default function UserList(props) {
       setUserResult(response.data);
       setExcelData(
         response.data.map((i) => ({
-          branchname: i.branch.name,
+          branchname: i.Branch.name,
           name: i.name,
           username: i.username,
           email: i.email,
-          role: i.roles[0].name,
+          role: i.Roles[0].name,
           createdAt: i.createdAt.substring(0, 10),
           updatedAt: i.updatedAt.substring(0, 10),
         }))
@@ -132,13 +132,13 @@ export default function UserList(props) {
   const getUser = useCallback(() => {
     UserService.get_user(currentUser.id).then((response) => {
       setUser(response.data);
-      if (response.data.roles[0].id === 4) {
+      if (response.data.Roles[0].id === 4) {
         //User is an employee
         setUserName(response.data.username);
-        setBranchName(response.data.branch.name);
-      } else if (response.data.roles[0].id === 2) {
+        setBranchName(response.data.Branch.name);
+      } else if (response.data.Roles[0].id === 2) {
         //User is an moderator
-        setBranchName(response.data.branch.name);
+        setBranchName(response.data.Branch.name);
       } else {
         handleSubmit();
       }
@@ -293,7 +293,7 @@ export default function UserList(props) {
                     {
                       [
                         ...new Set(
-                          userResult.map((option) => option.branch.name)
+                          userResult.map((option) => option.Branch.name)
                         ),
                       ].length
                     }
@@ -308,7 +308,7 @@ export default function UserList(props) {
                     }}
                     options={[
                       ...new Set(
-                        userResult.map((option) => option.branch.name)
+                        userResult.map((option) => option.Branch.name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -402,7 +402,7 @@ export default function UserList(props) {
                     {
                       [
                         ...new Set(
-                          userResult.map((option) => option.roles[0].name)
+                          userResult.map((option) => option.Roles[0].name)
                         ),
                       ].length
                     }
@@ -417,7 +417,7 @@ export default function UserList(props) {
                     }}
                     options={[
                       ...new Set(
-                        userResult.map((option) => option.roles[0].name)
+                        userResult.map((option) => option.Roles[0].name)
                       ),
                     ]}
                     renderInput={(params) => (
@@ -476,24 +476,24 @@ export default function UserList(props) {
           </thead>
           <tbody>
             {!!userResult &&
-              userResult.map((user, index) => (
+              userResult.map((User, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  {flag1 ? <td>{user.branch.name}</td> : null}
-                  {flag2 ? <td>{user.name}</td> : null}
-                  {flag3 ? <td>{user.username}</td> : null}
-                  {flag4 ? <td>{user.email}</td> : null}
-                  {flag5 ? <td>{user.roles[0].name}</td> : null}
+                  {flag1 ? <td>{User.Branch.name}</td> : null}
+                  {flag2 ? <td>{User.name}</td> : null}
+                  {flag3 ? <td>{User.username}</td> : null}
+                  {flag4 ? <td>{User.email}</td> : null}
+                  {flag5 ? <td>{User.Roles[0].name}</td> : null}
                   {flag6 ? (
-                    <td>Tạo ngày {user.createdAt.substring(0, 10)}</td>
+                    <td>Tạo ngày {User.createdAt.substring(0, 10)}</td>
                   ) : null}
                   {flag6 ? (
-                    <td>Cập nhật ngày {user.updatedAt.substring(0, 10)}</td>
+                    <td>Cập nhật ngày {User.updatedAt.substring(0, 10)}</td>
                   ) : null}
                   <td>
                     <Link
                       className="btn btn-primary btn-sm"
-                      to={"/dashboard/users/update/" + btoa(`${user.id}`)}
+                      to={"/dashboard/users/update/" + btoa(`${User.id}`)}
                     >
                       Update
                     </Link>
@@ -501,7 +501,7 @@ export default function UserList(props) {
                   <td>
                     <button
                       className="btn btn-secondary btn-sm"
-                      onClick={() => onClickHide(user.id)}
+                      onClick={() => onClickHide(User.id)}
                     >
                       Delete
                     </button>

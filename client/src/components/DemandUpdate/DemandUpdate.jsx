@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import DemandService from "../../services/demand.service";
-import DemandHistoryService from "../../services/demand_history.service";
+import DemandService from "../../services/Demand.service";
+import DemandHistoryService from "../../services/Demand_History.service";
 import AuthService from "../../services/auth.service";
-import DemandStatusService from "../../services/demand_status.service";
-import ColorService from "../../services/color.services";
+import DemandStatusService from "../../services/Demand_Status.service";
+import ColorService from "../../services/Color.services";
 
 import { Alert } from "react-bootstrap";
 import CheckButton from "react-validation/build/button";
@@ -14,11 +14,11 @@ export default function DemandUpdate(props) {
 
   const [arr, setArr] = useState([]);
 
-  const [demand_status, setDemandStatus] = useState(0);
+  const [Demand_Status, setDemandStatus] = useState(0);
   const [demand_status_name, setDemandStatusName] = useState("");
   const [demand_statuses, setDemandStatuses] = useState("");
 
-  const [color, setColor] = useState(0);
+  const [Color, setColor] = useState(0);
   const [color_name, setColorName] = useState("");
   const [colors, setColors] = useState("");
 
@@ -38,7 +38,7 @@ export default function DemandUpdate(props) {
     form.current.validateAll();
     const id = atob(props.match.params.id);
     if (checkBtn.current.context._errors.length === 0) {
-      DemandService.update_demand(id, demand_status, date, note, color);
+      DemandService.update_demand(id, Demand_Status, date, note, Color);
       DemandHistoryService.create_demand_history(arr).then(
         (response) => {
           setMessage(response.data.message);
@@ -76,12 +76,12 @@ export default function DemandUpdate(props) {
     DemandService.get_demand(id)
       .then((response) => {
         setDemands(response.data);
-        setDemandStatusName(response.data.demand_status.name);
-        setDemandStatus(response.data.demand_status.id);
+        setDemandStatusName(response.data.Demand_Status.name);
+        setDemandStatus(response.data.Demand_Status.id);
         setDate(response.data.date);
         setNote(response.data.note);
-        setColor(response.data.color.id);
-        setColorName(response.data.color.name);
+        setColor(response.data.Color.id);
+        setColorName(response.data.Color.name);
         setArr(response.data);
       })
       .catch((e) => {
@@ -118,7 +118,7 @@ export default function DemandUpdate(props) {
                         className="form-control"
                         style={{ overflow: "auto", background: "#e7e7e7" }}
                       >
-                        {demands.customer.name}
+                        {demands.Customer.name}
                       </div>
                     </div>
                     {demands.demand_statusId === 9 ||
@@ -130,7 +130,7 @@ export default function DemandUpdate(props) {
                             className="form-control"
                             style={{ overflow: "auto", background: "#e7e7e7" }}
                           >
-                            {demands.demand_status.name}
+                            {demands.Demand_Status.name}
                           </div>
                         </div>
                         <div className="col-sm">
@@ -139,7 +139,7 @@ export default function DemandUpdate(props) {
                             className="form-control"
                             style={{ overflow: "auto", background: "#e7e7e7" }}
                           >
-                            {demands.date}
+                            {demands.date.substring(0, 10)}
                           </div>
                         </div>
                       </div>
@@ -155,13 +155,13 @@ export default function DemandUpdate(props) {
                             }}
                           >
                             {!!demand_statuses &&
-                              demand_statuses.map((demand_status) => (
+                              demand_statuses.map((Demand_Status) => (
                                 <option
-                                  key={demand_status.id}
-                                  value={demand_status.id}
+                                  key={Demand_Status.id}
+                                  value={Demand_Status.id}
                                 >
                                   {demand_status_name} {">>"}{" "}
-                                  {demand_status.name}
+                                  {Demand_Status.name}
                                 </option>
                               ))}
                           </select>
@@ -172,7 +172,7 @@ export default function DemandUpdate(props) {
                             type="date"
                             className="form-control"
                             name="date"
-                            value={date}
+                            value={date.substring(0, 10)}
                             onChange={(e) => {
                               setDate(e.target.value);
                             }}
@@ -232,7 +232,7 @@ export default function DemandUpdate(props) {
                         className="form-control"
                         style={{ overflow: "auto", background: "#e7e7e7" }}
                       >
-                        {demands.car_model.name}
+                        {demands.Car_Model.name}
                       </div>
                     </div>
                     <div className="col-sm">
@@ -241,7 +241,7 @@ export default function DemandUpdate(props) {
                         className="form-control"
                         style={{ overflow: "auto", background: "#e7e7e7" }}
                       >
-                        {demands.car_type.name}
+                        {demands.Car_Type.name}
                       </div>
                     </div>
                     <div className="col-sm">
@@ -263,9 +263,9 @@ export default function DemandUpdate(props) {
                         }}
                       >
                         {!!colors &&
-                          colors.map((color) => (
-                            <option key={color.id} value={color.id}>
-                              {color_name} {">>"} {color.name}
+                          colors.map((Color) => (
+                            <option key={Color.id} value={Color.id}>
+                              {color_name} {">>"} {Color.name}
                             </option>
                           ))}
                       </select>
