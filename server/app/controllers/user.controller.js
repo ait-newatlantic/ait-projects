@@ -29,19 +29,9 @@ exports.findAll = (req, res) => {
     include: [
       {
         model: db.branch,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.role,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
     ],
   })
@@ -63,19 +53,9 @@ exports.findOne = (req, res) => {
     include: [
       {
         model: db.branch,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.role,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
     ],
   })

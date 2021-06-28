@@ -16,39 +16,27 @@ const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
 
 const db = {};
 
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.branch = require("../models/branch.model.js")(sequelize, Sequelize);
-db.province = require("../models/province.model.js")(sequelize, Sequelize);
-db.car_model = require("../models/car_model.model.js")(sequelize, Sequelize);
-db.car_type = require("../models/car_type.model.js")(sequelize, Sequelize);
-db.demand = require("../models/demand.model.js")(sequelize, Sequelize);
-db.customer = require("../models/customer.model.js")(sequelize, Sequelize);
-db.color = require("../models/color.model.js")(sequelize, Sequelize);
-db.option = require("../models/option.model.js")(sequelize, Sequelize);
-db.business_type = require("../models/business_type.model.js")(
+db.user = require("../models/user.js")(sequelize, Sequelize);
+db.role = require("../models/role.js")(sequelize, Sequelize);
+db.branch = require("../models/branch.js")(sequelize, Sequelize);
+db.province = require("../models/province.js")(sequelize, Sequelize);
+db.car_model = require("../models/car_model.js")(sequelize, Sequelize);
+db.car_type = require("../models/car_type.js")(sequelize, Sequelize);
+db.demand = require("../models/demand.js")(sequelize, Sequelize);
+db.customer = require("../models/customer.js")(sequelize, Sequelize);
+db.color = require("../models/color.js")(sequelize, Sequelize);
+db.option = require("../models/option.js")(sequelize, Sequelize);
+db.business_type = require("../models/business_type.js")(sequelize, Sequelize);
+db.demand_history = require("../models/demand_history.js")(
   sequelize,
   Sequelize
 );
-db.demand_history = require("../models/demand_history.model.js")(
-  sequelize,
-  Sequelize
-);
-db.contact_type = require("../models/contact_type.model.js")(
-  sequelize,
-  Sequelize
-);
-db.customer_type = require("../models/customer_type.model.js")(
-  sequelize,
-  Sequelize
-);
-db.demand_status = require("../models/demand_status.model.js")(
-  sequelize,
-  Sequelize
-);
+db.contact_type = require("../models/contact_type.js")(sequelize, Sequelize);
+db.customer_type = require("../models/customer_type.js")(sequelize, Sequelize);
+db.demand_status = require("../models/demand_status.js")(sequelize, Sequelize);
 
 //user_roles
 db.role.belongsToMany(db.user, {

@@ -16,7 +16,8 @@ exports.signup = (req, res) => {
     name: req.body.name,
     branchId: req.body.branchId,
     password: bcrypt.hashSync(req.body.password, 8),
-  })
+    hide: false,
+  }) 
     .then((user) => {
       if (req.body.roles) {
         Role.findAll({

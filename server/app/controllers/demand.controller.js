@@ -37,6 +37,7 @@ exports.create = (req, res) => {
       meeting: item.demand_meeting,
       contact_typeId: item.contact_typeId,
       note: item.demand_note,
+      hide: false,
     });
   });
   return Promise.all(requestArr)

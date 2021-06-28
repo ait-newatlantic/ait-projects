@@ -31,6 +31,7 @@ exports.create = (req, res) => {
     provinceId: req.body.provinceId,
     userId: req.body.userId,
     business_typeId: req.body.business_typeId,
+    hide: false,
   })
     .then((data) => {
       res.send({
@@ -51,65 +52,22 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  const hide = req.query.hide;
-  const order = req.query.order;
-  const username = req.query.username;
-  const branch_name = req.query.branch_name;
   Customer.findAll({
-    order: [["id", order]],
-    where: [
-      {
-        hide: {
-          [Op.eq]: hide,
-        },
-      },
-    ],
+    order: [["id", "DESC"]],
     include: [
       {
         model: db.user,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-          username: {
-            [Op.or]: {
-              [Op.like]: `%${username}%`,
-              [Op.eq]: null,
-            },
-          },
-        },
         include: [
           {
             model: db.branch,
-            where: {
-              hide: {
-                [Op.eq]: 0,
-              },
-              name: {
-                [Op.or]: {
-                  [Op.like]: `%${branch_name}%`,
-                  [Op.eq]: null,
-                },
-              },
-            },
           },
         ],
       },
       {
         model: db.province,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
       {
         model: db.business_type,
-        where: {
-          hide: {
-            [Op.eq]: 0,
-          },
-        },
       },
     ],
   })
