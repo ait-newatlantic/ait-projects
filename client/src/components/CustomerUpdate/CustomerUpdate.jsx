@@ -84,9 +84,6 @@ export default function CustomerUpdate(props) {
 
   return Customer ? (
     <div>
-      <div className="text-left">
-        <h4 className="font-weight-bold text-secondary">CẬP NHẬT KHÁCH HÀNG</h4>
-      </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div className="text-left">

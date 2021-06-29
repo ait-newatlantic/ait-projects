@@ -135,9 +135,6 @@ const Register = (props) => {
 
   return (
     <div className="text-left">
-      <div>
-        <h4 className="font-weight-bold text-dark">TẠO USER MỚI</h4>
-      </div>
       <Form onSubmit={handleRegister} ref={form}>
         {!successful && (
           <div>

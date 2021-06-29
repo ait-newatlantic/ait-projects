@@ -97,11 +97,6 @@ export default function DemandUpdate(props) {
 
   return demands ? (
     <div>
-      <div className="text-left">
-        <h4 className="font-weight-bold text-dark">
-          CẬP NHẬT NHU CẦU MUA XE CỦA KHÁCH HÀNG
-        </h4>
-      </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div className="text-left">

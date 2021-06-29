@@ -334,11 +334,6 @@ export default function DemandInput(props) {
 
   return (
     <div>
-      <div className="text-left">
-        <h4 className="font-weight-bold text-dark">
-          NHU CẦU MỚI CỦA KHÁCH HÀNG
-        </h4>
-      </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div>

@@ -143,9 +143,6 @@ export default function CustomerInput() {
 
   return (
     <div>
-      <div className="text-left">
-        <h4 className="font-weight-bold text-dark">TẠO KHÁCH HÀNG MỚI</h4>
-      </div>
       <Form onSubmit={handleSubmit} ref={form}>
         {!successful && (
           <div className="text-left">

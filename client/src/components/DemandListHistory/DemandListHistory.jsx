@@ -234,9 +234,7 @@ export default function DemandListHistory() {
 
   return (
     <div>
-      <div className="justify-content-start">
-        <h4 className="font-weight-bold text-dark text-left">THÙNG RÁC</h4>
-      </div>
+
       <div className="flex d-flex flex-wrap align-items-center justify-content-between rounded">
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
