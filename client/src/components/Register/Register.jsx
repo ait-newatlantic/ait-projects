@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import Select from "react-validation/build/select";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import BranchService from "../../services/Branch.service";
+import BranchService from "../../services/branch.service";
 import AuthService from "../../services/auth.service";
 import { Button } from "react-bootstrap";
 

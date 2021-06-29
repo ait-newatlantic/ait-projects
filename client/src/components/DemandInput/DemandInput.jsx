@@ -11,16 +11,16 @@ import Select from "react-validation/build/select";
 import { Table } from "react-bootstrap";
 
 //Services
-import DemandService from "../../services/Demand.service";
-import CustomerService from "../../services/Customer.service";
-import CustomerTypeService from "../../services/Customer_Type.service";
-import ContactTypeService from "../../services/Contact_Type.service";
+import DemandService from "../../services/demand.service";
+import CustomerService from "../../services/customer.service";
+import CustomerTypeService from "../../services/customer_type.service";
+import ContactTypeService from "../../services/contact_type.service";
 import AuthService from "../../services/auth.service";
-import CarModelService from "../../services/Car_Model.service";
-import CarTypeService from "../../services/Car_Type.service";
-import ColorService from "../../services/Color.services";
-import DemandStatusService from "../../services/Demand_Status.service";
-import UserService from "../../services/User.service";
+import CarModelService from "../../services/car_model.service";
+import CarTypeService from "../../services/car_type.service";
+import ColorService from "../../services/color.services";
+import DemandStatusService from "../../services/demand_status.service";
+import UserService from "../../services/user.service";
 
 export default function DemandInput(props) {
   const [date, setDemandDate] = useState("");

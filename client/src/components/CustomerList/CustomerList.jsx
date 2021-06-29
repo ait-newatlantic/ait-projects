@@ -16,9 +16,9 @@ import { CSVLink } from "react-csv";
 import * as MaterialUIIcons from "@material-ui/icons/";
 
 //Services
-import CustomerService from "../../services/Customer.service";
+import CustomerService from "../../services/customer.service";
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/User.service";
+import UserService from "../../services/user.service";
 
 //Functions
 import DateFunc from "../../functions/datetime";

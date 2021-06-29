@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Alert } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import CustomerService from "../../services/Customer.service";
+import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from "../../services/auth.service";
-import ProvinceService from "../../services/Province.service";
-import BusinessTypeService from "../../services/Business_Type.service";
+import ProvinceService from "../../services/province.service";
+import BusinessTypeService from "../../services/business_type.service";
 
 export default function CustomerInput() {
   const [customer_name, setCustomerName] = useState("");

@@ -17,7 +17,7 @@ import * as MaterialUIIcons from "@material-ui/icons/";
 
 //Services
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/User.service";
+import UserService from "../../services/user.service";
 
 //Functions
 import DateFunc from "../../functions/datetime";

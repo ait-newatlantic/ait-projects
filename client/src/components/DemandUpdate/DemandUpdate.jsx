@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import DemandService from "../../services/Demand.service";
-import DemandHistoryService from "../../services/Demand_History.service";
+import DemandService from "../../services/demand.service";
+import DemandHistoryService from "../../services/demand_history.service";
 import AuthService from "../../services/auth.service";
-import DemandStatusService from "../../services/Demand_Status.service";
-import ColorService from "../../services/Color.services";
+import DemandStatusService from "../../services/demand_status.service";
+import ColorService from "../../services/color.services";
 
 import { Alert } from "react-bootstrap";
 import CheckButton from "react-validation/build/button";

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Alert } from "react-bootstrap";
-import CustomerService from "../../services/Customer.service";
+import CustomerService from "../../services/customer.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import AuthService from "../../services/auth.service";
