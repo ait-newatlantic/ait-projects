@@ -363,7 +363,7 @@ export default function CustomerListHistory(props) {
           <thead>
             <tr>
               <th>
-                <FormHelperText className="text-dark">
+                <FormHelperText className="text-info">
                   Total ({customerResult.length})
                 </FormHelperText>
                 <FormControl>
@@ -381,7 +381,7 @@ export default function CustomerListHistory(props) {
               </th>
               {flag1 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Chi nhánh (
                     {
                       [
@@ -414,7 +414,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag2 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tên nhân viên (
                     {
                       [
@@ -445,7 +445,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag3 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tên khách hàng (
                     {
                       [...new Set(customerResult.map((option) => option.name))]
@@ -471,7 +471,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag4 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     SĐT khách hàng (
                     {
                       [
@@ -500,7 +500,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag5 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Địa chỉ khách hàng (
                     {
                       [
@@ -531,7 +531,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag6 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tên người đại diện (
                     {
                       [
@@ -562,7 +562,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag7 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Email người đại diện (
                     {
                       [
@@ -593,7 +593,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag8 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     SĐT người đại diện (
                     {
                       [
@@ -624,7 +624,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag9 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Mã số thuế (
                     {
                       [
@@ -655,7 +655,7 @@ export default function CustomerListHistory(props) {
               ) : null}
               {flag10 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Khu vực khách hàng (
                     {
                       [
@@ -688,7 +688,7 @@ export default function CustomerListHistory(props) {
                 <th colSpan="2">
                   <Grid container spacing={2}>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Loại ngày
                       </FormHelperText>
                       <FormControl>
@@ -706,7 +706,7 @@ export default function CustomerListHistory(props) {
                       </FormControl>
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Từ ngày
                       </FormHelperText>
                       <TextField
@@ -717,7 +717,7 @@ export default function CustomerListHistory(props) {
                       />
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Đến ngày
                       </FormHelperText>
                       <TextField
@@ -730,6 +730,7 @@ export default function CustomerListHistory(props) {
                   </Grid>
                 </th>
               ) : null}
+              <th colSpan={2}></th>
             </tr>
           </thead>
           <tbody>
@@ -763,7 +764,7 @@ export default function CustomerListHistory(props) {
                   </td>
                   <td>
                     <button
-                      className="btn btn-info btn-sm"
+                      className="btn btn-secondary btn-sm"
                       onClick={() => onClickHide(i.id)}
                     >
                       Restore

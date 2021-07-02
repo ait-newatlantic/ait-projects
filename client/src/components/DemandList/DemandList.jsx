@@ -408,7 +408,7 @@ export default function DemandList() {
           <thead>
             <tr>
               <th>
-                <FormHelperText className="text-dark">
+                <FormHelperText className="text-info">
                   Total ({DemandResult.length})
                 </FormHelperText>
                 <FormControl>
@@ -426,7 +426,7 @@ export default function DemandList() {
               </th>
               {flag1 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Chi nhánh (
                     {
                       [
@@ -457,7 +457,7 @@ export default function DemandList() {
               ) : null}
               {flag2 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Người nhập (
                     {
                       [
@@ -488,7 +488,7 @@ export default function DemandList() {
               ) : null}
               {flag3 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Người gặp khách hàng (
                     {
                       [
@@ -517,7 +517,7 @@ export default function DemandList() {
               ) : null}
               {flag4 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tên khách hàng (
                     {
                       [
@@ -548,7 +548,7 @@ export default function DemandList() {
               ) : null}
               {flag5 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     SĐT khách hàng (
                     {
                       [
@@ -579,7 +579,7 @@ export default function DemandList() {
               ) : null}
               {flag6 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Loại khách hàng (
                     {
                       [
@@ -612,7 +612,7 @@ export default function DemandList() {
               ) : null}
               {flag7 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Khu vực khách hàng (
                     {
                       [
@@ -647,7 +647,7 @@ export default function DemandList() {
               ) : null}
               {flag8 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Ý kiến khách hàng (
                     {
                       [...new Set(DemandResult.map((option) => option.opinion))]
@@ -673,7 +673,7 @@ export default function DemandList() {
               ) : null}
               {flag9 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Phương thức liên lạc (
                     {
                       [
@@ -704,7 +704,7 @@ export default function DemandList() {
               ) : null}
               {flag10 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Giai đoạn (
                     {
                       [
@@ -737,7 +737,7 @@ export default function DemandList() {
               ) : null}
               {flag11 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Model xe (
                     {
                       [
@@ -768,7 +768,7 @@ export default function DemandList() {
               ) : null}
               {flag12 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Loại xe (
                     {
                       [
@@ -799,7 +799,7 @@ export default function DemandList() {
               ) : null}
               {flag13 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Số lượng (
                     {[
                       DemandResult.map((option) => option.quantity).reduce(
@@ -829,7 +829,7 @@ export default function DemandList() {
               ) : null}
               {flag14 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Màu xe (
                     {
                       [
@@ -860,7 +860,7 @@ export default function DemandList() {
               ) : null}
               {flag15 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tình hình hiện nay
                   </FormHelperText>
                 </th>
@@ -869,7 +869,7 @@ export default function DemandList() {
                 <th colSpan="3">
                   <Grid container spacing={2}>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Loại ngày
                       </FormHelperText>
                       <FormControl>
@@ -888,7 +888,7 @@ export default function DemandList() {
                       </FormControl>
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Từ ngày
                       </FormHelperText>
                       <TextField
@@ -900,7 +900,7 @@ export default function DemandList() {
                       />
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Đến ngày
                       </FormHelperText>
                       <TextField
@@ -914,6 +914,7 @@ export default function DemandList() {
                   </Grid>
                 </th>
               ) : null}
+              <th colSpan={2}></th>
             </tr>
           </thead>
           <tbody>
@@ -964,7 +965,7 @@ export default function DemandList() {
                   </td>
                   <td>
                     <button
-                      className="btn btn-secondary btn-sm"
+                      className="btn btn-danger btn-sm"
                       onClick={() => onClickHide(i.id)}
                     >
                       Delete

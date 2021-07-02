@@ -268,7 +268,7 @@ export default function UserListHistory(props) {
           <thead>
             <tr>
               <th>
-                <FormHelperText className="text-dark">
+                <FormHelperText className="text-info">
                   Total ({userResult.length})
                 </FormHelperText>
                 <FormControl>
@@ -286,7 +286,7 @@ export default function UserListHistory(props) {
               </th>
               {flag1 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Chi nhánh (
                     {
                       [
@@ -317,7 +317,7 @@ export default function UserListHistory(props) {
               ) : null}
               {flag2 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tên nhân viên (
                     {
                       [...new Set(userResult.map((option) => option.name))]
@@ -343,7 +343,7 @@ export default function UserListHistory(props) {
               ) : null}
               {flag3 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tài khoản (
                     {
                       [...new Set(userResult.map((option) => option.username))]
@@ -369,7 +369,7 @@ export default function UserListHistory(props) {
               ) : null}
               {flag4 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Email (
                     {
                       [...new Set(userResult.map((option) => option.email))]
@@ -395,7 +395,7 @@ export default function UserListHistory(props) {
               ) : null}
               {flag5 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Quyền hạn (
                     {
                       [
@@ -428,7 +428,7 @@ export default function UserListHistory(props) {
                 <th colSpan="2">
                   <Grid container spacing={2}>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Loại ngày
                       </FormHelperText>
                       <FormControl>
@@ -446,7 +446,7 @@ export default function UserListHistory(props) {
                       </FormControl>
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Từ ngày
                       </FormHelperText>
                       <TextField
@@ -457,7 +457,7 @@ export default function UserListHistory(props) {
                       />
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Đến ngày
                       </FormHelperText>
                       <TextField
@@ -470,6 +470,7 @@ export default function UserListHistory(props) {
                   </Grid>
                 </th>
               ) : null}
+              <th colSpan={2}></th>
             </tr>
           </thead>
           <tbody>
@@ -498,7 +499,7 @@ export default function UserListHistory(props) {
                   </td>
                   <td>
                     <button
-                      className="btn btn-info btn-sm"
+                      className="btn btn-secondary btn-sm"
                       onClick={() => onClickHide(User.id)}
                     >
                       Restore

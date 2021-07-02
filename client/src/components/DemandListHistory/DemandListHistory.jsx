@@ -159,15 +159,15 @@ export default function DemandListHistory() {
           employee: i.employee,
           Customer: i.Customer.name,
           customer_number: i.Customer.number,
-          Customer_Type: i.Customer_Type.name,
+          customer_Type: i.Customer_Type.name,
           Province: i.Customer.Province.name,
           opinion: i.opinion,
-          Contact_Type: i.Contact_Type.name,
-          Demand_Status: i.Demand_Status.name,
-          Car_Model: i.Car_Model.name,
-          Car_Type: i.Car_Type.name,
+          contact_Type: i.Contact_Type.name,
+          demand_Status: i.Demand_Status.name,
+          car_Model: i.Car_Model.name,
+          car_Type: i.Car_Type.name,
           quantity: i.quantity,
-          Color: i.Color.name,
+          color: i.Color.name,
           note: i.note,
           date: i.date,
           createdAt: i.createdAt.substring(0, 10),
@@ -234,7 +234,6 @@ export default function DemandListHistory() {
 
   return (
     <div>
-
       <div className="flex d-flex flex-wrap align-items-center justify-content-between rounded">
         <div className="flex d-flex flex-wrap align-items-center justify-content-start">
           <div>
@@ -409,7 +408,7 @@ export default function DemandListHistory() {
           <thead>
             <tr>
               <th>
-                <FormHelperText className="text-dark">
+                <FormHelperText className="text-info">
                   Total ({DemandResult.length})
                 </FormHelperText>
                 <FormControl>
@@ -427,7 +426,7 @@ export default function DemandListHistory() {
               </th>
               {flag1 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Chi nhánh (
                     {
                       [
@@ -458,7 +457,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag2 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Người nhập (
                     {
                       [
@@ -489,7 +488,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag3 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Người gặp khách hàng (
                     {
                       [
@@ -518,7 +517,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag4 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tên khách hàng (
                     {
                       [
@@ -549,7 +548,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag5 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     SĐT khách hàng (
                     {
                       [
@@ -580,7 +579,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag6 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Loại khách hàng (
                     {
                       [
@@ -613,7 +612,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag7 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Khu vực khách hàng (
                     {
                       [
@@ -648,7 +647,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag8 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Ý kiến khách hàng (
                     {
                       [...new Set(DemandResult.map((option) => option.opinion))]
@@ -674,7 +673,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag9 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Phương thức liên lạc (
                     {
                       [
@@ -705,7 +704,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag10 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Giai đoạn (
                     {
                       [
@@ -738,7 +737,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag11 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Model xe (
                     {
                       [
@@ -769,7 +768,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag12 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Loại xe (
                     {
                       [
@@ -800,7 +799,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag13 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Số lượng (
                     {[
                       DemandResult.map((option) => option.quantity).reduce(
@@ -830,7 +829,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag14 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Màu xe (
                     {
                       [
@@ -861,7 +860,7 @@ export default function DemandListHistory() {
               ) : null}
               {flag15 ? (
                 <th>
-                  <FormHelperText className="text-dark">
+                  <FormHelperText className="text-info">
                     Tình hình hiện nay
                   </FormHelperText>
                 </th>
@@ -870,7 +869,7 @@ export default function DemandListHistory() {
                 <th colSpan="3">
                   <Grid container spacing={2}>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Loại ngày
                       </FormHelperText>
                       <FormControl>
@@ -889,7 +888,7 @@ export default function DemandListHistory() {
                       </FormControl>
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Từ ngày
                       </FormHelperText>
                       <TextField
@@ -901,7 +900,7 @@ export default function DemandListHistory() {
                       />
                     </Grid>
                     <Grid item xs>
-                      <FormHelperText className="text-dark">
+                      <FormHelperText className="text-info">
                         Đến ngày
                       </FormHelperText>
                       <TextField
@@ -915,6 +914,7 @@ export default function DemandListHistory() {
                   </Grid>
                 </th>
               ) : null}
+              <th colSpan={2}></th>
             </tr>
           </thead>
           <tbody>
@@ -925,7 +925,18 @@ export default function DemandListHistory() {
                   {flag1 ? <td>{i.User.Branch.name}</td> : null}
                   {flag2 ? <td>{i.User.name}</td> : null}
                   {flag3 ? <td>{i.employee}</td> : null}
-                  {flag4 ? <td>{i.Customer.name}</td> : null}
+                  {flag4 ? (
+                    <td>
+                      <Link
+                        to={
+                          "/dashboard/customers/update/" +
+                          btoa(`${i.Customer.id}`)
+                        }
+                      >
+                        {i.Customer.name}
+                      </Link>
+                    </td>
+                  ) : null}
                   {flag5 ? <td>{i.Customer.number}</td> : null}
                   {flag6 ? <td>{i.Customer_Type.name}</td> : null}
                   {flag7 ? <td>{i.Customer.Province.name}</td> : null}
@@ -954,7 +965,7 @@ export default function DemandListHistory() {
                   </td>
                   <td>
                     <button
-                      className="btn btn-info btn-sm"
+                      className="btn btn-secondary btn-sm"
                       onClick={() => onClickHide(i.id)}
                     >
                       Restore
