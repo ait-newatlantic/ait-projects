@@ -9,17 +9,17 @@ module.exports = {
         dialect: "mysql",
     },
     test: {
-        username: process.env.USER,
-        password: process.env.PASS,
+        username: process.env.TEST_USER,
+        password: process.env.TEST_PASS,
         database: process.env.DATABASE_TEST,
         host: process.env.HOST,
         dialect: "mysql",
     },
     production: {
-        username: process.env.USER,
-        password: process.env.PASS,
-        database: process.env.DATABASE,
-        host: process.env.HOST,
+        username: process.env.PROD_USER,
+        password: process.env.PROD_PASS,
+        database: process.env.PROD_DATABASE,
+        host: process.env.PROD_HOST,
         dialect: "mysql",
     },
 };
