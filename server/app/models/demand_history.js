@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         customer_typeId: DataTypes.INTEGER,
         car_modelId: DataTypes.INTEGER,
         car_typeId: DataTypes.INTEGER,
-        colord: DataTypes.INTEGER,
+        colorId: DataTypes.INTEGER,
         demand_statusId: DataTypes.INTEGER,
         contact_typeId: DataTypes.INTEGER,
         demandId: DataTypes.INTEGER,
