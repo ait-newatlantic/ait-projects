@@ -1,7 +1,7 @@
 module.exports = {
     up: async(queryInterface, Sequelize) => {
         await queryInterface.bulkInsert(
-            "Options", [{
+            "options", [{
                     name: "Sidebar",
                     content: "#05386b",
                     hide: false,
@@ -20,6 +20,6 @@ module.exports = {
     },
 
     down: async(queryInterface, Sequelize) => {
-        await queryInterface.bulkDelete("Options", null, {});
+        await queryInterface.bulkDelete("options", null, {});
     },
 };
