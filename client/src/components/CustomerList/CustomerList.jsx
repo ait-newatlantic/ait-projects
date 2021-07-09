@@ -42,7 +42,7 @@ const headers = [
 export default function CustomerList(props) {
   const [customerResult, setcustomerResult] = useState([]);
   const [excelData, setExcelData] = useState([]);
-  const [branch_name, setBranchName] = useState("");
+  const [branch_name, setBranchName] = useState(null);
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -198,11 +198,12 @@ export default function CustomerList(props) {
       } else if (response.data.Roles[0].id === 2) {
         //User is an moderator
         setBranchName(response.data.Branch.name);
-      } else {
-        handleSubmit();
+      } else if (response.data.Roles[0].id === 3){
+        setBranchName("");
       }
+      else {}
     });
-  }, [currentUser.id, handleSubmit]);
+  }, [currentUser.id]);
 
   const onClickHide = (id) => {
     const hide = 1;
@@ -398,7 +399,7 @@ export default function CustomerList(props) {
                     value={branch_name}
                     onChange={(event, newValue) => {
                       if (newValue === null) {
-                        setBranchName("");
+                        getUser();
                       } else setBranchName(newValue);
                     }}
                     options={[
