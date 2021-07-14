@@ -49,21 +49,46 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+    const hide = req.query.hide;
+    const username = req.query.username;
+    const branch_name = req.query.branch_name;
+    const order = req.query.order;
     Customer.findAll({
             order: [
-                ["id", "DESC"]
+                ["id", order]
             ],
+            where: [{
+                hide: {
+                    [Op.eq]: hide,
+                },
+            }, ],
             include: [{
                     model: db.User,
+                    where: {
+                        hide: {
+                            [Op.eq]: 0,
+                        },
+                        username: {
+                            [Op.or]: {
+                                [Op.like]: `%${username}%`,
+                                [Op.eq]: null,
+                            },
+                        },
+                    },
                     include: [{
                         model: db.Branch,
+                        where: {
+                            hide: {
+                                [Op.eq]: 0,
+                            },
+                            name: {
+                                [Op.or]: {
+                                    [Op.like]: `%${branch_name}%`,
+                                    [Op.eq]: null,
+                                },
+                            },
+                        },
                     }, ],
-                },
-                {
-                    model: db.Province,
-                },
-                {
-                    model: db.Business_Type,
                 },
             ],
         })
@@ -72,9 +97,8 @@ exports.findAll = (req, res) => {
         })
         .catch((err) => {
             res.status(500).send({
-                message: "Error retrieving Customers",
+                message: "Error retrieving Customers" + err,
             });
-            console.log(err);
         });
 };
 
