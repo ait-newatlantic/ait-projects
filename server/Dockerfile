@@ -1,5 +1,6 @@
 FROM node:12.19.1-buster-slim
 
+ENV NODE_ENV=production
 WORKDIR /usr/src/app
 
 # npm ci modules and build
