@@ -526,17 +526,17 @@ exports.findAllTotal = (req, res) => {
     return db.sequelize
         .query(
             `SELECT 
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" THEN quantity END) as tongcong,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="1" THEN quantity END) as tiepcanchaohang,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="2" THEN quantity END) as chaythu,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="3" THEN quantity END) as damphan,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="4" THEN quantity END) as chotdonhang,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="5" THEN quantity END) as dacoc,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="7" THEN quantity END) as dathanhtoantamung,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" THEN quantity END) as hoantatgiaodich,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="6" THEN quantity END) as lenhopdong,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="8" THEN quantity END) as bangiaochuathanhtoan,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="10" THEN quantity END) as giaodichthatbai
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 THEN quantity END) as tongcong,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="1" THEN quantity END) as tiepcanchaohang,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="2" THEN quantity END) as chaythu,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="3" THEN quantity END) as damphan,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="4" THEN quantity END) as chotdonhang,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="5" THEN quantity END) as dacoc,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="7" THEN quantity END) as dathanhtoantamung,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" THEN quantity END) as hoantatgiaodich,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="6" THEN quantity END) as lenhopdong,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="8" THEN quantity END) as bangiaochuathanhtoan,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="10" THEN quantity END) as giaodichthatbai
     FROM demands
     LEFT JOIN users ON demands.userId = users.id
     LEFT JOIN branches ON users.branchId = branches.id
@@ -555,17 +555,19 @@ exports.findAllQuantity = (req, res) => {
     return db.sequelize
         .query(
             `SELECT 
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id ="1" THEN quantity END) as c6540,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="2" THEN quantity END) as c6460,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="3" THEN quantity END) as c43253,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="4" THEN quantity END) as c43265,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="5" THEN quantity END) as c43266,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="6" THEN quantity END) as c53228,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="7" THEN quantity END) as c53229,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="8" THEN quantity END) as c65115,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="9" THEN quantity END) as c65116,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="10" THEN quantity END) as c65117,
-    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demand_statusId="9" AND car_models.id="11" THEN quantity END) as c57
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id ="1" THEN quantity END) as c6540,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="2" THEN quantity END) as c6460,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="3" THEN quantity END) as c43253,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="4" THEN quantity END) as c43265,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="5" THEN quantity END) as c43266,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="6" THEN quantity END) as c53228,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="6" THEN quantity END) as c53228,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="6" THEN quantity END) as c53228,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="7" THEN quantity END) as c53229,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="8" THEN quantity END) as c65115,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="9" THEN quantity END) as c65116,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="10" THEN quantity END) as c65117,
+    SUM(CASE WHEN branches.name LIKE "%${branch_name}%" AND users.username LIKE "%${username}%" AND demands.hide = 0 AND demand_statusId="9" AND car_models.id="11" THEN quantity END) as c57
     FROM demands
     LEFT JOIN users ON demands.userId = users.id
     LEFT JOIN branches ON users.branchId = branches.id
