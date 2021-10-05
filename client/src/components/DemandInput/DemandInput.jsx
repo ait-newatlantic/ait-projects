@@ -429,7 +429,7 @@ export default function DemandInput(props) {
                   <div className="row text-left">
                     {customer_typeId == 3 ? (
                       <div className="col-sm">
-                        <label>Ý kiến khách hàng</label>
+                        <label className="text-danger">Ý kiến khách hàng (quan trọng)</label>
                         <textarea
                           type="demand_opinion"
                           className="form-control"
