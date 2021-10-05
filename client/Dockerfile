@@ -17,7 +17,7 @@ RUN npm install -g serve
 
 # npm ci modules and build
 COPY package*.json ./
-RUN npm ci
+RUN npm install -f --no-save
 COPY . .
 RUN npm run build
 
