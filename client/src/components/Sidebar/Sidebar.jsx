@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Link } from "react-router-dom";
 
 //Libraries
@@ -83,7 +83,7 @@ export default function Sidebar() {
     },
     drawerPaper: {
       width: drawerWidth,
-      background: `#222222`,
+      background: `#003d80`,
     },
     drawerHeader: {
       alignItems: "center",
@@ -259,19 +259,31 @@ export default function Sidebar() {
             <ListItem button component={Link} to="/dashboard/demands/list">
               <ListItemText primary="Báo cáo kinh doanh" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/demands/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/demands/list/history"
+            >
               <ListItemText primary="Lịch sử kinh doanh" />
             </ListItem>
             <ListItem button component={Link} to="/dashboard/customers/list">
               <ListItemText primary="Danh sách khách hàng" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/customers/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/customers/list/history"
+            >
               <ListItemText primary="Lịch sử khách hàng" />
             </ListItem>
             <ListItem button component={Link} to="/dashboard/users/list">
               <ListItemText primary="Danh sách tài khoản" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/users/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/users/list/history"
+            >
               <ListItemText primary="Lịch sử tài khoản " />
             </ListItem>
           </List>
@@ -281,22 +293,37 @@ export default function Sidebar() {
             <ListItem button component={Link} to="/dashboard">
               <ListItemText primary="Dashboard" />
             </ListItem>
+            <ListItem button component={Link} to="/dashboard/kpi">
+              <ListItemText primary="Báo cáo KPI" />
+            </ListItem>
             <ListItem button component={Link} to="/dashboard/demands/list">
               <ListItemText primary="Báo cáo kinh doanh" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/demands/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/demands/list/history"
+            >
               <ListItemText primary="Lịch sử kinh doanh" />
             </ListItem>
             <ListItem button component={Link} to="/dashboard/customers/list">
               <ListItemText primary="Danh sách khách hàng" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/customers/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/customers/list/history"
+            >
               <ListItemText primary="Lịch sử khách hàng" />
             </ListItem>
             <ListItem button component={Link} to="/dashboard/users/list">
               <ListItemText primary="Danh sách tài khoản" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/users/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/users/list/history"
+            >
               <ListItemText primary="Lịch sử tài khoản " />
             </ListItem>
           </List>
@@ -306,22 +333,37 @@ export default function Sidebar() {
             <ListItem button component={Link} to="/dashboard">
               <ListItemText primary="Dashboard" />
             </ListItem>
+            <ListItem button component={Link} to="/dashboard/kpi">
+              <ListItemText primary="Báo cáo KPI" />
+            </ListItem>
             <ListItem button component={Link} to="/dashboard/demands/list">
               <ListItemText primary="Báo cáo kinh doanh" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/demands/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/demands/list/history"
+            >
               <ListItemText primary="Lịch sử kinh doanh" />
             </ListItem>
             <ListItem button component={Link} to="/dashboard/customers/list">
               <ListItemText primary="Danh sách khách hàng" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/customers/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/customers/list/history"
+            >
               <ListItemText primary="Lịch sử khách hàng" />
             </ListItem>
             <ListItem button component={Link} to="/dashboard/users/list">
               <ListItemText primary="Danh sách tài khoản" />
             </ListItem>
-            <ListItem button component={Link} to="/dashboard/users/list/history">
+            <ListItem
+              button
+              component={Link}
+              to="/dashboard/users/list/history"
+            >
               <ListItemText primary="Lịch sử tài khoản " />
             </ListItem>
           </List>
@@ -450,6 +492,7 @@ export default function Sidebar() {
               path="/dashboard/users/list/history"
               component={UserListHistory}
             />
+            <Route exact path="/dashboard/kpi" component={KPI} />
           </div>
         )}
         {showEmployeeBoard && (
@@ -509,6 +552,7 @@ export default function Sidebar() {
               path="/dashboard/users/list/history"
               component={UserListHistory}
             />
+            <Route exact path="/dashboard/kpi" component={KPI} />
           </div>
         )}
       </main>
