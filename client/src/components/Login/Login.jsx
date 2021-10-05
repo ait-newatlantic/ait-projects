@@ -4,7 +4,6 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
 import { Checkbox } from "@material-ui/core";
-import ColorFunc from "../../functions/colors";
 import { useEffect } from "react";
 
 const required = (value) => {
@@ -71,12 +70,6 @@ export default function Login(props) {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    setRand(
-      ColorFunc.colors[Math.floor(Math.random() * ColorFunc.colors.length)]
-    ); //pick random Color
-  }, []);
 
   return (
     <div style={rand}>
