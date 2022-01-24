@@ -1,15 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 //Libraries
-import * as MaterialUIIcons from "@material-ui/icons/";
 import { InputLabel } from "@material-ui/core";
 import {
   BarChart,
   DonutChart,
   HorizontalBarChart,
-  LineChart,
 } from "../DemandChart/DemandChart";
-import { Table } from "react-bootstrap";
 
 //Services
 import DemandService from "../../services/demand.service";
@@ -21,8 +18,7 @@ import UserService from "../../services/user.service";
 import DateFunc from "../../functions/datetime";
 
 export default function DashBoard() {
-  const [flag, setFlag] = useState(0);
-  const [User, setUser] = useState("");
+  const [user, setUser] = useState("");
   const [branch_name, setBranchName] = useState("");
   const [username, setUserName] = useState("");
   const [branches, setBranches] = useState("");
@@ -75,12 +71,6 @@ export default function DashBoard() {
     });
   }, [username, from_date, to_date, branch_name]);
 
-  const onClickFlag = () => {
-    if (flag === 0) {
-      setFlag(1);
-    } else setFlag(0);
-  };
-
   const FetchBranches = () => {
     BranchService.get_branchs().then((response) => {
       setBranches(response.data);
@@ -120,59 +110,50 @@ export default function DashBoard() {
       <div className="text-left">
         <h4 className="font-weight-bold text-dark">DASHBOARD</h4>
       </div>
-      <div className="d-flex justify-content-start rounded">
-        <div>
-          <button className="btn btn-sm btn-hover" onClick={onClickFlag}>
-            <MaterialUIIcons.FilterList />
-          </button>
-        </div>
-      </div>
-      {flag === 1 ? (
-        <div>
-          <div className="row">
-            <div className="col">
-              <InputLabel>Chi nhánh</InputLabel>
-              <select
-                className="form-control"
-                id="exampleFormControlSelect1"
-                onChange={(e) => setBranchName(e.target.value)}
-              >
-                <option value="">Tất cả</option>
-                {!!branches &&
-                  branches.map((Branch) => (
-                    <option key={Branch.id} value={Branch.name}>
-                      {Branch.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <div className="col">
-              <InputLabel>Từ ngày</InputLabel>
-              <input
-                type="date"
-                className="form-control"
-                name="from_date"
-                value={from_date}
-                onChange={onChangeFromDate}
-              />
-            </div>
-            <div className="col">
-              <InputLabel>Đến ngày</InputLabel>
-              <input
-                type="date"
-                className="form-control"
-                name="to_date"
-                value={to_date}
-                onChange={onChangeToDate}
-              />
-            </div>
+      <div>
+        <div className="row">
+          <div className="col">
+            <InputLabel>Chi nhánh</InputLabel>
+            <select
+              className="form-control"
+              id="exampleFormControlSelect1"
+              onChange={(e) => setBranchName(e.target.value)}
+            >
+              <option value="">Tất cả</option>
+              {!!branches &&
+                branches.map((Branch) => (
+                  <option key={Branch.id} value={Branch.name}>
+                    {Branch.name}
+                  </option>
+                ))}
+            </select>
           </div>
-          <br />
+          <div className="col">
+            <InputLabel>Từ ngày</InputLabel>
+            <input
+              type="date"
+              className="form-control"
+              name="from_date"
+              value={from_date}
+              onChange={onChangeFromDate}
+            />
+          </div>
+          <div className="col">
+            <InputLabel>Đến ngày</InputLabel>
+            <input
+              type="date"
+              className="form-control"
+              name="to_date"
+              value={to_date}
+              onChange={onChangeToDate}
+            />
+          </div>
         </div>
-      ) : null}
+        <br />
+      </div>
       <div className="row justify-content-center text-left">
-        <div className="col-md-8 col-sm d-flex flex-column">
-          <div className="flex-fill card p-2">
+        <div className="col-md-8 col-sm">
+          <div className="card p-2">
             {!!demand_statuses &&
               demand_statuses.map((month, index) => (
                 <BarChart
@@ -228,98 +209,8 @@ export default function DashBoard() {
                 />
               ))}
           </div>
-          <br />
-          <div className="card p-2">
-            <label className="font-weight-bold text-uppercase">
-              Bảng thống kê số lượng giao dịch hàng năm
-            </label>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Trang thái</th>
-                  <th>Tháng 1</th>
-                  <th>Tháng 2</th>
-                  <th>Tháng 3</th>
-                  <th>Tháng 4</th>
-                  <th>Tháng 5</th>
-                  <th>Tháng 6</th>
-                  <th>Tháng 7</th>
-                  <th>Tháng 8</th>
-                  <th>Tháng 9</th>
-                  <th>Tháng 10</th>
-                  <th>Tháng 11</th>
-                  <th>Tháng 12</th>
-                </tr>
-              </thead>
-              {!!demand_statuses &&
-                demand_statuses.map((month, index) => (
-                  <tbody key={index}>
-                    <tr>
-                      <td>Đang giao dịch trong tháng</td>
-                      <td>{month.danggiaodich1}</td>
-                      <td>{month.danggiaodich2}</td>
-                      <td>{month.danggiaodich3}</td>
-                      <td>{month.danggiaodich4}</td>
-                      <td>{month.danggiaodich5}</td>
-                      <td>{month.danggiaodich6}</td>
-                      <td>{month.danggiaodich7}</td>
-                      <td>{month.danggiaodich8}</td>
-                      <td>{month.danggiaodich9}</td>
-                      <td>{month.danggiaodich10}</td>
-                      <td>{month.danggiaodich11}</td>
-                      <td>{month.danggiaodich12}</td>
-                    </tr>
-                    <tr>
-                      <td>Giao dịch thành công</td>
-                      <td>{month.thanhcong1}</td>
-                      <td>{month.thanhcong2}</td>
-                      <td>{month.thanhcong3}</td>
-                      <td>{month.thanhcong4}</td>
-                      <td>{month.thanhcong5}</td>
-                      <td>{month.thanhcong6}</td>
-                      <td>{month.thanhcong7}</td>
-                      <td>{month.thanhcong8}</td>
-                      <td>{month.thanhcong9}</td>
-                      <td>{month.thanhcong10}</td>
-                      <td>{month.thanhcong11}</td>
-                      <td>{month.thanhcong12}</td>
-                    </tr>
-                    <tr>
-                      <td>Giao dịch thất bại</td>
-                      <td>{month.thatbai1}</td>
-                      <td>{month.thatbai2}</td>
-                      <td>{month.thatbai3}</td>
-                      <td>{month.thatbai4}</td>
-                      <td>{month.thatbai5}</td>
-                      <td>{month.thatbai6}</td>
-                      <td>{month.thatbai7}</td>
-                      <td>{month.thatbai8}</td>
-                      <td>{month.thatbai9}</td>
-                      <td>{month.thatbai10}</td>
-                      <td>{month.thatbai11}</td>
-                      <td>{month.thatbai12}</td>
-                    </tr>
-                    <tr>
-                      <td>Đang giao dịch hiện tại</td>
-                      <td>{month.tongcongdanggiaodich01}</td>
-                      <td>{month.tongcongdanggiaodich02}</td>
-                      <td>{month.tongcongdanggiaodich03}</td>
-                      <td>{month.tongcongdanggiaodich04}</td>
-                      <td>{month.tongcongdanggiaodich05}</td>
-                      <td>{month.tongcongdanggiaodich06}</td>
-                      <td>{month.tongcongdanggiaodich07}</td>
-                      <td>{month.tongcongdanggiaodich08}</td>
-                      <td>{month.tongcongdanggiaodich09}</td>
-                      <td>{month.tongcongdanggiaodich10}</td>
-                      <td>{month.tongcongdanggiaodich11}</td>
-                      <td>{month.tongcongdanggiaodich12}</td>
-                    </tr>
-                  </tbody>
-                ))}
-            </Table>
-          </div>
         </div>
-        <div className="col-md-4 col-sm d-flex flex-column">
+        <div className="col-md-4 col-sm">
           <div className="card p-2">
             {!!yearResult &&
               yearResult.map((form, index) => (
@@ -359,28 +250,6 @@ export default function DashBoard() {
               ))}
           </div>
           <br />
-          <div className="card p-2">
-            <div>
-              {!!demand_statuses &&
-                demand_statuses.map((month, index) => (
-                  <LineChart
-                    key={index}
-                    thanhcong1={month.thanhcong1}
-                    thanhcong2={month.thanhcong2}
-                    thanhcong3={month.thanhcong3}
-                    thanhcong4={month.thanhcong4}
-                    thanhcong5={month.thanhcong5}
-                    thanhcong6={month.thanhcong6}
-                    thanhcong7={month.thanhcong7}
-                    thanhcong8={month.thanhcong8}
-                    thanhcong9={month.thanhcong9}
-                    thanhcong10={month.thanhcong10}
-                    thanhcong11={month.thanhcong11}
-                    thanhcong12={month.thanhcong12}
-                  />
-                ))}
-            </div>
-          </div>
         </div>
       </div>
     </div>

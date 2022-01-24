@@ -105,11 +105,11 @@ export default function KPI() {
       .reduce((partial_sum, a) => partial_sum + a, 0);
     return (
       <>
-        <th>{username}</th>
-        <th>{branch}</th>
-        <th>
+        <td>{branch}</td>
+        <td>{username}</td>
+        <td>
           {userKPI}/{userKPITotal}
-        </th>
+        </td>
       </>
     );
   };
@@ -137,7 +137,7 @@ export default function KPI() {
       isInitialMount.current = false;
       // Your useEffect code here to be run on initial render
       getUser();
-      handleFetch()
+      handleFetch();
     } else {
       // Your useEffect code here to be run on update
       handleFetch();
@@ -172,15 +172,15 @@ export default function KPI() {
         <thead className="text-info">
           <tr>
             <th>STT</th>
-            <th>Tên nhân viên</th>
             <th>Chi nhánh</th>
+            <th>Tên nhân viên</th>
             <th>KPI (SL đã bán / SL dự kiến)</th>
           </tr>
         </thead>
         <tbody>
           {usersId.map((item, index) => (
             <tr key={index}>
-              <th>{index + 1}</th>
+              <td>{index + 1}</td>
               <Render key={item} item={item} index={index} />
             </tr>
           ))}

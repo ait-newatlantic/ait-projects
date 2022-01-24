@@ -883,7 +883,6 @@ export default function DemandList() {
                         >
                           <MenuItem value="">None</MenuItem>
                           <MenuItem value="date">Ngày giai đoạn</MenuItem>
-                          <MenuItem value="createdAt">Ngày tạo</MenuItem>
                           <MenuItem value="updatedAt">Ngày cập nhật</MenuItem>
                         </Select>
                       </FormControl>
@@ -950,9 +949,6 @@ export default function DemandList() {
                   {flag14 ? <td>{i.Color.name}</td> : null}
                   {flag15 ? <td>{i.note}</td> : null}
                   {flag16 ? <td>Gặp ngày {i.date.substring(0, 10)}</td> : null}
-                  {flag16 ? (
-                    <td>Tạo ngày {i.createdAt.substring(0, 10)}</td>
-                  ) : null}
                   {flag16 ? (
                     <td>Cập nhật ngày {i.updatedAt.substring(0, 10)}</td>
                   ) : null}
