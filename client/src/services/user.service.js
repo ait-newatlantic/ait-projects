@@ -13,12 +13,16 @@ const getUserBoard = () => {
   return axios.get(API_URL + "user", { headers: authHeader() });
 };
 
-const getModeratorBoard = () => {
-  return axios.get(API_URL + "mod", { headers: authHeader() });
+const getDriverBoard = () => {
+  return axios.get(API_URL + "driver", { headers: authHeader() });
 };
 
-const getEmployeeBoard = () => {
-  return axios.get(API_URL + "employee", { headers: authHeader() });
+const getTechinicianBoard = () => {
+  return axios.get(API_URL + "technician", { headers: authHeader() });
+};
+
+const getAccountantBoard = () => {
+  return axios.get(API_URL + "accountant", { headers: authHeader() });
 };
 
 const getAdminBoard = () => {
@@ -37,60 +41,26 @@ const get_user = (id) => {
   return axios.get(USER_URL + `users/user/${id}`);
 };
 
-const get_users_filtered = (
-  hide,
-  branch_name,
-  username,
-  email,
-  name,
-  role,
-  order,
-  datetype,
-  from_date,
-  to_date,
-  limit
-) => {
-  return axios.get(USER_URL + `users/filters`, {
-    params: {
-      hide,
-      branch_name,
-      username,
-      email,
-      name,
-      role,
-      order,
-      datetype,
-      from_date,
-      to_date,
-      limit,
-    },
-  });
+const get_users_from_project = (id) => {
+  return axios.get(USER_URL + `users/project/${id}`);
 };
 
-const update_user = (id, name, email, password) => {
-  return axios.put(USER_URL + `users/user/${id}`, {
-    name,
-    email,
-    password,
-  });
-};
-
-const hide_user = (hide, id) => {
-  return axios.put(USER_URL + `users/user?hide=${hide}&id=${id}`);
+const get_users_attendace_from_project = (id) => {
+  return axios.get(USER_URL + `users/project/attendance/${id}`);
 };
 
 const UserService = {
   getPublicContent,
   getUserBoard,
-  getModeratorBoard,
+  getAccountantBoard,
+  getDriverBoard,
+  getTechinicianBoard,
   getAdminBoard,
-  getEmployeeBoard,
   get_users,
-  get_users_filtered,
   delete_user,
   get_user,
-  update_user,
-  hide_user,
+  get_users_from_project,
+  get_users_attendace_from_project
 };
 
 export default UserService;

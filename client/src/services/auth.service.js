@@ -5,11 +5,10 @@ const API_URL = `${BASE_URL}/api/auth/`;
 
 console.log(API_URL);
 
-const register = (username, name, branchId, email, password) => {
+const register = (username, name, email, password) => {
   return axios.post(API_URL + "signup", {
     username,
     name,
-    branchId,
     email,
     password,
   });

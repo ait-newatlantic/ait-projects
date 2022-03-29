@@ -23,90 +23,80 @@ verifyToken = (req, res, next) => {
     });
 };
 
-isAdmin = (req, res, next) => {
+isManager = (req, res, next) => {
     User.findByPk(req.userId).then((user) => {
         user.getRoles().then((roles) => {
             for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "admin") {
+                if (roles[i].name === "manager") {
                     next();
                     return;
                 }
             }
 
             res.status(403).send({
-                message: "Require Admin Role!",
+                message: "Require Manager Role!",
             });
             return;
         });
     });
 };
 
-isModerator = (req, res, next) => {
+isTechnician = (req, res, next) => {
     User.findByPk(req.userId).then((user) => {
         user.getRoles().then((roles) => {
             for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "moderator") {
+                if (roles[i].name === "technician") {
                     next();
                     return;
                 }
             }
 
             res.status(403).send({
-                message: "Require Moderator Role!",
+                message: "Require Technician Role!",
             });
         });
     });
 };
 
-isEmployee = (req, res, next) => {
+isDriver = (req, res, next) => {
     User.findByPk(req.userId).then((user) => {
         user.getRoles().then((roles) => {
             for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "employee") {
+                if (roles[i].name === "driver") {
                     next();
                     return;
                 }
             }
 
             res.status(403).send({
-                message: "Require Employee Role!",
+                message: "Require Driver Role!",
             });
         });
     });
 };
 
-isModeratorOrAdminOrEmployee = (req, res, next) => {
-    User.findByPk(req.userId).then((user) => {
-        user.getRoles().then((roles) => {
+isAdmin = (req, res, next) => {
+    User.findByPk(req.userId).then(user => {
+        user.getRoles().then(roles => {
             for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "moderator") {
-                    next();
-                    return;
-                }
-
                 if (roles[i].name === "admin") {
                     next();
                     return;
                 }
-
-                if (roles[i].name === "employee") {
-                    next();
-                    return;
-                }
             }
-
             res.status(403).send({
-                message: "Require Moderator or Admin Or Employee Role!",
+                message: "Require Admin Role!"
             });
+            return;
         });
     });
 };
 
 const authJwt = {
     verifyToken: verifyToken,
+    isManager: isManager,
+    isTechnician: isTechnician,
+    isDriver: isDriver,
     isAdmin: isAdmin,
-    isModerator: isModerator,
-    isEmployee: isEmployee,
-    isModeratorOrAdminOrEmployee: isModeratorOrAdminOrEmployee,
 };
 module.exports = authJwt;

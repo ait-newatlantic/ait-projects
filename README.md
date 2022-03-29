@@ -1,2 +1,1 @@
-# ait-soft
 # ait-projects

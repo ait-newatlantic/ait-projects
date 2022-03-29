@@ -13,23 +13,16 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: "userId",
                 otherKey: "roleId",
             });
-            User.belongsTo(models.Branch, {
-                foreignKey: "branchId",
-                targetKey: "id",
-            });
-            User.hasMany(models.Customer, {
+            User.belongsToMany(models.Vehicle, {
+                through: "user_vehicles",
                 foreignKey: "userId",
-                targetKey: "id",
+                otherKey: "vehicleId",
             });
-            User.hasMany(models.Demand, {
+            User.belongsToMany(models.Project, {
+                through: "user_projects",
                 foreignKey: "userId",
-                targetKey: "id",
+                otherKey: "projectId",
             });
-            User.hasMany(models.Demand_History, {
-                foreignKey: "userId",
-                targetKey: "id",
-            });
-
         }
     }
     User.init({
@@ -41,9 +34,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         username: DataTypes.STRING,
         name: DataTypes.STRING,
-        email: DataTypes.STRING,
+        phone: DataTypes.INTEGER,
+        socialId: DataTypes.INTEGER,
+        working: DataTypes.BOOLEAN,
+        startDate: DataTypes.DATE,
+        endDate: DataTypes.DATE,
         password: DataTypes.STRING,
-        branchId: DataTypes.INTEGER,
         hide: DataTypes.BOOLEAN,
     }, {
         sequelize,

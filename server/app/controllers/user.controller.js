@@ -15,27 +15,32 @@ exports.adminBoard = (req, res) => {
     res.status(200).send("Admin");
 };
 
-exports.moderatorBoard = (req, res) => {
-    res.status(200).send("Moderator");
+exports.managerBoard = (req, res) => {
+    res.status(200).send("Manager");
 };
 
-exports.employeeBoard = (req, res) => {
-    res.status(200).send("Employee");
+exports.technicianBoard = (req, res) => {
+    res.status(200).send("Technician");
+};
+
+exports.driverBoard = (req, res) => {
+    res.status(200).send("Driver");
 };
 
 exports.findAll = (req, res) => {
     User.findAll({
-            order: [
-                ["id", "DESC"]
-            ],
-            include: [{
-                    model: db.Branch,
-                },
-                {
-                    model: db.Role,
-                },
-            ],
-        })
+        order: [
+            ["id", "DESC"]
+        ],
+        include: [
+            {
+                model: db.Role,
+            },
+            {
+                model: db.Project,
+            },
+        ],
+    })
         .then((data) => {
             res.send(data);
         })
@@ -50,14 +55,12 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
     User.findByPk(id, {
-            include: [{
-                    model: db.Branch,
-                },
-                {
-                    model: db.Role,
-                },
-            ],
-        })
+        include: [
+            {
+                model: db.Role,
+            },
+        ],
+    })
         .then((data) => {
             res.send(data);
         })
@@ -69,77 +72,77 @@ exports.findOne = (req, res) => {
         });
 };
 
-exports.findWithFilters = (req, res) => {
-    const branch_name = req.query.branch_name;
-    const username = req.query.username;
-    const name = req.query.name;
-    const email = req.query.email;
-    const role = req.query.role;
-    const hide = req.query.hide;
-    const order = req.query.order;
-    const datetype = req.query.datetype;
-    const from_date = req.query.from_date;
-    const to_date = req.query.to_date;
-    const limit = parseInt(req.query.limit) || null;
+exports.findWithProject = (req, res) => {
+    const id = req.params.id;
     User.findAll({
-            order: [
-                ["id", order]
-            ],
-            limit: limit,
-            where: [{
-                hide: {
-                    [Op.eq]: hide,
-                },
-                name: {
-                    [Op.like]: `%${name}%`,
-                },
-                email: {
-                    [Op.like]: `%${email}%`,
-                },
-                username: {
-                    [Op.like]: `%${username}%`,
-                },
-                [datetype]: {
-                    [Op.between]: [from_date, to_date],
-                },
-            }, ],
-            include: [{
-                    model: db.Branch,
-                    where: {
-                        name: {
-                            [Op.like]: `%${branch_name}%`,
-                        },
+        include: [
+            {
+                model: db.Project,
+                where: {
+                    id: {
+                        [Op.eq]: id,
                     },
                 },
-                {
-                    model: db.Role,
-                    where: {
-                        name: {
-                            [Op.like]: `%${role}%`,
-                        },
-                    },
-                },
-            ],
-        })
+            },
+            {
+                model: db.Role,
+            },
+        ],
+    })
         .then((data) => {
             res.send(data);
         })
         .catch((err) => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving users.",
+                message: "Error retrieving Users with id=" + id,
             });
+            console.log(err);
+        });
+};
+
+exports.findWithProjectAttendance = (req, res) => {
+    const id = req.params.id;
+    User.findAll({
+        include: [
+            {
+                model: db.Project,
+                where: {
+                    id: {
+                        [Op.eq]: id,
+                    },
+                },
+            },
+            {
+                model: db.Role,
+                where: {
+                    [Op.or]: [
+                        { name: 'driver' },
+                        { name: 'techinician' }
+                    ]
+                },
+            },
+        ],
+    })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: "Error retrieving Users with id=" + id,
+            });
+            console.log(err);
         });
 };
 
 exports.update = (req, res) => {
     const id = req.params.id;
     User.update({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 8),
-        }, {
-            where: { id: id },
-        })
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+    }, {
+        where: { id: id },
+    })
         .then((num) => {
             if (num == 1) {
                 res.send({
@@ -169,10 +172,10 @@ exports.hide = (req, res) => {
     const id = req.query.id;
     const hide = req.query.hide;
     User.update({
-            hide: hide,
-        }, {
-            where: { id: id },
-        })
+        hide: hide,
+    }, {
+        where: { id: id },
+    })
         .then((num) => {
             if (num == 1) {
                 res.send({

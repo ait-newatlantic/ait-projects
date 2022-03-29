@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Hello there!" });
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
         "Access-Control-Allow-Headers",
@@ -40,19 +40,12 @@ app.use(function(req, res, next) {
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
-require("./app/routes/branch.routes")(app);
-require("./app/routes/province.routes")(app);
-require("./app/routes/demand.routes")(app);
-require("./app/routes/demand_history.routes")(app);
-require("./app/routes/customer.routes")(app);
-require("./app/routes/business_type.routes")(app);
-require("./app/routes/contact_type.routes")(app);
-require("./app/routes/color.routes")(app);
-require("./app/routes/demand_status.routes")(app);
-require("./app/routes/customer_type.routes")(app);
-require("./app/routes/car_type.routes")(app);
-require("./app/routes/car_model.routes")(app);
-require("./app/routes/option.routes")(app);
+require("./app/routes/vehicle.routes")(app);
+require("./app/routes/project.routes")(app);
+require("./app/routes/attendance.routes")(app);
+require("./app/routes/report.routes")(app);
+require("./app/routes/unit.routes")(app);
+require("./app/routes/oil_type.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -60,4 +53,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
-function initial() {}
+function initial() { }

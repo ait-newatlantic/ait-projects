@@ -11,13 +11,12 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
     // Save User to Database
     User.create({
-            username: req.body.username,
-            email: req.body.email,
-            name: req.body.name,
-            branchId: req.body.branchId,
-            password: bcrypt.hashSync(req.body.password, 8),
-            hide: false,
-        })
+        username: req.body.username,
+        email: req.body.email,
+        name: req.body.name,
+        password: bcrypt.hashSync(req.body.password, 8),
+        hide: false,
+    })
         .then((user) => {
             if (req.body.roles) {
                 Role.findAll({
@@ -45,10 +44,10 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
     User.findOne({
-            where: {
-                username: req.body.username,
-            },
-        })
+        where: {
+            username: req.body.username,
+        },
+    })
         .then((user) => {
             if (!user) {
                 return res.status(404).send({ message: "User Not found." });
@@ -80,7 +79,6 @@ exports.signin = (req, res) => {
                     username: user.username,
                     name: user.name,
                     email: user.email,
-                    branchId: user.branchId,
                     roles: authorities,
                     accessToken: token,
                 });
