@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { formatTime } from "../../functions/date";
 import DateFunc from "../../functions/datetime";
+import { formatNumber } from "../../functions/number";
 import AuthService from "../../services/auth.service";
 import ReportService from "../../services/report.service";
 import UnitService from "../../services/unit.service";
@@ -276,7 +277,7 @@ const WorkDiaryReport = () => {
                                     {item.quantity ? item.quantity : ''}
                                 </td>
                                 <td className="border border-slate-700">
-                                    {item.price ? item.price : 0}
+                                    {item.price ? formatNumber(item.price) : 0}
                                 </td>
                                 <td className="border border-slate-700">
                                     {item.price * item.quantity}

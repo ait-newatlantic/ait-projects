@@ -74,7 +74,7 @@ const Dashboard = () => {
                             </tr>
                             <tr>
                                 <th className="border border-slate-700">3</th>
-                                <td className="border border-slate-700"><a href={`/work/diary/${id}`}>Báo cáo hàng ngày</a></td>
+                                <td className="border border-slate-700"><a href={`/report/${id}`}>Báo cáo hàng ngày</a></td>
                             </tr>
                         </tbody>
                     </table>

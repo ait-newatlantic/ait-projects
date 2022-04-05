@@ -46,6 +46,7 @@ require("./app/routes/attendance.routes")(app);
 require("./app/routes/report.routes")(app);
 require("./app/routes/unit.routes")(app);
 require("./app/routes/oil_type.routes")(app);
+require("./app/routes/brand.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

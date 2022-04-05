@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: "projectId",
                 targetKey: "id",
             });
+            Vehicle.belongsTo(models.Brand, {
+                foreignKey: "brandId",
+                targetKey: "id",
+            });
         }
     }
     Vehicle.init(

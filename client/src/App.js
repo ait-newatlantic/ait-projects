@@ -19,6 +19,7 @@ import WorkDiaryStatus from "./components/WorkDiaryStatus";
 import MaterialListTotal from "./components/MaterialListTotal";
 import logo from './assets/images/ait_logo.jpg'
 import WorkDiaryReportTotal from "./components/WorkDiaryReportTotal";
+import Report from "./components/Report";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -118,6 +119,7 @@ const App = () => {
         <Route exact path="/work/diary/report/:projectId/:id" element={<WorkDiaryReport />} />
         <Route exact path="/work/diary/report/:id" element={<WorkDiaryReportTotal />} />
         <Route exact path="/work/status/:id" element={<WorkDiaryStatus />} />
+        <Route exact path="/report/:id" element={<Report />} />
       </Routes>
     </div>
   );
