@@ -111,6 +111,45 @@ exports.findAll = (req, res) => {
         });
 };
 
+exports.findWithDate = (req, res) => {
+    const projectId = req.params.projectId;
+    const from_date = req.query.from_date;
+    const to_date = req.query.to_date;
+    Report.findAll({
+        where: {
+            hide: {
+                [Op.eq]: 0,
+            },
+            projectId: {
+                [Op.eq]: projectId,
+            },
+            updatedAt: {
+                [Op.between]: [from_date, to_date],
+            },
+        },
+        include: [
+            {
+                model: db.Project,
+            },
+            {
+                model: db.Unit,
+            },
+            {
+                model: db.Vehicle,
+            },
+        ]
+    })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving vehicles.",
+            });
+            console.log(err);
+        });
+};
+
 exports.findWithProject = (req, res) => {
     const id = req.params.id;
     const projectId = req.params.projectId;

@@ -5,6 +5,7 @@ const API_URL = `${BASE_URL}/api/`;
 
 const create_vehicle = (
     name,
+    brand,
     code,
     registryDate,
     plateNumber,
@@ -12,6 +13,7 @@ const create_vehicle = (
 ) => {
     return axios.post(API_URL + "vehicles", {
         name,
+        brand,
         code,
         registryDate,
         plateNumber,

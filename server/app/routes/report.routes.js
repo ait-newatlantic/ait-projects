@@ -11,6 +11,8 @@ module.exports = (app) => {
 
     router.get("/:id", reports.findWithId);
 
+    router.get("/report/:projectId", reports.findWithDate);
+
     router.get("/report/:projectId/:id", reports.findWithProject);
 
     app.use("/api/reports", router);

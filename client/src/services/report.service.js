@@ -57,12 +57,23 @@ const get_report_from_project = (projectId, id, from_date,
     });
 };
 
+const get_daily_report = (projectId, from_date,
+    to_date,) => {
+    return axios.get(API_URL + `reports/report/${projectId}`, {
+        params: {
+            from_date,
+            to_date,
+        },
+    });
+};
+
 const ReportService = {
     create_report,
     get_reports_from_id,
     update_report,
     get_reports,
     get_report_from_project,
+    get_daily_report,
 };
 
 export default ReportService;

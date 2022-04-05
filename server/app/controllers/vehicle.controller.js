@@ -4,6 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
     if (!req.body.name ||
+        !req.body.brand ||
         !req.body.code ||
         !req.body.registryDate ||
         !req.body.plateNumber ||
@@ -19,6 +20,7 @@ exports.create = (req, res) => {
     }
     Vehicle.create({
         name: req.body.name,
+        brandId: req.body.brand,
         code: req.body.code,
         registryDate: req.body.registryDate,
         plateNumber: req.body.plateNumber,
@@ -147,6 +149,9 @@ exports.findAll = (req, res) => {
             {
                 model: db.Project,
             },
+            {
+                model: db.Brand,
+            },
         ]
     })
         .then((data) => {
@@ -169,6 +174,14 @@ exports.findWithProject = (req, res) => {
                 [Op.eq]: id,
             },
         },
+        include: [
+            {
+                model: db.Project,
+            },
+            {
+                model: db.Brand,
+            },
+        ]
     })
         .then((data) => {
             res.send(data);

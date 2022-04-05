@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
+import BrandService from "../../services/brand.service";
 import ProjectService from "../../services/project.service";
 import VehicleService from "../../services/vehicle.service";
 
 const MaterialListTotal = () => {
     const [data, setData] = useState([])
     const [projects, setProjects] = useState([])
+    const [brands, setBrands] = useState([])
     const [name, setName] = useState('')
     const [code, setCode] = useState('')
+    const [brand, setBrand] = useState(1)
     const [registryDate, setRegistryDate] = useState('')
     const [plateNumber, setPlateNumber] = useState('')
     const [createdYear, setCreatedYear] = useState('')
@@ -14,6 +17,12 @@ const MaterialListTotal = () => {
     const fetchMaterials = useCallback(() => {
         VehicleService.get_vehicles().then((response) => {
             setData(response.data);
+        });
+    }, [])
+
+    const fetchBrands = useCallback(() => {
+        BrandService.get_brands().then((response) => {
+            setBrands(response.data);
         });
     }, [])
 
@@ -28,10 +37,15 @@ const MaterialListTotal = () => {
         VehicleService.update_vehicle(Number(e.target.value[0]), Number(e.target.value[2]));
     };
 
+    const handleSelectBrand = (e) => {
+        setBrand(Number(e.target.value))
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         VehicleService.create_vehicle(
             name,
+            brand,
             code,
             registryDate,
             plateNumber,
@@ -50,19 +64,32 @@ const MaterialListTotal = () => {
     useEffect(() => {
         fetchMaterials()
         fetchProjects()
-    }, [fetchMaterials, fetchProjects])
+        fetchBrands()
+    }, [fetchBrands, fetchMaterials, fetchProjects])
 
     return (
         <div className="container mx-auto text-center">
             <h3 className="mb-4 uppercase font-bold">Danh sách thiết bị & máy móc toàn công ty</h3>
             <div className="border border-slate-500 mb-4">
                 <p className="font-bold border border-slate-600 m-0.5">Thêm thiết bị</p>
-                <form className="px-8 pt-6 pb-8 mb-4 text-left space-y-2 flex justify-between">
+                <form className="px-8 pt-6 pb-8 mb-4 text-left space-y-2 flex justify-between items-center">
                     <div>
                         <label className="block text-gray-700 text-sm font-bold">
                             Tên thiết bị
                         </label>
                         <input className="border border-slate-600" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 text-sm font-bold">
+                            Hãng
+                        </label>
+                        <select className="border border-slate-600" onChange={handleSelectBrand}>
+                            {brands.map(brand => {
+                                return (
+                                    <option key={brand.id} value={brand.id}>{brand.name}</option>
+                                )
+                            })}
+                        </select>
                     </div>
                     <div>
                         <label className="block text-gray-700 text-sm font-bold">
@@ -98,6 +125,7 @@ const MaterialListTotal = () => {
                     <tr>
                         <th className="border border-slate-600">STT</th>
                         <th className="border border-slate-600">Tên thiết bị & máy móc</th>
+                        <th className="border border-slate-600">Hãng xe</th>
                         <th className="border border-slate-600">Mã thiết bị & máy móc</th>
                         <th className="border border-slate-600">Ngày đăng kiểm</th>
                         <th className="border border-slate-600">Biển số</th>
@@ -115,6 +143,9 @@ const MaterialListTotal = () => {
                                 </td>
                                 <td className="border border-slate-700">
                                     <a className="text-blue-600" href={`/work/diary/report/${item.id}`}>{item.name}</a>
+                                </td>
+                                <td className="border border-slate-700">
+                                    {item.Brand ? item.Brand.name : "N/A"}
                                 </td>
                                 <td className="border border-slate-700">
                                     {item.code}
@@ -139,6 +170,7 @@ const MaterialListTotal = () => {
                                                 <option key={project.id} value={[item.id, project.id]}>{project.name}</option>
                                             )
                                         })}
+                                        <option value={[item.id, null]}>N/A</option>
                                     </select>
                                 </td>
                             </tr>

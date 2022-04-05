@@ -24,6 +24,7 @@ const MaterialList = () => {
                     <tr>
                         <th className="border border-slate-600">STT</th>
                         <th className="border border-slate-600">Tên thiết bị & máy móc</th>
+                        <th className="border border-slate-600">Hãng xe</th>
                         <th className="border border-slate-600">Mã thiết bị & máy móc</th>
                         <th className="border border-slate-600">Ngày đăng kiểm</th>
                         <th className="border border-slate-600">Biển số</th>
@@ -39,6 +40,8 @@ const MaterialList = () => {
                                 </td>
                                 <td className="border border-slate-700">
                                     {item.name}
+                                </td>  <td className="border border-slate-700">
+                                    {item.Brand.name}
                                 </td>
                                 <td className="border border-slate-700">
                                     {item.code}

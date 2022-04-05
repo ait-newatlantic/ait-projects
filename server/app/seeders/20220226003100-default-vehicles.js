@@ -4,6 +4,7 @@ module.exports = {
       "vehicles", [
       {
         name: "Máy đào PC450-10 Komatsu",
+        brandId: 2,
         code: 'K01',
         registryDate: '2022-02-26 00:53:47',
         plateNumber: '1234',
@@ -16,6 +17,7 @@ module.exports = {
       },
       {
         name: "Máy ủi D85",
+        brandId: 1,
         code: 'K02',
         registryDate: '2022-02-26 00:53:47',
         plateNumber: '1234',

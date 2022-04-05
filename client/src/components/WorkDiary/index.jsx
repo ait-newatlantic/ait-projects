@@ -18,7 +18,7 @@ const WorkDiary = () => {
 
     return (
         <div className="container mx-auto text-center">
-            <h3 className="mb-4 uppercase font-bold">Nhật ký sửa chữa bảo dưỡng</h3>
+            <h3 className="mb-4 uppercase font-bold">Nhật ký sửa chữa bảo dưỡng xe</h3>
             <table className="table-auto border-separate border border-slate-500 w-full">
                 <thead>
                     <tr>
