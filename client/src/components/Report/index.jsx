@@ -27,7 +27,7 @@ const Report = () => {
       </h3>
       <table className="table-auto border-separate border border-slate-500 w-full">
         <thead>
-          <tr>
+          <tr className="bg-slate-300">
             <th className="border border-slate-600">STT</th>
             <th className="border border-slate-600">Xe</th>
             <th className="border border-slate-600">Mã xe</th>

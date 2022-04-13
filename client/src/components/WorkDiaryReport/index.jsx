@@ -124,12 +124,12 @@ const WorkDiaryReport = () => {
       </div>
       <div className="flex justify-center space-x-4 mb-4">
         <div className="border border-slate-500">
-          <p className="font-bold border border-slate-600 m-0.5">
+          <p className="font-bold border border-slate-600 m-0.5 bg-slate-300">
             Thêm nhật ký
           </p>
           <form className="px-8 pt-6 text-left space-y-2">
             <div>
-              <label className="block text-gray-700 text-sm font-bold">
+              <label className="block text-gray-700 text-sm font-bold ">
                 Ngày hư hỏng
               </label>
               <input
@@ -160,7 +160,7 @@ const WorkDiaryReport = () => {
           </form>
         </div>
         <div className="border border-slate-500 overflow-auto">
-          <p className="font-bold border border-slate-600 m-0.5">
+          <p className="font-bold border border-slate-600 m-0.5 bg-slate-300">
             Cập nhật nhật ký
           </p>
           <form className="px-8 pt-6 text-left space-y-2 flex flex-wrap items-center">
@@ -303,9 +303,9 @@ const WorkDiaryReport = () => {
           </button>
         </div>
       </div>
-      <table className="table-auto border-separate border border-slate-500 w-full">
+      <table className="table-auto border-separate border border-slate-500 w-full ">
         <thead>
-          <tr>
+          <tr className="bg-slate-300">
             <th className="border border-slate-600">STT</th>
             <th className="border border-slate-600">ID Báo cáo</th>
 

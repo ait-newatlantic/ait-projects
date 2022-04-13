@@ -50,7 +50,7 @@ const WorkDiaryReportTotal = () => {
       </div>
       <table className="table-auto border-separate border border-slate-500 w-full">
         <thead>
-          <tr>
+          <tr className="bg-slate-300">
             <th className="border border-slate-600">STT</th>
             <th className="border border-slate-600">ID Báo cáo</th>
             <th className="border border-slate-600">Nội dung hư hỏng</th>
