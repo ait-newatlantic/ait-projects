@@ -66,7 +66,7 @@ const Dashboard = () => {
               <tr>
                 <th className="border border-slate-700">2</th>
                 <td className="border border-slate-700">
-                  <a href={`/gasoline/list/${id}`}>Quản lý xăng dầu</a>
+                  <a href={`/gasoline/${id}`}>Quản lý xăng dầu</a>
                 </td>
               </tr>
             </tbody>
