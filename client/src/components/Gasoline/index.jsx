@@ -48,13 +48,13 @@ export const Gasoline = () => {
               <tr>
                 <th className="border border-slate-700">1</th>
                 <td className="border border-slate-700">
-                  <a href={`/gasoline/input/${id}`}>Báo cáo nhập</a>
+                  <a href={`/gasoline/report/input/${id}`}>Báo cáo nhập</a>
                 </td>
               </tr>
               <tr>
                 <th className="border border-slate-700">2</th>
                 <td className="border border-slate-700">
-                  <a href={`/gasoline/output/${id}`}>Báo cáo xuất</a>
+                  <a href={`/gasoline/report/output/${id}`}>Báo cáo xuất</a>
                 </td>
               </tr>
             </tbody>

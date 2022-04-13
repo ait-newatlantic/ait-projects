@@ -55,8 +55,6 @@ const App = () => {
     }
   }, [fetchUserProject]);
 
-  console.log(userProject);
-
   const logOut = () => {
     AuthService.logout();
   };
