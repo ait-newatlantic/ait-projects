@@ -217,10 +217,14 @@ const App = () => {
         <Route exact path="/gasoline/output" element={<OilOutputForm />} />
         <Route
           exact
-          path="/gasoline/output/:id"
+          path="/gasoline/report/output/:id"
           element={<OilOutputReport />}
         />
-        <Route exact path="/gasoline/input/:id" element={<OilInputReport />} />
+        <Route
+          exact
+          path="/gasoline/report/input/:id"
+          element={<OilInputReport />}
+        />
       </Routes>
     </div>
   );
