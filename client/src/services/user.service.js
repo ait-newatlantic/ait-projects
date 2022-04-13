@@ -25,6 +25,10 @@ const getAccountantBoard = () => {
   return axios.get(API_URL + "accountant", { headers: authHeader() });
 };
 
+const getManagerBoard = () => {
+  return axios.get(API_URL + "manager", { headers: authHeader() });
+};
+
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
@@ -51,6 +55,7 @@ const get_users_attendace_from_project = (id) => {
 
 const UserService = {
   getPublicContent,
+  getManagerBoard,
   getUserBoard,
   getAccountantBoard,
   getDriverBoard,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Route, Link, Routes } from "react-router-dom";
 import "./App.css";
 import AuthService from "./services/auth.service";
@@ -20,22 +20,42 @@ import MaterialListTotal from "./components/MaterialListTotal";
 import logo from './assets/images/ait_logo.jpg'
 import WorkDiaryReportTotal from "./components/WorkDiaryReportTotal";
 import Report from "./components/Report";
+import BoardManager from "./components/BoardManager";
+import UserService from "./services/user.service";
 
 const App = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [userProject, setUserProject] = useState(0)
+
+  const fetchUserProject = useCallback((id) => {
+    UserService.get_user(id).then(
+      (response) => {
+        setUserProject(response.data.Projects[0].id);
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
+  }, [])
+
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+      setShowManagerBoard(user.roles.includes("ROLE_MANAGER"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      fetchUserProject(user.id)
     }
-  }, []);
+  }, [fetchUserProject]);
+
+  console.log(userProject)
+
   const logOut = () => {
     AuthService.logout();
   };
+
   return (
     <div>
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
@@ -56,17 +76,17 @@ const App = () => {
                   Home
                 </Link>
               </li>
-              {showModeratorBoard && (
+              {showManagerBoard && (
                 <li>
-                  <Link to={"/mod"} className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                    Moderator Board
+                  <Link to={`/manager/project/${userProject}`} className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                    Manager Board
                   </Link>
                 </li>
               )}
               {showAdminBoard && (
                 <li>
                   <Link to={"/admin"} className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                    Dashboard
+                    Admin Board
                   </Link>
                 </li>
               )}
@@ -109,6 +129,7 @@ const App = () => {
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/user" element={<BoardUser />} />
         <Route exact path="/admin" element={<BoardAdmin />} />
+        <Route exact path="/manager/project/:id" element={<BoardManager />} />
         <Route exact path="/project/:id" element={<Dashboard />} />
         <Route exact path="/machineries" element={<MaterialListTotal />} />
         <Route exact path="/employee/list/:id" element={<EmployeeList />} />

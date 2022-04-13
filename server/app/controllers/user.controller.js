@@ -59,6 +59,9 @@ exports.findOne = (req, res) => {
             {
                 model: db.Role,
             },
+            {
+                model: db.Project,
+            }
         ],
     })
         .then((data) => {
