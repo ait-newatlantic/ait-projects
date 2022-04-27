@@ -1,6 +1,6 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class OilReport extends Model {
+  class OilImportReport extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -8,21 +8,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      OilReport.belongsTo(models.OilType, {
+      OilImportReport.belongsTo(models.OilType, {
         foreignKey: "oilTypeId",
         targetKey: "id",
       });
-      OilReport.belongsTo(models.Unit, {
+      OilImportReport.belongsTo(models.Unit, {
         foreignKey: "unitId",
         targetKey: "id",
       });
-      OilReport.belongsTo(models.User, {
+      OilImportReport.belongsTo(models.Project, {
+        foreignKey: "projectId",
+        targetKey: "id",
+      });
+      OilImportReport.belongsTo(models.User, {
         foreignKey: "userId",
         targetKey: "id",
       });
     }
   }
-  OilReport.init(
+  OilImportReport.init(
     {
       id: {
         allowNull: false,
@@ -30,23 +34,20 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      exportDate: DataTypes.DATE,
-      exportPaper: DataTypes.STRING,
-      amountBefore: DataTypes.INTEGER,
-      amountAfter: DataTypes.INTEGER,
+      importDate: DataTypes.DATE,
+      importPaper: DataTypes.STRING,
+      code: DataTypes.STRING,
       quantity: DataTypes.INTEGER,
-      trips: DataTypes.INTEGER,
-      discount: DataTypes.INTEGER,
-      consumption: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
+      supplier: DataTypes.STRING,
       note: DataTypes.STRING,
       hide: DataTypes.BOOLEAN,
     },
     {
       sequelize,
-      modelName: "OilReport",
-      tableName: "oil_reports",
+      modelName: "OilImportReport",
+      tableName: "oil_import_reports",
     }
   );
-  return OilReport;
+  return OilImportReport;
 };

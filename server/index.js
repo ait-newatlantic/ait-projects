@@ -46,6 +46,8 @@ require("./app/routes/attendance.routes")(app);
 require("./app/routes/report.routes")(app);
 require("./app/routes/unit.routes")(app);
 require("./app/routes/oil_type.routes")(app);
+require("./app/routes/oil_import_report.routes")(app);
+require("./app/routes/oil_export_report.routes")(app);
 require("./app/routes/brand.routes")(app);
 
 // set port, listen for requests
