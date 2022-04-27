@@ -26,7 +26,7 @@ const WorkDiaryReport = () => {
   const [note, setNote] = useState("");
   const [units, setUnits] = useState([]);
   const [fixCrew, setFixCrew] = useState("");
-  const [fixContent, setFixContent] = useState("");
+  const [fixContent, setFixContent] = useState(null);
   const [reportId, setReportId] = useState(null);
   const [unitId, setUnitId] = useState(null);
 
@@ -94,6 +94,22 @@ const WorkDiaryReport = () => {
     );
   };
 
+  const handleSelectId = useCallback((e) => {
+    const updatedData = data && data.filter(item => item.id === Number(e.target.value))
+    setReportId(updatedData[0].id)
+    setFixContent(updatedData[0].fixContent)
+    setFixDate(updatedData[0].fixDate)
+    setDamageContent(updatedData[0].damageContent)
+    setDamageDate(updatedData[0].damageDate)
+    setSparePartCode(updatedData[0].sparePartCode)
+    setSparePartName(updatedData[0].sparePartName)
+    setQuantity(updatedData[0].quantity)
+    setFixCrew(updatedData[0].fixCrew)
+    setPrice(updatedData[0].price)
+    setNote(updatedData[0].note)
+    console.log(updatedData)
+  }, [data])
+
   useEffect(() => {
     fetchReports();
     fetchUnits();
@@ -147,7 +163,7 @@ const WorkDiaryReport = () => {
                 className="border border-slate-600"
                 type="text"
                 value={damageContent}
-                onChange={(e) => setDamageContent(e.target.value)}
+                onChange={(e) => setDamageContent(e)}
               />
             </div>
             <button
@@ -170,7 +186,7 @@ const WorkDiaryReport = () => {
               </label>
               <select
                 className="border border-slate-600 max-w-[177px] w-full"
-                onChange={(e) => setReportId(e.target.value)}
+                onChange={handleSelectId}
               >
                 <option value="" selected disabled hidden>
                   Chọn

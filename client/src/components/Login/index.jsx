@@ -67,6 +67,7 @@ const Login = () => {
         <img
           src="https://www.newatlantic.vn/img/logo.webp"
           className="object-scale-down h-14 w-28 mx-auto"
+          alt="logo"
         />
 
         <div>
