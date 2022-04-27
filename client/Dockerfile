@@ -1,4 +1,4 @@
-FROM node:12.19.1-buster-slim
+FROM node:14.19.1-buster-slim
 
 #ENV SKIP_PREFLIGHT_CHECK=true
 #ENV NODE_ENV=production
