@@ -1,0 +1,18 @@
+name: SSH Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: pull and deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY_ED25519 }}
+        port: 22
+        script: bash update-ecosystem.sh ait-projects
