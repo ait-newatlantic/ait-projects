@@ -13,7 +13,7 @@ const WorkDiaryReport = () => {
     `${DateFunc.year}-${DateFunc.n}-${DateFunc.d}`
   );
   const [to_date, setToDate] = useState(
-    `${DateFunc.year}-${DateFunc.n}-${Number(DateFunc.d) + 1}`
+    `${DateFunc.year}-${DateFunc.n}-${Number(DateFunc.d) + 1 > 9 ? Number(DateFunc.d) + 1 : `0${Number(DateFunc.d)+1}`}`
   );
   const { projectId, id } = useParams();
   const [damageDate, setDamageDate] = useState("");
@@ -131,7 +131,7 @@ const WorkDiaryReport = () => {
         <div className="border border-black">
           <span>Đến Ngày: </span>
           <input
-            id="from_date"
+            id="to_date"
             type="date"
             value={to_date}
             onChange={(e) => setToDate(e.target.value)}
