@@ -14,7 +14,7 @@ const EmployeeAttendanceReport = () => {
     `${DateFunc.year}-${DateFunc.n}-${DateFunc.d}`
   );
   const [to_date, setToDate] = useState(
-    `${DateFunc.year}-${DateFunc.n}-${Number(DateFunc.d) + 1}`
+    `${DateFunc.year}-${DateFunc.n}-${Number(DateFunc.d) + 1 > 9 ? Number(DateFunc.d) + 1 : `0${Number(DateFunc.d) + 1}`}`
   );
   const { id } = useParams();
 

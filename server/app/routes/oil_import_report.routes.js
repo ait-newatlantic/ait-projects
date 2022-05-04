@@ -3,6 +3,8 @@ module.exports = (app) => {
 
     var router = require("express").Router();
 
+    router.post("/", oil_import_report.create);
+
     router.get("/", oil_import_report.findAll);
 
     router.get("/:id", oil_import_report.findWithProject);
