@@ -4,6 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
 import { useNavigate } from "react-router-dom";
+import company from "../../assets/images/company.png"
 
 const required = (value) => {
   if (!value) {
@@ -58,9 +59,9 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center">
+    <div className="bg-center bg-cover bg-no-repeat h-screen flex justify-center items-center" style={{backgroundImage: `url(${company})`}}>
       <Form
-        className="border rounded-2xl text-center flex flex-col space-y-5 p-4 mt-10 bg-white shadow-lg sm:min-w-[350px] "
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-full lg:w-1/2 mx-auto"
         onSubmit={handleLogin}
         ref={form}
       >
@@ -69,13 +70,12 @@ const Login = () => {
           className="object-scale-down h-14 w-28 mx-auto"
           alt="logo"
         />
-
-        <div>
-          <label htmlFor="username" className="font-bold">
-            Tên người dùng
+        <div className="mb-4">
+          <label className="block text-grey-darker text-sm font-bold mb-2" for="username">
+            Tên đăng nhập
           </label>
           <Input
-            className="bg-gray-100 text-center border rounded sm:min-w-[250px]"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
             type="text"
             name="username"
             value={username}
@@ -83,12 +83,12 @@ const Login = () => {
             validations={[required]}
           />
         </div>
-        <div>
-          <label htmlFor="password" className="font-bold">
+        <div className="mb-4">
+          <label className="block text-grey-darker text-sm font-bold mb-2" for="password">
             Mật khẩu
           </label>
           <Input
-            className="bg-gray-100 text-center border rounded sm:min-w-[250px]"
+            className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
             type="password"
             name="password"
             value={password}
@@ -96,13 +96,12 @@ const Login = () => {
             validations={[required]}
           />
         </div>
-        <hr></hr>
-        <a href="tel:0123456">
-          <u>Quên mật khẩu ?</u>
+        <a className="mb-4" href="tel:0123456">
+          <u>Quên mật khẩu?</u>
         </a>
         <div className="form-group">
           <button
-            className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-yellow-500 duration-100 ... rounded px-10 py-2"
+            className="bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
             disabled={loading}
           >
             {loading && (
