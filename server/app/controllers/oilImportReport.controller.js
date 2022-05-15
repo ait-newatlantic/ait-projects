@@ -9,7 +9,6 @@ exports.create = (req, res) => {
         !req.body.quantity ||
         !req.body.price ||
         !req.body.supplier ||
-        !req.body.note ||
         !req.body.oilTypeId ||
         !req.body.unitId ||
         !req.body.projectId ||

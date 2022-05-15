@@ -15,6 +15,7 @@ const create_export_oil_report = (
     price,
     oilTypeId,
     unitId,
+    note,
     projectId,
     userId
 ) => {
@@ -30,6 +31,7 @@ const create_export_oil_report = (
         price,
         oilTypeId,
         unitId,
+        note,
         projectId,
         userId
     });

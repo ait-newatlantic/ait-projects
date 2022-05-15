@@ -5,7 +5,6 @@ import DateFunc from "../../functions/datetime";
 import { formatNumber } from "../../functions/number";
 import AuthService from "../../services/auth.service";
 import ExportOilService from "../../services/export_gasoline.service";
-import ImportOilService from "../../services/import_gasoline.service";
 import OilTypeService from "../../services/oil_type.service";
 import UnitService from "../../services/unit.service";
 
@@ -28,15 +27,15 @@ export const OilOutputReport = () => {
   const [exportPaper, setExportPaper] = useState('')
   const [amountBefore, setAmountBefore] = useState('')
   const [amountAfter, setAmountAfter] = useState('')
-  const [quantity, setQuantity] = useState(0)
-  const [trips, setTrips] = useState(0)
-  const [discount, setDiscount] = useState(0)
-  const [consumption, setConsumption] = useState(0)
-  const [price, setPrice] = useState(0)
+  const [quantity, setQuantity] = useState('')
+  const [trips, setTrips] = useState('')
+  const [discount, setDiscount] = useState('')
+  const [consumption, setConsumption] = useState('')
+  const [price, setPrice] = useState('')
   const [supplier, setSupplier] = useState('')
   const [note, setNote] = useState('')
   const [oilTypeId, setOilTypeId] = useState(1)
-  const [unitId, setUnitId] = useState(1)
+  const [unitId, setUnitId] = useState(3)
 
   const fetchExportOil = useCallback(() => {
     ExportOilService.get_export_oil_from_project(id, from_date, to_date).then((response) => {
@@ -62,14 +61,17 @@ export const OilOutputReport = () => {
     e.preventDefault();
     ExportOilService.create_export_oil_report(
       exportDate,
+      exportPaper,
       amountBefore,
       amountAfter,
       quantity,
+      trips,
+      discount,
+      consumption,
       price,
-      supplier,
-      note,
       oilTypeId,
       unitId,
+      note,
       projectId,
       userId
     ).then(
@@ -117,21 +119,26 @@ export const OilOutputReport = () => {
         <table className="table-auto border-separate border border-slate-700 text-center w-full">
           <thead className="font-bold">
             <tr>
-              <th className="border border-slate-600">Ngày nhập</th>
-              <th className="border border-slate-600">Chứng từ</th>
+              <th className="border border-slate-600">Ngày xuất</th>
+              <th className="border border-slate-600">Chứng từ xuất</th>
+              <th className="border border-slate-600">Đo trước</th>
               <th className="border border-slate-600">Mã hàng</th>
-              <th className="border border-slate-600">Tên hàng</th>
+              <th className="border border-slate-600">Đo sau</th>
               <th className="border border-slate-600">ĐVT</th>
               <th className="border border-slate-600">Số lượng</th>
-              <th className="border border-slate-600">Đơn giá nhập</th>
-              <th className="border border-slate-600">Nhà cung cấp</th>
-              <th className="border border-slate-600">Ghi chú</th>
+              <th className="border border-slate-600">Chiết khấu</th>
+              <th className="border border-slate-600">Tiêu hao</th>
+              <th className="border border-slate-600">Giá vốn</th>
+              <th className="border border-slate-600">Tên</th>
+              <th className="border border-slate-600">Số chuyến</th>
+              <th className="border border-slate-600">Thời gian đổ dầu - Ghi chú </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='date' value={exportDate} onChange={(e) => setExportDate(e.target.value)} /></td>
               <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={exportPaper} onChange={(e) => setExportPaper(e.target.value)} /></td>
+              <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={amountBefore} onChange={(e) => setAmountBefore(e.target.value)} /></td>
               <td className="border border-slate-600">
                 <select value={oilTypeId} onClick={(e) => setOilTypeId(e.target.value)}>
                   {oils && oils.map(oil => {
@@ -141,6 +148,7 @@ export const OilOutputReport = () => {
                   })}
                 </select>
               </td>
+              <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={amountAfter} onChange={(e) => setAmountAfter(e.target.value)} /></td>
               <td className="border border-slate-600">
                 <select value={unitId} onClick={(e) => setUnitId(e.target.value)}>
                   {units && units.map(unit => {
@@ -151,8 +159,11 @@ export const OilOutputReport = () => {
                 </select>
               </td>
               <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={quantity} onChange={(e) => setQuantity(e.target.value)} /></td>
+              <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={discount} onChange={(e) => setDiscount(e.target.value)} /></td>
+              <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={consumption} onChange={(e) => setConsumption(e.target.value)} /></td>
               <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={price} onChange={(e) => setPrice(e.target.value)} /></td>
               <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={supplier} onChange={(e) => setSupplier(e.target.value)} /></td>
+              <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={trips} onChange={(e) => setTrips(e.target.value)} /></td>
               <td className="border border-slate-600"><input className=" bg-gray-300 w-full text-center" type='text' value={note} onChange={(e) => setNote(e.target.value)} /></td>
             </tr>
           </tbody>
@@ -183,6 +194,7 @@ export const OilOutputReport = () => {
               <th className="border border-slate-600">Tiêu hao</th>
               <th className="border border-slate-600">Giá vốn</th>
               <th className="border border-slate-600">Tên</th>
+              <th className="border border-slate-600">Số chuyến</th>
               <th className="border border-slate-600">Thời gian đổ dầu - Ghi chú </th>
             </tr>
           </thead>
@@ -202,6 +214,7 @@ export const OilOutputReport = () => {
                   <td className="border border-slate-600">{item.consumption}</td>
                   <td className="border border-slate-600">{formatNumber(item.price)}</td>
                   <td className="border border-slate-600">{item.User.name}</td>
+                  <td className="border border-slate-600">{item.trips}</td>
                   <td className="border border-slate-600">{item.note}</td>
                 </tr>
               )

@@ -12,7 +12,6 @@ exports.create = (req, res) => {
         !req.body.discount ||
         !req.body.consumption ||
         !req.body.price ||
-        !req.body.note ||
         !req.body.oilTypeId ||
         !req.body.unitId ||
         !req.body.projectId ||
@@ -21,14 +20,14 @@ exports.create = (req, res) => {
         res.status(400).send({
             message: {
                 heading: "Oh snap! You got an error!",
-                message: "Xin hãy điền đầy đủ thông tin của xe!!",
+                message: "Xin hãy điền đầy đủ thông tin của report!!",
             },
         });
         return;
     }
     OilExportReport.create({
-        exportDate: req.body.importDate,
-        exportPaper: req.body.importPaper,
+        exportDate: req.body.exportDate,
+        exportPaper: req.body.exportPaper,
         amountBefore: req.body.amountBefore,
         amountAfter: req.body.amountAfter,
         quantity: req.body.quantity,
